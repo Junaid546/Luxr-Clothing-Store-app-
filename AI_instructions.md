@@ -298,6 +298,8 @@ assets/
 * Optimize Firestore queries
 * Cache frequently used data
 * Lazy load images
+* No use of setstate 
+* use const where possible  
 
 ---
 
@@ -328,6 +330,7 @@ The final app must:
 * Be secure
 * Be scalable
 * Follow real-world architecture
+* Every screen design must match the app_desing if any screen design is missing then creat your own UI theme must match the app theme.
 
 ---
 

@@ -4,16 +4,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-@riverpod
-FirebaseAuth firebaseAuth(FirebaseAuthRef ref) => FirebaseAuth.instance;
+final firebaseAuthProvider = Provider<FirebaseAuth>(
+  (ref) => FirebaseAuth.instance,
+);
 
-@riverpod
-FirebaseFirestore firestore(FirestoreRef ref) => FirebaseFirestore.instance;
+final firestoreProvider = Provider<FirebaseFirestore>(
+  (ref) => FirebaseFirestore.instance,
+);
 
-@riverpod
-FirebaseStorage firebaseStorage(FirebaseStorageRef ref) =>
-    FirebaseStorage.instance;
+final firebaseStorageProvider = Provider<FirebaseStorage>(
+  (ref) => FirebaseStorage.instance,
+);
 
-@riverpod
-FirebaseMessaging firebaseMessaging(FirebaseMessagingRef ref) =>
-    FirebaseMessaging.instance;
+final firebaseMessagingProvider = Provider<FirebaseMessaging>(
+  (ref) => FirebaseMessaging.instance,
+);
