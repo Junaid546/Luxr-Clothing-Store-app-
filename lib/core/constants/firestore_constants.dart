@@ -21,6 +21,11 @@ abstract final class FirestoreConstants {
   static const String photoUrl = 'photoUrl';
   static const String totalOrders = 'totalOrders';
   static const String eliteStatus = 'eliteStatus';
+  static const String lastLoginAt = 'lastLoginAt';
+  static const String totalSpent = 'totalSpent';
+  static const String wishlistCount = 'wishlistCount';
+  static const String addresses = 'addresses';
+  static const String notificationPrefs = 'notificationPrefs';
 
   // Product fields
   static const String name = 'name';
