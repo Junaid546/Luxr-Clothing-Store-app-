@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Epilogue', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
+<div class="flex items-center justify-between p-4 max-w-md mx-auto w-full">
+<button class="p-2 rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Order Tracking</h1>
+<button class="p-2 rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-primary">help_outline</span>
+</button>
+</div>
+</header>
+<main class="flex-1 max-w-md mx-auto w-full px-4 py-6 overflow-y-auto">
+<div class="mb-8">
+<div class="flex justify-between items-end mb-2">
+<h2 class="text-2xl font-extrabold text-primary">#LX-882910</h2>
+<span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">In Transit</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Placed on October 24, 2023 • 10:30 AM</p>
+</div>
+<div class="relative space-y-0 mb-10">
+<div class="absolute left-[11px] top-2 bottom-2 w-0.5 bg-slate-200 dark:bg-primary/10"></div>
+<div class="relative flex gap-6 pb-8">
+<div class="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark">
+<span class="material-symbols-outlined text-[14px] text-background-dark filled-icon">check</span>
+</div>
+<div class="flex flex-col">
+<p class="text-base font-bold text-primary">Order Placed</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Oct 24, 10:30 AM</p>
+</div>
+</div>
+<div class="relative flex gap-6 pb-8">
+<div class="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark">
+<span class="material-symbols-outlined text-[14px] text-background-dark filled-icon">check</span>
+</div>
+<div class="flex flex-col">
+<p class="text-base font-bold text-primary">Packed</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Oct 25, 09:15 AM</p>
+</div>
+</div>
+<div class="relative flex gap-6 pb-8">
+<div class="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-primary ring-4 ring-background-light dark:ring-background-dark">
+<span class="material-symbols-outlined text-[14px] text-background-dark filled-icon">local_shipping</span>
+</div>
+<div class="flex flex-col">
+<p class="text-base font-bold text-primary">Shipped</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Oct 25, 02:00 PM</p>
+</div>
+</div>
+<div class="relative flex gap-6 pb-8">
+<div class="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-primary/20 ring-4 ring-background-light dark:ring-background-dark border-2 border-primary">
+<div class="h-2 w-2 rounded-full bg-primary"></div>
+</div>
+<div class="flex flex-col">
+<p class="text-base font-bold text-primary">Out for Delivery</p>
+<p class="text-sm text-primary font-medium italic">Estimated: Today, 5:00 PM</p>
+</div>
+</div>
+<div class="relative flex gap-6">
+<div class="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 dark:bg-primary/10 ring-4 ring-background-light dark:ring-background-dark">
+</div>
+<div class="flex flex-col opacity-50">
+<p class="text-base font-bold">Delivered</p>
+<p class="text-sm">Pending</p>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-5 border border-primary/10 mb-6">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/60 mb-4">Courier Information</h3>
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="Courier Profile" class="w-full h-full object-cover" data-alt="Close up portrait of a delivery courier smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClBTPQbtp2gXZ6EvE_IVJv2jz3Lw_HMWpKSOora2wr7pXGDTE0iEtlFZe6YR1XSV4_31dGxcmQ7hqL6EWQOer3UPTolUOteHSQP8BpQubVNKmkmOKFqUQ8jLdfaAZabVVWwv2vwWfnRN5icueWFvg1nU_yeD_fcWLlafEr3L5XRXnIQ1kI-v5b81ID5BoFpC2tAzhZVWiYVzJ6vFsI9G5lgoc7b1MGEsET_QPWX2wQ_fTAtK_RH9jBfQdoNf09O2_uRUlRX3dMw9g"/>
+</div>
+<div class="flex-1">
+<p class="font-bold text-lg">Marcus Sterling</p>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-sm filled-icon">star</span>
+<span class="text-sm font-semibold">4.9 (1.2k reviews)</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full bg-primary text-background-dark flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined filled-icon">call</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-primary text-background-dark flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined filled-icon">chat</span>
+</button>
+</div>
+</div>
+</div>
+<div class="rounded-xl overflow-hidden border border-primary/10 h-48 relative mb-20">
+<img alt="Delivery Map" class="w-full h-full object-cover opacity-60" data-alt="Minimal map showing delivery route in a city" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTI39DlONcBNXBpC4M_fvo2kSC7Fa89klLVZhjzrD-qmxiorKZzinjyTP_6BJga_QqjFPmC8nxcLxnSRoywRVe73wzQD-xOt1_6LvmDZjZra0rfhlzTWDsrQYmzLazurb4owNVL04BifS8cdKEBDjc_QHRlVSxwQodzJqccqEo3-puDKhFTea2NHhnm7lTT2nY69J-WPkfvlTcuGq84vLHMIf_yQkcw9IV3O4J66qOTHB9tkNbYzmHGcsQT9PuHYJV42Vlgj7W1QI"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="relative">
+<div class="absolute -top-1 -left-1 w-8 h-8 bg-primary/30 rounded-full animate-ping"></div>
+<div class="relative bg-primary text-background-dark p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined filled-icon">moped</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 bg-background-light dark:bg-background-dark px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tight shadow-sm">
+                Live Location
+            </div>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-background-light dark:bg-background-dark border-t border-primary/10 px-4 pb-6 pt-3 max-w-md mx-auto w-full">
+<div class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Shop</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined filled-icon">receipt_long</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

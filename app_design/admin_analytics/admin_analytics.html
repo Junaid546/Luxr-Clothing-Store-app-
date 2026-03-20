@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@100..900&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "gold": "#d4af37",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"],
+                        "mono": ["DM Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between p-4 bg-background-light dark:bg-background-dark sticky top-0 z-10 border-b border-primary/10">
+<div class="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Analytics</h2>
+<div class="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+</header>
+<!-- Date Range Pill Toggle -->
+<div class="flex gap-3 p-4 overflow-x-auto no-scrollbar">
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-primary px-6 text-white text-sm font-semibold">
+                Today
+            </button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-primary/10 dark:bg-white/5 px-6 text-slate-600 dark:text-slate-300 text-sm font-medium">
+                Weekly
+            </button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-primary/10 dark:bg-white/5 px-6 text-slate-600 dark:text-slate-300 text-sm font-medium">
+                Monthly
+            </button>
+<button class="flex h-10 shrink-0 items-center justify-center rounded-full bg-primary/10 dark:bg-white/5 px-6 text-slate-600 dark:text-slate-300 text-sm font-medium">
+                Yearly
+            </button>
+</div>
+<main class="flex flex-col gap-6 p-4 pb-24">
+<!-- Revenue Card -->
+<div class="flex flex-col gap-4 rounded-xl border border-primary/20 bg-white/5 p-6 backdrop-blur-sm">
+<div class="flex items-center justify-between">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Total Revenue</p>
+<div class="flex items-center gap-1 rounded-full bg-teal-500/20 px-2 py-1 text-teal-500">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+<span class="text-xs font-bold">+12.4%</span>
+</div>
+</div>
+<p class="font-mono text-4xl font-medium text-gold tracking-tight">$482,900.00</p>
+<div class="mt-2 h-24 w-full">
+<svg fill="none" height="100%" preserveaspectratio="none" viewbox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18 109 18 21 36 21C54 21 54 41 72 41C90 41 90 93 108 93C127 93 127 33 145 33C163 33 163 101 181 101C199 101 199 61 217 61C236 61 236 45 254 45C272 45 272 121 290 121C308 121 308 149 326 149C344 149 344 1 363 1C381 1 381 81 399 81C417 81 417 129 435 129C453 129 453 25 472 25" stroke="#d4af37" stroke-linecap="round" stroke-width="3"></path>
+<path d="M0 109C18 109 18 21 36 21C54 21 54 41 72 41C90 41 90 93 108 93C127 93 127 33 145 33C163 33 163 101 181 101C199 101 199 61 217 61C236 61 236 45 254 45C272 45 272 121 290 121C308 121 308 149 326 149C344 149 344 1 363 1C381 1 381 81 399 81C417 81 417 129 435 129C453 129 453 25 472 25V150H0V109Z" fill="url(#goldGradient)" fill-opacity="0.1"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="goldGradient" x1="236" x2="236" y1="1" y2="150">
+<stop stop-color="#d4af37"></stop>
+<stop offset="1" stop-color="#d4af37" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<!-- Sales Bar Chart -->
+<div class="flex flex-col gap-4 rounded-xl border border-primary/10 bg-white/5 p-6">
+<p class="text-slate-900 dark:text-slate-100 text-lg font-bold">Weekly Sales Performance</p>
+<div class="flex h-48 items-end justify-between gap-2 pt-4">
+<div class="flex flex-1 flex-col items-center gap-2">
+<div class="w-full rounded-t-lg bg-gold/40" style="height: 40%"></div>
+<span class="text-[10px] text-slate-500">Mon</span>
+</div>
+<div class="flex flex-1 flex-col items-center gap-2">
+<div class="w-full rounded-t-lg bg-gold/60" style="height: 65%"></div>
+<span class="text-[10px] text-slate-500">Tue</span>
+</div>
+<div class="flex flex-1 flex-col items-center gap-2">
+<div class="w-full rounded-t-lg bg-gold/50" style="height: 50%"></div>
+<span class="text-[10px] text-slate-500">Wed</span>
+</div>
+<div class="flex flex-1 flex-col items-center gap-2">
+<div class="w-full rounded-t-lg bg-gold" style="height: 90%"></div>
+<span class="text-[10px] font-bold text-slate-300">Thu</span>
+</div>
+<div class="flex flex-1 flex-col items-center gap-2">
+<div class="w-full rounded-t-lg bg-gold/70" style="height: 75%"></div>
+<span class="text-[10px] text-slate-500">Fri</span>
+</div>
+<div class="flex flex-1 flex-col items-center gap-2">
+<div class="w-full rounded-t-lg bg-gold/40" style="height: 35%"></div>
+<span class="text-[10px] text-slate-500">Sat</span>
+</div>
+<div class="flex flex-1 flex-col items-center gap-2">
+<div class="w-full rounded-t-lg bg-gold/30" style="height: 25%"></div>
+<span class="text-[10px] text-slate-500">Sun</span>
+</div>
+</div>
+</div>
+<!-- Sales by Category (Donut) -->
+<div class="flex flex-col gap-4 rounded-xl border border-primary/10 bg-white/5 p-6">
+<p class="text-slate-900 dark:text-slate-100 text-lg font-bold">Sales by Category</p>
+<div class="flex items-center justify-between py-4">
+<div class="relative flex size-32 items-center justify-center">
+<svg class="size-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-gold/10" cx="18" cy="18" fill="none" r="16" stroke-width="4"></circle>
+<circle class="stroke-gold" cx="18" cy="18" fill="none" r="16" stroke-dasharray="70, 100" stroke-linecap="round" stroke-width="4"></circle>
+<circle class="stroke-gold/50" cx="18" cy="18" fill="none" r="16" stroke-dasharray="25, 100" stroke-dashoffset="-70" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-xl font-bold">1.2k</span>
+<span class="text-[10px] text-slate-500 uppercase">Items</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 flex-1 pl-8">
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-gold"></div>
+<span class="text-sm font-medium">Watches (70%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-gold/50"></div>
+<span class="text-sm font-medium">Jewelry (25%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-3 rounded-full bg-gold/10"></div>
+<span class="text-sm font-medium">Accessories (5%)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Best Sellers List -->
+<div class="flex flex-col gap-4 rounded-xl border border-primary/10 bg-white/5 p-6 mb-8">
+<div class="flex items-center justify-between">
+<p class="text-slate-900 dark:text-slate-100 text-lg font-bold">Best Sellers</p>
+<button class="text-sm font-semibold text-primary">View All</button>
+</div>
+<div class="flex flex-col gap-6 pt-2">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="font-medium">Oyster Perpetual 41</span>
+<span class="font-mono text-gold">420 units</span>
+</div>
+<div class="h-2 w-full rounded-full bg-primary/10">
+<div class="h-full rounded-full bg-gold" style="width: 85%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="font-medium">Gold Signet Ring</span>
+<span class="font-mono text-gold">285 units</span>
+</div>
+<div class="h-2 w-full rounded-full bg-primary/10">
+<div class="h-full rounded-full bg-gold" style="width: 60%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between text-sm">
+<span class="font-medium">Diamond Cufflinks</span>
+<span class="font-mono text-gold">142 units</span>
+</div>
+<div class="h-2 w-full rounded-full bg-primary/10">
+<div class="h-full rounded-full bg-gold" style="width: 35%"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-20 flex border-t border-primary/20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pb-6 pt-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium uppercase tracking-widest">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-[10px] font-medium uppercase tracking-widest">Vault</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">analytics</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Analytics</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-medium uppercase tracking-widest">Profile</p>
+</a>
+</nav>
+</div>
+</body></html>

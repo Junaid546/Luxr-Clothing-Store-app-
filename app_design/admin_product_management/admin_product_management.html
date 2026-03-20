@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                        "accent-gold": "#d4af37",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "mono": ["DM Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="sticky top-0 z-20 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 border-b border-primary/10">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">LUXR Inventory</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</header>
+<!-- Tabs -->
+<nav class="flex border-b border-primary/5 px-4 bg-background-light dark:bg-background-dark">
+<a class="flex flex-col items-center justify-center border-b-2 border-primary px-4 py-3 text-primary" href="#">
+<span class="text-sm font-bold">All Items</span>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent px-4 py-3 text-slate-500 dark:text-slate-400" href="#">
+<span class="text-sm font-bold">Low Stock</span>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent px-4 py-3 text-slate-500 dark:text-slate-400" href="#">
+<span class="text-sm font-bold">Categories</span>
+</a>
+</nav>
+<!-- Product List -->
+<main class="flex-1 overflow-y-auto p-4 space-y-3 pb-24">
+<!-- Product Item 1 -->
+<div class="flex items-center gap-4 rounded bg-white/5 dark:bg-primary/5 p-3 border border-primary/10">
+<div class="h-[56px] w-[56px] shrink-0 overflow-hidden rounded bg-slate-200 dark:bg-slate-800">
+<img alt="Luxury leather bag" class="h-full w-full object-cover" data-alt="Premium brown leather designer travel bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPBE9rK5zcgvIlPKp8rQ9PTIRhfElS3CPx6nuJxjarLEL9J-9nJ8o_Do_NmsUWrBLnmaJR_eHmZUQPQnC0w2wYb7NFtAWEb2jkqQ7OsrK9rxm5M5ICoxL8t8fE3LlnpPGbU6MIenfyj47LF9KW8I1CFWEqrBNOCa_YPEMVNRhf5_P4BEr01V8YWHRB57yxvXD79RJdBfvhRaIa5Spr_EQMrCpzOCjK9denqycedD7Yp8Neew2jP3HLO530kAvGihalPSU5T-yVnjk"/>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="truncate text-sm font-bold">Heritage Weekender</h3>
+<span class="rounded-full border border-accent-gold/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-accent-gold">Luggage</span>
+</div>
+<div class="flex items-center justify-between">
+<p class="font-mono text-sm text-primary font-medium">$1,250.00</p>
+<div class="flex items-center gap-1.5">
+<div class="h-1.5 w-1.5 rounded-full bg-teal-500"></div>
+<span class="text-[11px] font-medium text-teal-500 uppercase">Stock: 42</span>
+</div>
+</div>
+</div>
+<button class="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+<!-- Product Item 2 -->
+<div class="flex items-center gap-4 rounded bg-white/5 dark:bg-primary/5 p-3 border border-primary/10">
+<div class="h-[56px] w-[56px] shrink-0 overflow-hidden rounded bg-slate-200 dark:bg-slate-800">
+<img alt="Gold signet ring" class="h-full w-full object-cover" data-alt="Minimalist gold signet ring on black surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDItn9NERCbAQWvlcL974xi2V64U1Vbs84uCK7zLH_aBGy00jSghxk6TutwaG_zy6gnd2NruKZlZrq53XPpFr_s4CHVER9cbRezZHNW3WoBZeTjy9-kaOqyCH87fWA1hi3ZSAuVGwKfr4ku59muSJMIv3IwnZjQ2gVksqPUtUxdpq9K91HZVJB-e5CyVsPiblcbbwl086itN5deOiurF1zYgs_UusEGku-4t-s34RL2X3myxEUyi96FkEnn4vuZmm3Cr04BsPY9Si0"/>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="truncate text-sm font-bold">Oracle Signet Gold</h3>
+<span class="rounded-full border border-accent-gold/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-accent-gold">Jewelry</span>
+</div>
+<div class="flex items-center justify-between">
+<p class="font-mono text-sm text-primary font-medium">$890.00</p>
+<div class="flex items-center gap-1.5">
+<div class="h-1.5 w-1.5 rounded-full bg-red-500"></div>
+<span class="text-[11px] font-medium text-red-500 uppercase">Stock: 3</span>
+</div>
+</div>
+</div>
+<button class="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+<!-- Product Item 3 -->
+<div class="flex items-center gap-4 rounded bg-white/5 dark:bg-primary/5 p-3 border border-primary/10">
+<div class="h-[56px] w-[56px] shrink-0 overflow-hidden rounded bg-slate-200 dark:bg-slate-800">
+<img alt="Premium watch" class="h-full w-full object-cover" data-alt="Luxury automatic watch with black dial" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA36LzJhIuYDqxWKd45-5FAgvvtkWNmFGP48P7sIHrJBceSX550PQToNj8aROMMYNUUQHrySDPBx4Gw3MAHvB8U8ARBC-fZRKUslJMppl2WkEI7ruw-dlEN2n70KI6olW9wtMf33Qnpd2NpBeR1ovLc_-u5fC4C8FGk-hyIha2UnrkVCueinDHC_Wmh9rM0n5Ew7ZUrHVtYZsdJb83dMSiVNs65dw5RkgLRS3Vo8y22NqmerYWsI9jRzf2hocE_pLVU74UtcequOuI"/>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="truncate text-sm font-bold">Nocturnal Chrono</h3>
+<span class="rounded-full border border-accent-gold/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-accent-gold">Watches</span>
+</div>
+<div class="flex items-center justify-between">
+<p class="font-mono text-sm text-primary font-medium">$4,600.00</p>
+<div class="flex items-center gap-1.5">
+<div class="h-1.5 w-1.5 rounded-full bg-teal-500"></div>
+<span class="text-[11px] font-medium text-teal-500 uppercase">Stock: 12</span>
+</div>
+</div>
+</div>
+<button class="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+<!-- Product Item 4 -->
+<div class="flex items-center gap-4 rounded bg-white/5 dark:bg-primary/5 p-3 border border-primary/10">
+<div class="h-[56px] w-[56px] shrink-0 overflow-hidden rounded bg-slate-200 dark:bg-slate-800">
+<img alt="Silk Scarf" class="h-full w-full object-cover" data-alt="Handcrafted silk scarf with gold patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiumnMcIhH8UP912IwdZdGRFfsKBjpCWx8HpimxxZC4jZ94g9-bWylIHJyrwNEFFdttgtFCiRe5ZVKdC8yiva9krDb5q6exAFO92sAf0aPxkQufX53FiufBIj9qkGo4L3y1SQ7pNs937ojh1vDVZumg3u8PmWqbn-6aESHOWIAJF-QqBZ7xRpgE_8MZbBfVlP3TBgIqts-Ae5bNEi1eisXesiFjgDM9UiG1ompde05lyxbR4t-WZLJYVMHo4XexC47zfQHdLDOlak"/>
+</div>
+<div class="flex flex-1 flex-col min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h3 class="truncate text-sm font-bold">Midnight Silk Drape</h3>
+<span class="rounded-full border border-accent-gold/50 px-2 py-0.5 text-[10px] uppercase tracking-wider text-accent-gold">Apparel</span>
+</div>
+<div class="flex items-center justify-between">
+<p class="font-mono text-sm text-primary font-medium">$320.00</p>
+<div class="flex items-center gap-1.5">
+<div class="h-1.5 w-1.5 rounded-full bg-red-500"></div>
+<span class="text-[11px] font-medium text-red-500 uppercase">Stock: 2</span>
+</div>
+</div>
+</div>
+<button class="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-24 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-xl shadow-primary/30 z-30 ring-4 ring-background-light dark:ring-background-dark">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<!-- Bottom Navigation -->
+<footer class="fixed bottom-0 left-0 right-0 z-40">
+<div class="flex gap-2 border-t border-primary/10 bg-background-light dark:bg-background-dark px-4 pb-6 pt-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-[10px] font-medium">Dashboard</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-[10px] font-medium">Products</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<p class="text-[10px] font-medium">Orders</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-medium">Settings</p>
+</a>
+</div>
+</footer>
+</div>
+</body></html>

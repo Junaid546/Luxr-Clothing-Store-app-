@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700&amp;family=DM+Sans:wght@400;500;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C9A96E", // Gold as requested
+                        "accent-coral": "#ff6b6b",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#0A0A0C",
+                        "surface": "#1E1E2A",
+                        "surface-dark": "#131318",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "sans": ["DM Sans", "sans-serif"],
+                        "mono": ["DM Mono", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans">
+<!-- Header & Search -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pt-4 pb-2">
+<div class="flex items-center justify-between mb-4">
+<h1 class="text-2xl font-display font-bold tracking-tight text-primary">LUXR</h1>
+<div class="relative">
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-surface">
+<span class="material-symbols-outlined text-slate-100">notifications</span>
+</button>
+<span class="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-accent-coral"></span>
+</div>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 bg-surface border-none rounded-xl text-slate-100 placeholder-slate-400 focus:ring-1 focus:ring-primary text-sm" placeholder="Search luxury fashion" type="text"/>
+</div>
+</header>
+<main class="pb-24">
+<!-- Section 1: Hero Banner Slider -->
+<section class="px-4 py-4">
+<div class="relative h-[200px] w-full rounded-xl overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="Luxury fashion model in dark studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChS8WqKGtV-g3Wu9KrbzLT51FYRso_SOsuOBRilnbjBQNRUO5wPbUu550b0UK0VbNcq1qPkk2rCFg6uX5mGoWKvYAfBBKb23WBBIvt_yBe2aoIC7w_8oyboVmFRacgBmREyTQI3zJyR3hZKfnIwsi1Xbp23vwsZ93492B7QeXbb20BP33pWgP6JThm9mLPpUhmUftUfQ84r9tXW9bQVDh-LX29UlrMLCe-jWJpg-roQ_wpopnr_Qnd2_-gKdpYs59u7lB1ENuaC_w"/>
+<div class="absolute inset-0 z-20 flex flex-col justify-end p-6">
+<h2 class="text-2xl font-display font-bold text-white mb-2">Winter Collection '24</h2>
+<button class="w-fit px-6 py-2 border border-white text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors">
+                        Shop Now
+                    </button>
+</div>
+<div class="absolute bottom-4 right-6 z-20 flex gap-1.5">
+<div class="w-6 h-1 bg-primary rounded-full"></div>
+<div class="w-2 h-1 bg-white/50 rounded-full"></div>
+<div class="w-2 h-1 bg-white/50 rounded-full"></div>
+</div>
+</div>
+</section>
+<!-- Section 2: Category Chips -->
+<section class="py-2">
+<div class="flex overflow-x-auto no-scrollbar gap-3 px-4">
+<button class="shrink-0 px-6 py-2.5 bg-primary text-black font-bold rounded-full text-sm">All</button>
+<button class="shrink-0 px-6 py-2.5 bg-surface text-slate-300 font-medium rounded-full text-sm">Shirts</button>
+<button class="shrink-0 px-6 py-2.5 bg-surface text-slate-300 font-medium rounded-full text-sm">Hoodies</button>
+<button class="shrink-0 px-6 py-2.5 bg-surface text-slate-300 font-medium rounded-full text-sm">Outerwear</button>
+<button class="shrink-0 px-6 py-2.5 bg-surface text-slate-300 font-medium rounded-full text-sm">Accessories</button>
+</div>
+</section>
+<!-- Section 3: Featured Products -->
+<section class="py-6">
+<div class="flex items-center justify-between px-4 mb-4">
+<h3 class="text-[18px] font-sans font-bold">Featured</h3>
+<a class="text-primary text-sm font-medium" href="#">See all</a>
+</div>
+<div class="flex overflow-x-auto no-scrollbar gap-4 px-4">
+<!-- Card 1 -->
+<div class="shrink-0 w-[160px]">
+<div class="relative h-[240px] bg-surface-dark rounded-xl overflow-hidden mb-2">
+<span class="absolute top-2 left-2 bg-accent-coral text-white text-[10px] font-bold px-2 py-1 rounded-md z-10">-20%</span>
+<img class="w-full h-full object-cover" data-alt="Premium wool coat product shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJk9i0cjkfKlHFG80NUSbrND9CEjFfo_svVVgPSUHGYiymVqWrbL5Ps_xUgvwOvGwtVzE993VJqd62_Dsw0PoiXr9eKOg-HNstfzubaFGyuHZdn8JMWpYBPWkXc00CkmP55_c_o3ktZ_jGnUCkfhpR48CAfIj1vSycAwXf9eoyI-YURY-B00maun2bLANMr2AtVBpHHUvtq-avVAV3PuBSm_EOx7ZLS2I5K7C4vo_pKsmAZDcuiKdh7jQp1o3cS3H0TShoJIiuNxM"/>
+</div>
+<p class="text-sm font-medium truncate">Silk Blend Blazer</p>
+<p class="text-primary font-mono font-medium">$840.00</p>
+</div>
+<!-- Card 2 -->
+<div class="shrink-0 w-[160px]">
+<div class="relative h-[240px] bg-surface-dark rounded-xl overflow-hidden mb-2">
+<img class="w-full h-full object-cover" data-alt="Minimalist black t-shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqT6dafN_K2rJnNg2p3V4cgBg2Y2GW728SP2abMko7WZmmxI23_PHK2GuCXBpvGlAQ-rjpuryH7KBCwyIDZrlvBU7nYNnwTpf4fo9Vm-9skdFGBQeZKuzWLuCYGnVIbIzTRzPynRS3FTgnVHRPGYRqy0RBLYdAvvbq5Cp43du1dWK2bTKSDTQ30DjRd9voV0kf72uICvmJOzDfqJm8j4znGo6EjhiS5KsKhibtlIu_SA3StFeqTyOB6SrzpX5u4YPZr_Bi14N1bC8"/>
+</div>
+<p class="text-sm font-medium truncate">Essential Tee</p>
+<p class="text-primary font-mono font-medium">$125.00</p>
+</div>
+<!-- Card 3 -->
+<div class="shrink-0 w-[160px]">
+<div class="relative h-[240px] bg-surface-dark rounded-xl overflow-hidden mb-2">
+<span class="absolute top-2 left-2 bg-accent-coral text-white text-[10px] font-bold px-2 py-1 rounded-md z-10">-15%</span>
+<img class="w-full h-full object-cover" data-alt="Elegant leather bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEdNSpTBeqSi0X15xM1g3eFnoeSVD-up05dxEQhzZIxs65FduSXk7oFRKXty3oWxLigyAYN0wWozQzG6X93ioHog9R4iGnjqpr_Gn0rjDn_1302smBqwqNgKOwgKTLRpxdWJep0YgnId0fUcsVgfVSqi7Unx4gypefnY34weMGYMNGbNRrNKryeG2mRUozCKKYeAFC4Pbg_yIashvP6zlh7w4LyOPx7fpItg1kDW04p26NGPvWXo-aBLdgOfUr653F0RwdiSgAqPY"/>
+</div>
+<p class="text-sm font-medium truncate">Leather Carry-all</p>
+<p class="text-primary font-mono font-medium">$1,200.00</p>
+</div>
+</div>
+</section>
+<!-- Section 4: New Arrivals -->
+<section class="px-4 py-4">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-[18px] font-sans font-bold">New Arrivals</h3>
+<a class="text-primary text-sm font-medium" href="#">View all</a>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<div class="aspect-[3/4] rounded-xl bg-surface-dark overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Modern streetwear look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6whiWX7rJ280f90qnT8ngmRULcTdU3VldU5eLJxGVsTPKqGvBVWwHlue4cJR9BSvGvD7awf5ldqLq2AJj4m0csZA1uJ-RskX5pUq1ED_j3TN0rdFRSWbf_P5VUMM5OVk9LiYl9g6FGt4qvfc0B4qLpom_XEUdWZ6wSaW9TByJ8Fu0CzegrXgvg-DBXvktLU_Yz8qKY1dHAzgFgcnh5cwVqrh0DEZOXZNbNHMYtpZGGavx7Pbtvin6Ho6OkwrA0QIy45RWQjcEwgo"/>
+</div>
+<p class="text-xs font-medium uppercase tracking-wider text-slate-400">Outerwear</p>
+<p class="text-sm font-bold">Tech Parka</p>
+<p class="text-primary font-mono">$450</p>
+</div>
+<div class="space-y-2">
+<div class="aspect-[3/4] rounded-xl bg-surface-dark overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Oversized designer hoodie" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJSNYmA0Bo7vi5rW3vS_XPa8Xv28nKBB86iMxFSMgAkcpN4h6hVZyNqd5PuXr_Wk1ONQ36xcitcPtaLjxImTv8d0Vzbfc0Q1JVEFzilmZ9VvTkU_LB0gZ00YzvOHQc9UbADkQgCbVKoHFSVOHxhpzyfk8aPFVW2LLUofPuKH_1wV9LLAXSR1eqyCSf9nEQDfkTGI9_31mARRisugdDdG1XG1fK9vI26ssR6nGiX4DCGrCOXOHaXLal_AiPwQ2KPLeZ-dlXg38r8qA"/>
+</div>
+<p class="text-xs font-medium uppercase tracking-wider text-slate-400">Hoodies</p>
+<p class="text-sm font-bold">Luxe Fleece</p>
+<p class="text-primary font-mono">$290</p>
+</div>
+</div>
+</section>
+<!-- Section 5: Trending Now -->
+<section class="py-6 px-4">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">diamond</span>
+<h3 class="text-xl font-display font-bold">Trending Now</h3>
+</div>
+<div class="relative rounded-xl overflow-hidden aspect-video group">
+<div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Boutique interior luxury display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0IP6_NvFp_hbJVaW5VLaza4XEekql48AN5vkNdb9CFF-RoCq3OJKlMgHb5Ng_lV7dpU-26qh-B_q5PGY8VUq2yVM9xDHBXK5s5hwExmk2OiylY7QqSwKQbZueaDdRhFUZEKgqgbsyrsje1Snlqkf1DTh7C9htsOynBOCsOTyRAnlSqYstLQybaCeAcsE8LX0enVScT1IClsiif2RDPXf5lLPBgnLzGy2tZkS3MTMAKoPBv34t5avnRU3GP4iYLxZQNmV5SUliSjk"/>
+<div class="absolute inset-0 z-20 flex flex-col justify-center p-8">
+<p class="text-primary font-bold tracking-widest text-xs uppercase mb-2">Must Have</p>
+<h4 class="text-2xl font-display font-bold text-white mb-4">The Statement Piece</h4>
+<button class="w-fit px-8 py-3 bg-primary text-black font-bold rounded-full text-sm">Discover</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom NavBar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-white/10 px-6 py-3 z-50">
+<div class="flex items-center justify-between max-w-lg mx-auto">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1">home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-[28px]">search</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-[28px]">shopping_bag</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-[28px]">favorite</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-[28px]">person</span>
+</a>
+</div>
+</nav>
+</body></html>

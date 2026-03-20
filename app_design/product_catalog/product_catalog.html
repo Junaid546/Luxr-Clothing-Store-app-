@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 justify-between border-b border-primary/10">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-primary/10">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
+</button>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Shop</h1>
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-primary/10">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">tune</span>
+</button>
+</header>
+<div class="flex gap-2 p-4 overflow-x-auto no-scrollbar">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-4 text-white">
+<span class="text-sm font-medium">Gold</span>
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/20 px-4 text-primary border border-primary/30">
+<span class="text-sm font-medium">Rings</span>
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/20 px-4 text-primary border border-primary/30">
+<span class="text-sm font-medium">Necklaces</span>
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary/20 px-4 text-primary border border-primary/30">
+<span class="text-sm font-medium">Bracelets</span>
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div class="flex items-center gap-4 px-4 py-2 justify-between">
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium">124 Results</p>
+<button class="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-primary border border-primary/20">
+<span class="text-xs font-semibold uppercase tracking-wider">Sort by: Newest</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<main class="grid grid-cols-2 gap-4 p-4 mb-24">
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Luxury solid gold wedding ring on dark background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBTUFLVKIiIIjYZ6SP1xYWsZ3CvPFoh6679B4rXO-AYs1-o_hU8eCwwI9x2BEMDr1veQ_bYpn9NaHC5rBHRkIAPr6-jWB6xeFgEV7hQtW1e1ewJbjgsWcVpB6Z_ig_m7NLf2e4R7c9ol5BFBMuj3HS1e3ATsuYdjRWNMzZGQcBx0aUoWqHPfPRZGzimNQHm7xqAuEhYPm4LKaD5_Fs1YPE2pOd2nOJJrv-Ta6UTrvhKRQNRxYvwrfBoMEIZRLnX-wX9vZcipg1hC1k");'></div>
+<div class="absolute top-2 left-2 rounded-full bg-teal-500 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-tighter">In Stock</div>
+<button class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-md text-white">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-primary text-xs material-symbols-filled">star</span>
+<span class="text-xs font-semibold text-slate-900 dark:text-slate-100">4.9</span>
+</div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-tight truncate">Luxe Gold Ring</p>
+<p class="text-primary text-sm font-bold mt-1">$850.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Dainty diamond stud earrings on velvet cushion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCOYI1v032bkufXjZlnbINgsQq7GhtVueQzdrhAKHEO4nsIqmHoQ927OkaftsKlrFt2ib7VS-hK_mpIXAncurFU3UqnXaJ88yf3jEt9I2glPk44JftEGbfxhF0TtB3BnSvIqQYOl6Yd-vgNn8Cm-UK-4PsnNjtbNnkVBxVFdZYB9OHdO1wl1UVmC1yzoFKr3UDOhrN1ywAx9hXr2OhF7a4TCSpupi9k2RaidL_y67RsZPcShouo_ZRF0s_qlV4A8-GQ16oAdl0yswI");'></div>
+<div class="absolute top-2 left-2 rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-tighter">Low Stock</div>
+<button class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-md text-white">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-primary text-xs material-symbols-filled">star</span>
+<span class="text-xs font-semibold text-slate-900 dark:text-slate-100">5.0</span>
+</div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-tight truncate">Diamond Studs</p>
+<p class="text-primary text-sm font-bold mt-1">$1,200.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Elegant emerald pendant necklace with gold chain" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdadFYZJdQBCPvq_9Jlw2KTTpa-t5Vys5e1PjpbaEmCbvgGvJmvSxPP3zDp6Q_QPfVXNLtQ_sj69oAz11wBassomdg1k0LoavpQcXRRXK85ArzYGeDz7uBmbTdTnTtKpauvvNp4djg_TLkQA490_BVkaEmaLB0WzwVrEw3Se-FZfz8EPttWi8y9OvtH-ru-rkzK6lgOw7xyi2urbd8x8CSPGjxm3keKSzzynWjuKVtYy8A-8kpMQ5pG-yfIuyOpuA0LaxgfxPpN1s");'></div>
+<div class="absolute top-2 left-2 rounded-full bg-teal-500 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-tighter">In Stock</div>
+<button class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-md text-white">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-primary text-xs material-symbols-filled">star</span>
+<span class="text-xs font-semibold text-slate-900 dark:text-slate-100">4.8</span>
+</div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-tight truncate">Emerald Pendant</p>
+<p class="text-primary text-sm font-bold mt-1">$2,100.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Heavy gold link bracelet for women" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAqUXjq2N-60VrCYQqS8bogcwd-KGi7VszTjquLGLyf37nWtr6ZemO92yo-IHYX5TiMdLBPNvI9K2qgwQ_gGQlZEtvABDHIbSbuO4f__TCzw1gOHa7x2l5vBPyhLNDmWey8kWEAuH9IDsr0UuEoP6waPbSNqofNFw7AlcbvtCXXUsOOixeZ5XsLP2G0WB3sRNfrOSojDl-srsVO12VrPTyHIfrsTDG6zCHyWlt9_EGF6NQWGGer0lYnuYfzzbs2lNJP77PPZEX1kUs");'></div>
+<div class="absolute top-2 left-2 rounded-full bg-teal-500 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-tighter">In Stock</div>
+<button class="absolute top-2 right-2 flex size-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-md text-white">
+<span class="material-symbols-outlined text-lg">favorite</span>
+</button>
+</div>
+<div>
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-primary text-xs material-symbols-filled">star</span>
+<span class="text-xs font-semibold text-slate-900 dark:text-slate-100">4.7</span>
+</div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold leading-tight truncate">Chain Bracelet</p>
+<p class="text-primary text-sm font-bold mt-1">$950.00</p>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 z-20 flex bg-background-light dark:bg-background-dark border-t border-primary/10 px-4 pb-6 pt-2">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined material-symbols-filled">shopping_bag</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Shop</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Cart</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Profile</p>
+</a>
+</nav>
+<div class="fixed inset-0 z-30 bg-black/40 backdrop-blur-sm transition-opacity pointer-events-none opacity-0 group-[.filter-open]:opacity-100 group-[.filter-open]:pointer-events-auto"></div>
+<div class="fixed bottom-0 left-0 right-0 z-40 h-[85vh] rounded-t-xl bg-[#1E1E2A] p-6 shadow-2xl transition-transform translate-y-full transform-gpu group-[.filter-open]:translate-y-0 overflow-y-auto">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-white text-xl font-bold">Filters</h3>
+<button class="text-slate-400 hover:text-white">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<section class="mb-8">
+<h4 class="text-slate-100 text-sm font-bold mb-4 uppercase tracking-widest">Category</h4>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-3 cursor-pointer group/radio">
+<div class="relative flex h-5 w-5 items-center justify-center rounded-full border-2 border-primary/40 group-hover/radio:border-primary">
+<div class="h-2.5 w-2.5 rounded-full bg-primary opacity-100"></div>
+</div>
+<span class="text-slate-100 text-base font-medium">All Jewelry</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/radio">
+<div class="relative flex h-5 w-5 items-center justify-center rounded-full border-2 border-slate-600 group-hover/radio:border-primary"></div>
+<span class="text-slate-400 text-base font-medium">Engagement Rings</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group/radio">
+<div class="relative flex h-5 w-5 items-center justify-center rounded-full border-2 border-slate-600 group-hover/radio:border-primary"></div>
+<span class="text-slate-400 text-base font-medium">Diamond Necklaces</span>
+</label>
+</div>
+</section>
+<section class="mb-8">
+<h4 class="text-slate-100 text-sm font-bold mb-4 uppercase tracking-widest">Size</h4>
+<div class="flex flex-wrap gap-2">
+<button class="h-10 px-6 rounded-full bg-primary text-white text-sm font-bold">5</button>
+<button class="h-10 px-6 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-sm font-bold">6</button>
+<button class="h-10 px-6 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-sm font-bold">7</button>
+<button class="h-10 px-6 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-sm font-bold">8</button>
+<button class="h-10 px-6 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-sm font-bold">9</button>
+</div>
+</section>
+<section class="mb-8">
+<h4 class="text-slate-100 text-sm font-bold mb-4 uppercase tracking-widest">Color Swatch</h4>
+<div class="flex gap-4">
+<button class="size-10 rounded-full border-2 border-primary ring-2 ring-primary/20 bg-[#FFD700]" title="Gold"></button>
+<button class="size-10 rounded-full border-2 border-transparent bg-[#E5E4E2]" title="Silver"></button>
+<button class="size-10 rounded-full border-2 border-transparent bg-[#B76E79]" title="Rose Gold"></button>
+<button class="size-10 rounded-full border-2 border-transparent bg-[#FFFFFF]" title="White Gold"></button>
+</div>
+</section>
+<section class="mb-8">
+<h4 class="text-slate-100 text-sm font-bold mb-6 uppercase tracking-widest">Price Range</h4>
+<div class="relative h-2 w-full rounded-full bg-slate-700">
+<div class="absolute left-1/4 right-1/4 h-full bg-primary"></div>
+<div class="absolute left-1/4 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-slate-900 bg-primary"></div>
+<div class="absolute right-1/4 top-1/2 h-6 w-6 translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-slate-900 bg-primary"></div>
+</div>
+<div class="flex justify-between mt-4">
+<span class="text-slate-400 font-bold">$100</span>
+<span class="text-slate-400 font-bold">$5,000+</span>
+</div>
+</section>
+<div class="sticky bottom-0 bg-[#1E1E2A] pt-4 pb-2 flex gap-4">
+<button class="flex-1 h-14 rounded-full border border-slate-700 text-slate-100 font-bold">Clear All</button>
+<button class="flex-[2] h-14 rounded-full bg-primary text-white font-bold shadow-lg shadow-primary/20">Apply Filters</button>
+</div>
+</div>
+</div>
+</body></html>

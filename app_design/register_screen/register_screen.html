@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#131318",
+                        "card-dark": "#1c1c24",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex flex-col lg:flex-row min-h-screen w-full overflow-x-hidden">
+<!-- Left Section: 40% Moody Photo -->
+<div class="lg:w-[40%] w-full h-64 lg:h-auto relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Moody dark abstract luxury interior with red accents" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAuxH_KF86U_3SjCD54GQGMuVRrYg9K1N70fnuoGqqQYbwvTdI-7u8_camEDayKpI9qHh4iVb3m-FFjWbnDdj0WWCinwlfpTJyDF5cVwVthyHxUgas8I83zdX2qvo-hiZ7gYuh3z6_49KAxFEbz8eRJQ-nQrIBW-w5DJV-IEze_CoIH8MFumsgqLoPNsFroK3xqN356B_zQsLOAGP2homeUiXbWuNah7H7VmVRkDBuuO-HQET_1vrk2LhM5La2lRcp9We_mFJ3ZfHc');">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 via-transparent to-transparent lg:bg-gradient-to-r"></div>
+<div class="absolute bottom-8 left-8 z-10">
+<div class="flex items-center gap-2 mb-2">
+<span class="p-2 bg-primary rounded-lg">
+<span class="material-symbols-outlined text-white">diamond</span>
+</span>
+<span class="text-2xl font-bold tracking-tighter text-white">LUXR</span>
+</div>
+<p class="text-white/70 max-w-xs">Elevating your digital experience to the next level of sophistication.</p>
+</div>
+</div>
+<!-- Right Section: 60% Form Card -->
+<div class="lg:w-[60%] w-full flex items-center justify-center p-6 lg:p-12">
+<div class="w-full max-w-md space-y-8">
+<div class="space-y-2">
+<h1 class="text-4xl font-bold tracking-tight">Create Account</h1>
+<p class="text-slate-500 dark:text-slate-400">Join the elite community of LUXR today.</p>
+</div>
+<form class="space-y-5">
+<!-- Full Name -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium px-1">Full Name</label>
+<input class="w-full h-14 px-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="Alexander Pierce" type="text"/>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium px-1">Email Address</label>
+<input class="w-full h-14 px-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none" placeholder="alex@luxr.io" type="email"/>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium px-1">Password</label>
+<div class="relative">
+<input class="w-full h-14 px-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none pr-12" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer">visibility</span>
+</div>
+<!-- Password Strength Bar -->
+<div class="flex gap-1 mt-1 px-1">
+<div class="h-1.5 flex-1 bg-red-500 rounded-full"></div>
+<div class="h-1.5 flex-1 bg-yellow-500 rounded-full"></div>
+<div class="h-1.5 flex-1 bg-green-500 rounded-full"></div>
+</div>
+<p class="text-[10px] text-slate-500 px-1">Strong password: Mix of letters, numbers &amp; symbols</p>
+</div>
+<!-- Confirm Password -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium px-1">Confirm Password</label>
+<div class="relative">
+<input class="w-full h-14 px-4 rounded-xl border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none pr-12" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 cursor-pointer">visibility</span>
+</div>
+</div>
+<!-- Terms Checkbox -->
+<div class="flex items-start gap-3 px-1 py-2">
+<input class="mt-1 rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" id="terms" type="checkbox"/>
+<label class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" for="terms">
+                            By creating an account, I agree to the <span class="text-primary hover:underline cursor-pointer">Terms of Service</span> and <span class="text-primary hover:underline cursor-pointer">Privacy Policy</span>.
+                        </label>
+</div>
+<!-- CTA Button -->
+<button class="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2">
+                        Create Account
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<!-- Login Link -->
+<p class="text-center text-sm text-slate-500 mt-6">
+                        Already have an account? 
+                        <a class="text-primary font-bold hover:underline" href="#">Sign In</a>
+</p>
+</form>
+</div>
+</div>
+</div>
+</body></html>

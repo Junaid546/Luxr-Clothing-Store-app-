@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;700&amp;family=Playfair+Display:ital,wght@1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "gold": "#d4af37",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>LUXR - Profile</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="relative w-full bg-gradient-to-b from-primary/20 to-background-dark pt-8 pb-12 px-6">
+<div class="flex items-center justify-between mb-8">
+<div class="flex size-10 items-center justify-center rounded-full bg-background-dark/40 backdrop-blur-md border border-white/10">
+<span class="material-symbols-outlined text-slate-100">arrow_back</span>
+</div>
+<h2 class="text-slate-100 text-lg font-bold tracking-tight uppercase tracking-widest">Profile</h2>
+<div class="flex size-10 items-center justify-center rounded-full bg-background-dark/40 backdrop-blur-md border border-white/10">
+<span class="material-symbols-outlined text-slate-100">settings</span>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="relative">
+<div class="size-32 rounded-full p-1 bg-gradient-to-tr from-gold via-primary to-gold">
+<div class="size-full rounded-full border-4 border-background-dark bg-cover bg-center" data-alt="Elegant portrait of a woman for profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAg_UQ63j6mmRpQF7N3cAoRGgHl1rj_CwTPJO7eubvdPzTc3X5GgV0KnMrQ8IfEx7okSdH5v2LHPfzYbMC2H1SGsytNuYcV2-Ls5yw2da1zULopX6Itc8r3k9feT4aXGxf6gD6sR9XPnJnSX5oJzLPlkZBtPpHvdXc0gmzKLPNofv00xVvVs8NAGOJTDhNIOV9FoBFFBhV8S3Obj2_Ju4jn9gTPBc-e1HLBddtMX1HUwHLNE-AReMSVUtuikWGwTuKz-Qm8h6KI33c')">
+</div>
+</div>
+<div class="absolute bottom-1 right-1 size-8 bg-gold rounded-full flex items-center justify-center border-4 border-background-dark">
+<span class="material-symbols-outlined text-[16px] text-background-dark font-bold">edit</span>
+</div>
+</div>
+<div class="mt-4 text-center">
+<h1 class="font-serif italic text-[22px] text-slate-100">Alexandria Moore</h1>
+<p class="text-primary text-sm font-medium mt-1 tracking-widest uppercase">Gold Elite Status</p>
+</div>
+</div>
+</header>
+<section class="px-6 -mt-6">
+<div class="grid grid-cols-3 gap-3 bg-background-dark/60 backdrop-blur-xl border border-white/5 rounded-xl p-4 shadow-2xl">
+<div class="flex flex-col items-center justify-center border-r border-white/10">
+<p class="text-gold text-2xl font-bold font-serif italic leading-tight">12</p>
+<p class="text-slate-400 text-[10px] uppercase tracking-tighter mt-1">Orders</p>
+</div>
+<div class="flex flex-col items-center justify-center border-r border-white/10">
+<p class="text-gold text-2xl font-bold font-serif italic leading-tight">48</p>
+<p class="text-slate-400 text-[10px] uppercase tracking-tighter mt-1">Wishlist</p>
+</div>
+<div class="flex flex-col items-center justify-center">
+<p class="text-gold text-2xl font-bold font-serif italic leading-tight">15</p>
+<p class="text-slate-400 text-[10px] uppercase tracking-tighter mt-1">Reviews</p>
+</div>
+</div>
+</section>
+<main class="flex-1 px-6 py-8">
+<div class="space-y-2">
+<h3 class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-4 ml-2">Personal Management</h3>
+<a class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gold">shopping_bag</span>
+<span class="text-slate-100 font-medium">My Orders</span>
+</div>
+<span class="material-symbols-outlined text-slate-500">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gold">location_on</span>
+<span class="text-slate-100 font-medium">Addresses</span>
+</div>
+<span class="material-symbols-outlined text-slate-500">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gold">payments</span>
+<span class="text-slate-100 font-medium">Payment Methods</span>
+</div>
+<span class="material-symbols-outlined text-slate-500">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gold">notifications</span>
+<span class="text-slate-100 font-medium">Notifications</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="bg-primary size-2 rounded-full"></span>
+<span class="material-symbols-outlined text-slate-500">chevron_right</span>
+</div>
+</a>
+<a class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gold">workspace_premium</span>
+<span class="text-slate-100 font-medium">LUXR Rewards</span>
+</div>
+<span class="material-symbols-outlined text-slate-500">chevron_right</span>
+</a>
+<div class="pt-6 pb-2">
+<h3 class="text-slate-400 text-xs font-bold uppercase tracking-[0.2em] mb-4 ml-2">Support</h3>
+</div>
+<a class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-gold">help</span>
+<span class="text-slate-100 font-medium">Help Center</span>
+</div>
+<span class="material-symbols-outlined text-slate-500">chevron_right</span>
+</a>
+<div class="pt-8">
+<button class="w-full flex items-center justify-center gap-2 p-4 rounded-xl border border-primary/20 bg-primary/10 text-primary font-bold hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined">logout</span>
+                        Sign Out
+                    </button>
+</div>
+</div>
+</main>
+<nav class="sticky bottom-0 z-50 flex border-t border-white/10 bg-background-dark/80 backdrop-blur-xl px-4 pb-6 pt-3">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium tracking-widest uppercase">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<p class="text-[10px] font-medium tracking-widest uppercase">Curated</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">search</span>
+<p class="text-[10px] font-medium tracking-widest uppercase">Search</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<p class="text-[10px] font-medium tracking-widest uppercase">Wishlist</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined font-fill">person</span>
+<p class="text-[10px] font-bold tracking-widest uppercase">Profile</p>
+</a>
+</nav>
+</div>
+</body></html>

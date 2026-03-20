@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "accent-gold": "#d4af37",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#131318",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Epilogue', sans-serif;
+        }
+        .radio-gold:checked {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%23d4af37' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full max-w-md mx-auto flex-col bg-background-light dark:bg-background-dark overflow-x-hidden pb-10">
+<!-- Top Navigation -->
+<div class="flex items-center p-4 pb-2 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center cursor-pointer" data-icon="ArrowLeft">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Checkout</h2>
+</div>
+<!-- Progress Indicator -->
+<div class="flex flex-col gap-3 p-4">
+<div class="flex gap-6 justify-between items-center">
+<p class="text-slate-900 dark:text-slate-100 text-base font-medium">Shipping &amp; Payment</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Step 2 of 3</p>
+</div>
+<div class="rounded-full bg-primary/20 h-2 w-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 66%;"></div>
+</div>
+</div>
+<!-- Progress Dots (Gold Active) -->
+<div class="flex w-full flex-row items-center justify-center gap-4 py-4">
+<div class="h-2.5 w-2.5 rounded-full bg-accent-gold shadow-[0_0_8px_rgba(212,175,55,0.6)]"></div>
+<div class="h-px w-8 bg-accent-gold/30"></div>
+<div class="h-2.5 w-2.5 rounded-full bg-accent-gold shadow-[0_0_8px_rgba(212,175,55,0.6)]"></div>
+<div class="h-px w-8 bg-slate-700"></div>
+<div class="h-2.5 w-2.5 rounded-full bg-slate-700"></div>
+</div>
+<!-- Shipping Address Section -->
+<div class="px-4 pt-4">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold mb-4">Shipping Address</h3>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-4 rounded-xl border-2 border-accent-gold bg-slate-100 dark:bg-[#1c1c24] p-4 cursor-pointer transition-all">
+<div class="flex grow flex-col">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Home</p>
+<span class="material-symbols-outlined text-accent-gold text-sm">home</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-1">123 Luxury Lane, Beverly Hills, CA 90210</p>
+</div>
+<input checked="" class="radio-gold h-5 w-5 border-2 border-accent-gold bg-transparent text-transparent checked:border-accent-gold focus:outline-none focus:ring-0 focus:ring-offset-0" name="address" type="radio"/>
+</label>
+<label class="flex items-center gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-background-dark p-4 cursor-pointer hover:border-accent-gold/50 transition-all">
+<div class="flex grow flex-col">
+<div class="flex justify-between items-start">
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium">Office</p>
+<span class="material-symbols-outlined text-slate-400 text-sm">work</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-1">456 Business Blvd, Downtown, LA 90012</p>
+</div>
+<input class="radio-gold h-5 w-5 border-2 border-slate-700 bg-transparent text-transparent checked:border-accent-gold focus:outline-none focus:ring-0 focus:ring-offset-0" name="address" type="radio"/>
+</label>
+</div>
+</div>
+<!-- Delivery Method -->
+<div class="px-4 pt-8">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold mb-4">Delivery Method</h3>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex flex-col gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-background-dark p-4 cursor-pointer relative">
+<input checked="" class="radio-gold absolute top-4 right-4 h-4 w-4 border-2 border-slate-700 bg-transparent text-transparent checked:border-accent-gold focus:outline-none focus:ring-0" name="delivery" type="radio"/>
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+<div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Standard</p>
+<p class="text-slate-500 dark:text-slate-400 text-[10px]">3-5 Business Days</p>
+</div>
+<p class="text-accent-gold text-xs font-bold mt-1">Free</p>
+</label>
+<label class="flex flex-col gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-background-dark p-4 cursor-pointer relative">
+<input class="radio-gold absolute top-4 right-4 h-4 w-4 border-2 border-slate-700 bg-transparent text-transparent checked:border-accent-gold focus:outline-none focus:ring-0" name="delivery" type="radio"/>
+<span class="material-symbols-outlined text-primary">bolt</span>
+<div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Express</p>
+<p class="text-slate-500 dark:text-slate-400 text-[10px]">Next Day Delivery</p>
+</div>
+<p class="text-accent-gold text-xs font-bold mt-1">$25.00</p>
+</label>
+</div>
+</div>
+<!-- Payment Method -->
+<div class="px-4 pt-8">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold mb-4">Payment Method</h3>
+<div class="flex flex-col gap-3">
+<label class="flex items-center gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-background-dark p-4 cursor-pointer">
+<span class="material-symbols-outlined text-primary">payments</span>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium grow">Cash on Delivery</p>
+<input class="radio-gold h-5 w-5 border-2 border-slate-700 bg-transparent text-transparent checked:border-accent-gold focus:outline-none focus:ring-0" name="payment" type="radio"/>
+</label>
+<label class="flex items-center gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-background-dark p-4 cursor-pointer">
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-medium grow">Online Payment</p>
+<input checked="" class="radio-gold h-5 w-5 border-2 border-slate-700 bg-transparent text-transparent checked:border-accent-gold focus:outline-none focus:ring-0" name="payment" type="radio"/>
+</label>
+</div>
+</div>
+<!-- Order Summary Mini-Card -->
+<div class="px-4 pt-8">
+<div class="rounded-xl bg-slate-100 dark:bg-[#1c1c24] p-4 border border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center mb-3">
+<p class="text-slate-500 dark:text-slate-400 text-sm">Order Summary</p>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">2 Items</p>
+</div>
+<div class="space-y-2 border-t border-slate-200 dark:border-slate-800 pt-3">
+<div class="flex justify-between text-xs">
+<span class="text-slate-500 dark:text-slate-400">Subtotal</span>
+<span class="text-slate-900 dark:text-slate-100">$1,250.00</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-500 dark:text-slate-400">Shipping</span>
+<span class="text-accent-gold">Free</span>
+</div>
+<div class="flex justify-between text-base font-bold mt-2 pt-2 border-t border-dashed border-slate-300 dark:border-slate-700">
+<span class="text-slate-900 dark:text-slate-100">Total</span>
+<span class="text-primary">$1,250.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Place Order Button -->
+<div class="p-4 mt-6">
+<button class="w-full py-4 bg-primary text-white rounded-xl font-bold text-lg shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                Place Order
+            </button>
+<p class="text-center text-[10px] text-slate-500 dark:text-slate-400 mt-4">By placing an order, you agree to LUXR's Terms &amp; Conditions</p>
+</div>
+</div>
+</body></html>

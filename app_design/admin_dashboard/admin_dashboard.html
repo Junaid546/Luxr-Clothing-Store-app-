@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUXR Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "gold": "#D4AF37",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#09090F",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"],
+                        "mono": ["DM Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .gold-gradient-text {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+<!-- Header -->
+<header class="flex items-center justify-between p-6 bg-background-light/50 dark:bg-background-dark/50 sticky top-0 z-10 backdrop-blur-md">
+<div class="flex flex-col">
+<h1 class="text-2xl font-bold tracking-tight">LUXR <span class="text-xs uppercase tracking-[0.3em] font-light text-gold ml-2">Admin</span></h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Welcome back, Director</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 rounded-full bg-slate-200 dark:bg-slate-800">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
+</button>
+<div class="size-10 rounded-full border-2 border-gold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of admin user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDguJEptWtrqTTR0GtEP7phGRlrG0mYiTpqr-SDprkbr-wc5900vlo0Yf9eQGKhApZYdeNNwADK_Cwokyf6ORvRJQzPX2YlAzyaqVuv5FQpdkuC_b8wZ3UeihrnRWgODjfJbktXffGtfhqbijoG_EJzGj2PoXR55ldawbZvSd4nsd8HcgEXgcwOVlC16VRPDn0yw3J_l2WlAtG6plc8WY2hejnmztAqq7dZ8FMWsmpaApG0106RGyGfEWDdRGkNA2Jh2O2Wgfa4I9c"/>
+</div>
+</div>
+</header>
+<!-- Stats Grid (2x2) -->
+<div class="grid grid-cols-2 gap-4 p-4">
+<div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl flex flex-col gap-3">
+<span class="material-symbols-outlined text-gold">payments</span>
+<div>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Total Revenue</p>
+<p class="text-xl font-mono text-gold font-medium leading-tight">$482,900</p>
+<p class="text-[10px] text-green-500 font-medium">+14.2%</p>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl flex flex-col gap-3">
+<span class="material-symbols-outlined text-gold">shopping_bag</span>
+<div>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Total Orders</p>
+<p class="text-xl font-mono text-gold font-medium leading-tight">1,248</p>
+<p class="text-[10px] text-green-500 font-medium">+8.1%</p>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl flex flex-col gap-3">
+<span class="material-symbols-outlined text-gold">group</span>
+<div>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">New Clients</p>
+<p class="text-xl font-mono text-gold font-medium leading-tight">342</p>
+<p class="text-[10px] text-green-500 font-medium">+22.5%</p>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl flex flex-col gap-3">
+<span class="material-symbols-outlined text-gold">trending_up</span>
+<div>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Conversion</p>
+<p class="text-xl font-mono text-gold font-medium leading-tight">4.8%</p>
+<p class="text-[10px] text-red-500 font-medium">-0.4%</p>
+</div>
+</div>
+</div>
+<!-- Sales Chart Section -->
+<div class="p-4">
+<div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Weekly Performance</h3>
+<p class="text-2xl font-bold">$42,000</p>
+</div>
+<div class="flex gap-2">
+<span class="text-xs px-2 py-1 rounded bg-gold/10 text-gold border border-gold/20 font-mono">7D</span>
+<span class="text-xs px-2 py-1 rounded bg-slate-800 text-slate-400 font-mono">30D</span>
+</div>
+</div>
+<div class="relative h-40 w-full">
+<!-- SVG Line Chart -->
+<svg class="w-full h-full overflow-visible" viewbox="0 0 400 150">
+<defs>
+<lineargradient id="goldGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#D4AF37" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#D4AF37" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,120 C50,110 80,40 120,60 C160,80 200,20 250,50 C300,80 350,10 400,30 L400,150 L0,150 Z" fill="url(#goldGradient)"></path>
+<path d="M0,120 C50,110 80,40 120,60 C160,80 200,20 250,50 C300,80 350,10 400,30" fill="none" stroke="#D4AF37" stroke-linecap="round" stroke-width="3"></path>
+<!-- Dots -->
+<circle cx="120" cy="60" fill="#D4AF37" r="4"></circle>
+<circle cx="250" cy="50" fill="#D4AF37" r="4"></circle>
+<circle cx="400" cy="30" fill="#D4AF37" r="4"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-4">
+<span class="text-[10px] font-mono text-slate-500 uppercase">Mon</span>
+<span class="text-[10px] font-mono text-slate-500 uppercase">Wed</span>
+<span class="text-[10px] font-mono text-slate-500 uppercase">Fri</span>
+<span class="text-[10px] font-mono text-slate-500 uppercase">Sun</span>
+</div>
+</div>
+</div>
+<!-- Top Selling - Horizontal Scroll -->
+<div class="py-4">
+<h3 class="px-6 mb-4 text-sm font-bold uppercase tracking-widest text-slate-400">Top Selling Products</h3>
+<div class="flex overflow-x-auto gap-4 px-6 no-scrollbar">
+<!-- Product Card 1 -->
+<div class="flex-none w-48 relative">
+<div class="absolute top-2 left-2 z-10 bg-gold text-slate-900 text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">#1 Rank</div>
+<div class="h-64 rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="Close up of a luxury mechanical watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPhJzIodn-1yLIM0HFpIMKneIOHiXXWHuZINzj_JvULJJRg06GVPTWzxUiyn4iReVHisWDHePraPGfphqKZc4qShrFPcwEvPCTzFU0pycbKr6yoj7dHVXv1FO7VXw33racp8LfCqUINE3bHwMinywkIePMYtbNd96eZl4aYsz-GDJihvI7QQMQd7mqM49lv8Epif3FsYqv2lSL1P1a73IXmsTC_mR9f7DukG0p4fwsykBObomDuyQsE_NGJSZsk1OZuvR0r4j2hH4"/>
+</div>
+<h4 class="font-bold text-sm truncate">Royal Oak Perpetual</h4>
+<p class="text-xs text-gold font-mono">$128,000</p>
+</div>
+<!-- Product Card 2 -->
+<div class="flex-none w-48 relative">
+<div class="absolute top-2 left-2 z-10 bg-slate-300 text-slate-900 text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">#2 Rank</div>
+<div class="h-64 rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="Elegant luxury minimalist gold ring" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAbucSDWH6niog4EW0QCgKbHGqJ5LqVPr4_YQe7rqAKBsNFHFoYNeNpO-RoGQjK9bSIEyYPljReD4pmg3c5x4u7UZ1aaPk2wcS0tQHm9ZjU7PjmGmz9_37Jl_4iLM4VYglVRKYK7oSt_QEWi_AAcgLLTOr0NU-ONTACkrQlcizWM4ucrT7N8jhj-DoVIlWr2nXHFMG0klgvw90TTnjz-HMLtD9YpTW82gPqKtpx9WsecXuvE-hPd_oAQVqiKBauOXNy4wMCBJPRtg"/>
+</div>
+<h4 class="font-bold text-sm truncate">Aurelian Signet Ring</h4>
+<p class="text-xs text-gold font-mono">$4,200</p>
+</div>
+<!-- Product Card 3 -->
+<div class="flex-none w-48 relative">
+<div class="absolute top-2 left-2 z-10 bg-amber-700 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">#3 Rank</div>
+<div class="h-64 rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="Luxury designer leather handbag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_6cThIYXE41t6oQNN_Rrm2ZLmGRiDLMenlVKeldD5JC-MLd4eHGZWOtLAMSLihxD1Ns0c12s4LxNm2PWvtXU0BJPzhfW1Ce4qJM-newHW83SUjPAgSGv-M9qwMGpRFo6Pb4SSkluKTHcPqRCbCbz3EwZK1S6PepsXZLVa3QLIspmts-h01ribuoCMS3yprrClj37gsIb9ourwbOYPxCmW6eKEUiysuY8H63gc-87FK4KrWx4uEL0dK5CKEAWIK98fl9JJVXUBzGw"/>
+</div>
+<h4 class="font-bold text-sm truncate">Nocturne Clutch</h4>
+<p class="text-xs text-gold font-mono">$8,900</p>
+</div>
+</div>
+</div>
+<!-- Recent Orders List (Simple) -->
+<div class="p-4">
+<div class="bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="font-bold text-sm">Recent Activity</h3>
+<button class="text-xs text-primary font-semibold">View All</button>
+</div>
+<div class="divide-y divide-slate-200 dark:divide-slate-800">
+<div class="p-4 flex items-center gap-3">
+<div class="size-10 rounded-full bg-gold/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-gold text-lg">add_shopping_cart</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">New order #8921</p>
+<p class="text-xs text-slate-500">2 minutes ago</p>
+</div>
+<p class="text-sm font-mono text-gold">$2,400</p>
+</div>
+<div class="p-4 flex items-center gap-3">
+<div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-lg">person_add</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">New customer registered</p>
+<p class="text-xs text-slate-500">45 minutes ago</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light dark:bg-[#0F0F1A] border-t border-slate-200 dark:border-slate-800 px-2 py-3 z-50">
+<div class="flex items-center justify-between max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-xl bg-gold text-slate-900 shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+<span class="material-symbols-outlined fill-1">dashboard</span>
+</div>
+<span class="text-[10px] font-bold text-gold uppercase tracking-tighter">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-xl text-slate-400 group-hover:text-gold transition-colors">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="text-[10px] font-medium text-slate-500 uppercase tracking-tighter">Products</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-xl text-slate-400 group-hover:text-gold transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<span class="text-[10px] font-medium text-slate-500 uppercase tracking-tighter">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-xl text-slate-400 group-hover:text-gold transition-colors">
+<span class="material-symbols-outlined">groups</span>
+</div>
+<span class="text-[10px] font-medium text-slate-500 uppercase tracking-tighter">Clients</span>
+</a>
+<a class="flex flex-col items-center gap-1 group" href="#">
+<div class="p-2 rounded-xl text-slate-400 group-hover:text-gold transition-colors">
+<span class="material-symbols-outlined">leaderboard</span>
+</div>
+<span class="text-[10px] font-medium text-slate-500 uppercase tracking-tighter">Analytics</span>
+</a>
+</div>
+</nav>
+</body></html>

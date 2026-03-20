@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Epilogue', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header Section -->
+<header class="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-4 justify-between border-b border-primary/10">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
+</div>
+<div class="flex flex-col items-center">
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Wishlist</h2>
+<span class="text-xs font-medium text-primary uppercase tracking-widest">12 Items</span>
+</div>
+<div class="flex size-10 items-center justify-end">
+<button class="flex items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">search</span>
+</button>
+</div>
+</header>
+<!-- Category Tabs -->
+<div class="sticky top-[72px] z-10 bg-background-light dark:bg-background-dark/95 border-b border-primary/5">
+<div class="flex px-4 gap-6 overflow-x-auto hide-scrollbar">
+<a class="flex flex-col items-center justify-center border-b-2 border-primary text-primary pb-3 pt-4 shrink-0" href="#">
+<p class="text-sm font-bold leading-normal tracking-wide">All Items</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 shrink-0" href="#">
+<p class="text-sm font-medium leading-normal tracking-wide">Apparel</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 shrink-0" href="#">
+<p class="text-sm font-medium leading-normal tracking-wide">Accessories</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-2 border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 shrink-0" href="#">
+<p class="text-sm font-medium leading-normal tracking-wide">Beauty</p>
+</a>
+</div>
+</div>
+<!-- Wishlist Grid -->
+<main class="flex-1 p-4">
+<div class="grid grid-cols-2 gap-4">
+<!-- Product Card 1 -->
+<div class="flex flex-col gap-2 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-primary/5 border border-primary/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Elegant beige silk dress hanging elegantly" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8rwrnYwrdwyB_sELCq3exZUnK5OgVxrDrO8dPHvAVWkB9Efp5xjOQa1GwqcnuXzwXO6fOpFFrdW7jYhwDJz7pDM-cOOkntpjk4TT4Ls7CmgWbBG4_aApzmcrfnTlsIU58RaO5Kgu1Mc_PK1S2MInfjAOGAv69d3hXRuzWTrieQk3MTa-OMoAdW23-PMfVjgQZaD8jKtPIvv4l8MvAF92GYweOJB-dLDcBhezpV8Bx629xuTIbbwvyYEjZcCBYRFOD6PxGtfVhvzQ");'></div>
+<div class="absolute top-3 right-3 z-10">
+<button class="size-8 rounded-full bg-white/90 dark:bg-background-dark/90 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[#FFD700]" style="font-variation-settings: 'FILL' 1">favorite</span>
+</button>
+</div>
+<div class="absolute bottom-3 right-3">
+<div class="bg-primary text-white p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-sm">shopping_bag</span>
+</div>
+</div>
+</div>
+<div class="px-1">
+<p class="text-xs text-primary font-bold uppercase tracking-tighter">New Collection</p>
+<h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-1">Silk Wrap Dress</h3>
+<p class="text-sm font-medium text-slate-500">$320.00</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="flex flex-col gap-2 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-primary/5 border border-primary/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Modern gold hoop earrings display" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDOJnhOqQr-9TPe2Uaq8WpPb0fT-QVi_mSrBQcTCb4h3Q1glsi0weKtFt2fjC1tgrcsFAGADoC48a3V7msmdA7HGIp6FgQcvc2Dp4YWqtSVk747oXe_H2l-BRHYVEbFoimyOo99w4cmJAMP-At3g28ZDiUfukNVsxPP9xUnz-bEAcADLkJk2z_nCQyqAzng_-bpvr6m7OfS_lngb1aqBfg-CCkQkSSZ_ljBqcI4M3nsm7WeWy2sNafNMcKfRKbPfLbICEOio1FWFD8");'></div>
+<div class="absolute top-3 right-3 z-10">
+<button class="size-8 rounded-full bg-white/90 dark:bg-background-dark/90 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[#FFD700]" style="font-variation-settings: 'FILL' 1">favorite</span>
+</button>
+</div>
+</div>
+<div class="px-1">
+<p class="text-xs text-slate-400 font-bold uppercase tracking-tighter">Accessories</p>
+<h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-1">Double Gold Hoops</h3>
+<p class="text-sm font-medium text-slate-500">$185.00</p>
+</div>
+</div>
+<!-- Swipeable Item Concept -->
+<div class="col-span-2 relative mt-2 group overflow-hidden rounded-xl bg-primary/20">
+<!-- Move to Cart Action (Visible on Swipe) -->
+<div class="absolute inset-0 flex items-center justify-end px-6 bg-primary">
+<div class="flex flex-col items-center text-white">
+<span class="material-symbols-outlined text-2xl">shopping_cart_checkout</span>
+<span class="text-[10px] font-bold uppercase tracking-widest mt-1">Move to Cart</span>
+</div>
+</div>
+<!-- Content Layer -->
+<div class="relative bg-background-light dark:bg-background-dark flex items-center gap-4 p-3 translate-x-0 group-hover:-translate-x-24 transition-transform duration-300 border border-primary/10 rounded-xl">
+<div class="bg-center bg-cover rounded-lg w-20 aspect-square shrink-0" data-alt="Luxury leather tote bag in tan" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMIX48OPw1IMvETDKKd3jWCuRk4atX92G5GtMWYElMB64S1bgqW5idS4bLr5oM3e7okU9dO23-GfPAzszXMZ9IhPWH0rO3t9w27U422S9xMsA_lXpEoW5C5CxAFoaO6S_n3QEMwGs5HV5s1E_tME22U9-yFSIluNbpywRJ8lrNGGfsbfXMbuAYyv2GSVgKIvN2VvMakrDT6rTXkeLGj8Y-im3fwjlao2jz15nZ7ZpPMvyEgn32P9n_5ByZ5t83LczdIfYeFJKtbjM");'></div>
+<div class="flex flex-col flex-1">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-xs text-primary font-bold uppercase mb-0.5">Limited Edition</p>
+<h3 class="text-sm font-bold text-slate-900 dark:text-slate-100">Tan Leather Tote</h3>
+</div>
+<span class="material-symbols-outlined text-[#FFD700] text-xl" style="font-variation-settings: 'FILL' 1">favorite</span>
+</div>
+<div class="flex items-center justify-between mt-2">
+<p class="text-sm font-bold text-slate-900 dark:text-slate-100">$1,250</p>
+<div class="flex items-center gap-1 text-[10px] text-slate-400">
+<span class="material-symbols-outlined text-xs">swipe_left</span>
+                                    Swipe to add
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="flex flex-col gap-2 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-primary/5 border border-primary/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="High-end designer sneakers minimalist style" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA_vmGoY9ptzSauKnZk7jAYCdOTfIVIqMyh_OFHRtvFhFYtVVv-TqjRp9WYWaj8v-4RlK-UaoePzxdvSz33dmYOd7Urn2Nu322etXo_e_9YlpNl7Qj7u8PuiT-PgPWaveKVTq9R1NRXaku6yjYLDqRm2WroKVwqgIxDncQVkm6Ynl5fngy3qmNajkaiYSzbEMFdq7xA0Ynlfo4oMijgzXqMB1zb2Gt9Xz1HeUeoppBewvz6rckbKm-Ns6xwH9GkJ8VU9YPpMTSgSLI");'></div>
+<div class="absolute top-3 right-3 z-10">
+<button class="size-8 rounded-full bg-white/90 dark:bg-background-dark/90 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[#FFD700]" style="font-variation-settings: 'FILL' 1">favorite</span>
+</button>
+</div>
+</div>
+<div class="px-1">
+<p class="text-xs text-slate-400 font-bold uppercase tracking-tighter">Footwear</p>
+<h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-1">Vellum Sneakers</h3>
+<p class="text-sm font-medium text-slate-500">$590.00</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="flex flex-col gap-2 group">
+<div class="relative aspect-[3/4] rounded-xl overflow-hidden bg-primary/5 border border-primary/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Cashmere scarf soft texture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDDLLEr5WCy1G_ZqcbLmXPPhuUWFuWnbtDYFdEqEKgeOBSWxLQAA4Hhy3m2HM4ccJlYyGY7rreI2KN5wTRWCF3TkPDgxztRAj_bGhD2W70vFTXZXwi9WXjDXMZ9C6Gh4CNK9vFBQQDtvtEiJUuhuc63q27MULUp1zwDTwrQzJGOuIlQmdeK9Uc03-dD697Cikceul7g0E3gQozrM2GgH5yMVeX8N8E2EUWmWQeBz2IlB1Iw_rEkBz0PMOgdGyul8iZnapVWdTVuSKk");'></div>
+<div class="absolute top-3 right-3 z-10">
+<button class="size-8 rounded-full bg-white/90 dark:bg-background-dark/90 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[#FFD700]" style="font-variation-settings: 'FILL' 1">favorite</span>
+</button>
+</div>
+</div>
+<div class="px-1">
+<p class="text-xs text-slate-400 font-bold uppercase tracking-tighter">Winter Wear</p>
+<h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 line-clamp-1">Cashmere Scarf</h3>
+<p class="text-sm font-medium text-slate-500">$240.00</p>
+</div>
+</div>
+</div>
+<!-- Empty Space at bottom -->
+<div class="h-24"></div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex border-t border-primary/10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-lg px-4 pb-8 pt-3">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">search</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Shop</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">favorite</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Wishlist</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<div class="relative">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 size-4 bg-primary text-[8px] text-white flex items-center justify-center rounded-full font-bold">3</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Cart</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Profile</p>
+</a>
+</nav>
+</div>
+</body></html>

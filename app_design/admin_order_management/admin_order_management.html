@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUXR Admin - Order Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@100..900&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "gold": "#D4AF37",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"],
+                        "mono": ["DM Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 border-b border-primary/10 justify-between sticky top-0 z-20">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">LUXR Management</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-full h-10 w-10 bg-primary/10 text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<nav class="bg-background-light dark:bg-background-dark/50 backdrop-blur-md sticky top-[65px] z-10">
+<div class="flex overflow-x-auto no-scrollbar border-b border-primary/5 px-4 gap-6 items-center">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-gold text-slate-900 dark:text-slate-100 pb-3 pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold tracking-wide">All</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold tracking-wide">Pending</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold tracking-wide">Processing</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold tracking-wide">Shipped</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-4 whitespace-nowrap" href="#">
+<p class="text-sm font-bold tracking-wide">Delivered</p>
+</a>
+</div>
+</nav>
+<main class="flex-1 p-4 space-y-4 pb-32">
+<div class="bg-white dark:bg-primary/5 rounded-xl border border-primary/10 overflow-hidden shadow-sm">
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-mono text-gold font-medium text-lg tracking-wider">#LX-9902</span>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-1">2 mins ago • 2 items</p>
+</div>
+<span class="bg-orange-500/20 text-orange-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest">Pending</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-lg bg-cover bg-center shrink-0" data-alt="Close up of luxury watch face" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD6jLtEx6CvvI99cNF-ttx7R_P0MSDDok3MgbtSxAsPN2TpkDTKuY-OZ5JZpuvSrO4qqbsSIl5I8Ig1Pd_SXM1fGzTm0C8M_9qdie3RujsKWnlieLGHMHZdu6TPjHB7SgYzhM8obr1bQxzbhUMMprar4ZhRQS8K_287bNfe1kJMfGEJ-73Iz8wj6i2Li1n81PNrtpepyTqRVGR8Wch6adSjxepkXrQ4zn6j5gyz8-zlTNzKG4O1pNbLcLenjM4Hp3FWguFet4K98f8')"></div>
+<div class="flex-1 min-w-0">
+<p class="text-slate-900 dark:text-slate-100 font-bold truncate">Midnight Chronograph</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">$2,450.00</p>
+</div>
+<button class="bg-gold text-background-dark font-bold px-4 py-2 rounded-full text-xs shrink-0">Details</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 rounded-xl border border-primary/10 overflow-hidden shadow-sm">
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-mono text-gold font-medium text-lg tracking-wider">#LX-9895</span>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-1">1 hour ago • 1 item</p>
+</div>
+<span class="bg-blue-500/20 text-blue-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest">Processing</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-lg bg-cover bg-center shrink-0" data-alt="Modern minimalist wall clock design" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAy0SILu90-aP-FGUeHgfMD6VJKFPL0kdOWAwWO7H77cEG6Ws77TwMojJEGqdlVkCDJAkV9uyqhC7bHzAlkEx0Syrbyhzsx5MoPLh357R-YrbiMGLZdBCbLa_YwbDygQay_IPywf1-9xOHApBzvoM95qfl-i8GhvgJecYCGAULCWWMQ2SwJu1fZgF0ZPU8Cy_LwA_PqqKS16_P1IDTuD7M5Q6PwuSkPRApWqen7nOnu9C51-dHT1cLbXndaSwFWjufQRVHqUcZ8SIE')"></div>
+<div class="flex-1 min-w-0">
+<p class="text-slate-900 dark:text-slate-100 font-bold truncate">Aether Digital Display</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">$1,200.00</p>
+</div>
+<button class="bg-gold text-background-dark font-bold px-4 py-2 rounded-full text-xs shrink-0">Details</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 rounded-xl border border-primary/10 overflow-hidden shadow-sm">
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-mono text-gold font-medium text-lg tracking-wider">#LX-9888</span>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-1">4 hours ago • 3 items</p>
+</div>
+<span class="bg-purple-500/20 text-purple-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest">Shipped</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-lg bg-cover bg-center shrink-0" data-alt="High-end noise cancelling headphones" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDgVvrf3N4VT6JvDWJwIELCHO0s6loPda7AGyOgvUDTqFszotHBIZSoyEGra7j0J-PyUXGutSPI-lSX4b3lNdIcS4rI6Ul0bE-6QYHUZIz7VHmquCtbyoPQVIxhG7ti64WsHWgmjdUrGKiV_4tBmDsRLTAvDxDkFk29fnWtqmwck1P5SPg5txBLzzpyHTjSsG1ovmnGeEZ3NMATYLHtvfAgaNxZhUEnUs35J1lVVinN1U2znKL0mI6po9EhBL2MeUORvfUaZls0nLo')"></div>
+<div class="flex-1 min-w-0">
+<p class="text-slate-900 dark:text-slate-100 font-bold truncate">Obsidian Audio Pack</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">$3,890.00</p>
+</div>
+<button class="bg-gold text-background-dark font-bold px-4 py-2 rounded-full text-xs shrink-0">Details</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 rounded-xl border border-primary/10 overflow-hidden shadow-sm opacity-80">
+<div class="p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<span class="font-mono text-gold font-medium text-lg tracking-wider">#LX-9872</span>
+<p class="text-slate-500 dark:text-slate-400 text-xs mt-1">Yesterday • 1 item</p>
+</div>
+<span class="bg-green-500/20 text-green-500 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest">Delivered</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="size-16 rounded-lg bg-cover bg-center shrink-0" data-alt="Luxury designer sunglasses" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTe3zMm3Jikn_Sgjp6f_j3LwSGrobpugInYPTK_uJwG_2hKg__8YC7qJP08tAc27iQEYhP-upRfHDXKRZ4jpJVSVFQ__5I_pnVKh0cJ4Vzv-Qf7PoauQfY9u6tppcBQlahSYUNR3ThU_B3I-Ge_1c3peWcjI40ASxROZQCdrbDMYV1VT93Ej_94nr12EkJzMVK10LOgi9hK1bzWYm2NS8BZ-9qQF9SCj-pFyrpOreKVDoRvXSAhUqZ1hHofDi_h_02pLlSQ9VLLeU')"></div>
+<div class="flex-1 min-w-0">
+<p class="text-slate-900 dark:text-slate-100 font-bold truncate">Aurora Optics V2</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">$950.00</p>
+</div>
+<button class="bg-gold text-background-dark font-bold px-4 py-2 rounded-full text-xs shrink-0">Details</button>
+</div>
+</div>
+</div>
+</main>
+<section class="fixed bottom-0 left-0 right-0 z-40 bg-background-light dark:bg-background-dark rounded-t-xl border-t border-primary/20 shadow-2xl">
+<div class="w-12 h-1.5 bg-primary/20 rounded-full mx-auto my-3"></div>
+<div class="px-6 pb-8 pt-2">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-lg font-bold">Order Details</h3>
+<p class="font-mono text-gold text-sm tracking-wider">#LX-9895</p>
+</div>
+<button class="text-slate-400"><span class="material-symbols-outlined">expand_more</span></button>
+</div>
+<div class="relative flex justify-between items-center mb-10 px-4">
+<div class="absolute top-1/2 left-4 right-4 h-0.5 bg-primary/10 -translate-y-1/2 -z-10"></div>
+<div class="absolute top-1/2 left-4 w-1/3 h-0.5 bg-gold -translate-y-1/2 -z-10"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="size-6 rounded-full bg-gold flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-background-dark font-bold">check</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tight text-slate-400">Placed</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="size-6 rounded-full bg-gold flex items-center justify-center ring-4 ring-gold/20">
+<div class="size-2 bg-background-dark rounded-full"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tight text-gold">Processing</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="size-6 rounded-full bg-background-dark border-2 border-primary/20 flex items-center justify-center"></div>
+<span class="text-[10px] font-bold uppercase tracking-tight text-slate-400">Shipped</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="size-6 rounded-full bg-background-dark border-2 border-primary/20 flex items-center justify-center"></div>
+<span class="text-[10px] font-bold uppercase tracking-tight text-slate-400">Delivered</span>
+</div>
+</div>
+<div class="flex gap-4 mb-8">
+<button class="flex-1 bg-primary/10 text-primary py-4 rounded-xl font-bold text-sm">Cancel Order</button>
+<button class="flex-1 bg-gold text-background-dark py-4 rounded-xl font-bold text-sm shadow-lg shadow-gold/20">Update Status</button>
+</div>
+</div>
+<nav class="flex gap-2 border-t border-primary/10 bg-background-light dark:bg-background-dark/80 px-4 pb-6 pt-3">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Orders</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Inventory</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Analytics</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Settings</p>
+</a>
+</nav>
+</section>
+</div>
+</body></html>

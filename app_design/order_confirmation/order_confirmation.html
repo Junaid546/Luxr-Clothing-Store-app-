@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Confirmation | LUXR</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;700&amp;family=Playfair+Display:ital,wght@1,700&amp;family=DM+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#ff6b6b",
+                "background-light": "#f8f5f5",
+                "background-dark": "#230f0f",
+                "muted-gold": "#ce8d8d",
+                "teal-accent": "#2dd4bf"
+              },
+              fontFamily: {
+                "display": ["Epilogue", "sans-serif"],
+                "serif-italic": ["Playfair Display", "serif"],
+                "mono": ["DM Mono", "monospace"]
+              },
+              borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .serif-italic-font { font-family: 'Playfair Display', serif; font-style: italic; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="flex-1 flex flex-col items-center justify-center px-6 py-12">
+<div class="w-full max-w-md text-center space-y-8">
+<div class="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-teal-accent/10">
+<span class="material-symbols-outlined text-teal-accent text-6xl">
+                    check_circle
+                </span>
+</div>
+<div class="space-y-4">
+<h1 class="serif-italic-font text-4xl text-white">Order Placed!</h1>
+<p class="font-mono text-muted-gold text-sm tracking-wider">Order ID: #LX-88291</p>
+</div>
+<div class="bg-primary/5 rounded-xl p-6 border border-primary/10 space-y-4">
+<p class="text-slate-300 text-sm leading-relaxed">
+                    Thank you for your purchase. We've sent a confirmation email to your registered address with the full receipt and tracking details.
+                </p>
+<div class="h-[1px] bg-primary/10 w-full"></div>
+<div class="flex justify-between items-center text-xs uppercase tracking-widest text-muted-gold">
+<span>Est. Delivery</span>
+<span class="text-white font-bold">Oct 24 - Oct 27</span>
+</div>
+</div>
+<div class="space-y-4 pt-4">
+<button class="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-colors">
+                    Track Order
+                </button>
+<button class="w-full py-4 border border-primary/40 text-primary font-bold rounded-xl hover:bg-primary/5 transition-colors">
+                    Continue Shopping
+                </button>
+</div>
+</div>
+</div>
+<div class="w-full max-w-md mx-auto">
+<div class="flex gap-2 border-t border-primary/10 bg-background-dark px-4 pb-8 pt-4">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-muted-gold" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">home</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-muted-gold" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">search</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Shop</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-white" href="#">
+<div class="flex h-10 w-10 items-center justify-center bg-primary rounded-full mb-1">
+<span class="material-symbols-outlined fill-1">shopping_bag</span>
+</div>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-muted-gold" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">favorite</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Saved</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-muted-gold" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Profile</p>
+</a>
+</div>
+</div>
+</body></html>

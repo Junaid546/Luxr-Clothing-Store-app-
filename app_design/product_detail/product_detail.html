@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b", // Coral highlight
+                        "gold": "#d4af37",    // Brand Gold
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#131318",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue", "sans-serif"],
+                        "playfair": ["Playfair Display", "serif"],
+                        "dmsans": ["DM Sans", "sans-serif"],
+                        "dmmono": ["DM Mono", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-gold {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            color: #d4af37;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Full-bleed product image top half -->
+<div class="relative h-[55vh] w-full overflow-hidden">
+<div class="absolute inset-0 bg-center bg-no-repeat bg-cover" data-alt="Luxury fashion silk garment detailed texture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBq8GlxW80H98LyTN5l7VQ48PKdZO7IiYnegmwJie_ciEpHBNYvBC41MNh8YpTnyqWmlxfOvxpwwDb4T9i6-AJb30G7bIeNgRjzp0SPJrYkfEhv2kTvOMVGjrunifa38y7Hu7Pge6igeY2JLrWUqj4OfZH9iNgbaLuawTq3712H5utFQE9XjOzeR1GcN-GxLYQUc78Qjpu3AEb03uNkb5oVQhRwMhcNcBSttgtCwUex6WZHtAJyQLgZvbeTQW8HFx7h7-JjeKjWkJI');">
+</div>
+<!-- Floating Navigation -->
+<div class="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-10">
+<button class="bg-background-dark/30 backdrop-blur-md text-white p-3 rounded-full hover:bg-background-dark/50 transition-colors">
+<span class="material-symbols-outlined block">arrow_back</span>
+</button>
+<button class="bg-background-dark/30 backdrop-blur-md p-3 rounded-full hover:bg-background-dark/50 transition-colors">
+<span class="material-symbols-outlined filled-gold block">favorite</span>
+</button>
+</div>
+<!-- Image Gradient Overlay -->
+<div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background-dark to-transparent"></div>
+</div>
+<!-- Bottom Sheet Content -->
+<div class="relative -mt-10 flex-1 bg-background-dark rounded-t-xl px-6 pt-8 pb-32">
+<!-- Pull Handle -->
+<div class="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/10 rounded-full"></div>
+<!-- Header Info -->
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="font-dmsans text-gold uppercase tracking-[0.2em] text-xs font-bold mb-1 block">LUXR Maison</span>
+<h1 class="font-playfair italic text-3xl text-white leading-tight">Velvet Night Ensemble</h1>
+</div>
+<div class="text-right">
+<div class="font-dmmono text-gold text-2xl font-medium">$1,850.00</div>
+<span class="text-primary text-sm font-bold uppercase tracking-wider">Only 2 left</span>
+</div>
+</div>
+<!-- Selectors -->
+<div class="space-y-6 mb-8">
+<div>
+<span class="text-slate-400 text-xs uppercase tracking-widest font-bold mb-3 block">Select Size</span>
+<div class="flex gap-3">
+<button class="w-12 h-12 rounded flex items-center justify-center border border-white/10 text-white hover:border-gold transition-colors">XS</button>
+<button class="w-12 h-12 rounded flex items-center justify-center border-2 border-gold text-gold font-bold">S</button>
+<button class="w-12 h-12 rounded flex items-center justify-center border border-white/10 text-white hover:border-gold transition-colors">M</button>
+<button class="w-12 h-12 rounded flex items-center justify-center border border-white/10 text-white hover:border-gold transition-colors">L</button>
+</div>
+</div>
+<div>
+<span class="text-slate-400 text-xs uppercase tracking-widest font-bold mb-3 block">Color</span>
+<div class="flex gap-4">
+<div class="p-1 rounded-full border-2 border-gold">
+<div class="w-6 h-6 rounded-full bg-[#1a1a1a]"></div>
+</div>
+<div class="p-1 rounded-full border border-white/10">
+<div class="w-6 h-6 rounded-full bg-[#2c1810]"></div>
+</div>
+<div class="p-1 rounded-full border border-white/10">
+<div class="w-6 h-6 rounded-full bg-[#0d1b2a]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tabs -->
+<div class="border-b border-white/10 flex gap-8 mb-6">
+<button class="pb-3 border-b-2 border-gold text-gold text-sm font-bold uppercase tracking-widest">Description</button>
+<button class="pb-3 text-slate-500 text-sm font-bold uppercase tracking-widest">Reviews (48)</button>
+</div>
+<div class="text-slate-400 leading-relaxed text-sm mb-12">
+                Hand-crafted from premium Italian velvet, this limited edition piece features a tailored silhouette designed to transition seamlessly from high-profile galas to private late-night lounges. Accented with signature gold-toned hardware.
+            </div>
+</div>
+<!-- Action Bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-background-dark/80 backdrop-blur-xl border-t border-white/10 p-4 pb-8 z-20">
+<div class="max-w-screen-xl mx-auto flex gap-4">
+<button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-full uppercase tracking-widest text-sm transition-all shadow-lg shadow-primary/20">
+                    Add to Cart
+                </button>
+<button class="flex-1 border-2 border-gold hover:bg-gold/10 text-gold font-bold py-4 rounded-full uppercase tracking-widest text-sm transition-all">
+                    Buy Now
+                </button>
+</div>
+</div>
+<!-- Component: BottomNavBar (Modified for overlay context) -->
+<div class="fixed bottom-0 left-0 right-0 hidden">
+<!-- Included as per requirements but hidden as the action bar takes priority for checkout -->
+<div class="flex gap-2 border-t border-white/10 bg-background-dark px-4 pb-3 pt-2">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-gold" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">search</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">favorite</span>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+</a>
+</div>
+</div>
+</div>
+</body></html>

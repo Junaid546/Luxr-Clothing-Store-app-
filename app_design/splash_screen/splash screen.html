@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700&amp;family=Playfair+Display:ital,wght@1,400;1,700&amp;family=DM+Sans:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#C9A96E",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#09090F",
+                        "accent-gold": "#C9A96E",
+                        "warm-white": "#FDFBF7",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"],
+                        "playfair": ["'Playfair Display'", "serif"],
+                        "dm-sans": ["'DM Sans'", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .gold-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #C9A96E, transparent);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased">
+<!-- Splash Screen Container -->
+<div class="relative flex h-screen w-full flex-col items-center justify-center bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Decorative Ambient Background Elements -->
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px]"></div>
+<!-- Main Branding Section -->
+<div class="flex flex-col items-center justify-center z-10 w-full max-w-xs">
+<!-- Upper Accent Line -->
+<div class="w-24 gold-line mb-6 opacity-60"></div>
+<!-- Brand Name -->
+<h1 class="text-warm-white font-playfair italic text-[48px] tracking-[0.1em] leading-none mb-4">
+                LUXR
+            </h1>
+<!-- Lower Accent Line -->
+<div class="w-24 gold-line mt-2 mb-6 opacity-60"></div>
+<!-- Subtitle -->
+<p class="text-primary font-dm-sans text-sm tracking-[0.25em] uppercase font-medium opacity-90">
+                Premium Fashion
+            </p>
+</div>
+<!-- Loading Indicator Section -->
+<div class="absolute bottom-16 left-0 right-0 px-12 flex flex-col items-center gap-4">
+<div class="w-full max-w-[200px] h-[1px] bg-primary/20 rounded-full overflow-hidden">
+<!-- Loading Progress -->
+<div class="h-full bg-primary" style="width: 35%;"></div>
+</div>
+<p class="text-primary/60 font-dm-sans text-[10px] tracking-[0.3em] uppercase">
+                Loading Excellence
+            </p>
+</div>
+<!-- Background Image Texture Overlay -->
+<div class="absolute inset-0 pointer-events-none opacity-10 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/dark-leather.png')]" data-alt="Subtle dark leather texture overlay"></div>
+</div>
+</body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add/Edit Product - LUXR</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff6b6b",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .form-input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="%23ff6b6b" viewBox="0 0 256 256"><path d="M181.66,170.34a8,8,0,0,1,0,11.32l-48,48a8,8,0,0,1-11.32,0l-48-48a8,8,0,0,1,11.32-11.32L128,212.69l42.34-42.35A8,8,0,0,1,181.66,170.34Zm-96-84.68L128,43.31l42.34,42.35a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,85.66,85.66Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5rem;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-2xl mx-auto shadow-2xl">
+<!-- Top App Bar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 sticky top-0 z-10">
+<button class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center hover:bg-primary/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold leading-tight tracking-tight flex-1 ml-2">Add New Product</h2>
+<button class="text-primary font-bold text-sm px-4 py-2 hover:bg-primary/10 rounded-full">Preview</button>
+</div>
+<div class="flex flex-col p-4 space-y-6 pb-24">
+<!-- Image Upload Section -->
+<div class="flex flex-col items-center gap-6 rounded-xl border-2 border-dashed border-primary/30 bg-primary/5 px-6 py-12 text-center group cursor-pointer hover:border-primary transition-colors">
+<div class="flex flex-col items-center gap-4">
+<div class="flex size-16 items-center justify-center rounded-full bg-primary/20 text-primary">
+<span class="material-symbols-outlined !text-4xl" style="color: #d4af37;">photo_camera</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-slate-900 dark:text-slate-100 text-lg font-bold">Upload Product Images</p>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Drag and drop or tap to select files</p>
+</div>
+</div>
+<button class="flex min-w-[120px] items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                    Add Images
+                </button>
+</div>
+<!-- Form Fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Product Name -->
+<div class="col-span-full">
+<label class="block group">
+<span class="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1.5 block px-1 group-focus-within:text-primary transition-colors">Product Name</span>
+<input class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border border-primary/20 bg-white dark:bg-primary/10 focus:border-primary h-14 p-4 text-base transition-all" placeholder="e.g. Silk Evening Gown" type="text"/>
+</label>
+</div>
+<!-- Category -->
+<div class="col-span-full">
+<label class="block group">
+<span class="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1.5 block px-1 group-focus-within:text-primary transition-colors">Category</span>
+<select class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border border-primary/20 bg-white dark:bg-primary/10 focus:border-primary h-14 px-4 text-base transition-all">
+<option value="">Select Category</option>
+<option value="dresses">Luxury Dresses</option>
+<option value="accessories">Fine Accessories</option>
+<option value="footwear">Footwear</option>
+</select>
+</label>
+</div>
+<!-- Price -->
+<div>
+<label class="block group">
+<span class="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1.5 block px-1 group-focus-within:text-primary transition-colors">Price ($)</span>
+<input class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border border-primary/20 bg-white dark:bg-primary/10 focus:border-primary h-14 p-4 text-base transition-all" placeholder="0.00" type="number"/>
+</label>
+</div>
+<!-- Discount -->
+<div>
+<label class="block group">
+<span class="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1.5 block px-1 group-focus-within:text-primary transition-colors">Discount (%)</span>
+<input class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border border-primary/20 bg-white dark:bg-primary/10 focus:border-primary h-14 p-4 text-base transition-all" placeholder="0" type="number"/>
+</label>
+</div>
+<!-- Description -->
+<div class="col-span-full">
+<label class="block group">
+<span class="text-slate-600 dark:text-slate-400 text-sm font-medium mb-1.5 block px-1 group-focus-within:text-primary transition-colors">Description</span>
+<textarea class="form-input flex w-full rounded-xl text-slate-900 dark:text-slate-100 border border-primary/20 bg-white dark:bg-primary/10 focus:border-primary min-h-[120px] p-4 text-base transition-all" placeholder="Describe the item's features, material, and condition..."></textarea>
+</label>
+</div>
+</div>
+<!-- Inventory Section -->
+<div class="flex flex-col space-y-4 pt-2">
+<div class="flex items-center justify-between">
+<h3 class="text-slate-900 dark:text-slate-100 text-lg font-bold">Inventory &amp; Sizing</h3>
+<span class="text-primary text-xs font-bold uppercase tracking-widest bg-primary/10 px-3 py-1 rounded-full">In Stock</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<!-- Size S -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-center w-full h-10 rounded-lg bg-primary/20 text-primary font-bold text-sm">S</div>
+<input class="form-input w-full rounded-lg text-center border border-primary/20 bg-white dark:bg-primary/10 h-10 text-sm" placeholder="Qty" type="number" value="0"/>
+</div>
+<!-- Size M -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-center w-full h-10 rounded-lg bg-primary/10 text-slate-600 dark:text-slate-400 font-bold text-sm">M</div>
+<input class="form-input w-full rounded-lg text-center border border-primary/20 bg-white dark:bg-primary/10 h-10 text-sm" placeholder="Qty" type="number" value="0"/>
+</div>
+<!-- Size L -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-center w-full h-10 rounded-lg bg-primary/10 text-slate-600 dark:text-slate-400 font-bold text-sm">L</div>
+<input class="form-input w-full rounded-lg text-center border border-primary/20 bg-white dark:bg-primary/10 h-10 text-sm" placeholder="Qty" type="number" value="0"/>
+</div>
+<!-- Size XL -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-center w-full h-10 rounded-lg bg-primary/10 text-slate-600 dark:text-slate-400 font-bold text-sm">XL</div>
+<input class="form-input w-full rounded-lg text-center border border-primary/20 bg-white dark:bg-primary/10 h-10 text-sm" placeholder="Qty" type="number" value="0"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Action -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md max-w-2xl mx-auto z-20">
+<button class="w-full h-14 bg-primary text-white rounded-full font-bold text-lg shadow-xl shadow-primary/30 hover:brightness-110 active:scale-95 transition-all">
+                Save Product
+            </button>
+</div>
+</div>
+</body></html>
