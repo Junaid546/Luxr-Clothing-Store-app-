@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'route_names.dart';
-import 'customer_shell.dart';
-import 'admin_shell.dart';
-
-// Auth status enum (stub for now)
-enum AuthStatus { loading, authenticated, unauthenticated }
-
-// Auth state provider (stub)
-final authStateProvider = StateProvider<AuthStatus>(
-  (ref) => AuthStatus.unauthenticated,
-);
+import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:style_cart/features/auth/presentation/screens/splash_screen.dart';
+import 'package:style_cart/features/auth/presentation/screens/login_screen.dart';
+import 'package:style_cart/features/auth/presentation/screens/register_screen.dart';
+import 'package:style_cart/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:style_cart/app/router/route_names.dart';
+import 'package:style_cart/app/router/customer_shell.dart';
+import 'package:style_cart/app/router/admin_shell.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -21,27 +18,31 @@ class AppRouter {
   static final navigatorKey = GlobalKey<NavigatorState>();
 }
 
-// Router provider (without code generation)
+// Router provider
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final authState = ref.watch(authStateProvider);
+  final authStatus = ref.watch(authRedirectStatusProvider);
 
   return GoRouter(
     navigatorKey: AppRouter.navigatorKey,
     initialLocation: RouteNames.splash,
-    redirect: (context, state) => _handleRedirect(authState, state),
+    redirect: (context, state) => _handleRedirect(authStatus, state),
     routes: [
       // Auth routes (no shell)
       GoRoute(
         path: RouteNames.splash,
-        builder: (context, state) => const SplashScreenPlaceholder(),
+        builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: RouteNames.login,
-        builder: (context, state) => const LoginScreenPlaceholder(),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: RouteNames.register,
-        builder: (context, state) => const RegisterScreenPlaceholder(),
+        builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.forgotPassword,
+        builder: (context, state) => const ForgotPasswordScreen(),
       ),
 
       // Customer shell routes
@@ -114,23 +115,31 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   );
 });
 
-String? _handleRedirect(AuthStatus authState, GoRouterState state) {
-  final isLoggedIn = authState == AuthStatus.authenticated;
-  final isLoggingIn = state.matchedLocation == RouteNames.login;
-  final isRegistering = state.matchedLocation == RouteNames.register;
-  final isSplash = state.matchedLocation == RouteNames.splash;
+String? _handleRedirect(AuthRedirectStatus status, GoRouterState state) {
+  final isOnAuthRoute = [
+    RouteNames.splash,
+    RouteNames.login,
+    RouteNames.register,
+    RouteNames.forgotPassword,
+  ].contains(state.matchedLocation);
 
-  // Allow splash, login, register without auth
-  if (isSplash || isLoggingIn || isRegistering) {
-    return null;
-  }
-
-  // If not logged in, redirect to login
-  if (!isLoggedIn) {
-    return RouteNames.login;
-  }
-
-  return null;
+  return switch (status) {
+    AuthRedirectStatus.loading => RouteNames.splash,
+    AuthRedirectStatus.unauthenticated =>
+      isOnAuthRoute ? null : RouteNames.login,
+    AuthRedirectStatus.customer =>
+      isOnAuthRoute
+          ? RouteNames.home
+          : state.matchedLocation.startsWith('/admin')
+          ? RouteNames.home
+          : null,
+    AuthRedirectStatus.admin =>
+      isOnAuthRoute
+          ? RouteNames.adminDashboard
+          : !state.matchedLocation.startsWith('/admin')
+          ? RouteNames.adminDashboard
+          : null,
+  };
 }
 
 // Placeholder screens - will be replaced with actual implementations

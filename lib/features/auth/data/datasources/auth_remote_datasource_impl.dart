@@ -4,21 +4,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../../core/constants/firestore_constants.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../models/user_model.dart';
-import 'auth_remote_datasource.dart';
+import 'package:style_cart/core/constants/firestore_constants.dart';
+import 'package:style_cart/core/errors/exceptions.dart';
+import 'package:style_cart/features/auth/data/models/user_model.dart';
+import 'package:style_cart/features/auth/data/datasources/auth_remote_datasource.dart';
 
 /// Implementation of AuthRemoteDataSource using Firebase
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final FirebaseAuth _auth;
-  final FirebaseFirestore _firestore;
-
   const AuthRemoteDataSourceImpl({
     required FirebaseAuth auth,
     required FirebaseFirestore firestore,
   }) : _auth = auth,
        _firestore = firestore;
+  final FirebaseAuth _auth;
+  final FirebaseFirestore _firestore;
 
   // ── Firestore helper ────────────────────────────────────────
   CollectionReference<Map<String, dynamic>> get _usersRef =>
@@ -96,15 +95,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel> signInWithGoogle() async {
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      final googleSignIn = GoogleSignIn();
+      final googleUser = await googleSignIn.signIn();
 
       if (googleUser == null) {
         throw const AuthException('Google sign-in cancelled');
       }
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      final googleAuth = await googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,

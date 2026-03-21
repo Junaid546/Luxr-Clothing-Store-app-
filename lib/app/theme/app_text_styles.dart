@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
+import 'package:style_cart/app/theme/app_colors.dart';
 
 abstract final class AppTextStyles {
   // Display styles

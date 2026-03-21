@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../models/user_model.dart';
+import 'package:style_cart/features/auth/data/models/user_model.dart';
 
 /// Abstract remote data source for authentication operations
 abstract interface class AuthRemoteDataSource {

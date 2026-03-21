@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../theme/app_colors.dart';
-import 'route_names.dart';
-import 'app_router.dart';
+import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:style_cart/app/router/route_names.dart';
+import 'package:style_cart/app/router/app_router.dart';
 
 class CustomerShell extends ConsumerWidget {
-  final Widget child;
   const CustomerShell({required this.child, super.key});
+  final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,7 @@ class CustomerShell extends ConsumerWidget {
     final location = GoRouterState.of(context).matchedLocation;
     final cartCount = ref.watch(cartItemCountProvider);
 
-    int currentIndex = 0;
+    var currentIndex = 0;
     if (location.startsWith('/home')) {
       currentIndex = 0;
     } else if (location.startsWith('/shop')) {
@@ -41,19 +41,14 @@ class CustomerShell extends ConsumerWidget {
         switch (index) {
           case 0:
             context.go(RouteNames.home);
-            break;
           case 1:
             context.go(RouteNames.shop);
-            break;
           case 2:
             context.go(RouteNames.cart);
-            break;
           case 3:
             context.go(RouteNames.wishlist);
-            break;
           case 4:
             context.go(RouteNames.profile);
-            break;
         }
       },
       type: BottomNavigationBarType.fixed,

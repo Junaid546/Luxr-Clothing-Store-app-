@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../../core/constants/firestore_constants.dart';
-import '../../domain/entities/user_entity.dart';
+import 'package:style_cart/core/constants/firestore_constants.dart';
+import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
 
 /// User data model for Firebase Firestore
 /// Extends UserEntity (data layer CAN extend domain)
@@ -10,18 +10,18 @@ class UserModel extends UserEntity {
     required super.uid,
     required super.email,
     required super.displayName,
-    super.photoUrl,
     required super.role,
-    super.fcmToken,
     required super.createdAt,
     required super.totalOrders,
     required super.eliteStatus,
     required super.emailVerified,
+    super.photoUrl,
+    super.fcmToken,
   });
 
   /// Create UserModel from Firestore DocumentSnapshot
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+    final data = doc.data()! as Map<String, dynamic>;
     return UserModel(
       uid: doc.id,
       email: data['email'] as String? ?? '',

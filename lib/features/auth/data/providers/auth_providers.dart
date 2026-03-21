@@ -1,18 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/providers/firebase_providers.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../../domain/usecases/get_auth_state_usecase.dart';
-import '../../domain/usecases/register_with_email_usecase.dart';
-import '../../domain/usecases/send_password_reset_usecase.dart';
-import '../../domain/usecases/sign_in_with_email_usecase.dart';
-import '../../domain/usecases/sign_in_with_email_usecase.dart';
-import '../../domain/usecases/sign_in_with_google_usecase.dart';
-import '../../domain/usecases/sign_out_usecase.dart';
-import '../../domain/usecases/refresh_user_profile_usecase.dart';
-import '../datasources/auth_remote_datasource.dart';
-import '../datasources/auth_remote_datasource_impl.dart';
-import '../repositories/auth_repository_impl.dart';
+import 'package:style_cart/core/providers/firebase_providers.dart';
+import 'package:style_cart/features/auth/domain/repositories/auth_repository.dart';
+import 'package:style_cart/features/auth/domain/usecases/get_auth_state_usecase.dart';
+import 'package:style_cart/features/auth/domain/usecases/register_with_email_usecase.dart';
+import 'package:style_cart/features/auth/domain/usecases/send_password_reset_usecase.dart';
+import 'package:style_cart/features/auth/domain/usecases/sign_in_with_email_usecase.dart';
+import 'package:style_cart/features/auth/domain/usecases/sign_in_with_email_usecase.dart';
+import 'package:style_cart/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
+import 'package:style_cart/features/auth/domain/usecases/sign_out_usecase.dart';
+import 'package:style_cart/features/auth/domain/usecases/refresh_user_profile_usecase.dart';
+import 'package:style_cart/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:style_cart/features/auth/data/datasources/auth_remote_datasource_impl.dart';
+import 'package:style_cart/features/auth/data/repositories/auth_repository_impl.dart';
 
 // ── Data Source Provider ───────────────────────────────────────
 final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {

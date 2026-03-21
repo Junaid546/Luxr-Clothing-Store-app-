@@ -19,10 +19,10 @@ abstract final class Validators {
     if (value.length < 8) {
       return 'Password must be at least 8 characters';
     }
-    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+    if (!RegExp('[A-Z]').hasMatch(value)) {
       return 'Password must contain at least one uppercase letter';
     }
-    if (!RegExp(r'[0-9]').hasMatch(value)) {
+    if (!RegExp('[0-9]').hasMatch(value)) {
       return 'Password must contain at least one number';
     }
     if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {

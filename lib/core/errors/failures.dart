@@ -1,6 +1,6 @@
 sealed class Failure {
-  final String message;
   const Failure(this.message);
+  final String message;
 }
 
 final class ServerFailure extends Failure {

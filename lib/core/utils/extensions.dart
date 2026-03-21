@@ -15,7 +15,7 @@ extension StringExtensions on String {
 
   String get toSlug {
     return toLowerCase()
-        .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
+        .replaceAll(RegExp('[^a-z0-9]+'), '-')
         .replaceAll(RegExp(r'^-|-$'), '');
   }
 }
@@ -24,7 +24,7 @@ extension DoubleExtensions on double {
   String get toCurrencyString {
     final formatter = NumberFormat.currency(
       locale: 'en_US',
-      symbol: '\$',
+      symbol: r'$',
       decimalDigits: 2,
     );
     return formatter.format(this);

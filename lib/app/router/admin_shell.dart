@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../theme/app_colors.dart';
-import 'route_names.dart';
+import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:style_cart/app/router/route_names.dart';
 
 class AdminShell extends ConsumerWidget {
-  final Widget child;
   const AdminShell({required this.child, super.key});
+  final Widget child;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,7 +17,7 @@ class AdminShell extends ConsumerWidget {
   Widget _buildBottomNav(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
 
-    int currentIndex = 0;
+    var currentIndex = 0;
     if (location.startsWith('/admin')) {
       if (location == '/admin') {
         currentIndex = 0;
@@ -36,16 +36,12 @@ class AdminShell extends ConsumerWidget {
         switch (index) {
           case 0:
             context.go(RouteNames.adminDashboard);
-            break;
           case 1:
             context.go(RouteNames.adminProducts);
-            break;
           case 2:
             context.go(RouteNames.adminOrders);
-            break;
           case 3:
             context.go(RouteNames.adminAnalytics);
-            break;
         }
       },
       type: BottomNavigationBarType.fixed,

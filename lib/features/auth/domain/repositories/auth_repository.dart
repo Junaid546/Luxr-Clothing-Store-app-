@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/errors/failures.dart';
-import '../entities/user_entity.dart';
+import 'package:style_cart/core/errors/failures.dart';
+import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
 
 /// Abstract repository interface for authentication operations
 /// Domain layer contract - no implementation details

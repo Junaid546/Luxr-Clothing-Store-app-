@@ -1,16 +1,15 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/failures.dart';
-import '../../domain/entities/user_entity.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../datasources/auth_remote_datasource.dart';
+import 'package:style_cart/core/errors/exceptions.dart';
+import 'package:style_cart/core/errors/failures.dart';
+import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
+import 'package:style_cart/features/auth/domain/repositories/auth_repository.dart';
+import 'package:style_cart/features/auth/data/datasources/auth_remote_datasource.dart';
 
 /// Implementation of AuthRepository
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDataSource _dataSource;
-
   AuthRepositoryImpl(this._dataSource);
+  final AuthRemoteDataSource _dataSource;
 
   // Cached current user (updated on every auth state change)
   UserEntity? _cachedUser;

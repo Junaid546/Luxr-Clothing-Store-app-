@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'app_colors.dart';
-import 'app_dimensions.dart';
-import 'app_text_styles.dart';
+import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:style_cart/app/theme/app_dimensions.dart';
+import 'package:style_cart/app/theme/app_text_styles.dart';
 
 abstract final class AppTheme {
   static ThemeData get darkTheme {
@@ -125,10 +125,10 @@ abstract final class AppTheme {
       ),
 
       // Tab Bar Theme
-      tabBarTheme: TabBarThemeData(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.primary,
         unselectedLabelColor: AppColors.textMuted,
-        indicator: const UnderlineTabIndicator(
+        indicator: UnderlineTabIndicator(
           borderSide: BorderSide(color: AppColors.primary, width: 2),
         ),
         labelStyle: AppTextStyles.labelLarge,
@@ -169,7 +169,6 @@ abstract final class AppTheme {
         error: AppColors.error,
         onPrimary: AppColors.textPrimary,
         onSecondary: AppColors.textPrimary,
-        onSurface: AppColors.textPrimary,
         onError: AppColors.textPrimary,
       ),
     );

@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 abstract final class AppColors {
   // Backgrounds
-  static const Color backgroundDark = Color(0xFF0D0D0D);
+  static const Color backgroundDark = Color(0xFF131318);
+  static const Color backgroundLight = Color(0xFFF8F5F5);
   static const Color backgroundCard = Color(0xFF1A0A0A);
   static const Color backgroundElevated = Color(0xFF1F1010);
+  static const Color inputBg = Color(0xFF1E1E2A);
+  static const Color cardDark = Color(0xFF1C1C24);
 
   // Primary — Salmon/Coral CTA
-  static const Color primary = Color(0xFFE8614A);
-  static const Color primaryLight = Color(0xFFFF7A65);
-  static const Color primaryDark = Color(0xFFC44A35);
+  static const Color primary = Color(0xFFFF6B6B);
+  static const Color primaryLight = Color(0xFFFF8A8A);
+  static const Color primaryDark = Color(0xFFE54B4B);
 
   // Gold accent (admin dashboard, premium badges)
   static const Color gold = Color(0xFFD4AF37);

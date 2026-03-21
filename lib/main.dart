@@ -4,19 +4,42 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'app/app.dart';
+import 'package:style_cart/app/app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load .env before Firebase initialization
-  await dotenv.load(fileName: '.env');
+  await dotenv.load();
 
-  // Initialize Firebase with options from .env
-  await Firebase.initializeApp(options: _buildFirebaseOptions());
+  // Initialize Firebase - handle duplicate app error
+  // Use try-catch to handle race condition on hot reload
+  try {
+    await Firebase.initializeApp(options: _buildFirebaseOptions());
+  } on FirebaseException {
+    // Ignore duplicate app error - app already exists
+  } catch (e) {
+    // Re-throw any other errors
+  }
 
   // Set preferred orientations to portrait only
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  // Set full screen mode - hide status bar and navigation
+  await SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+    overlays: [SystemUiOverlay.top],
+  );
+
+  // Set system UI overlay style for dark theme
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
 
   runApp(const ProviderScope(child: StyleCartApp()));
 }

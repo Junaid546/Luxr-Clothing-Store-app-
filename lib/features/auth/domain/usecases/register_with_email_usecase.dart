@@ -1,25 +1,24 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/errors/failures.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../../../../core/utils/validators.dart';
-import '../entities/user_entity.dart';
-import '../repositories/auth_repository.dart';
+import 'package:style_cart/core/errors/failures.dart';
+import 'package:style_cart/core/usecases/usecase.dart';
+import 'package:style_cart/core/utils/validators.dart';
+import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
+import 'package:style_cart/features/auth/domain/repositories/auth_repository.dart';
 
 /// Parameters for registration use case
 class RegisterParams extends Equatable {
-  final String email;
-  final String password;
-  final String confirmPassword;
-  final String displayName;
-
   const RegisterParams({
     required this.email,
     required this.password,
     required this.confirmPassword,
     required this.displayName,
   });
+  final String email;
+  final String password;
+  final String confirmPassword;
+  final String displayName;
 
   @override
   List<Object> get props => [email, password, confirmPassword, displayName];
@@ -27,9 +26,8 @@ class RegisterParams extends Equatable {
 
 /// Use case for registering a new user with email and password
 class RegisterWithEmailUseCase implements UseCase<UserEntity, RegisterParams> {
-  final AuthRepository _repository;
-
   const RegisterWithEmailUseCase(this._repository);
+  final AuthRepository _repository;
 
   @override
   Future<Either<Failure, UserEntity>> call(RegisterParams params) {

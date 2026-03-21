@@ -1,15 +1,14 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/errors/failures.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../entities/user_entity.dart';
-import '../repositories/auth_repository.dart';
+import 'package:style_cart/core/errors/failures.dart';
+import 'package:style_cart/core/usecases/usecase.dart';
+import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
+import 'package:style_cart/features/auth/domain/repositories/auth_repository.dart';
 
 /// Use case for refreshing user profile from Firestore
 class RefreshUserProfileUseCase implements UseCase<UserEntity, NoParams> {
-  final AuthRepository _repository;
-
   const RefreshUserProfileUseCase(this._repository);
+  final AuthRepository _repository;
 
   @override
   Future<Either<Failure, UserEntity>> call(NoParams params) {

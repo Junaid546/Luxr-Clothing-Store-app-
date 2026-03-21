@@ -25,17 +25,6 @@ extension EliteStatusExtension on int {
 /// User entity representing the authenticated user
 /// Domain layer - pure Dart, no Flutter/Firebase imports
 class UserEntity extends Equatable {
-  final String uid;
-  final String email;
-  final String displayName;
-  final String? photoUrl;
-  final UserRole role;
-  final String? fcmToken;
-  final DateTime createdAt;
-  final int totalOrders;
-  final String eliteStatus;
-  final bool emailVerified;
-
   const UserEntity({
     required this.uid,
     required this.email,
@@ -48,6 +37,16 @@ class UserEntity extends Equatable {
     required this.eliteStatus,
     required this.emailVerified,
   });
+  final String uid;
+  final String email;
+  final String displayName;
+  final String? photoUrl;
+  final UserRole role;
+  final String? fcmToken;
+  final DateTime createdAt;
+  final int totalOrders;
+  final String eliteStatus;
+  final bool emailVerified;
 
   /// Check if user has admin role
   bool get isAdmin => role == UserRole.admin;
