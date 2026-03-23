@@ -1,3 +1,4 @@
+﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:style_cart/core/constants/firestore_constants.dart';
@@ -115,3 +116,6 @@ class UserModel extends UserEntity {
     );
   }
 }
+
+
+

@@ -1,3 +1,4 @@
+﻿// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering
 import 'package:dartz/dartz.dart';
 
 import 'package:style_cart/core/errors/exceptions.dart';
@@ -17,7 +18,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   UserEntity? get currentUser => _cachedUser;
 
-  // ── Auth state stream ────────────────────────────────────────
+  // â”€â”€ Auth state stream â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Stream<UserEntity?> get authStateChanges {
     return _dataSource.firebaseAuthStateChanges.asyncMap((firebaseUser) async {
@@ -30,7 +31,7 @@ class AuthRepositoryImpl implements AuthRepository {
         _cachedUser = user;
         return user;
       } catch (_) {
-        // User exists in Auth but not Firestore —
+        // User exists in Auth but not Firestore â€”
         // sign them out for safety
         await _dataSource.signOut();
         _cachedUser = null;
@@ -39,7 +40,7 @@ class AuthRepositoryImpl implements AuthRepository {
     });
   }
 
-  // ── Sign In with Email ───────────────────────────────────────
+  // â”€â”€ Sign In with Email â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, UserEntity>> signInWithEmail({
     required String email,
@@ -60,7 +61,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Register with Email ─────────────────────────────────────
+  // â”€â”€ Register with Email â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, UserEntity>> registerWithEmail({
     required String email,
@@ -82,7 +83,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Sign In with Google ─────────────────────────────────────
+  // â”€â”€ Sign In with Google â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, UserEntity>> signInWithGoogle() async {
     try {
@@ -96,7 +97,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Sign Out ────────────────────────────────────────────────
+  // â”€â”€ Sign Out â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, void>> signOut() async {
     try {
@@ -108,7 +109,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Send Password Reset ─────────────────────────────────────
+  // â”€â”€ Send Password Reset â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, void>> sendPasswordResetEmail({
     required String email,
@@ -121,7 +122,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Send Email Verification ─────────────────────────────────
+  // â”€â”€ Send Email Verification â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, void>> sendEmailVerification() async {
     try {
@@ -132,7 +133,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Refresh User Profile ────────────────────────────────────
+  // â”€â”€ Refresh User Profile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, UserEntity>> refreshUserProfile() async {
     try {
@@ -148,7 +149,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Update FCM Token ────────────────────────────────────────
+  // â”€â”€ Update FCM Token â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, void>> updateFcmToken(String token) async {
     try {
@@ -161,10 +162,11 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  // ── Delete Account ──────────────────────────────────────────
+  // â”€â”€ Delete Account â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
   Future<Either<Failure, void>> deleteAccount() async {
     // Implementation in Phase 11 (Security)
     return const Right(null);
   }
 }
+

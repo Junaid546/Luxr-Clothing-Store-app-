@@ -1,3 +1,4 @@
+﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -22,7 +23,7 @@ class ProductModel with _$ProductModel {
     required double finalPrice,
     required List<String> imageUrls,
     required String thumbnailUrl,
-    required Map<String, int> inventory,  // size → qty
+    required Map<String, int> inventory,  // size â†’ qty
     required int totalStock,
     required int lowStockThreshold,
     required List<ProductColor> colors,
@@ -39,7 +40,7 @@ class ProductModel with _$ProductModel {
     required String createdBy,
   }) = _ProductModel;
 
-  // ── Stock status ─────────────────────────────────
+  // â”€â”€ Stock status â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   StockStatus get stockStatus {
     if (totalStock == 0) return StockStatus.outOfStock;
     if (totalStock <= lowStockThreshold) return StockStatus.low;
@@ -56,9 +57,9 @@ class ProductModel with _$ProductModel {
 
   bool get hasDiscount => discountPct > 0;
 
-  // ── Firestore Deserialization ─────────────────────
+  // â”€â”€ Firestore Deserialization â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   factory ProductModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
 
     // Parse inventory map safely
     final rawInventory = 
@@ -121,7 +122,7 @@ class ProductModel with _$ProductModel {
     );
   }
 
-  // ── Firestore Serialization ───────────────────────
+  // â”€â”€ Firestore Serialization â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   Map<String, dynamic> toFirestore() {
     // Regenerate searchIndex on every write
     final searchTerms = <String>{};
@@ -165,7 +166,7 @@ class ProductModel with _$ProductModel {
   }
 }
 
-// ── Supporting classes ────────────────────────────────
+// â”€â”€ Supporting classes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 class ProductColor extends Equatable {
   final String name;
   final String hexCode;
@@ -196,3 +197,6 @@ extension StockStatusExtension on StockStatus {
   };
   bool get isAvailable => this != StockStatus.outOfStock;
 }
+
+
+

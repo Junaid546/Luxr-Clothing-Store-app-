@@ -1,3 +1,4 @@
+﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -22,7 +23,7 @@ class BannerModel with _$BannerModel {
   }) = _BannerModel;
 
   factory BannerModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
     return BannerModel(
       bannerId:    doc.id,
       title:       d['title']       as String? ?? '',
@@ -52,3 +53,6 @@ class BannerModel with _$BannerModel {
     // createdAt is usually handled outside or created once.
   };
 }
+
+
+

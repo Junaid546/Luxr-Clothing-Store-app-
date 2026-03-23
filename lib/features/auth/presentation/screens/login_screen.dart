@@ -95,24 +95,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               flex: 4,
               child: Stack(
                 children: [
-                  // Background image (placeholder - using gradient for now)
+                  // Background image - Model photo from assets
+                  // Recommended size: 1920x1080 (16:9 aspect ratio) or 1080x1350 (4:5)
+                  // Use @2x/@3x variants for retina displays (2160x1350 or 3240x2025)
                   Container(
                     width: double.infinity,
+                    height: double.infinity,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.backgroundCard.withValues(alpha: 0.3),
-                          AppColors.backgroundDark.withValues(alpha: 0.8),
-                        ],
-                      ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.checkroom,
-                        size: 80,
-                        color: AppColors.gold,
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/login screen model image.png',
+                        ),
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
                       ),
                     ),
                   ),

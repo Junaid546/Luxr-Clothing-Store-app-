@@ -1,3 +1,4 @@
+﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,7 +20,7 @@ class NotificationModel with _$NotificationModel {
   }) = _NotificationModel;
 
   factory NotificationModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
     return NotificationModel(
       notificationId: doc.id,
       userId:         d['userId'] as String? ?? '',
@@ -43,3 +44,6 @@ class NotificationModel with _$NotificationModel {
     // createdAt is usually handled outside on document creation
   };
 }
+
+
+

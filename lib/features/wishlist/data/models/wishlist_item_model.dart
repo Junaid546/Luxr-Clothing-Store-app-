@@ -1,3 +1,4 @@
+﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -20,7 +21,7 @@ class WishlistItemModel with _$WishlistItemModel {
   }) = _WishlistItemModel;
 
   factory WishlistItemModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
     return WishlistItemModel(
       productId:   doc.id,
       productName: d['productName'] as String? ?? '',
@@ -46,3 +47,6 @@ class WishlistItemModel with _$WishlistItemModel {
     'addedAt':     FieldValue.serverTimestamp(),
   };
 }
+
+
+

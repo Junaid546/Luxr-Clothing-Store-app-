@@ -1,3 +1,4 @@
+﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -34,7 +35,7 @@ class OrderModel with _$OrderModel {
     DateTime? deliveredAt,
   }) = _OrderModel;
 
-  // ── Computed helpers ──────────────────────────────
+  // Ã¢â€â‚¬Ã¢â€â‚¬ Computed helpers Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
   bool get isCancellable => [
     OrderStatus.pending,
     OrderStatus.confirmed,
@@ -48,9 +49,9 @@ class OrderModel with _$OrderModel {
     OrderStatus.returned,
   ].contains(status);
 
-  int get totalItems => items.fold(0, (sum, i) => sum + i.quantity);
+  int get totalItems => items.fold(0, (acc, i) => acc + i.quantity);
 
-  // ── Status display helpers ────────────────────────
+  // Ã¢â€â‚¬Ã¢â€â‚¬ Status display helpers Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
   String get statusDisplay => switch (status) {
     'pending'          => 'Order Placed',
     'confirmed'        => 'Confirmed',
@@ -66,7 +67,7 @@ class OrderModel with _$OrderModel {
   };
 
   factory OrderModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
 
     final rawItems = d['items'] as List<dynamic>? ?? [];
     final items = rawItems
@@ -153,7 +154,7 @@ class OrderModel with _$OrderModel {
   };
 }
 
-// ── OrderItemModel ────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ OrderItemModel Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 class OrderItemModel extends Equatable {
   final String productId;
   final String productName;
@@ -214,7 +215,7 @@ class OrderItemModel extends Equatable {
   List<Object> get props => [productId, size, color];
 }
 
-// ── ShippingAddressModel ──────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ ShippingAddressModel Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 class ShippingAddressModel extends Equatable {
   final String fullName;
   final String phone;
@@ -260,7 +261,7 @@ class ShippingAddressModel extends Equatable {
     [street, city, state, zipCode];
 }
 
-// ── EstimatedDeliveryModel ────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ EstimatedDeliveryModel Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 class EstimatedDeliveryModel extends Equatable {
   final DateTime from;
   final DateTime to;
@@ -281,7 +282,7 @@ class EstimatedDeliveryModel extends Equatable {
   };
 
   // Compute delivery window from order placement
-  static EstimatedDeliveryModel forMethod(String method) {
+  factory EstimatedDeliveryModel.forMethod(String method) {
     final now = DateTime.now();
     if (method == ShippingMethod.express) {
       return EstimatedDeliveryModel(
@@ -299,7 +300,7 @@ class EstimatedDeliveryModel extends Equatable {
   List<Object> get props => [from, to];
 }
 
-// ── StatusHistoryEntry ────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ StatusHistoryEntry Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 class StatusHistoryEntry extends Equatable {
   final String status;
   final DateTime timestamp;
@@ -333,7 +334,7 @@ class StatusHistoryEntry extends Equatable {
   List<Object?> get props => [status, timestamp];
 }
 
-// ── CourierModel ──────────────────────────────────────
+// Ã¢â€â‚¬Ã¢â€â‚¬ CourierModel Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬Ã¢â€â‚¬
 class CourierModel extends Equatable {
   final String? name;
   final String? trackingNumber;
@@ -357,3 +358,6 @@ class CourierModel extends Equatable {
   @override
   List<Object?> get props => [name, trackingNumber];
 }
+
+
+

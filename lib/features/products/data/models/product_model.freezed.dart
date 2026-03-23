@@ -31,7 +31,7 @@ mixin _$ProductModel {
   List<String> get imageUrls => throw _privateConstructorUsedError;
   String get thumbnailUrl => throw _privateConstructorUsedError;
   Map<String, int> get inventory =>
-      throw _privateConstructorUsedError; // size → qty
+      throw _privateConstructorUsedError; // size â†’ qty
   int get totalStock => throw _privateConstructorUsedError;
   int get lowStockThreshold => throw _privateConstructorUsedError;
   List<ProductColor> get colors => throw _privateConstructorUsedError;
@@ -551,7 +551,7 @@ class _$ProductModelImpl extends _ProductModel {
     return EqualUnmodifiableMapView(_inventory);
   }
 
-  // size → qty
+  // size â†’ qty
   @override
   final int totalStock;
   @override
@@ -758,7 +758,7 @@ abstract class _ProductModel extends ProductModel {
   @override
   String get thumbnailUrl;
   @override
-  Map<String, int> get inventory; // size → qty
+  Map<String, int> get inventory; // size â†’ qty
   @override
   int get totalStock;
   @override
