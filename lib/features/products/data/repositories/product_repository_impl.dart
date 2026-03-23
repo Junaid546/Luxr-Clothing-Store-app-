@@ -71,8 +71,7 @@ class ProductRepositoryImpl
     Object? lastDocumentSnapshot,
   }) {
     return safeFirestoreCall(() async {
-      Query<Map<String, dynamic>> query = _ref
-          .where('isActive', isEqualTo: true);
+      Query<Map<String, dynamic>> query = _ref;
 
       // ── Apply filters ─────────────────────────────
       if (filter.category != null) {
@@ -118,6 +117,7 @@ class ProductRepositoryImpl
 
       var products = snapshot.docs
           .map((doc) => ProductModel.fromFirestore(doc).toEntity())
+          .where((p) => p.isActive)
           .toList();
 
       // ── Client-side price range filter ───────────
@@ -185,14 +185,13 @@ class ProductRepositoryImpl
       // Search by first token (Firestore limitation:
       // arrayContains takes 1 value, not array)
       final snapshot = await _ref
-          .where('isActive', isEqualTo: true)
-          .where('searchIndex', 
-                 arrayContains: tokens.first)
+          .where('searchIndex', arrayContains: tokens.first)
           .limit(50)
           .get();
 
       var results = snapshot.docs
           .map((doc) => ProductModel.fromFirestore(doc).toEntity())
+          .where((p) => p.isActive)
           .toList();
 
       // Client-side filter for remaining tokens
@@ -384,7 +383,7 @@ class ProductRepositoryImpl
         (url) => removedImageUrls.contains(url),
       );
       // Delete from Storage (best effort, non-blocking)
-      unawaited(_imageRepo.deleteImages(removedImageUrls).catchError((_) => const Right(null)));
+      unawaited(_imageRepo.deleteImages(removedImageUrls).catchError((_) => const Right<Failure, void>(null)));
     }
 
     if (imageUrls.isEmpty) {
@@ -479,12 +478,12 @@ class ProductRepositoryImpl
   ) {
     return safeFirestoreCall(() async {
       final snapshot = await _ref
-          .where('isActive', isEqualTo: true)
           .where('totalStock', isLessThanOrEqualTo: threshold)
           .orderBy('totalStock')
           .get();
       return snapshot.docs
           .map((doc) => ProductModel.fromFirestore(doc).toEntity())
+          .where((p) => p.isActive)
           .toList();
     });
   }

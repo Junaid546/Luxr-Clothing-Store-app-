@@ -22,74 +22,54 @@ class CustomerShell extends ConsumerWidget {
     final location = GoRouterState.of(context).matchedLocation;
     final cartCount = ref.watch(cartItemCountProvider);
 
-    var currentIndex = 0;
-    if (location.startsWith('/home')) {
-      currentIndex = 0;
-    } else if (location.startsWith('/shop')) {
-      currentIndex = 1;
-    } else if (location.startsWith('/cart')) {
-      currentIndex = 2;
-    } else if (location.startsWith('/wishlist')) {
-      currentIndex = 3;
-    } else if (location.startsWith('/profile')) {
-      currentIndex = 4;
-    }
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.backgroundDark,
+        border: Border(top: BorderSide(color: Color(0x1AFFFFFF))),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      child: SafeArea(
+        top: false,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildNavItem(context, Icons.home_outlined, Icons.home, 0, location.startsWith('/home')),
+            _buildNavItem(context, Icons.search_outlined, Icons.search, 1, location.startsWith('/shop')),
+            _buildNavItem(context, Icons.shopping_bag_outlined, Icons.shopping_bag, 2, location.startsWith('/cart'), badgeCount: cartCount),
+            _buildNavItem(context, Icons.favorite_outline, Icons.favorite, 3, location.startsWith('/wishlist')),
+            _buildNavItem(context, Icons.person_outline, Icons.person, 4, location.startsWith('/profile')),
+          ],
+        ),
+      ),
+    );
+  }
 
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) {
+  Widget _buildNavItem(BuildContext context, IconData icon, IconData activeIcon, int index, bool isActive, {int badgeCount = 0}) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
         switch (index) {
-          case 0:
-            context.go(RouteNames.home);
-          case 1:
-            context.go(RouteNames.shop);
-          case 2:
-            context.go(RouteNames.cart);
-          case 3:
-            context.go(RouteNames.wishlist);
-          case 4:
-            context.go(RouteNames.profile);
+          case 0: context.go(RouteNames.home);
+          case 1: context.go(RouteNames.shop);
+          case 2: context.go(RouteNames.cart);
+          case 3: context.go(RouteNames.wishlist);
+          case 4: context.go(RouteNames.profile);
         }
       },
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: AppColors.backgroundCard,
-      selectedItemColor: AppColors.primary,
-      unselectedItemColor: AppColors.textMuted,
-      items: [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          activeIcon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_bag_outlined),
-          activeIcon: Icon(Icons.shopping_bag),
-          label: 'Shop',
-        ),
-        BottomNavigationBarItem(
-          icon: Badge(
-            isLabelVisible: cartCount > 0,
-            label: Text('$cartCount'),
-            child: const Icon(Icons.shopping_cart_outlined),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Badge(
+            isLabelVisible: badgeCount > 0,
+            label: Text('$badgeCount'),
+            child: Icon(
+              isActive ? activeIcon : icon,
+              color: isActive ? AppColors.primary : AppColors.textMuted,
+              size: 28,
+            ),
           ),
-          activeIcon: Badge(
-            isLabelVisible: cartCount > 0,
-            label: Text('$cartCount'),
-            child: const Icon(Icons.shopping_cart),
-          ),
-          label: 'Cart',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_outline),
-          activeIcon: Icon(Icons.favorite),
-          label: 'Wishlist',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

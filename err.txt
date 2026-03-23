@@ -1,0 +1,670 @@
+﻿Analyzing luxr_clothing...                                      
+
+   info - Missing documentation for a public member - lib\app\app.dart:7:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\app.dart:8:9 - public_member_api_docs
+   info - Sort directive sections alphabetically - lib\app\router\admin_shell.dart:3:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\admin_shell.dart:6:1 - directives_ordering
+   info - Missing documentation for a public member - lib\app\router\admin_shell.dart:8:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\admin_shell.dart:9:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\admin_shell.dart:10:16 - public_member_api_docs
+   info - Sort directive sections alphabetically - lib\app\router\app_router.dart:3:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\app_router.dart:7:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\app_router.dart:9:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\app_router.dart:10:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\app_router.dart:11:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\app_router.dart:12:1 - directives_ordering
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:15:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:17:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:18:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:22:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:146:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:147:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:155:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:156:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:164:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:165:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:173:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:174:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:182:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:183:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:191:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:192:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:200:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:201:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:209:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:210:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:218:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:219:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:227:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:228:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:236:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:237:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:245:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\app_router.dart:246:9 - public_member_api_docs
+   info - Sort directive sections alphabetically - lib\app\router\customer_shell.dart:3:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\customer_shell.dart:6:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\app\router\customer_shell.dart:7:1 - directives_ordering
+   info - Missing documentation for a public member - lib\app\router\customer_shell.dart:9:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\customer_shell.dart:10:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\customer_shell.dart:11:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:1:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:3:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:4:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:5:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:6:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:9:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:10:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:11:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:12:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:13:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:14:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:17:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:18:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:19:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:20:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:23:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:24:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:25:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:26:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:27:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:28:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\router\route_names.dart:29:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:3:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:5:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:6:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:7:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:8:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:9:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:10:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:13:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:14:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:15:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:18:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:19:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:22:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:23:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:24:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:27:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:28:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:29:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:30:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:31:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:32:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:33:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:36:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:37:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_colors.dart:38:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:1:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:3:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:4:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:5:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:6:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:7:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:8:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:9:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:10:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:11:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:14:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:15:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:16:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:17:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:18:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:19:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:20:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:23:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:24:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:25:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_dimensions.dart:26:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:5:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:7:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:14:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:22:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:28:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:35:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:41:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:48:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:54:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:60:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:67:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:73:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:79:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:87:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_text_styles.dart:93:26 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_theme.dart:7:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\app\theme\app_theme.dart:8:24 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:1:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:3:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:4:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:5:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:6:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:7:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:8:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:9:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:10:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:11:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:12:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:15:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:16:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:17:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:18:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:19:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:20:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:21:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:22:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:23:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:24:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:25:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:26:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:27:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:28:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:31:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:32:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:33:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:34:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:35:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:36:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:37:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:38:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:39:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:40:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:41:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:42:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:43:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:44:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:45:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:48:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:49:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:50:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:51:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:52:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:53:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:54:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:55:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:56:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:57:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:58:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:59:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:60:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_constants.dart:61:23 - public_member_api_docs
+   info - Dangling library doc comment - lib\core\constants\firestore_schema.dart:1:1 - dangling_library_doc_comments
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:487:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:490:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:491:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:492:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:493:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:494:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:495:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:496:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:497:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:498:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:499:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:502:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:503:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:504:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:507:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:508:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:509:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:510:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:511:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:512:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:513:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:514:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:515:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:516:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:517:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:518:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:519:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:520:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:523:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:524:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:527:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:528:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:529:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:530:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:531:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:532:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:533:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:534:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:535:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:536:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:537:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:540:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:541:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:542:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:543:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:544:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:545:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:546:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:547:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:548:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:549:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:550:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:553:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:554:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:555:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:558:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:559:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:560:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:563:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:564:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:567:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:568:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:569:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:570:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:571:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:572:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:573:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:574:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:575:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:576:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:577:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:578:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:579:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:580:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:581:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:584:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:585:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:586:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:587:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:588:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:589:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:590:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:591:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:592:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:593:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:596:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:597:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:598:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:599:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:600:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:601:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:602:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:603:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:604:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:605:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:606:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:607:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:608:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:611:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:612:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:613:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:614:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:615:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:616:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:617:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:618:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:619:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:622:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:623:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:624:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:625:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:626:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:627:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:628:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:629:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:630:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:631:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:632:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:633:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:636:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:637:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:638:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:639:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:640:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:641:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:642:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:643:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:644:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:647:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:648:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:649:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:652:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:653:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:654:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:655:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:656:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:657:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:658:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:659:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:660:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:661:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:662:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:665:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:666:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:667:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:671:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:672:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:673:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:674:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:675:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:676:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:677:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:678:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:679:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:680:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:681:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:684:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:685:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:686:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:689:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:690:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:691:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:692:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:695:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:696:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:697:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:700:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:701:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:702:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:703:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:704:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:707:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:708:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:709:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:710:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:711:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:714:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:715:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:716:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:717:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:718:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:719:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:720:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:721:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:722:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:724:29 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:730:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:731:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:732:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:733:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:734:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:735:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:736:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:737:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:739:29 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\constants\firestore_schema.dart:740:29 - public_member_api_docs
+   info - Constructor declarations should be before non-constructor declarations - lib\core\data\firestore_base_repository.dart:10:9 - sort_constructors_first
+warning - The type of 'error' can't be inferred; a type must be explicitly provided - lib\core\data\firestore_base_repository.dart:42:8 - inference_failure_on_untyped_parameter
+warning - The type argument(s) of the constructor 'Left' can't be inferred - lib\core\data\firestore_base_repository.dart:42:18 - inference_failure_on_instance_creation
+   info - Closure should be a tearoff - lib\core\data\firestore_base_repository.dart:45:11 - unnecessary_lambdas
+   info - Missing a newline at the end of the file - lib\core\data\firestore_base_repository.dart:47:2 - eol_at_end_of_file
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:1:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:2:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:3:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:6:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:7:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:8:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:11:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:12:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:13:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:16:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:17:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:18:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:21:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:22:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:23:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:26:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:27:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:28:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:31:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:32:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:33:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:36:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:37:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\exceptions.dart:38:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:1:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:3:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:6:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:7:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:10:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:11:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:14:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:15:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:18:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:19:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:22:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:23:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:26:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:27:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:30:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:31:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:34:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\errors\failures.dart:35:9 - public_member_api_docs
+   info - Missing a newline at the end of the file - lib\core\providers\firebase_providers.dart:22:3 - eol_at_end_of_file
+   info - Missing documentation for a public member - lib\core\usecases\usecase.dart:6:26 - public_member_api_docs
+   info - Unnecessary use of an abstract class - lib\core\usecases\usecase.dart:6:26 - one_member_abstracts
+   info - The type parameter name 'Type' matches a visible type name - lib\core\usecases\usecase.dart:6:34 - avoid_types_as_parameter_names
+   info - Missing documentation for a public member - lib\core\usecases\usecase.dart:7:33 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\usecases\usecase.dart:10:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:3:11 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:4:12 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:11:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:16:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:23:11 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:24:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:34:11 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:35:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:39:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:46:11 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\extensions.dart:47:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:1:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:2:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:15:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:34:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:44:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:55:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:69:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\core\utils\validators.dart:83:18 - public_member_api_docs
+   info - Sort directive sections alphabetically - lib\features\auth\data\datasources\auth_remote_datasource_impl.dart:10:1 - directives_ordering
+   info - Missing documentation for a public member - lib\features\auth\data\datasources\auth_remote_datasource_impl.dart:14:9 - public_member_api_docs
+   info - Missing a newline at the end of the file - lib\features\auth\data\models\user_model.dart:118:2 - eol_at_end_of_file
+warning - Duplicate import - lib\features\auth\data\providers\auth_providers.dart:9:8 - duplicate_import
+   info - Sort directive sections alphabetically - lib\features\auth\data\providers\auth_providers.dart:12:1 - directives_ordering
+warning - Unused import: 'package:style_cart/features/auth/domain/usecases/refresh_user_profile_usecase.dart' - lib\features\auth\data\providers\auth_providers.dart:12:8 - unused_import
+   info - Sort directive sections alphabetically - lib\features\auth\data\providers\auth_providers.dart:13:1 - directives_ordering
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:18:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:26:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:31:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:35:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:41:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:47:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:51:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:57:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:63:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\data\providers\auth_providers.dart:70:7 - public_member_api_docs
+   info - Missing a newline at the end of the file - lib\features\auth\data\repositories\auth_repository_impl.dart:171:2 - eol_at_end_of_file
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:4:17 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:4:24 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:8:19 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:12:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:17:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:28:9 - public_member_api_docs
+   info - Required named parameters should be before optional named parameters - lib\features\auth\domain\entities\user_entity.dart:33:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\auth\domain\entities\user_entity.dart:35:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\auth\domain\entities\user_entity.dart:36:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\auth\domain\entities\user_entity.dart:37:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\auth\domain\entities\user_entity.dart:38:19 - always_put_required_named_parameters_first
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:40:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:41:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:42:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:43:17 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:44:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:45:17 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:46:18 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:47:13 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:48:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\entities\user_entity.dart:49:14 - public_member_api_docs
+   info - Missing a newline at the end of the file - lib\features\auth\domain\repositories\auth_repository.dart:49:2 - eol_at_end_of_file
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\get_auth_state_usecase.dart:7:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\refresh_user_profile_usecase.dart:10:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\register_with_email_usecase.dart:12:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\register_with_email_usecase.dart:18:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\register_with_email_usecase.dart:19:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\register_with_email_usecase.dart:20:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\register_with_email_usecase.dart:21:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\register_with_email_usecase.dart:29:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\send_password_reset_usecase.dart:11:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\send_password_reset_usecase.dart:12:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\send_password_reset_usecase.dart:20:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\sign_in_with_email_usecase.dart:12:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\sign_in_with_email_usecase.dart:13:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\sign_in_with_email_usecase.dart:14:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\sign_in_with_email_usecase.dart:23:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\sign_in_with_google_usecase.dart:11:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\domain\usecases\sign_out_usecase.dart:9:9 - public_member_api_docs
+warning - Unused import: 'package:style_cart/features/auth/domain/usecases/sign_in_with_google_usecase.dart' - lib\features\auth\presentation\providers\auth_state_notifier.dart:9:8 - unused_import
+warning - Unused import: 'package:style_cart/features/auth/domain/usecases/sign_out_usecase.dart' - lib\features\auth\presentation\providers\auth_state_notifier.dart:10:8 - unused_import
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:13:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:17:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:18:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:21:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:22:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:25:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:26:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:27:20 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:30:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:31:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:34:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:35:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:36:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:40:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:41:3 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:58:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:73:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:97:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:109:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:119:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:137:19 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:146:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:153:6 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:153:27 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:153:36 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:153:46 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:153:53 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\providers\auth_state_notifier.dart:155:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\forgot_password_screen.dart:11:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\forgot_password_screen.dart:12:9 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\login_screen.dart:10:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\login_screen.dart:11:9 - public_member_api_docs
+   info - The line length exceeds the 80-character limit - lib\features\auth\presentation\screens\login_screen.dart:99:81 - lines_longer_than_80_chars
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\login_screen.dart:104:33 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\login_screen.dart:105:30 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\login_screen.dart:106:32 - prefer_const_constructors
+warning - The value of the local variable 'isFocused' isn't used - lib\features\auth\presentation\screens\login_screen.dart:422:11 - unused_local_variable
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\register_screen.dart:10:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\register_screen.dart:11:9 - public_member_api_docs
+   info - The line length exceeds the 80-character limit - lib\features\auth\presentation\screens\register_screen.dart:95:81 - lines_longer_than_80_chars
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\register_screen.dart:99:33 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\register_screen.dart:100:30 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\register_screen.dart:101:32 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\register_screen.dart:105:36 - prefer_const_constructors
+   info - The line length exceeds the 80-character limit - lib\features\auth\presentation\screens\register_screen.dart:157:81 - lines_longer_than_80_chars
+   info - The line length exceeds the 80-character limit - lib\features\auth\presentation\screens\register_screen.dart:167:81 - lines_longer_than_80_chars
+   info - The line length exceeds the 80-character limit - lib\features\auth\presentation\screens\register_screen.dart:369:81 - lines_longer_than_80_chars
+   info - Use 'package:' imports for files in the 'lib' directory - lib\features\auth\presentation\screens\splash_screen.dart:5:8 - always_use_package_imports
+   info - Use 'package:' imports for files in the 'lib' directory - lib\features\auth\presentation\screens\splash_screen.dart:6:8 - always_use_package_imports
+   info - Use 'package:' imports for files in the 'lib' directory - lib\features\auth\presentation\screens\splash_screen.dart:7:8 - always_use_package_imports
+   info - Use 'package:' imports for files in the 'lib' directory - lib\features\auth\presentation\screens\splash_screen.dart:8:8 - always_use_package_imports
+   info - Use 'package:' imports for files in the 'lib' directory - lib\features\auth\presentation\screens\splash_screen.dart:9:8 - always_use_package_imports
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\splash_screen.dart:11:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\screens\splash_screen.dart:12:9 - public_member_api_docs
+   info - Unnecessary use of a 'double' literal - lib\features\auth\presentation\screens\splash_screen.dart:32:43 - prefer_int_literals
+   info - Unnecessary use of a 'double' literal - lib\features\auth\presentation\screens\splash_screen.dart:32:53 - prefer_int_literals
+   info - Unnecessary use of a 'double' literal - lib\features\auth\presentation\screens\splash_screen.dart:35:31 - prefer_int_literals
+   info - Unnecessary use of a 'double' literal - lib\features\auth\presentation\screens\splash_screen.dart:39:54 - prefer_int_literals
+   info - Unnecessary use of a 'double' literal - lib\features\auth\presentation\screens\splash_screen.dart:42:31 - prefer_int_literals
+   info - The value of the argument is redundant because it matches the default value - lib\features\auth\presentation\screens\splash_screen.dart:96:33 - avoid_redundant_argument_values
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\splash_screen.dart:123:23 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\splash_screen.dart:125:32 - prefer_const_constructors
+   info - The value of the argument is redundant because it matches the default value - lib\features\auth\presentation\screens\splash_screen.dart:163:34 - avoid_redundant_argument_values
+   info - Use 'const' with the constructor to improve performance - lib\features\auth\presentation\screens\splash_screen.dart:175:29 - prefer_const_constructors
+   info - Missing documentation for a public member - lib\features\auth\presentation\widgets\password_strength_indicator.dart:6:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\features\auth\presentation\widgets\password_strength_indicator.dart:9:9 - public_member_api_docs
+   info - Required named parameters should be before optional named parameters - lib\features\auth\presentation\widgets\password_strength_indicator.dart:9:61 - always_put_required_named_parameters_first
+   info - Missing documentation for a public member - lib\features\auth\presentation\widgets\password_strength_indicator.dart:10:13 - public_member_api_docs
+   info - Missing a newline at the end of the file - lib\features\cart\data\models\cart_item_model.dart:73:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\cart\data\repositories\cart_repository_impl.dart:119:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\cart\domain\repositories\cart_repository.dart:14:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\home\data\models\banner_model.dart:55:2 - eol_at_end_of_file
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\home\presentation\providers\home_providers.dart:1:1 - document_ignores
+warning - Unused import: 'package:cloud_firestore/cloud_firestore.dart' - lib\features\home\presentation\providers\home_providers.dart:3:8 - unused_import
+warning - Unused import: 'package:style_cart/features/products/domain/usecases/get_low_stock_products_usecase.dart' - lib\features\home\presentation\providers\home_providers.dart:12:8 - unused_import
+   info - The value of the argument is redundant because it matches the default value - lib\features\home\presentation\providers\home_providers.dart:43:19 - avoid_redundant_argument_values
+   info - Catch clause should use 'on' to specify the type of exception being caught - lib\features\home\presentation\providers\home_providers.dart:89:5 - avoid_catches_without_on_clauses
+   info - Missing a newline at the end of the file - lib\features\notifications\data\models\notification_model.dart:46:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\orders\data\models\order_model.dart:360:2 - eol_at_end_of_file
+warning - The method doesn't override an inherited method - lib\features\orders\data\repositories\order_repository_impl.dart:148:45 - override_on_non_overriding_member
+   info - Missing a newline at the end of the file - lib\features\orders\data\repositories\order_repository_impl.dart:194:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\orders\domain\repositories\order_repository.dart:25:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\products\data\models\product_model.dart:199:2 - eol_at_end_of_file
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\data\repositories\image_repository_impl.dart:14:9 - sort_constructors_first
+   info - Catch clause should use 'on' to specify the type of exception being caught - lib\features\products\data\repositories\image_repository_impl.dart:77:7 - avoid_catches_without_on_clauses
+   info - Unnecessary type annotation on a local variable - lib\features\products\data\repositories\image_repository_impl.dart:101:10 - omit_local_variable_types
+   info - Missing an 'await' for the 'Future' computed by this expression - lib\features\products\data\repositories\image_repository_impl.dart:108:14 - unawaited_futures
+warning - The type argument(s) of the constructor 'Left' can't be inferred - lib\features\products\data\repositories\image_repository_impl.dart:114:18 - inference_failure_on_instance_creation
+   info - The line length exceeds the 80-character limit - lib\features\products\data\repositories\image_repository_impl.dart:124:81 - lines_longer_than_80_chars
+   info - Closure should be a tearoff - lib\features\products\data\repositories\image_repository_impl.dart:162:9 - unnecessary_lambdas
+   info - Closure should be a tearoff - lib\features\products\data\repositories\product_repository_impl.dart:213:39 - unnecessary_lambdas
+   info - Local variables should be final - lib\features\products\data\repositories\product_repository_impl.dart:365:5 - prefer_final_locals
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\presentation\providers\product_detail_notifier.dart:1:1 - document_ignores
+warning - The generic type 'StreamSubscription<dynamic>?' should have explicit type arguments but doesn't - lib\features\products\presentation\providers\product_detail_notifier.dart:31:3 - strict_raw_type
+   info - Use an if-null operator to convert a 'null' to a 'bool' - lib\features\products\presentation\providers\product_detail_notifier.dart:83:9 - use_if_null_to_convert_nulls_to_bools
+   info - 'bool' parameters should be named parameters - lib\features\products\presentation\providers\product_detail_notifier.dart:109:22 - avoid_positional_boolean_parameters
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\presentation\providers\product_list_notifier.dart:1:1 - document_ignores
+   info - The value of the argument is redundant because it matches the default value - lib\features\products\presentation\providers\product_list_notifier.dart:35:5 - avoid_redundant_argument_values
+   info - The value of the argument is redundant because it matches the default value - lib\features\products\presentation\providers\product_list_notifier.dart:35:37 - avoid_redundant_argument_values
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\presentation\providers\search_notifier.dart:1:1 - document_ignores
+   info - Unnecessary duplication of receiver - lib\features\products\presentation\providers\search_notifier.dart:81:5 - cascade_invocations
+   info - Unnecessary duplication of receiver - lib\features\products\presentation\providers\search_notifier.dart:82:5 - cascade_invocations
+   info - Missing a newline at the end of the file - lib\features\wishlist\data\models\wishlist_item_model.dart:49:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\wishlist\data\repositories\wishlist_repository_impl.dart:108:2 - eol_at_end_of_file
+   info - Missing a newline at the end of the file - lib\features\wishlist\domain\repositories\wishlist_repository.dart:13:2 - eol_at_end_of_file
+   info - Sort directive sections alphabetically - lib\main.dart:4:1 - directives_ordering
+   info - Sort directive sections alphabetically - lib\main.dart:5:1 - directives_ordering
+   info - Catch clause should use 'on' to specify the type of exception being caught - lib\main.dart:21:5 - avoid_catches_without_on_clauses
+   info - The line length exceeds the 80-character limit - lib\shared\widgets\cards\product_card_widget.dart:5:81 - lines_longer_than_80_chars
+   info - Sort directive sections alphabetically - lib\shared\widgets\cards\product_card_widget.dart:7:1 - directives_ordering
+warning - Unused import: 'package:style_cart/core/utils/extensions.dart' - lib\shared\widgets\cards\product_card_widget.dart:8:8 - unused_import
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_card_widget.dart:11:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_card_widget.dart:12:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_card_widget.dart:13:22 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_card_widget.dart:14:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_card_widget.dart:15:14 - public_member_api_docs
+   info - Constructor declarations should be before non-constructor declarations - lib\shared\widgets\cards\product_card_widget.dart:17:9 - sort_constructors_first
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_card_widget.dart:17:9 - public_member_api_docs
+warning - Dead code - lib\shared\widgets\cards\product_card_widget.dart:39:44 - dead_code
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\widgets\cards\product_card_widget.dart:39:47 - dead_null_aware_expression
+   info - The line length exceeds the 80-character limit - lib\shared\widgets\cards\product_card_widget.dart:63:81 - lines_longer_than_80_chars
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_card_widget.dart:87:44 - invalid_null_aware_operator
+warning - The left operand can't be null, so the right operand is never executed - lib\shared\widgets\cards\product_card_widget.dart:98:49 - dead_null_aware_expression
+   info - Constructor declarations should be before non-constructor declarations - lib\shared\widgets\cards\product_card_widget.dart:121:9 - sort_constructors_first
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_card_widget.dart:134:39 - invalid_null_aware_operator
+   info - Constructor declarations should be before non-constructor declarations - lib\shared\widgets\cards\product_card_widget.dart:144:9 - sort_constructors_first
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_card_widget.dart:162:40 - invalid_null_aware_operator
+   info - Constructor declarations should be before non-constructor declarations - lib\shared\widgets\cards\product_card_widget.dart:174:9 - sort_constructors_first
+   info - Constructor declarations should be before non-constructor declarations - lib\shared\widgets\cards\product_card_widget.dart:200:9 - sort_constructors_first
+   info - The line length exceeds the 80-character limit - lib\shared\widgets\cards\product_card_widget.dart:206:81 - lines_longer_than_80_chars
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_card_widget.dart:207:40 - invalid_null_aware_operator
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_card_widget.dart:216:41 - invalid_null_aware_operator
+   info - The line length exceeds the 80-character limit - lib\shared\widgets\cards\product_card_widget.dart:219:81 - lines_longer_than_80_chars
+   info - Constructor declarations should be before non-constructor declarations - lib\shared\widgets\cards\product_card_widget.dart:228:9 - sort_constructors_first
+   info - The line length exceeds the 80-character limit - lib\shared\widgets\cards\product_card_widget.dart:234:81 - lines_longer_than_80_chars
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_card_widget.dart:239:41 - invalid_null_aware_operator
+   info - Use a 'ColoredBox' rather than a 'Container' with only a 'Color' - lib\shared\widgets\cards\product_card_widget.dart:253:36 - use_colored_box
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:11:7 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:12:29 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:13:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:14:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:15:14 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:16:16 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:17:23 - public_member_api_docs
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:18:23 - public_member_api_docs
+   info - Constructor declarations should be before non-constructor declarations - lib\shared\widgets\cards\product_grid_widget.dart:20:9 - sort_constructors_first
+   info - Missing documentation for a public member - lib\shared\widgets\cards\product_grid_widget.dart:20:9 - public_member_api_docs
+   info - The line length exceeds the 80-character limit - lib\shared\widgets\cards\product_grid_widget.dart:85:81 - lines_longer_than_80_chars
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_grid_widget.dart:127:47 - invalid_null_aware_operator
+   info - The line length exceeds the 80-character limit - lib\shared\widgets\cards\product_grid_widget.dart:129:81 - lines_longer_than_80_chars
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\shared\widgets\cards\product_grid_widget.dart:134:46 - invalid_null_aware_operator
+   info - Dependencies not sorted alphabetically - pubspec.yaml:13:3 - sort_pub_dependencies
+   info - Dependencies not sorted alphabetically - pubspec.yaml:52:3 - sort_pub_dependencies
+

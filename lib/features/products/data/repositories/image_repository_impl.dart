@@ -121,7 +121,7 @@ class ImageRepositoryImpl implements ImageRepository {
 
       // If we got a failure, stop and return it
       if (result.isLeft()) {
-        return Left(result.fold((f) => f, (_) => const ServerFailure()));
+        return Left<Failure, List<String>>(result.fold((f) => f, (_) => const ServerFailure()));
       }
     }
 

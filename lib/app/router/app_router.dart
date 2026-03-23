@@ -10,6 +10,8 @@ import 'package:style_cart/features/auth/presentation/screens/forgot_password_sc
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/router/customer_shell.dart';
 import 'package:style_cart/app/router/admin_shell.dart';
+import 'package:style_cart/features/home/presentation/screens/home_screen.dart';
+import 'package:style_cart/features/products/presentation/screens/shop_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -51,11 +53,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: RouteNames.home,
-            builder: (context, state) => const HomeScreenPlaceholder(),
+            builder: (context, state) => const HomeScreen(),
           ),
           GoRoute(
             path: RouteNames.shop,
-            builder: (context, state) => const ShopScreenPlaceholder(),
+            builder: (context, state) => const ShopScreen(),
           ),
           GoRoute(
             path: RouteNames.cart,
@@ -170,23 +172,7 @@ class RegisterScreenPlaceholder extends StatelessWidget {
   }
 }
 
-class HomeScreenPlaceholder extends StatelessWidget {
-  const HomeScreenPlaceholder({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('HomeScreen')));
-  }
-}
-
-class ShopScreenPlaceholder extends StatelessWidget {
-  const ShopScreenPlaceholder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('ShopScreen')));
-  }
-}
 
 class CartScreenPlaceholder extends StatelessWidget {
   const CartScreenPlaceholder({super.key});

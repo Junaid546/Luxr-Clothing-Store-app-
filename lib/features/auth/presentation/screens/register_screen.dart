@@ -78,6 +78,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     ref.listen(authNotifierProvider, (previous, next) {
       if (next is AuthError) {
         _showError(next.message);
+      } else if (next is AuthAuthenticated) {
+        context.go(RouteNames.home);
       }
     });
 
