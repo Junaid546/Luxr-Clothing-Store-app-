@@ -1,0 +1,48 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'wishlist_item_model.freezed.dart';
+
+@freezed
+class WishlistItemModel with _$WishlistItemModel {
+  const WishlistItemModel._();
+
+  const factory WishlistItemModel({
+    required String productId,
+    required String productName,
+    required String brand,
+    required String imageUrl,
+    required double price,
+    required int discountPct,
+    required double finalPrice,
+    required String category,
+    required DateTime addedAt,
+  }) = _WishlistItemModel;
+
+  factory WishlistItemModel.fromFirestore(DocumentSnapshot doc) {
+    final d = doc.data() as Map<String, dynamic>;
+    return WishlistItemModel(
+      productId:   doc.id,
+      productName: d['productName'] as String? ?? '',
+      brand:       d['brand']       as String? ?? '',
+      imageUrl:    d['imageUrl']    as String? ?? '',
+      price:       (d['price']      as num?)?.toDouble() ?? 0.0,
+      discountPct: (d['discountPct'] as num?)?.toInt() ?? 0,
+      finalPrice:  (d['finalPrice']  as num?)?.toDouble() ?? 0.0,
+      category:    d['category']    as String? ?? '',
+      addedAt:     (d['addedAt']    as Timestamp?)?.toDate() ?? DateTime.now(),
+    );
+  }
+
+  Map<String, dynamic> toFirestore() => {
+    'productId':   productId,
+    'productName': productName,
+    'brand':       brand,
+    'imageUrl':    imageUrl,
+    'price':       price,
+    'discountPct': discountPct,
+    'finalPrice':  finalPrice,
+    'category':    category,
+    'addedAt':     FieldValue.serverTimestamp(),
+  };
+}
