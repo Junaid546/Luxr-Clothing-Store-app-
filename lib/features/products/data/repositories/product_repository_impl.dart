@@ -1,88 +1,158 @@
-﻿// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering
+﻿// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering, sort_constructors_first, avoid_positional_boolean_parameters
 
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fpdart/fpdart.dart';
+import 'package:dartz/dartz.dart';
 import 'package:style_cart/core/constants/firestore_constants.dart';
 import 'package:style_cart/core/data/firestore_base_repository.dart';
 import 'package:style_cart/core/errors/exceptions.dart';
 import 'package:style_cart/core/errors/failures.dart';
 import 'package:style_cart/features/products/data/models/product_model.dart';
+import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
 import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
 
-class ProductRepositoryImpl 
-    extends FirestoreBaseRepository
-    implements ProductRepository {
+extension ProductModelMapper on ProductModel {
+  ProductEntity toEntity() {
+    return ProductEntity(
+      productId: productId,
+      name: name,
+      brand: brand,
+      description: description,
+      category: category,
+      subcategory: subcategory,
+      tags: tags,
+      price: price,
+      discountPct: discountPct,
+      finalPrice: finalPrice,
+      imageUrls: imageUrls,
+      thumbnailUrl: thumbnailUrl,
+      inventory: inventory,
+      totalStock: totalStock,
+      lowStockThreshold: lowStockThreshold,
+      colors: colors.map((c) => ProductColorEntity(name: c.name, hexCode: c.hexCode)).toList(),
+      isActive: isActive,
+      isFeatured: isFeatured,
+      isNewArrival: isNewArrival,
+      isLimitedEdition: isLimitedEdition,
+      avgRating: avgRating,
+      reviewCount: reviewCount,
+      soldCount: soldCount,
+      viewCount: viewCount,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      createdBy: createdBy,
+    );
+  }
+}
 
+extension ProductEntityMapper on ProductEntity {
+  ProductModel toModel() {
+    return ProductModel(
+      productId: productId,
+      name: name,
+      brand: brand,
+      description: description,
+      category: category,
+      subcategory: subcategory,
+      tags: tags,
+      searchIndex: const [], // will be set correctly by toFirestore
+      price: price,
+      discountPct: discountPct,
+      finalPrice: finalPrice,
+      imageUrls: imageUrls,
+      thumbnailUrl: thumbnailUrl,
+      inventory: inventory,
+      totalStock: totalStock,
+      lowStockThreshold: lowStockThreshold,
+      colors: colors.map((c) => ProductColor(name: c.name, hexCode: c.hexCode)).toList(),
+      isActive: isActive,
+      isFeatured: isFeatured,
+      isNewArrival: isNewArrival,
+      isLimitedEdition: isLimitedEdition,
+      avgRating: avgRating,
+      reviewCount: reviewCount,
+      soldCount: soldCount,
+      viewCount: viewCount,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      createdBy: createdBy,
+    );
+  }
+}
+
+class ProductRepositoryImpl extends FirestoreBaseRepository implements ProductRepository {
   ProductRepositoryImpl(super.firestore);
 
   CollectionReference<Map<String, dynamic>> get _productsRef =>
       firestore.collection(FirestoreConstants.products);
 
-  // â”€â”€ Get Products (paginated + filtered) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
-  Future<Either<Failure, List<ProductModel>>> getProducts({
-    String? category,
-    String? sortBy,
-    bool? isFeatured,
-    bool? isNewArrival,
-    int limit = 20,
-    DocumentSnapshot? lastDocument,
+  Future<Either<Failure, List<ProductEntity>>> getProducts({
+    required ProductFilter filter,
+    Object? lastDocumentSnapshot,
   }) {
     return safeFirestoreCall(() async {
-      Query<Map<String, dynamic>> query = _productsRef
-          .where('isActive', isEqualTo: true);
+      Query<Map<String, dynamic>> query = _productsRef.where('isActive', isEqualTo: true);
 
-      if (category != null && category.isNotEmpty) {
-        query = query.where('category', isEqualTo: category);
+      if (filter.category != null && filter.category!.isNotEmpty) {
+        query = query.where('category', isEqualTo: filter.category);
       }
-      if (isFeatured == true) {
+      if (filter.isFeatured == true) {
         query = query.where('isFeatured', isEqualTo: true);
       }
-      if (isNewArrival == true) {
+      if (filter.isNewArrival == true) {
         query = query.where('isNewArrival', isEqualTo: true);
       }
+      if (filter.isLimitedEdition == true) {
+        query = query.where('isLimitedEdition', isEqualTo: true);
+      }
 
+      // We handle minPrice and maxPrice in Dart because Firestore allows range filters on only ONE field.
       // Apply sort
-      query = switch (sortBy) {
+      query = switch (filter.sortBy) {
         'price_asc'  => query.orderBy('finalPrice', descending: false),
         'price_desc' => query.orderBy('finalPrice', descending: true),
         'rating'     => query.orderBy('avgRating', descending: true),
         'popular'    => query.orderBy('soldCount', descending: true),
-        _            => query.orderBy('createdAt', descending: true), // newest default
+        _            => query.orderBy('createdAt', descending: true),
       };
 
-      // Pagination cursor
-      if (lastDocument != null) {
-        query = query.startAfterDocument(lastDocument);
+      if (lastDocumentSnapshot != null && lastDocumentSnapshot is DocumentSnapshot) {
+        query = query.startAfterDocument(lastDocumentSnapshot);
       }
 
-      query = query.limit(limit);
+      query = query.limit(filter.pageSize * 2); // Overfetch to allow client-side filtering of prices and sizes
 
       final snapshot = await query.get();
-      return snapshot.docs.map(ProductModel.fromFirestore).toList();
+      var products = snapshot.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()).toList();
+
+      if (filter.minPrice != null) {
+        products = products.where((p) => p.finalPrice >= filter.minPrice!).toList();
+      }
+      if (filter.maxPrice != null) {
+        products = products.where((p) => p.finalPrice <= filter.maxPrice!).toList();
+      }
+      if (filter.sizes.isNotEmpty) {
+        products = products.where((p) => filter.sizes.any((s) => p.isSizeAvailable(s))).toList();
+      }
+
+      return products.take(filter.pageSize).toList();
     });
   }
 
-  // â”€â”€ Get Single Product â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
-  Future<Either<Failure, ProductModel>> getProductById(String productId) {
+  Future<Either<Failure, ProductEntity>> getProductById(String productId) {
     return safeFirestoreCall(() async {
       final doc = await _productsRef.doc(productId).get();
       if (!doc.exists) {
         throw const NotFoundException('Product not found');
       }
-      // Increment viewCount (non-blocking, best effort)
-      unawaited(_productsRef.doc(productId).update({
-        'viewCount': FieldValue.increment(1),
-      }).catchError((_) {})); // ignore errors for non-blocking update
-      return ProductModel.fromFirestore(doc);
+      return ProductModel.fromFirestore(doc).toEntity();
     });
   }
 
-  // â”€â”€ Search Products â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
-  Future<Either<Failure, List<ProductModel>>> searchProducts(String query) {
+  Future<Either<Failure, List<ProductEntity>>> searchProducts(String query) {
     return safeFirestoreCall(() async {
       if (query.trim().isEmpty) return [];
       
@@ -92,39 +162,93 @@ class ProductRepositoryImpl
           .where('searchIndex', arrayContains: searchTerm)
           .limit(30)
           .get();
-      return snapshot.docs.map(ProductModel.fromFirestore).toList();
+      return snapshot.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()).toList();
     });
   }
 
-  // â”€â”€ Get Products By IDs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   @override
-  Future<Either<Failure, List<ProductModel>>> getProductsByIds(List<String> ids) {
+  Future<Either<Failure, List<ProductEntity>>> getProductsByIds(List<String> productIds) {
     return safeFirestoreCall(() async {
-      if (ids.isEmpty) return [];
-      final uniqueIds = ids.toSet().toList();
+      if (productIds.isEmpty) return [];
+      final uniqueIds = productIds.toSet().toList();
       final chunks = <List<String>>[];
       for (var i = 0; i < uniqueIds.length; i += 10) {
         chunks.add(uniqueIds.sublist(i, i + 10 > uniqueIds.length ? uniqueIds.length : i + 10));
       }
-      final results = <ProductModel>[];
+      final results = <ProductEntity>[];
       for (final chunk in chunks) {
         final snap = await _productsRef.where(FieldPath.documentId, whereIn: chunk).get();
-        results.addAll(snap.docs.map(ProductModel.fromFirestore));
+        results.addAll(snap.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()));
       }
       return results;
     });
   }
 
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-  // ATOMIC STOCK RESERVATION
-  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  @override
+  Stream<Either<Failure, ProductEntity>> watchProduct(String productId) {
+    return safeFirestoreStream(() =>
+      _productsRef.doc(productId).snapshots()
+          .where((doc) => doc.exists)
+          .map((doc) => ProductModel.fromFirestore(doc).toEntity()),
+    );
+  }
 
   @override
-  Future<Either<Failure, void>> reserveStock({
-    required String productId,
-    required String size,
-    required int quantity,
-  }) {
+  Future<Either<Failure, String>> createProduct(ProductEntity product, List<String> imageLocalPaths) {
+    return safeFirestoreCall(() async {
+      final docRef = _productsRef.doc();
+      final data = product.toModel().toFirestore();
+      data['productId'] = docRef.id;
+      data['createdAt'] = FieldValue.serverTimestamp();
+      await docRef.set(data);
+      return docRef.id;
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> updateProduct(ProductEntity product, List<String> newImageLocalPaths, List<String> removedImageUrls) {
+    return safeFirestoreCall(() async {
+      await _productsRef.doc(product.productId).update(product.toModel().toFirestore());
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> toggleProductStatus(String productId, bool isActive) {
+    return safeFirestoreCall(() async {
+      await _productsRef.doc(productId).update({
+        'isActive': isActive,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> updateInventory({required String productId, required Map<String, int> inventory}) {
+    return safeFirestoreCall(() async {
+      final totalStock = inventory.values.fold(0, (a, b) => a + b);
+      await _productsRef.doc(productId).update({
+        'inventory': inventory,
+        'totalStock': totalStock,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<ProductEntity>>> getLowStockProducts(int threshold) {
+    return safeFirestoreCall(() async {
+      final snap = await _productsRef
+          .where('isActive', isEqualTo: true)
+          .where('totalStock', isLessThanOrEqualTo: threshold)
+          .orderBy('totalStock', descending: false)
+          .limit(50)
+          .get();
+      return snap.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()).toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> reserveStock({required String productId, required String size, required int quantity}) {
     return safeFirestoreCall(() async {
       final productRef = _productsRef.doc(productId);
 
@@ -136,27 +260,16 @@ class ProductRepositoryImpl
         }
 
         final data = snapshot.data()!;
-        final inventory = Map<String, dynamic>.from(
-          data['inventory'] as Map? ?? {},
-        );
-
+        final inventory = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
         final currentStock = (inventory[size] as num?)?.toInt() ?? 0;
 
         if (currentStock < quantity) {
-          throw StockException(
-            currentStock == 0
-                ? 'Size $size is out of stock'
-                : 'Only $currentStock left in size $size',
-          );
+          throw StockException(currentStock == 0 ? 'Size $size is out of stock' : 'Only $currentStock left in size $size');
         }
 
-        final newSizeStock = currentStock - quantity;
-        final currentTotal = (data['totalStock'] as num?)?.toInt() ?? 0;
-        final newTotal = currentTotal - quantity;
-
         transaction.update(productRef, {
-          'inventory.$size': newSizeStock,
-          'totalStock': newTotal,
+          'inventory.$size': currentStock - quantity,
+          'totalStock': ((data['totalStock'] as num?)?.toInt() ?? 0) - quantity,
           'soldCount': FieldValue.increment(quantity),
           'updatedAt': FieldValue.serverTimestamp(),
         });
@@ -165,11 +278,7 @@ class ProductRepositoryImpl
   }
 
   @override
-  Future<Either<Failure, void>> releaseStock({
-    required String productId,
-    required String size,
-    required int quantity,
-  }) {
+  Future<Either<Failure, void>> releaseStock({required String productId, required String size, required int quantity}) {
     return safeFirestoreCall(() async {
       await _productsRef.doc(productId).update({
         'inventory.$size': FieldValue.increment(quantity),
@@ -181,99 +290,51 @@ class ProductRepositoryImpl
   }
 
   @override
-  Stream<Either<Failure, ProductModel>> watchProduct(String productId) {
-    return safeFirestoreStream(() =>
-      _productsRef.doc(productId).snapshots()
-          .where((doc) => doc.exists)
-          .map(ProductModel.fromFirestore),
-    );
-  }
-
-  // â”€â”€ Admin operations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  @override
-  Future<Either<Failure, String>> createProduct(ProductModel product) {
-    return safeFirestoreCall(() async {
-      final docRef = _productsRef.doc();
-      final data = product.toFirestore();
-      data['productId'] = docRef.id;
-      data['createdAt'] = FieldValue.serverTimestamp();
-      data['viewCount'] = 0;
-      data['soldCount'] = 0;
-      data['avgRating'] = 0.0;
-      data['reviewCount'] = 0;
-      await docRef.set(data);
-      return docRef.id;
-    });
-  }
-
-  @override
-  Future<Either<Failure, void>> updateProduct(ProductModel product) {
-    return safeFirestoreCall(() async {
-      await _productsRef.doc(product.productId).update(product.toFirestore());
-    });
-  }
-
-  @override
-  Future<Either<Failure, void>> deleteProduct(String productId) {
-    return safeFirestoreCall(() async {
-      await _productsRef.doc(productId).update({
-        'isActive': false,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-    });
-  }
-
-  // â”€â”€ Batch stock update for multiple items â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  @override
-  Future<Either<Failure, void>> reserveMultipleItems(
-    List<({String productId, String size, int quantity})> items,
-  ) {
+  Future<Either<Failure, void>> reserveMultipleItems(List<StockReservationItem> items) {
     return safeFirestoreCall(() async {
       await firestore.runTransaction((transaction) async {
-        // READ all products first
-        final snapshots = await Future.wait(
-          items.map((item) => transaction.get(_productsRef.doc(item.productId))),
-        );
-
-        // VALIDATE all stocks before any write
+        final snapshots = await Future.wait(items.map((item) => transaction.get(_productsRef.doc(item.productId))));
+        
         for (var i = 0; i < items.length; i++) {
           final item = items[i];
           final data = snapshots[i].data()!;
-          final inventory = Map<String, dynamic>.from(
-            data['inventory'] as Map? ?? {},
-          );
+          final inventory = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
           final stock = (inventory[item.size] as num?)?.toInt() ?? 0;
           if (stock < item.quantity) {
-            final name = data['name'] as String? ?? '';
-            throw StockException(
-              stock == 0
-                ? '$name (Size ${item.size}) is out of stock'
-                : '$name: Only $stock left in size ${item.size}',
-            );
+            throw StockException(stock == 0 ? '${data['name']} (Size ${item.size}) is out of stock' : '${data['name']}: Only $stock left in size ${item.size}');
           }
         }
 
-        // ALL valid â€” now WRITE all updates
         for (var i = 0; i < items.length; i++) {
           final item = items[i];
           final data = snapshots[i].data()!;
-          final inventory = Map<String, dynamic>.from(
-            data['inventory'] as Map? ?? {},
-          );
+          final inventory = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
           final currentStock = (inventory[item.size] as num?)?.toInt() ?? 0;
-          final currentTotal = (data['totalStock'] as num?)?.toInt() ?? 0;
-
-          transaction.update(
-            _productsRef.doc(item.productId),
-            {
-              'inventory.${item.size}': currentStock - item.quantity,
-              'totalStock': currentTotal - item.quantity,
-              'soldCount': FieldValue.increment(item.quantity),
-              'updatedAt': FieldValue.serverTimestamp(),
-            },
-          );
+          
+          transaction.update(_productsRef.doc(item.productId), {
+            'inventory.${item.size}': currentStock - item.quantity,
+            'totalStock': ((data['totalStock'] as num?)?.toInt() ?? 0) - item.quantity,
+            'soldCount': FieldValue.increment(item.quantity),
+            'updatedAt': FieldValue.serverTimestamp(),
+          });
         }
       });
+    });
+  }
+
+  @override
+  Future<Either<Failure, void>> releaseMultipleItems(List<StockReservationItem> items) {
+    return safeFirestoreCall(() async {
+      final batch = firestore.batch();
+      for (final item in items) {
+        batch.update(_productsRef.doc(item.productId), {
+          'inventory.${item.size}': FieldValue.increment(item.quantity),
+          'totalStock': FieldValue.increment(item.quantity),
+          'soldCount': FieldValue.increment(-item.quantity),
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+      }
+      await batch.commit();
     });
   }
 }

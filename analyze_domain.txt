@@ -1,0 +1,61 @@
+﻿Analyzing domain...                                             
+
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\entities\product_entity.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\entities\product_entity.dart:34:9 - sort_constructors_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:41:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:42:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:43:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:44:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:45:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:46:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:47:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:48:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:49:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:50:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:51:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:52:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:53:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:54:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:55:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:56:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:57:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:58:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:59:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:60:19 - always_put_required_named_parameters_first
+   info - Required named parameters should be before optional named parameters - lib\features\products\domain\entities\product_entity.dart:61:19 - always_put_required_named_parameters_first
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\entities\product_entity.dart:107:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\entities\product_filter_entity.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\entities\product_filter_entity.dart:17:9 - sort_constructors_first
+   info - Use an if-null operator to convert a 'null' to a 'bool' - lib\features\products\domain\entities\product_filter_entity.dart:35:7 - use_if_null_to_convert_nulls_to_bools
+   info - Use an if-null operator to convert a 'null' to a 'bool' - lib\features\products\domain\entities\product_filter_entity.dart:43:9 - use_if_null_to_convert_nulls_to_bools
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\repositories\image_repository.dart:1:1 - document_ignores
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\repositories\product_repository.dart:1:1 - document_ignores
+   info - 'bool' parameters should be named parameters - lib\features\products\domain\repositories\product_repository.dart:48:5 - avoid_positional_boolean_parameters
+   info - Sort directive sections alphabetically - lib\features\products\domain\repositories\product_repository.dart:85:1 - directives_ordering
+  error - Directives must appear before any declarations - lib\features\products\domain\repositories\product_repository.dart:85:1 - directive_after_declaration
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\repositories\product_repository.dart:93:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\create_product_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\create_product_usecase.dart:13:9 - sort_constructors_first
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\create_product_usecase.dart:24:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\get_low_stock_products_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\get_low_stock_products_usecase.dart:12:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\get_product_by_id_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\get_product_by_id_usecase.dart:12:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\get_products_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\get_products_usecase.dart:15:9 - sort_constructors_first
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\get_products_usecase.dart:27:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\release_stock_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\release_stock_usecase.dart:11:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\reserve_stock_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\reserve_stock_usecase.dart:11:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\search_products_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\search_products_usecase.dart:12:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\update_inventory_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\update_inventory_usecase.dart:12:9 - sort_constructors_first
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\update_inventory_usecase.dart:23:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\update_product_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\update_product_usecase.dart:14:9 - sort_constructors_first
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\update_product_usecase.dart:26:9 - sort_constructors_first
+   info - Missing documentation explaining why the diagnostic is ignored - lib\features\products\domain\usecases\watch_product_usecase.dart:1:1 - document_ignores
+   info - Constructor declarations should be before non-constructor declarations - lib\features\products\domain\usecases\watch_product_usecase.dart:11:9 - sort_constructors_first
+

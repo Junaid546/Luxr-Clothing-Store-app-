@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_dimensions.dart';
 import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
 import 'package:style_cart/features/auth/presentation/widgets/password_strength_indicator.dart';
 
@@ -75,7 +74,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
     final isLoading = authState is AuthLoading;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     ref.listen(authNotifierProvider, (previous, next) {
       if (next is AuthError) {
@@ -93,24 +91,18 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               flex: 4,
               child: Stack(
                 children: [
-                  // Background placeholder
+                  // Background image - Model photo from assets
+                  // Recommended size: 1920x1080 (16:9) or 1080x1350 (4:5) for fashion brands
                   Container(
                     width: double.infinity,
+                    height: double.infinity,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          AppColors.primary.withValues(alpha: 0.3),
-                          AppColors.backgroundDark,
-                        ],
-                      ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.diamond,
-                        size: 48,
-                        color: AppColors.primary,
+                      image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/signup_screen_model_image.png',
+                        ),
+                        fit: BoxFit.cover,
+                        alignment: Alignment(0.4, 0),
                       ),
                     ),
                   ),
