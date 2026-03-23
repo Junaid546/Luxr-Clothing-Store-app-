@@ -102,7 +102,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           'assets/images/signup_screen_model_image.png',
                         ),
                         fit: BoxFit.cover,
-                        alignment: Alignment(0.4, 0),
+                        alignment: Alignment(-0.8, 0),
                       ),
                     ),
                   ),

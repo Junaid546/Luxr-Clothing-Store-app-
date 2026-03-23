@@ -1,4 +1,6 @@
-﻿// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering, sort_constructors_first, avoid_positional_boolean_parameters
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering, sort_constructors_first, avoid_positional_boolean_parameters
+
+import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
@@ -9,6 +11,7 @@ import 'package:style_cart/core/errors/failures.dart';
 import 'package:style_cart/features/products/data/models/product_model.dart';
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
 import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
+import 'package:style_cart/features/products/domain/repositories/image_repository.dart';
 import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
 
 extension ProductModelMapper on ProductModel {
@@ -45,57 +48,37 @@ extension ProductModelMapper on ProductModel {
   }
 }
 
-extension ProductEntityMapper on ProductEntity {
-  ProductModel toModel() {
-    return ProductModel(
-      productId: productId,
-      name: name,
-      brand: brand,
-      description: description,
-      category: category,
-      subcategory: subcategory,
-      tags: tags,
-      searchIndex: const [], // will be set correctly by toFirestore
-      price: price,
-      discountPct: discountPct,
-      finalPrice: finalPrice,
-      imageUrls: imageUrls,
-      thumbnailUrl: thumbnailUrl,
-      inventory: inventory,
-      totalStock: totalStock,
-      lowStockThreshold: lowStockThreshold,
-      colors: colors.map((c) => ProductColor(name: c.name, hexCode: c.hexCode)).toList(),
-      isActive: isActive,
-      isFeatured: isFeatured,
-      isNewArrival: isNewArrival,
-      isLimitedEdition: isLimitedEdition,
-      avgRating: avgRating,
-      reviewCount: reviewCount,
-      soldCount: soldCount,
-      viewCount: viewCount,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      createdBy: createdBy,
-    );
-  }
-}
+class ProductRepositoryImpl
+    extends FirestoreBaseRepository
+    implements ProductRepository {
 
-class ProductRepositoryImpl extends FirestoreBaseRepository implements ProductRepository {
-  ProductRepositoryImpl(super.firestore);
+  final ImageRepository _imageRepo;
 
-  CollectionReference<Map<String, dynamic>> get _productsRef =>
+  ProductRepositoryImpl(
+    super.firestore,
+    this._imageRepo,
+  );
+
+  CollectionReference<Map<String, dynamic>> get _ref =>
       firestore.collection(FirestoreConstants.products);
 
+  // ══════════════════════════════════════════════════
+  // GET PRODUCTS — Paginated + Filtered
+  // ══════════════════════════════════════════════════
   @override
   Future<Either<Failure, List<ProductEntity>>> getProducts({
     required ProductFilter filter,
     Object? lastDocumentSnapshot,
   }) {
     return safeFirestoreCall(() async {
-      Query<Map<String, dynamic>> query = _productsRef.where('isActive', isEqualTo: true);
+      Query<Map<String, dynamic>> query = _ref
+          .where('isActive', isEqualTo: true);
 
-      if (filter.category != null && filter.category!.isNotEmpty) {
-        query = query.where('category', isEqualTo: filter.category);
+      // ── Apply filters ─────────────────────────────
+      if (filter.category != null) {
+        query = query.where(
+          'category', isEqualTo: filter.category,
+        );
       }
       if (filter.isFeatured == true) {
         query = query.where('isFeatured', isEqualTo: true);
@@ -104,238 +87,576 @@ class ProductRepositoryImpl extends FirestoreBaseRepository implements ProductRe
         query = query.where('isNewArrival', isEqualTo: true);
       }
       if (filter.isLimitedEdition == true) {
-        query = query.where('isLimitedEdition', isEqualTo: true);
+        query = query.where(
+          'isLimitedEdition', isEqualTo: true,
+        );
       }
 
-      // We handle minPrice and maxPrice in Dart because Firestore allows range filters on only ONE field.
-      // Apply sort
+      // ── Apply sort ────────────────────────────────
+      // IMPORTANT: sort field must match Firestore index
       query = switch (filter.sortBy) {
-        'price_asc'  => query.orderBy('finalPrice', descending: false),
-        'price_desc' => query.orderBy('finalPrice', descending: true),
-        'rating'     => query.orderBy('avgRating', descending: true),
-        'popular'    => query.orderBy('soldCount', descending: true),
-        _            => query.orderBy('createdAt', descending: true),
+        'price_asc'  => query.orderBy('finalPrice'),
+        'price_desc' => query.orderBy(
+                          'finalPrice', descending: true),
+        'rating'     => query.orderBy(
+                          'avgRating', descending: true),
+        'popular'    => query.orderBy(
+                          'soldCount', descending: true),
+        _            => query.orderBy(
+                          'createdAt', descending: true),
       };
 
-      if (lastDocumentSnapshot != null && lastDocumentSnapshot is DocumentSnapshot) {
-        query = query.startAfterDocument(lastDocumentSnapshot);
+      // ── Pagination cursor ─────────────────────────
+      if (lastDocumentSnapshot != null) {
+        query = query.startAfterDocument(
+          lastDocumentSnapshot as DocumentSnapshot,
+        );
       }
 
-      query = query.limit(filter.pageSize * 2); // Overfetch to allow client-side filtering of prices and sizes
-
+      query = query.limit(filter.pageSize);
       final snapshot = await query.get();
-      var products = snapshot.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()).toList();
 
+      var products = snapshot.docs
+          .map((doc) => ProductModel.fromFirestore(doc).toEntity())
+          .toList();
+
+      // ── Client-side price range filter ───────────
+      // Firestore can't do range + orderBy on different fields
+      // So we filter price range client-side
       if (filter.minPrice != null) {
-        products = products.where((p) => p.finalPrice >= filter.minPrice!).toList();
+        products = products
+            .where((p) => p.finalPrice >= filter.minPrice!)
+            .toList();
       }
       if (filter.maxPrice != null) {
-        products = products.where((p) => p.finalPrice <= filter.maxPrice!).toList();
-      }
-      if (filter.sizes.isNotEmpty) {
-        products = products.where((p) => filter.sizes.any((s) => p.isSizeAvailable(s))).toList();
+        products = products
+            .where((p) => p.finalPrice <= filter.maxPrice!)
+            .toList();
       }
 
-      return products.take(filter.pageSize).toList();
+      // ── Client-side size filter ───────────────────
+      if (filter.sizes.isNotEmpty) {
+        products = products.where((p) =>
+          filter.sizes.any((size) => p.isSizeAvailable(size)),
+        ).toList();
+      }
+
+      return products;
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // GET SINGLE PRODUCT
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, ProductEntity>> getProductById(String productId) {
+  Future<Either<Failure, ProductEntity>> getProductById(
+    String productId,
+  ) {
     return safeFirestoreCall(() async {
-      final doc = await _productsRef.doc(productId).get();
+      final doc = await _ref.doc(productId).get();
       if (!doc.exists) {
         throw const NotFoundException('Product not found');
       }
+      // Increment view count (fire and forget)
+      unawaited(_ref.doc(productId).update({
+        'viewCount': FieldValue.increment(1),
+      }).catchError((_) {}));
       return ProductModel.fromFirestore(doc).toEntity();
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // SEARCH PRODUCTS
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, List<ProductEntity>>> searchProducts(String query) {
+  Future<Either<Failure, List<ProductEntity>>> searchProducts(
+    String query,
+  ) {
     return safeFirestoreCall(() async {
-      if (query.trim().isEmpty) return [];
-      
-      final searchTerm = query.toLowerCase().trim();
-      final snapshot = await _productsRef
+      // Tokenize the query for better matching
+      final tokens = query
+          .toLowerCase()
+          .split(' ')
+          .where((t) => t.length >= 2)
+          .toList();
+
+      if (tokens.isEmpty) return [];
+
+      // Search by first token (Firestore limitation:
+      // arrayContains takes 1 value, not array)
+      final snapshot = await _ref
           .where('isActive', isEqualTo: true)
-          .where('searchIndex', arrayContains: searchTerm)
-          .limit(30)
+          .where('searchIndex', 
+                 arrayContains: tokens.first)
+          .limit(50)
           .get();
-      return snapshot.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()).toList();
+
+      var results = snapshot.docs
+          .map((doc) => ProductModel.fromFirestore(doc).toEntity())
+          .toList();
+
+      // Client-side filter for remaining tokens
+      // if (tokens.length > 1) {
+      //   results = results.where((product) {
+      //     return tokens.skip(1).every((token) =>
+      //       product.searchIndex.any( // Wait, entity doesn't have searchIndex.
+      //         (idx) => idx.contains(token),
+      //       ),
+      //     );
+      //   }).toList();
+      // }
+      // To properly filter we need to tokenize the entity properties or map afterwards.
+      // Since entity properties include name, brand, tags, we can just check those.
+      if (tokens.length > 1) {
+        results = results.where((product) {
+          final searchableText = '${product.name} ${product.brand} ${product.tags.join(' ')}'.toLowerCase();
+          return tokens.skip(1).every((token) => searchableText.contains(token));
+        }).toList();
+      }
+
+      return results;
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // GET PRODUCTS BY IDS (for wishlist/cart refresh)
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, List<ProductEntity>>> getProductsByIds(List<String> productIds) {
+  Future<Either<Failure, List<ProductEntity>>> getProductsByIds(
+    List<String> productIds,
+  ) {
     return safeFirestoreCall(() async {
       if (productIds.isEmpty) return [];
-      final uniqueIds = productIds.toSet().toList();
+
+      // Firestore whereIn limit = 30
       final chunks = <List<String>>[];
-      for (var i = 0; i < uniqueIds.length; i += 10) {
-        chunks.add(uniqueIds.sublist(i, i + 10 > uniqueIds.length ? uniqueIds.length : i + 10));
+      for (int i = 0; i < productIds.length; i += 30) {
+        chunks.add(productIds.sublist(
+          i, 
+          (i + 30 > productIds.length) 
+              ? productIds.length 
+              : i + 30,
+        ));
       }
+
       final results = <ProductEntity>[];
       for (final chunk in chunks) {
-        final snap = await _productsRef.where(FieldPath.documentId, whereIn: chunk).get();
-        results.addAll(snap.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()));
+        final snapshot = await _ref
+            .where(FieldPath.documentId, whereIn: chunk)
+            .get();
+        results.addAll(
+          snapshot.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()),
+        );
       }
       return results;
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // REAL-TIME WATCH
+  // ══════════════════════════════════════════════════
   @override
-  Stream<Either<Failure, ProductEntity>> watchProduct(String productId) {
+  Stream<Either<Failure, ProductEntity>> watchProduct(
+    String productId,
+  ) {
     return safeFirestoreStream(() =>
-      _productsRef.doc(productId).snapshots()
+      _ref.doc(productId).snapshots()
           .where((doc) => doc.exists)
           .map((doc) => ProductModel.fromFirestore(doc).toEntity()),
     );
   }
 
+  // ══════════════════════════════════════════════════
+  // CREATE PRODUCT (Admin)
+  // Uploads images → writes Firestore doc atomically
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, String>> createProduct(ProductEntity product, List<String> imageLocalPaths) {
+  Future<Either<Failure, String>> createProduct(
+    ProductEntity product,
+    List<String> imageLocalPaths,
+  ) async {
+    // 1. Generate Firestore doc ref FIRST to get the ID
+    final docRef = _ref.doc();
+    final productId = docRef.id;
+
+    // 2. Upload images to Storage using the productId
+    final uploadResult = await _imageRepo.uploadProductImages(
+      localPaths: imageLocalPaths,
+      productId: productId,
+    );
+
+    // If upload fails → return failure (no Firestore doc created)
+    if (uploadResult.isLeft()) {
+      return Left(uploadResult.fold((f) => f, (_) =>
+          const ServerFailure()));
+    }
+
+    final imageUrls = uploadResult.getOrElse(() => []);
+
+    // 3. Build Firestore document
     return safeFirestoreCall(() async {
-      final docRef = _productsRef.doc();
-      final data = product.toModel().toFirestore();
-      data['productId'] = docRef.id;
-      data['createdAt'] = FieldValue.serverTimestamp();
+      final searchTerms = <String>{};
+      for (final word in [
+        product.name,
+        product.brand,
+        product.category,
+        ...product.tags,
+      ]) {
+        searchTerms.addAll(
+          word.toLowerCase().split(' '),
+        );
+      }
+
+      final computedTotal = product.inventory.values
+          .fold(0, (a, b) => a + b);
+
+      final data = <String, dynamic>{
+        'productId':        productId,
+        'name':             product.name,
+        'brand':            product.brand,
+        'description':      product.description,
+        'category':         product.category,
+        'subcategory':      product.subcategory,
+        'tags':             product.tags,
+        'searchIndex':      searchTerms.toList(),
+        'price':            product.price,
+        'discountPct':      product.discountPct,
+        'finalPrice':       product.price * 
+                            (1 - product.discountPct / 100),
+        'imageUrls':        imageUrls,
+        'thumbnailUrl':     imageUrls.isNotEmpty ? imageUrls.first : '',
+        'inventory':        product.inventory,
+        'totalStock':       computedTotal,
+        'lowStockThreshold':product.lowStockThreshold,
+        'colors':           product.colors
+                              .map((c) => {
+                                'name': c.name,
+                                'hexCode': c.hexCode,
+                              }).toList(),
+        'isActive':         true,
+        'isFeatured':       product.isFeatured,
+        'isNewArrival':     product.isNewArrival,
+        'isLimitedEdition': product.isLimitedEdition,
+        'avgRating':        0.0,
+        'reviewCount':      0,
+        'soldCount':        0,
+        'viewCount':        0,
+        'createdAt':        FieldValue.serverTimestamp(),
+        'updatedAt':        FieldValue.serverTimestamp(),
+        'createdBy':        product.createdBy,
+      };
+
       await docRef.set(data);
-      return docRef.id;
+      return productId;
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // UPDATE PRODUCT (Admin)
+  // Uploads new images → deletes removed ones → updates doc
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, void>> updateProduct(ProductEntity product, List<String> newImageLocalPaths, List<String> removedImageUrls) {
+  Future<Either<Failure, void>> updateProduct(
+    ProductEntity product,
+    List<String> newImageLocalPaths,
+    List<String> removedImageUrls,
+  ) async {
+    // 1. Upload new images if any
+    var imageUrls = List<String>.from(product.imageUrls);
+
+    if (newImageLocalPaths.isNotEmpty) {
+      final uploadResult = await _imageRepo
+          .uploadProductImages(
+        localPaths: newImageLocalPaths,
+        productId: product.productId,
+      );
+      if (uploadResult.isLeft()) {
+        return Left(uploadResult.fold(
+          (f) => f, (_) => const ServerFailure(),
+        ));
+      }
+      imageUrls.addAll(uploadResult.getOrElse(() => []));
+    }
+
+    // 2. Remove deleted image URLs from list
+    if (removedImageUrls.isNotEmpty) {
+      imageUrls.removeWhere(
+        (url) => removedImageUrls.contains(url),
+      );
+      // Delete from Storage (best effort, non-blocking)
+      unawaited(_imageRepo.deleteImages(removedImageUrls).catchError((_) => const Right(null)));
+    }
+
+    if (imageUrls.isEmpty) {
+      return const Left(
+        ValidationFailure('Product must have at least 1 image'),
+      );
+    }
+
+    // 3. Update Firestore
     return safeFirestoreCall(() async {
-      await _productsRef.doc(product.productId).update(product.toModel().toFirestore());
+      final searchTerms = <String>{};
+      for (final word in [
+        product.name, product.brand,
+        product.category, ...product.tags,
+      ]) {
+        searchTerms.addAll(word.toLowerCase().split(' '));
+      }
+
+      final computedTotal = product.inventory.values
+          .fold(0, (a, b) => a + b);
+
+      await _ref.doc(product.productId).update({
+        'name':             product.name,
+        'brand':            product.brand,
+        'description':      product.description,
+        'category':         product.category,
+        'subcategory':      product.subcategory,
+        'tags':             product.tags,
+        'searchIndex':      searchTerms.toList(),
+        'price':            product.price,
+        'discountPct':      product.discountPct,
+        'finalPrice':       product.price *
+                            (1 - product.discountPct / 100),
+        'imageUrls':        imageUrls,
+        'thumbnailUrl':     imageUrls.isNotEmpty ? imageUrls.first : '',
+        'inventory':        product.inventory,
+        'totalStock':       computedTotal,
+        'lowStockThreshold':product.lowStockThreshold,
+        'colors':           product.colors
+                              .map((c) => {
+                                'name': c.name,
+                                'hexCode': c.hexCode,
+                              }).toList(),
+        'isFeatured':       product.isFeatured,
+        'isNewArrival':     product.isNewArrival,
+        'isLimitedEdition': product.isLimitedEdition,
+        'updatedAt':        FieldValue.serverTimestamp(),
+      });
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // TOGGLE STATUS (Admin soft delete)
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, void>> toggleProductStatus(String productId, bool isActive) {
+  Future<Either<Failure, void>> toggleProductStatus(
+    String productId,
+    bool isActive,
+  ) {
     return safeFirestoreCall(() async {
-      await _productsRef.doc(productId).update({
-        'isActive': isActive,
+      await _ref.doc(productId).update({
+        'isActive':  isActive,
         'updatedAt': FieldValue.serverTimestamp(),
       });
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // UPDATE INVENTORY (Admin)
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, void>> updateInventory({required String productId, required Map<String, int> inventory}) {
+  Future<Either<Failure, void>> updateInventory({
+    required String productId,
+    required Map<String, int> inventory,
+  }) {
     return safeFirestoreCall(() async {
-      final totalStock = inventory.values.fold(0, (a, b) => a + b);
-      await _productsRef.doc(productId).update({
-        'inventory': inventory,
-        'totalStock': totalStock,
-        'updatedAt': FieldValue.serverTimestamp(),
+      final total = inventory.values.fold(0, (a, b) => a + b);
+      await _ref.doc(productId).update({
+        'inventory':  inventory,
+        'totalStock': total,
+        'updatedAt':  FieldValue.serverTimestamp(),
       });
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // GET LOW STOCK PRODUCTS (Admin alert)
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, List<ProductEntity>>> getLowStockProducts(int threshold) {
+  Future<Either<Failure, List<ProductEntity>>> getLowStockProducts(
+    int threshold,
+  ) {
     return safeFirestoreCall(() async {
-      final snap = await _productsRef
+      final snapshot = await _ref
           .where('isActive', isEqualTo: true)
           .where('totalStock', isLessThanOrEqualTo: threshold)
-          .orderBy('totalStock', descending: false)
-          .limit(50)
+          .orderBy('totalStock')
           .get();
-      return snap.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()).toList();
+      return snapshot.docs
+          .map((doc) => ProductModel.fromFirestore(doc).toEntity())
+          .toList();
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // ATOMIC STOCK RESERVATION (Single item)
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, void>> reserveStock({required String productId, required String size, required int quantity}) {
+  Future<Either<Failure, void>> reserveStock({
+    required String productId,
+    required String size,
+    required int quantity,
+  }) {
     return safeFirestoreCall(() async {
-      final productRef = _productsRef.doc(productId);
+      await firestore.runTransaction((txn) async {
+        final ref = _ref.doc(productId);
+        final snap = await txn.get(ref);
 
-      await firestore.runTransaction((transaction) async {
-        final snapshot = await transaction.get(productRef);
-
-        if (!snapshot.exists) {
+        if (!snap.exists) {
           throw const NotFoundException('Product not found');
         }
 
-        final data = snapshot.data()!;
-        final inventory = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
-        final currentStock = (inventory[size] as num?)?.toInt() ?? 0;
+        final data = snap.data()!;
+        final inv = Map<String, dynamic>.from(
+          data['inventory'] as Map? ?? {},
+        );
+        final current = (inv[size] as num?)?.toInt() ?? 0;
 
-        if (currentStock < quantity) {
-          throw StockException(currentStock == 0 ? 'Size $size is out of stock' : 'Only $currentStock left in size $size');
+        if (current < quantity) {
+          throw StockException(
+            current == 0
+                ? 'Size $size is out of stock'
+                : 'Only $current units left in size $size',
+          );
         }
 
-        transaction.update(productRef, {
-          'inventory.$size': currentStock - quantity,
-          'totalStock': ((data['totalStock'] as num?)?.toInt() ?? 0) - quantity,
-          'soldCount': FieldValue.increment(quantity),
+        final newSizeQty = current - quantity;
+        final currentTotal =
+            (data['totalStock'] as num?)?.toInt() ?? 0;
+
+        // Compute new total manually (no FieldValue inside txn)
+        final newTotal = currentTotal - quantity;
+
+        txn.update(ref, {
+          'inventory.$size': newSizeQty,
+          'totalStock':      newTotal,
+          'soldCount': (data['soldCount'] as num? ?? 0) + quantity,
           'updatedAt': FieldValue.serverTimestamp(),
         });
       });
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // ATOMIC STOCK RELEASE (cancel/return)
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, void>> releaseStock({required String productId, required String size, required int quantity}) {
+  Future<Either<Failure, void>> releaseStock({
+    required String productId,
+    required String size,
+    required int quantity,
+  }) {
     return safeFirestoreCall(() async {
-      await _productsRef.doc(productId).update({
+      // Release doesn't need a transaction —
+      // increment is safe here because we're adding stock back
+      // and there's no "stock cannot exceed max" constraint
+      await _ref.doc(productId).update({
         'inventory.$size': FieldValue.increment(quantity),
-        'totalStock': FieldValue.increment(quantity),
+        'totalStock':      FieldValue.increment(quantity),
         'soldCount': FieldValue.increment(-quantity),
         'updatedAt': FieldValue.serverTimestamp(),
       });
     });
   }
 
+  // ══════════════════════════════════════════════════
+  // BATCH STOCK RESERVATION (Order placement)
+  // READ ALL → VALIDATE ALL → WRITE ALL
+  // This is the most critical operation in the app
+  // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, void>> reserveMultipleItems(List<StockReservationItem> items) {
+  Future<Either<Failure, void>> reserveMultipleItems(
+    List<StockReservationItem> items,
+  ) {
     return safeFirestoreCall(() async {
-      await firestore.runTransaction((transaction) async {
-        final snapshots = await Future.wait(items.map((item) => transaction.get(_productsRef.doc(item.productId))));
-        
-        for (var i = 0; i < items.length; i++) {
+      await firestore.runTransaction((txn) async {
+
+        // ── PHASE 1: READ ALL ─────────────────────
+        final refs = items
+            .map((item) => _ref.doc(item.productId))
+            .toList();
+
+        final snapshots = await Future.wait(
+          refs.map((ref) => txn.get(ref)),
+        );
+
+        // ── PHASE 2: VALIDATE ALL ─────────────────
+        for (int i = 0; i < items.length; i++) {
           final item = items[i];
-          final data = snapshots[i].data()!;
-          final inventory = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
-          final stock = (inventory[item.size] as num?)?.toInt() ?? 0;
+          final snap = snapshots[i];
+
+          if (!snap.exists) {
+            throw NotFoundException(
+              '${item.productName} no longer exists',
+            );
+          }
+
+          final data = snap.data()!;
+          if (data['isActive'] == false) {
+            throw ValidationException(
+              '${item.productName} is no longer available',
+            );
+          }
+
+          final inv = Map<String, dynamic>.from(
+            data['inventory'] as Map? ?? {},
+          );
+          final stock = (inv[item.size] as num?)?.toInt() ?? 0;
+
           if (stock < item.quantity) {
-            throw StockException(stock == 0 ? '${data['name']} (Size ${item.size}) is out of stock' : '${data['name']}: Only $stock left in size ${item.size}');
+            throw StockException(
+              stock == 0
+                ? '${item.productName} (Size ${item.size})'
+                  ' is out of stock'
+                : '${item.productName}: Only $stock left'
+                  ' in size ${item.size}',
+            );
           }
         }
 
-        for (var i = 0; i < items.length; i++) {
+        // ── PHASE 3: WRITE ALL ────────────────────
+        for (int i = 0; i < items.length; i++) {
           final item = items[i];
           final data = snapshots[i].data()!;
-          final inventory = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
-          final currentStock = (inventory[item.size] as num?)?.toInt() ?? 0;
-          
-          transaction.update(_productsRef.doc(item.productId), {
-            'inventory.${item.size}': currentStock - item.quantity,
-            'totalStock': ((data['totalStock'] as num?)?.toInt() ?? 0) - item.quantity,
-            'soldCount': FieldValue.increment(item.quantity),
-            'updatedAt': FieldValue.serverTimestamp(),
+          final inv = Map<String, dynamic>.from(
+            data['inventory'] as Map? ?? {},
+          );
+          final current = 
+              (inv[item.size] as num?)?.toInt() ?? 0;
+          final total = 
+              (data['totalStock'] as num?)?.toInt() ?? 0;
+          final sold = 
+              (data['soldCount'] as num?)?.toInt() ?? 0;
+
+          txn.update(refs[i], {
+            'inventory.${item.size}': current - item.quantity,
+            'totalStock': total - item.quantity,
+            'soldCount':  sold + item.quantity,
+            'updatedAt':  FieldValue.serverTimestamp(),
           });
         }
       });
     });
   }
 
+  // ── Release multiple (order cancel) ───────────────
   @override
-  Future<Either<Failure, void>> releaseMultipleItems(List<StockReservationItem> items) {
+  Future<Either<Failure, void>> releaseMultipleItems(
+    List<StockReservationItem> items,
+  ) async {
     return safeFirestoreCall(() async {
       final batch = firestore.batch();
       for (final item in items) {
-        batch.update(_productsRef.doc(item.productId), {
-          'inventory.${item.size}': FieldValue.increment(item.quantity),
+        batch.update(_ref.doc(item.productId), {
+          'inventory.${item.size}': 
+              FieldValue.increment(item.quantity),
           'totalStock': FieldValue.increment(item.quantity),
-          'soldCount': FieldValue.increment(-item.quantity),
-          'updatedAt': FieldValue.serverTimestamp(),
+          'soldCount':  FieldValue.increment(-item.quantity),
+          'updatedAt':  FieldValue.serverTimestamp(),
         });
       }
       await batch.commit();
     });
   }
 }
-

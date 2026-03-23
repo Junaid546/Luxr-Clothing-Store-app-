@@ -1,4 +1,4 @@
-﻿// GENERATED CODE - DO NOT MODIFY BY HAND
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'repository_providers.dart';
 
@@ -23,7 +23,7 @@ final firestoreProvider = AutoDisposeProvider<FirebaseFirestore>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef FirestoreRef = AutoDisposeProviderRef<FirebaseFirestore>;
-String _$productRepositoryHash() => r'f5bc6fd545b0f03c7cd3e548eb6b63019ee41aa8';
+String _$productRepositoryHash() => r'f6bd1b1cd29c84d60cf7fa0d34e17f370ab62415';
 
 /// See also [productRepository].
 @ProviderFor(productRepository)
@@ -94,7 +94,5 @@ final orderRepositoryProvider = AutoDisposeProvider<OrderRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef OrderRepositoryRef = AutoDisposeProviderRef<OrderRepository>;
-// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering
-// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering
-
-
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
