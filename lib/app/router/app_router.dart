@@ -12,6 +12,8 @@ import 'package:style_cart/app/router/customer_shell.dart';
 import 'package:style_cart/app/router/admin_shell.dart';
 import 'package:style_cart/features/home/presentation/screens/home_screen.dart';
 import 'package:style_cart/features/products/presentation/screens/shop_screen.dart';
+import 'package:style_cart/features/products/presentation/screens/product_detail_screen.dart';
+import 'package:style_cart/features/wishlist/presentation/screens/wishlist_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -64,8 +66,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const CartScreenPlaceholder(),
           ),
           GoRoute(
+            path: RouteNames.productDetail,
+            builder: (context, state) {
+              final productId = state.pathParameters['productId']!;
+              return ProductDetailScreen(productId: productId);
+            },
+          ),
+          GoRoute(
             path: RouteNames.wishlist,
-            builder: (context, state) => const WishlistScreenPlaceholder(),
+            builder: (context, state) => const WishlistScreen(),
           ),
           GoRoute(
             path: RouteNames.profile,
@@ -118,29 +127,35 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 });
 
 String? _handleRedirect(AuthRedirectStatus status, GoRouterState state) {
-  final isOnAuthRoute = [
+  final location = state.matchedLocation;
+
+  // 1. Define sets of routes for easier checking
+  final isAuthRoute = [
     RouteNames.splash,
     RouteNames.login,
     RouteNames.register,
     RouteNames.forgotPassword,
-  ].contains(state.matchedLocation);
+  ].contains(location);
 
+  final isPublicRoute = [
+    RouteNames.home,
+    RouteNames.shop,
+  ].contains(location) || location.startsWith('/product/');
+
+  final isAdminRoute = location.startsWith('/admin');
+
+  // 2. Routing logic based on Auth Status
   return switch (status) {
     AuthRedirectStatus.loading => RouteNames.splash,
+
     AuthRedirectStatus.unauthenticated =>
-      isOnAuthRoute ? null : RouteNames.login,
+      (isAuthRoute || isPublicRoute) ? null : RouteNames.login,
+
     AuthRedirectStatus.customer =>
-      isOnAuthRoute
-          ? RouteNames.home
-          : state.matchedLocation.startsWith('/admin')
-          ? RouteNames.home
-          : null,
+      (isAuthRoute || isAdminRoute) ? RouteNames.home : null,
+
     AuthRedirectStatus.admin =>
-      isOnAuthRoute
-          ? RouteNames.adminDashboard
-          : !state.matchedLocation.startsWith('/admin')
-          ? RouteNames.adminDashboard
-          : null,
+      (isAuthRoute || !isAdminRoute) ? RouteNames.adminDashboard : null,
   };
 }
 

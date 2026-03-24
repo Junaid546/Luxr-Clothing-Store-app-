@@ -25,6 +25,7 @@ mixin _$WishlistItemModel {
   int get discountPct => throw _privateConstructorUsedError;
   double get finalPrice => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
+  bool get isLimitedEdition => throw _privateConstructorUsedError;
   DateTime get addedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of WishlistItemModel
@@ -50,6 +51,7 @@ abstract class $WishlistItemModelCopyWith<$Res> {
     int discountPct,
     double finalPrice,
     String category,
+    bool isLimitedEdition,
     DateTime addedAt,
   });
 }
@@ -77,6 +79,7 @@ class _$WishlistItemModelCopyWithImpl<$Res, $Val extends WishlistItemModel>
     Object? discountPct = null,
     Object? finalPrice = null,
     Object? category = null,
+    Object? isLimitedEdition = null,
     Object? addedAt = null,
   }) {
     return _then(
@@ -113,6 +116,10 @@ class _$WishlistItemModelCopyWithImpl<$Res, $Val extends WishlistItemModel>
                 ? _value.category
                 : category // ignore: cast_nullable_to_non_nullable
                       as String,
+            isLimitedEdition: null == isLimitedEdition
+                ? _value.isLimitedEdition
+                : isLimitedEdition // ignore: cast_nullable_to_non_nullable
+                      as bool,
             addedAt: null == addedAt
                 ? _value.addedAt
                 : addedAt // ignore: cast_nullable_to_non_nullable
@@ -141,6 +148,7 @@ abstract class _$$WishlistItemModelImplCopyWith<$Res>
     int discountPct,
     double finalPrice,
     String category,
+    bool isLimitedEdition,
     DateTime addedAt,
   });
 }
@@ -167,6 +175,7 @@ class __$$WishlistItemModelImplCopyWithImpl<$Res>
     Object? discountPct = null,
     Object? finalPrice = null,
     Object? category = null,
+    Object? isLimitedEdition = null,
     Object? addedAt = null,
   }) {
     return _then(
@@ -203,6 +212,10 @@ class __$$WishlistItemModelImplCopyWithImpl<$Res>
             ? _value.category
             : category // ignore: cast_nullable_to_non_nullable
                   as String,
+        isLimitedEdition: null == isLimitedEdition
+            ? _value.isLimitedEdition
+            : isLimitedEdition // ignore: cast_nullable_to_non_nullable
+                  as bool,
         addedAt: null == addedAt
             ? _value.addedAt
             : addedAt // ignore: cast_nullable_to_non_nullable
@@ -224,6 +237,7 @@ class _$WishlistItemModelImpl extends _WishlistItemModel {
     required this.discountPct,
     required this.finalPrice,
     required this.category,
+    required this.isLimitedEdition,
     required this.addedAt,
   }) : super._();
 
@@ -244,11 +258,13 @@ class _$WishlistItemModelImpl extends _WishlistItemModel {
   @override
   final String category;
   @override
+  final bool isLimitedEdition;
+  @override
   final DateTime addedAt;
 
   @override
   String toString() {
-    return 'WishlistItemModel(productId: $productId, productName: $productName, brand: $brand, imageUrl: $imageUrl, price: $price, discountPct: $discountPct, finalPrice: $finalPrice, category: $category, addedAt: $addedAt)';
+    return 'WishlistItemModel(productId: $productId, productName: $productName, brand: $brand, imageUrl: $imageUrl, price: $price, discountPct: $discountPct, finalPrice: $finalPrice, category: $category, isLimitedEdition: $isLimitedEdition, addedAt: $addedAt)';
   }
 
   @override
@@ -270,6 +286,8 @@ class _$WishlistItemModelImpl extends _WishlistItemModel {
                 other.finalPrice == finalPrice) &&
             (identical(other.category, category) ||
                 other.category == category) &&
+            (identical(other.isLimitedEdition, isLimitedEdition) ||
+                other.isLimitedEdition == isLimitedEdition) &&
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
@@ -284,6 +302,7 @@ class _$WishlistItemModelImpl extends _WishlistItemModel {
     discountPct,
     finalPrice,
     category,
+    isLimitedEdition,
     addedAt,
   );
 
@@ -309,6 +328,7 @@ abstract class _WishlistItemModel extends WishlistItemModel {
     required final int discountPct,
     required final double finalPrice,
     required final String category,
+    required final bool isLimitedEdition,
     required final DateTime addedAt,
   }) = _$WishlistItemModelImpl;
   const _WishlistItemModel._() : super._();
@@ -329,6 +349,8 @@ abstract class _WishlistItemModel extends WishlistItemModel {
   double get finalPrice;
   @override
   String get category;
+  @override
+  bool get isLimitedEdition;
   @override
   DateTime get addedAt;
 

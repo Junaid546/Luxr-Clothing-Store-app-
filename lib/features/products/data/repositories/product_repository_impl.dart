@@ -258,11 +258,24 @@ class ProductRepositoryImpl
   Stream<Either<Failure, ProductEntity>> watchProduct(
     String productId,
   ) {
-    return safeFirestoreStream(() =>
-      _ref.doc(productId).snapshots()
-          .where((doc) => doc.exists)
-          .map((doc) => ProductModel.fromFirestore(doc).toEntity()),
-    );
+    return _ref.doc(productId).snapshots().map<Either<Failure, ProductEntity>>((doc) {
+      if (!doc.exists) {
+        return Left<Failure, ProductEntity>(
+          NotFoundFailure('Product with ID $productId not found'),
+        );
+      }
+      try {
+        return Right<Failure, ProductEntity>(
+          ProductModel.fromFirestore(doc).toEntity(),
+        );
+      } catch (e) {
+        return Left<Failure, ProductEntity>(
+          ServerFailure('Failed to parse product: $e'),
+        );
+      }
+    }).handleError((Object error) {
+      return Left<Failure, ProductEntity>(ServerFailure(error.toString()));
+    });
   }
 
   // ══════════════════════════════════════════════════

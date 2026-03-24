@@ -28,31 +28,38 @@ class ProductDetailState with _$ProductDetailState {
 @riverpod
 class ProductDetailNotifier extends _$ProductDetailNotifier {
 
-  StreamSubscription? _productSubscription;
+  StreamSubscription<dynamic>? _productSubscription;
 
   @override
   ProductDetailState build(String productId) {
-    // Start watching product for real-time stock updates
-    _watchProduct(productId);
+    // Register dispose FIRST before any subscriptions
+    ref.onDispose(() {
+      _productSubscription?.cancel();
+      _productSubscription = null;
+    });
 
-    // Cleanup stream on dispose
-    ref.onDispose(() => _productSubscription?.cancel());
+    // Schedule stream subscription AFTER the current build phase completes
+    // This prevents "setState called during build" assertion errors
+    Timer.run(() => _watchProduct(productId));
 
     return const ProductDetailState(isLoading: true);
   }
 
   void _watchProduct(String productId) {
+    _productSubscription?.cancel();
     _productSubscription = ref
         .read(productRepositoryProvider)
         .watchProduct(productId)
         .listen(
       (result) {
         result.fold(
-          (failure) => state = state.copyWith(
-            isLoading: false,
-            hasError: true,
-            errorMessage: failure.message,
-          ),
+          (failure) {
+            state = state.copyWith(
+              isLoading: false,
+              hasError: true,
+              errorMessage: failure.message,
+            );
+          },
           (product) {
             // Auto-select first available size
             final firstAvailableSize = product.inventory.entries
@@ -68,12 +75,17 @@ class ProductDetailNotifier extends _$ProductDetailNotifier {
             state = state.copyWith(
               isLoading: false,
               product: product,
-              selectedSize: state.selectedSize ?? 
-                            firstAvailableSize,
-              selectedColor: state.selectedColor ?? 
-                             firstColor,
+              selectedSize: state.selectedSize ?? firstAvailableSize,
+              selectedColor: state.selectedColor ?? firstColor,
             );
           },
+        );
+      },
+      onError: (Object e) {
+        state = state.copyWith(
+          isLoading: false,
+          hasError: true,
+          errorMessage: e.toString(),
         );
       },
     );

@@ -6,7 +6,7 @@ part of 'home_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$featuredProductsHash() => r'79901788911cac5f9803f67fa8aca03ca81b90b1';
+String _$featuredProductsHash() => r'5fc84f202b8b3354759e6b357e1b5b64801edf07';
 
 /// See also [featuredProducts].
 @ProviderFor(featuredProducts)
@@ -25,7 +25,7 @@ final featuredProductsProvider =
 // ignore: unused_element
 typedef FeaturedProductsRef = AutoDisposeFutureProviderRef<List<ProductEntity>>;
 String _$newArrivalProductsHash() =>
-    r'ffc230efb6028b0ab82e9d7c7f9ddfad8babaeb3';
+    r'ac6df7be24e9cac02573515a4fbf630a3ddbbe04';
 
 /// See also [newArrivalProducts].
 @ProviderFor(newArrivalProducts)
@@ -45,7 +45,7 @@ final newArrivalProductsProvider =
 typedef NewArrivalProductsRef =
     AutoDisposeFutureProviderRef<List<ProductEntity>>;
 String _$bestSellerProductsHash() =>
-    r'935632fa321cc0f481cfc7a21f0ededff1291ba1';
+    r'bf5b263da6b31bd89ddce5fea2774d3313f6275a';
 
 /// See also [bestSellerProducts].
 @ProviderFor(bestSellerProducts)
@@ -64,7 +64,7 @@ final bestSellerProductsProvider =
 // ignore: unused_element
 typedef BestSellerProductsRef =
     AutoDisposeFutureProviderRef<List<ProductEntity>>;
-String _$homeBannersHash() => r'd3469bf8da4b185309870b6f66066ba2d4e5d1de';
+String _$homeBannersHash() => r'0456aa1f93fd553e8aa6eee0e83148e6a27ce92f';
 
 /// See also [homeBanners].
 @ProviderFor(homeBanners)

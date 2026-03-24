@@ -15,6 +15,7 @@ import 'package:style_cart/features/home/data/models/banner_model.dart';
 import 'package:style_cart/features/home/presentation/providers/home_providers.dart';
 
 import 'package:style_cart/features/products/presentation/providers/product_list_notifier.dart';
+import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
 import 'package:style_cart/shared/utils/wishlist_helper.dart';
 import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
 import 'package:style_cart/shared/widgets/section_header_widget.dart';
@@ -470,20 +471,24 @@ class _FeaturedSection extends ConsumerWidget {
                     width: 160,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 12),
-                      child: ProductCardWidget(
-                        product: products[index],
-                        imageAspectRatio: 2 / 3,
-                        onTap: () => context.push(
-                          RouteNames.productDetail.replaceAll(
-                            ':productId',
-                            products[index].productId,
-                          ),
+                        child: Consumer(
+                          builder: (context, ref, child) {
+                            final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
+                            return ProductCardWidget(
+                              product: products[index],
+                              imageAspectRatio: 2 / 3,
+                              onTap: () => context.push(
+                                RouteNames.productDetail.replaceAll(
+                                  ':productId',
+                                  products[index].productId,
+                                ),
+                              ),
+                              isWishlisted: isWishlisted,
+                              onWishlistTap: () =>
+                                  toggleWishlist(ref, context, products[index]),
+                            );
+                          },
                         ),
-                        // Assuming isWishlisted is resolved properly later or using a mock wrapper
-                        isWishlisted: false,
-                        onWishlistTap: () =>
-                            toggleWishlist(ref, context, products[index]),
-                      ),
                     ),
                   );
                 },
@@ -548,18 +553,23 @@ class _NewArrivalsSection extends ConsumerWidget {
                 childAspectRatio: 0.50,
               ),
               itemCount: min(products.length, 4),
-              itemBuilder: (_, index) => ProductCardWidget(
-                product: products[index],
-                imageAspectRatio: 3 / 4,
-                onTap: () => context.push(
-                  RouteNames.productDetail.replaceAll(
-                    ':productId',
-                    products[index].productId,
-                  ),
-                ),
-                isWishlisted: false,
-                onWishlistTap: () =>
-                    toggleWishlist(ref, context, products[index]),
+              itemBuilder: (_, index) => Consumer(
+                builder: (context, ref, child) {
+                  final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
+                  return ProductCardWidget(
+                    product: products[index],
+                    imageAspectRatio: 3 / 4,
+                    onTap: () => context.push(
+                      RouteNames.productDetail.replaceAll(
+                        ':productId',
+                        products[index].productId,
+                      ),
+                    ),
+                    isWishlisted: isWishlisted,
+                    onWishlistTap: () =>
+                        toggleWishlist(ref, context, products[index]),
+                  );
+                },
               ),
             );
           },
@@ -735,18 +745,23 @@ class _BestSellersSection extends ConsumerWidget {
                     width: 160,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 12),
-                      child: ProductCardWidget(
-                        product: products[index],
-                        imageAspectRatio: 2 / 3,
-                        onTap: () => context.push(
-                          RouteNames.productDetail.replaceAll(
-                            ':productId',
-                            products[index].productId,
-                          ),
-                        ),
-                        isWishlisted: false,
-                        onWishlistTap: () =>
-                            toggleWishlist(ref, context, products[index]),
+                      child: Consumer(
+                        builder: (context, ref, child) {
+                          final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
+                          return ProductCardWidget(
+                            product: products[index],
+                            imageAspectRatio: 2 / 3,
+                            onTap: () => context.push(
+                              RouteNames.productDetail.replaceAll(
+                                ':productId',
+                                products[index].productId,
+                              ),
+                            ),
+                            isWishlisted: isWishlisted,
+                            onWishlistTap: () =>
+                                toggleWishlist(ref, context, products[index]),
+                          );
+                        },
                       ),
                     ),
                   );

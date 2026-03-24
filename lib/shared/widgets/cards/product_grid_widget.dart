@@ -6,6 +6,8 @@ import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
+import 'package:style_cart/shared/utils/wishlist_helper.dart';
 import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
 
 class ProductGridWidget extends ConsumerStatefulWidget {
@@ -79,11 +81,18 @@ class _ProductGridWidgetState extends ConsumerState<ProductGridWidget> {
           return _buildShimmerCard();
         }
         final product = widget.products[index];
-        return ProductCardWidget(
-          product: product,
-          onTap: () => context.push(
-            RouteNames.productDetail.replaceAll(':productId', product.productId),
-          ),
+        return Consumer(
+          builder: (context, ref, child) {
+            final isWishlisted = ref.watch(isProductWishlistedProvider(product.productId));
+            return ProductCardWidget(
+              product: product,
+              isWishlisted: isWishlisted,
+              onWishlistTap: () => toggleWishlist(ref, context, product),
+              onTap: () => context.push(
+                RouteNames.productDetail.replaceAll(':productId', product.productId),
+              ),
+            );
+          },
         );
       },
     );

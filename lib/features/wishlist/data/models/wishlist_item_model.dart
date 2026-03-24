@@ -1,4 +1,4 @@
-﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
+// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -17,6 +17,7 @@ class WishlistItemModel with _$WishlistItemModel {
     required int discountPct,
     required double finalPrice,
     required String category,
+    required bool isLimitedEdition,
     required DateTime addedAt,
   }) = _WishlistItemModel;
 
@@ -31,6 +32,7 @@ class WishlistItemModel with _$WishlistItemModel {
       discountPct: (d['discountPct'] as num?)?.toInt() ?? 0,
       finalPrice:  (d['finalPrice']  as num?)?.toDouble() ?? 0.0,
       category:    d['category']    as String? ?? '',
+      isLimitedEdition: d['isLimitedEdition'] as bool? ?? false,
       addedAt:     (d['addedAt']    as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
@@ -44,6 +46,7 @@ class WishlistItemModel with _$WishlistItemModel {
     'discountPct': discountPct,
     'finalPrice':  finalPrice,
     'category':    category,
+    'isLimitedEdition': isLimitedEdition,
     'addedAt':     FieldValue.serverTimestamp(),
   };
 }
