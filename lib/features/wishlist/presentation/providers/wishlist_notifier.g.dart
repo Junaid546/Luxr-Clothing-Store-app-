@@ -146,7 +146,7 @@ class _IsProductWishlistedProviderElement
   String get productId => (origin as IsProductWishlistedProvider).productId;
 }
 
-String _$wishlistNotifierHash() => r'90f1cda1ceb66119ae8ee06c886621003f311773';
+String _$wishlistNotifierHash() => r'3241cdf8926ae94246e2bdd8d3655107e5a6dbd3';
 
 /// See also [WishlistNotifier].
 @ProviderFor(WishlistNotifier)

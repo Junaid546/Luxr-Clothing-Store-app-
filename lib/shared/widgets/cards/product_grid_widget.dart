@@ -73,7 +73,7 @@ class _ProductGridWidgetState extends ConsumerState<ProductGridWidget> {
         crossAxisCount: 2,
         crossAxisSpacing: 12,
         mainAxisSpacing: 16,
-        childAspectRatio: 0.6,
+        childAspectRatio: 0.5,
       ),
       itemCount: widget.products.length + (widget.isLoadingMore ? 2 : 0),
       itemBuilder: (context, index) {
@@ -104,7 +104,7 @@ class _ProductGridWidgetState extends ConsumerState<ProductGridWidget> {
           crossAxisCount: 2,
           crossAxisSpacing: 12,
           mainAxisSpacing: 16,
-          childAspectRatio: 0.6,
+          childAspectRatio: 0.5,
         ),
         itemCount: 6,
         itemBuilder: (_, __) => _buildShimmerCard(),

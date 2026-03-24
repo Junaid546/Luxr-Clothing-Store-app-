@@ -458,7 +458,7 @@ class _FeaturedSection extends ConsumerWidget {
           onActionTap: () => context.push(RouteNames.shop),
         ),
         SizedBox(
-          height: 320,
+          height: 350,
           child: productsAsync.when(
             data: (products) {
               if (products.isEmpty) return const SizedBox.shrink();
@@ -732,7 +732,7 @@ class _BestSellersSection extends ConsumerWidget {
           onActionTap: () => context.push(RouteNames.shop),
         ),
         SizedBox(
-          height: 320,
+          height: 350,
           child: productsAsync.when(
             data: (products) {
               if (products.isEmpty) return const SizedBox.shrink();

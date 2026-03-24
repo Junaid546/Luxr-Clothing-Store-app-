@@ -4,72 +4,139 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/router/app_router.dart';
+import 'package:style_cart/core/providers/shared_providers.dart';
 
 class CustomerShell extends ConsumerWidget {
   const CustomerShell({required this.child, super.key});
   final Widget child;
 
+  static final _tabs = [
+    (
+      icon: Icons.home_outlined,
+      activeIcon: Icons.home,
+      label: 'HOME',
+      route: RouteNames.home
+    ),
+    (
+      icon: Icons.search_outlined,
+      activeIcon: Icons.search,
+      label: 'SHOP',
+      route: RouteNames.shop
+    ),
+    (
+      icon: Icons.shopping_bag_outlined,
+      activeIcon: Icons.shopping_bag,
+      label: 'CART',
+      route: RouteNames.cart
+    ),
+    (
+      icon: Icons.favorite_border,
+      activeIcon: Icons.favorite,
+      label: 'WISHLIST',
+      route: RouteNames.wishlist
+    ),
+    (
+      icon: Icons.person_outline,
+      activeIcon: Icons.person,
+      label: 'PROFILE',
+      route: RouteNames.profile
+    ),
+  ];
+
+  int _getActiveIndex(String location) {
+    if (location.startsWith('/shop') || location.startsWith('/product')) return 1;
+    if (location.startsWith('/cart')) return 2;
+    if (location.startsWith('/wishlist')) return 3;
+    if (location.startsWith('/profile')) return 4;
+    return 0; // home
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final location = GoRouterState.of(context).matchedLocation;
+    final activeIndex = _getActiveIndex(location);
+
     return Scaffold(
       body: child,
-      bottomNavigationBar: _buildBottomNav(context, ref),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: activeIndex,
+        onTap: (index) => context.go(_tabs[index].route),
+        backgroundColor: AppColors.backgroundCard,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.textMuted,
+        selectedLabelStyle: const TextStyle(fontSize: 10, letterSpacing: 0.5),
+        unselectedLabelStyle: const TextStyle(fontSize: 10),
+        elevation: 0,
+        items: _tabs.asMap().entries.map((entry) {
+          final tab = entry.value;
+          final isCart = tab.label == 'CART';
+          return BottomNavigationBarItem(
+            icon: isCart
+                ? _CartIconWithBadge(
+                    icon: tab.icon,
+                    isActive: activeIndex == entry.key,
+                  )
+                : Icon(tab.icon),
+            activeIcon: isCart
+                ? _CartIconWithBadge(
+                    icon: tab.activeIcon,
+                    isActive: true,
+                  )
+                : Icon(tab.activeIcon),
+            label: tab.label,
+          );
+        }).toList(),
+      ),
     );
   }
+}
 
-  Widget _buildBottomNav(BuildContext context, WidgetRef ref) {
-    final location = GoRouterState.of(context).matchedLocation;
-    final cartCount = ref.watch(cartItemCountProvider);
+class _CartIconWithBadge extends ConsumerWidget {
+  final IconData icon;
+  final bool isActive;
 
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.backgroundDark,
-        border: Border(top: BorderSide(color: Color(0x1AFFFFFF))),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      child: SafeArea(
-        top: false,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildNavItem(context, Icons.home_outlined, Icons.home, 0, location.startsWith('/home')),
-            _buildNavItem(context, Icons.search_outlined, Icons.search, 1, location.startsWith('/shop')),
-            _buildNavItem(context, Icons.shopping_bag_outlined, Icons.shopping_bag, 2, location.startsWith('/cart'), badgeCount: cartCount),
-            _buildNavItem(context, Icons.favorite_outline, Icons.favorite, 3, location.startsWith('/wishlist')),
-            _buildNavItem(context, Icons.person_outline, Icons.person, 4, location.startsWith('/profile')),
-          ],
+  const _CartIconWithBadge({required this.icon, required this.isActive});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final countAsync = ref.watch(cartItemCountProvider);
+
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Icon(icon, color: isActive ? AppColors.primary : AppColors.textMuted),
+        countAsync.when(
+          data: (count) {
+            if (count == 0) return const SizedBox.shrink();
+            return Positioned(
+              right: -6,
+              top: -6,
+              child: Container(
+                width: 16,
+                height: 16,
+                decoration: const BoxDecoration(
+                  color: AppColors.primary,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
+                    '$count',
+                    style: const TextStyle(
+                      fontSize: 9,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            );
+          },
+          loading: () => const SizedBox.shrink(),
+          error: (_, __) => const SizedBox.shrink(),
         ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(BuildContext context, IconData icon, IconData activeIcon, int index, bool isActive, {int badgeCount = 0}) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        switch (index) {
-          case 0: context.go(RouteNames.home);
-          case 1: context.go(RouteNames.shop);
-          case 2: context.go(RouteNames.cart);
-          case 3: context.go(RouteNames.wishlist);
-          case 4: context.go(RouteNames.profile);
-        }
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Badge(
-            isLabelVisible: badgeCount > 0,
-            label: Text('$badgeCount'),
-            child: Icon(
-              isActive ? activeIcon : icon,
-              color: isActive ? AppColors.primary : AppColors.textMuted,
-              size: 28,
-            ),
-          ),
-        ],
-      ),
+      ],
     );
   }
 }

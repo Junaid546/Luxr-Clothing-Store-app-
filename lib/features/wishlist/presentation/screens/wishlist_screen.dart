@@ -57,8 +57,14 @@ class _WishlistScreenState extends ConsumerState<WishlistScreen> {
           SnackBar(content: Text(failure.message), backgroundColor: AppColors.error),
         ),
         (_) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Added to cart!'), backgroundColor: AppColors.success),
+            const SnackBar(
+              content: Text('Added to cart!'),
+              backgroundColor: AppColors.success,
+              behavior: SnackBarBehavior.floating,
+              duration: Duration(seconds: 2),
+            ),
           );
           // Auto remove from wishlist after adding to cart
           ref.read(wishlistNotifierProvider.notifier).removeFromWishlist(item.productId);
@@ -104,7 +110,7 @@ class _WishlistScreenState extends ConsumerState<WishlistScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => context.pop(),
+          onPressed: () => context.go(RouteNames.shop),
         ),
         actions: [
           IconButton(
@@ -136,7 +142,7 @@ class _WishlistScreenState extends ConsumerState<WishlistScreen> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => context.pop(),
+          onPressed: () => context.go(RouteNames.shop),
         ),
       ),
       body: Center(
@@ -201,8 +207,8 @@ class _WishlistScreenState extends ConsumerState<WishlistScreen> {
 
 class _WishlistGrid extends StatelessWidget {
   final List<WishlistItemModel> filteredItems;
-  final Function(String) onRemove;
-  final Function(WishlistItemModel) onAddToCart;
+  final void Function(String) onRemove;
+  final void Function(WishlistItemModel) onAddToCart;
 
   const _WishlistGrid({
     required this.filteredItems,

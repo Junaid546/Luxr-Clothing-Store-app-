@@ -96,18 +96,22 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           backgroundColor: AppColors.error,
         ),
       ),
-      (_) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Added to cart!'),
-          backgroundColor: AppColors.success,
-          behavior: SnackBarBehavior.floating,
-          action: SnackBarAction(
-            label: 'VIEW CART',
-            textColor: Colors.white,
-            onPressed: () => context.push(RouteNames.cart),
+      (_) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Added to cart!'),
+            backgroundColor: AppColors.success,
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 2),
+            action: SnackBarAction(
+              label: 'VIEW CART',
+              textColor: Colors.white,
+              onPressed: () => context.push(RouteNames.cart),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -159,7 +163,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => context.go(RouteNames.home),
+                    onPressed: () => context.pop(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.gold,
                       padding: const EdgeInsets.symmetric(vertical: 16),

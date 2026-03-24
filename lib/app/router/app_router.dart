@@ -14,6 +14,8 @@ import 'package:style_cart/features/home/presentation/screens/home_screen.dart';
 import 'package:style_cart/features/products/presentation/screens/shop_screen.dart';
 import 'package:style_cart/features/products/presentation/screens/product_detail_screen.dart';
 import 'package:style_cart/features/wishlist/presentation/screens/wishlist_screen.dart';
+import 'package:style_cart/features/cart/presentation/screens/cart_screen.dart';
+import 'package:style_cart/features/profile/presentation/screens/profile_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -63,7 +65,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: RouteNames.cart,
-            builder: (context, state) => const CartScreenPlaceholder(),
+            builder: (context, state) => const CartScreen(),
           ),
           GoRoute(
             path: RouteNames.productDetail,
@@ -78,7 +80,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: RouteNames.profile,
-            builder: (context, state) => const ProfileScreenPlaceholder(),
+            builder: (context, state) => const ProfileScreen(),
           ),
         ],
       ),
