@@ -1,27 +1,84 @@
-﻿// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering
-
 import 'package:dartz/dartz.dart';
 import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
-import 'package:style_cart/features/orders/data/models/order_model.dart';
+import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 
 abstract interface class OrderRepository {
-  Future<Either<Failure, void>> placeOrder({
+
+  // ── Customer operations ───────────────────────────
+
+  // Real-time stream of single order (for tracking)
+  Stream<Either<Failure, OrderEntity>> watchOrder(
+    String orderId,
+  );
+
+  // Real-time stream of user's orders
+  Stream<Either<Failure, List<OrderEntity>>> watchUserOrders(
+    String userId,
+  );
+
+  // One-time fetch
+  Future<Either<Failure, OrderEntity>> getOrderById(
+    String orderId,
+  );
+
+  // Paginated user orders
+  Future<Either<Failure, List<OrderEntity>>> getUserOrders({
     required String userId,
-    required OrderModel order,
-    required List<CartItemModel> cartItems,
+    String? statusFilter,
+    int limit = 10,
+    Object? lastDocument,
   });
 
-  Stream<Either<Failure, List<OrderModel>>> watchUserOrders(String userId);
-  
-  Future<Either<Failure, OrderModel>> getOrderById(String orderId);
+  // Cancel order (only pending/confirmed)
+  Future<Either<Failure, void>> cancelOrder({
+    required String orderId,
+    required String userId,
+    required List<OrderItemEntity> items,
+    String? reason,
+  });
 
+  // Request return (only delivered within 7 days)
+  Future<Either<Failure, void>> requestReturn({
+    required String orderId,
+    required String userId,
+    required String reason,
+  });
+
+  // ── Admin operations ──────────────────────────────
+
+  // All orders (paginated + filtered)
+  Future<Either<Failure, List<OrderEntity>>> getAllOrders({
+    String? statusFilter,
+    DateTime? fromDate,
+    DateTime? toDate,
+    int limit = 20,
+    Object? lastDocument,
+  });
+
+  // Real-time stream of all orders (admin dashboard)
+  Stream<Either<Failure, List<OrderEntity>>> watchAllOrders({
+    String? statusFilter,
+    int limit = 20,
+  });
+
+  // Update order status (admin)
   Future<Either<Failure, void>> updateOrderStatus({
     required String orderId,
     required String newStatus,
-    String? note,
     required String updatedBy,
+    String? note,
+    CourierEntity? courier,
   });
+
+  // Confirm return + release stock (admin)
+  Future<Either<Failure, void>> confirmReturn({
+    required String orderId,
+    required List<OrderItemEntity> items,
+    required String adminId,
+  });
+
+  // Search orders by ID or user email (admin)
+  Future<Either<Failure, List<OrderEntity>>> searchOrders(
+    String query,
+  );
 }
-
-
