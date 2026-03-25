@@ -1,9 +1,11 @@
+import 'package:dartz/dartz.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:style_cart/core/errors/failures.dart';
 import 'package:style_cart/core/providers/repository_providers.dart';
 import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
 import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
-import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/errors/failures.dart';
+import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
 
 part 'cart_notifier.g.dart';
 
@@ -25,53 +27,71 @@ Stream<List<CartItemModel>> cartItems(CartItemsRef ref) {
 @riverpod
 class CartTotal extends _$CartTotal {
   @override
-  Map<String, double> build() {
+  CartSummary build() {
     final items = ref.watch(cartItemsProvider).value ?? [];
+    final threshold = double.parse(dotenv.env['FREE_SHIPPING_THRESHOLD'] ?? '100');
     
     double subtotal = 0;
-    double discount = 0;
+    double savings = 0;
     
     for (final item in items) {
-      subtotal += item.unitPrice * item.quantity;
-      discount += (item.unitPrice - item.finalPrice) * item.quantity;
+      subtotal += item.lineTotal;
+      savings += (item.unitPrice - item.finalPrice) * item.quantity;
     }
     
-    const shipping = 0.0; // Free shipping as per design
-    final total = subtotal - discount + shipping;
+    final freeShipping = subtotal >= threshold;
+    final shipping = (items.isNotEmpty && !freeShipping) 
+        ? double.parse(dotenv.env['EXPRESS_SHIPPING_COST'] ?? '25')
+        : 0.0;
+        
+    final total = subtotal + shipping;
     
-    return {
-      'subtotal': subtotal,
-      'discount': discount,
-      'shipping': shipping,
-      'total': total,
-    };
+    return CartSummary(
+      subtotal: subtotal,
+      shippingCost: shipping,
+      discountAmount: savings, // Total discount from SRP
+      totalSavings: savings,
+      total: total,
+      freeShippingEligible: freeShipping,
+    );
   }
 }
 
 @riverpod
 class CartNotifier extends _$CartNotifier {
   @override
-  void build() {}
+  bool build() => false; // returns isUpdating state
 
   Future<void> updateQuantity(String cartItemId, int quantity) async {
+    if (quantity < 1) return;
+    state = true;
     final authState = ref.read(authNotifierProvider);
-    if (authState is! AuthAuthenticated) return;
+    if (authState is! AuthAuthenticated) {
+      state = false;
+      return;
+    }
 
     await ref.read(cartRepositoryProvider).updateQuantity(
       userId: authState.user.uid,
       cartItemId: cartItemId,
       quantity: quantity,
     );
+    state = false;
   }
 
   Future<void> removeFromCart(String cartItemId) async {
+    state = true;
     final authState = ref.read(authNotifierProvider);
-    if (authState is! AuthAuthenticated) return;
+    if (authState is! AuthAuthenticated) {
+      state = false;
+      return;
+    }
 
     await ref.read(cartRepositoryProvider).removeFromCart(
       userId: authState.user.uid,
       cartItemId: cartItemId,
     );
+    state = false;
   }
 
   Future<void> clearCart() async {

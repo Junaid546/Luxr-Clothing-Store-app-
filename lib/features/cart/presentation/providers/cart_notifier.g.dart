@@ -24,12 +24,12 @@ final cartItemsProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CartItemsRef = AutoDisposeStreamProviderRef<List<CartItemModel>>;
-String _$cartTotalHash() => r'97b7bee40a84138e4c315310f1c3d6514ae6fd98';
+String _$cartTotalHash() => r'dd06af4d2c5de47098039e324fa52fced919ce04';
 
 /// See also [CartTotal].
 @ProviderFor(CartTotal)
 final cartTotalProvider =
-    AutoDisposeNotifierProvider<CartTotal, Map<String, double>>.internal(
+    AutoDisposeNotifierProvider<CartTotal, CartSummary>.internal(
       CartTotal.new,
       name: r'cartTotalProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,13 +39,13 @@ final cartTotalProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$CartTotal = AutoDisposeNotifier<Map<String, double>>;
-String _$cartNotifierHash() => r'8e2842dd67ad8d8e4cfc361c55f48d3d0d5ae28d';
+typedef _$CartTotal = AutoDisposeNotifier<CartSummary>;
+String _$cartNotifierHash() => r'1c324a0030092f7d7ad78a795ded2b3597275ab5';
 
 /// See also [CartNotifier].
 @ProviderFor(CartNotifier)
 final cartNotifierProvider =
-    AutoDisposeNotifierProvider<CartNotifier, void>.internal(
+    AutoDisposeNotifierProvider<CartNotifier, bool>.internal(
       CartNotifier.new,
       name: r'cartNotifierProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -55,6 +55,6 @@ final cartNotifierProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$CartNotifier = AutoDisposeNotifier<void>;
+typedef _$CartNotifier = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

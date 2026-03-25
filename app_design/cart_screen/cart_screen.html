@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>LUXR - My Cart</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LUXR - My Cart</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800&amp;family=DM+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -24,152 +31,176 @@
                         "display": ["Epilogue", "sans-serif"],
                         "mono": ["DM Mono", "monospace"]
                     },
-                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
                 },
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
-<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-<div class="flex items-center justify-between px-6 py-4">
-<div class="flex items-center gap-4">
-<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
-<span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
-</button>
-<div class="flex flex-col">
-<h1 class="text-xl font-bold tracking-tight">My Cart</h1>
-<span class="text-xs font-medium text-slate-500 dark:text-slate-400">3 ITEMS</span>
-</div>
-</div>
-<button class="flex items-center justify-center size-10 rounded-full text-slate-400 hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined">delete_sweep</span>
-</button>
-</div>
-</header>
-<main class="flex-1 overflow-y-auto px-6 py-6 space-y-4">
-<div class="bg-[#131318] rounded-xl p-4 border border-slate-800 flex gap-4 relative">
-<div class="size-20 rounded-lg overflow-hidden shrink-0 bg-slate-800">
-<img alt="Luxury leather jacket" class="w-full h-full object-cover" data-alt="Black luxury leather jacket high fashion" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC28ooScDPIiYsSadUAtPoPbPofkPUeU5Rr9VC9fdECpdm_ap61ShjyXo7TK6SrcVhqgOkoWCQ_Wk4blLm3Q72xNu7ghtaUa9YIMssRQZkpF-1NQ-uVJZPG8Lo21EtqERwelr80YXsSqUCoFH8JI9dCyXxlW3-ioWka3pqt3l_Tjr3CwtcoTo7P7pQxUitG9BhlAQ2KJ0Y9C1q3KAAQXjs1Mxr_kdwzfd7AwQXoWpZwWUROlnjJmEzjVvcfqdiIEHt-D9O9iap0hRs"/>
-</div>
-<div class="flex flex-col flex-1 justify-between py-0.5">
-<div>
-<h3 class="font-bold text-base line-clamp-1">Aventador Jacket</h3>
-<p class="text-xs text-slate-400 mt-1">Size: L | Color: Obsidian Black</p>
-</div>
-<div class="flex items-center justify-between mt-2">
-<span class="font-mono text-accent-gold font-medium">$1,200</span>
-<div class="flex items-center gap-3 bg-slate-800/50 rounded-full px-2 py-1">
-<button class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">-</button>
-<span class="font-mono text-accent-gold text-sm w-4 text-center">1</span>
-<button class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">+</button>
-</div>
-</div>
-</div>
-<button class="absolute top-4 right-4 text-slate-600">
-<span class="material-symbols-outlined text-lg">close</span>
-</button>
-</div>
-<div class="bg-[#131318] rounded-xl p-4 border border-slate-800 flex gap-4 relative">
-<div class="size-20 rounded-lg overflow-hidden shrink-0 bg-slate-800">
-<img alt="Luxury titanium watch" class="w-full h-full object-cover" data-alt="Gold and black titanium chronometer watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeTfwS-CyQFWTOVr5pynu_zXmvKBFdTogvIN5NdO3ZCzqQhlK9w_6guYJGDtoTDKXWkUGnIVk0huL7t6EVOJ4-7q0W0zfKzf9WmMDaNPyPWovsqElkawKJXtl08wztbGl3WX3lNVfPan5ix9OEgQkXj_ajP6rQ9rrhaNnOcLhLiOxLTAlLSToRH-Edd-srrEEfnEWpSW0N0dVxyDrBbKcE2DURVtquJVMLDwiAvybVwE7RHXQqJeG16hPcm-N1TP1OxmMjtGxQiA8"/>
-</div>
-<div class="flex flex-col flex-1 justify-between py-0.5">
-<div>
-<h3 class="font-bold text-base line-clamp-1">Titanium Chrono</h3>
-<p class="text-xs text-slate-400 mt-1">Size: 42mm | Color: Gold/Black</p>
-</div>
-<div class="flex items-center justify-between mt-2">
-<span class="font-mono text-accent-gold font-medium">$2,500</span>
-<div class="flex items-center gap-3 bg-slate-800/50 rounded-full px-2 py-1">
-<button class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">-</button>
-<span class="font-mono text-accent-gold text-sm w-4 text-center">1</span>
-<button class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">+</button>
-</div>
-</div>
-</div>
-<button class="absolute top-4 right-4 text-slate-600">
-<span class="material-symbols-outlined text-lg">close</span>
-</button>
-</div>
-<div class="bg-[#131318] rounded-xl p-4 border border-slate-800 flex gap-4 relative">
-<div class="size-20 rounded-lg overflow-hidden shrink-0 bg-slate-800">
-<img alt="Designer shoes" class="w-full h-full object-cover" data-alt="Designer midnight blue velvet loafers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6JYJEKz32ODP9A-dO2_2yWpD25jommDoEF3lyfiLPEawv4zNBVp2poaEY0b4QninC_BzV8CLrfvtR-d5Rdm2s6jTkhFNRJQ-a4UQMi9epaHXfXbf-vtqb7ty_l3FVxlaihMxrkmGTY2bzdFg_9fDl0APpDGS0pP51N4LmjrtjqkjdkY-AM3qAHBABx8gERLrQxaqUWnuVcUvtBX4gnBCL4rnzd0pMtQKj9hnCqYBE4TlGLcR4EDSR1VjdznhMFszP8isKrtSMFt0"/>
-</div>
-<div class="flex flex-col flex-1 justify-between py-0.5">
-<div>
-<h3 class="font-bold text-base line-clamp-1">Midnight Loafers</h3>
-<p class="text-xs text-slate-400 mt-1">Size: 44 | Color: Midnight Blue</p>
-</div>
-<div class="flex items-center justify-between mt-2">
-<span class="font-mono text-accent-gold font-medium">$850</span>
-<div class="flex items-center gap-3 bg-slate-800/50 rounded-full px-2 py-1">
-<button class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">-</button>
-<span class="font-mono text-accent-gold text-sm w-4 text-center">1</span>
-<button class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">+</button>
-</div>
-</div>
-</div>
-<button class="absolute top-4 right-4 text-slate-600">
-<span class="material-symbols-outlined text-lg">close</span>
-</button>
-</div>
-<div class="mt-8 bg-[#131318] rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
-<div class="flex justify-between items-center">
-<span class="text-slate-400 font-medium">Subtotal</span>
-<span class="font-mono text-slate-100 font-medium text-lg">$4,550.00</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-slate-400 font-medium">Shipping</span>
-<span class="font-mono text-slate-100 font-medium">FREE</span>
-</div>
-<div class="flex justify-between items-center">
-<span class="text-slate-400 font-medium">Discount</span>
-<span class="font-mono text-accent-green font-medium">-$250.00</span>
-</div>
-<div class="pt-4 border-t border-slate-800 flex justify-between items-center">
-<span class="text-slate-100 font-bold text-lg">Total</span>
-<span class="font-mono text-accent-gold font-bold text-2xl">$4,300.00</span>
-</div>
-<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 mt-2">
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+    <header
+        class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-4">
+                <button
+                    class="flex items-center justify-center size-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined text-slate-900 dark:text-slate-100">arrow_back</span>
+                </button>
+                <div class="flex flex-col">
+                    <h1 class="text-xl font-bold tracking-tight">My Cart</h1>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">3 ITEMS</span>
+                </div>
+            </div>
+            <button
+                class="flex items-center justify-center size-10 rounded-full text-slate-400 hover:text-red-500 transition-colors">
+                <span class="material-symbols-outlined">delete_sweep</span>
+            </button>
+        </div>
+    </header>
+    <main class="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+        <div class="bg-[#131318] rounded-xl p-4 border border-slate-800 flex gap-4 relative">
+            <div class="size-20 rounded-lg overflow-hidden shrink-0 bg-slate-800">
+                <img alt="Luxury leather jacket" class="w-full h-full object-cover"
+                    data-alt="Black luxury leather jacket high fashion"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC28ooScDPIiYsSadUAtPoPbPofkPUeU5Rr9VC9fdECpdm_ap61ShjyXo7TK6SrcVhqgOkoWCQ_Wk4blLm3Q72xNu7ghtaUa9YIMssRQZkpF-1NQ-uVJZPG8Lo21EtqERwelr80YXsSqUCoFH8JI9dCyXxlW3-ioWka3pqt3l_Tjr3CwtcoTo7P7pQxUitG9BhlAQ2KJ0Y9C1q3KAAQXjs1Mxr_kdwzfd7AwQXoWpZwWUROlnjJmEzjVvcfqdiIEHt-D9O9iap0hRs" />
+            </div>
+            <div class="flex flex-col flex-1 justify-between py-0.5">
+                <div>
+                    <h3 class="font-bold text-base line-clamp-1">Aventador Jacket</h3>
+                    <p class="text-xs text-slate-400 mt-1">Size: L | Color: Obsidian Black</p>
+                </div>
+                <div class="flex items-center justify-between mt-2">
+                    <span class="font-mono text-accent-gold font-medium">$1,200</span>
+                    <div class="flex items-center gap-3 bg-slate-800/50 rounded-full px-2 py-1">
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">-</button>
+                        <span class="font-mono text-accent-gold text-sm w-4 text-center">1</span>
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">+</button>
+                    </div>
+                </div>
+            </div>
+            <button class="absolute top-4 right-4 text-slate-600">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+        <div class="bg-[#131318] rounded-xl p-4 border border-slate-800 flex gap-4 relative">
+            <div class="size-20 rounded-lg overflow-hidden shrink-0 bg-slate-800">
+                <img alt="Luxury titanium watch" class="w-full h-full object-cover"
+                    data-alt="Gold and black titanium chronometer watch"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeTfwS-CyQFWTOVr5pynu_zXmvKBFdTogvIN5NdO3ZCzqQhlK9w_6guYJGDtoTDKXWkUGnIVk0huL7t6EVOJ4-7q0W0zfKzf9WmMDaNPyPWovsqElkawKJXtl08wztbGl3WX3lNVfPan5ix9OEgQkXj_ajP6rQ9rrhaNnOcLhLiOxLTAlLSToRH-Edd-srrEEfnEWpSW0N0dVxyDrBbKcE2DURVtquJVMLDwiAvybVwE7RHXQqJeG16hPcm-N1TP1OxmMjtGxQiA8" />
+            </div>
+            <div class="flex flex-col flex-1 justify-between py-0.5">
+                <div>
+                    <h3 class="font-bold text-base line-clamp-1">Titanium Chrono</h3>
+                    <p class="text-xs text-slate-400 mt-1">Size: 42mm | Color: Gold/Black</p>
+                </div>
+                <div class="flex items-center justify-between mt-2">
+                    <span class="font-mono text-accent-gold font-medium">$2,500</span>
+                    <div class="flex items-center gap-3 bg-slate-800/50 rounded-full px-2 py-1">
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">-</button>
+                        <span class="font-mono text-accent-gold text-sm w-4 text-center">1</span>
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">+</button>
+                    </div>
+                </div>
+            </div>
+            <button class="absolute top-4 right-4 text-slate-600">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+        <div class="bg-[#131318] rounded-xl p-4 border border-slate-800 flex gap-4 relative">
+            <div class="size-20 rounded-lg overflow-hidden shrink-0 bg-slate-800">
+                <img alt="Designer shoes" class="w-full h-full object-cover"
+                    data-alt="Designer midnight blue velvet loafers"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6JYJEKz32ODP9A-dO2_2yWpD25jommDoEF3lyfiLPEawv4zNBVp2poaEY0b4QninC_BzV8CLrfvtR-d5Rdm2s6jTkhFNRJQ-a4UQMi9epaHXfXbf-vtqb7ty_l3FVxlaihMxrkmGTY2bzdFg_9fDl0APpDGS0pP51N4LmjrtjqkjdkY-AM3qAHBABx8gERLrQxaqUWnuVcUvtBX4gnBCL4rnzd0pMtQKj9hnCqYBE4TlGLcR4EDSR1VjdznhMFszP8isKrtSMFt0" />
+            </div>
+            <div class="flex flex-col flex-1 justify-between py-0.5">
+                <div>
+                    <h3 class="font-bold text-base line-clamp-1">Midnight Loafers</h3>
+                    <p class="text-xs text-slate-400 mt-1">Size: 44 | Color: Midnight Blue</p>
+                </div>
+                <div class="flex items-center justify-between mt-2">
+                    <span class="font-mono text-accent-gold font-medium">$850</span>
+                    <div class="flex items-center gap-3 bg-slate-800/50 rounded-full px-2 py-1">
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">-</button>
+                        <span class="font-mono text-accent-gold text-sm w-4 text-center">1</span>
+                        <button
+                            class="size-6 flex items-center justify-center rounded-full bg-slate-700 text-slate-100">+</button>
+                    </div>
+                </div>
+            </div>
+            <button class="absolute top-4 right-4 text-slate-600">
+                <span class="material-symbols-outlined text-lg">close</span>
+            </button>
+        </div>
+        <div class="mt-8 bg-[#131318] rounded-2xl p-6 border border-slate-800 shadow-xl space-y-4">
+            <div class="flex justify-between items-center">
+                <span class="text-slate-400 font-medium">Subtotal</span>
+                <span class="font-mono text-slate-100 font-medium text-lg">$4,550.00</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-slate-400 font-medium">Shipping</span>
+                <span class="font-mono text-slate-100 font-medium">FREE</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-slate-400 font-medium">Discount</span>
+                <span class="font-mono text-accent-green font-medium">-$250.00</span>
+            </div>
+            <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
+                <span class="text-slate-100 font-bold text-lg">Total</span>
+                <span class="font-mono text-accent-gold font-bold text-2xl">$4,300.00</span>
+            </div>
+            <button
+                class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 mt-2">
                 Proceed to Checkout
                 <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-</div>
-</main>
-<nav class="sticky bottom-0 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pb-8 pt-2 px-6">
-<div class="flex items-center justify-between max-w-md mx-auto">
-<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">home</span>
-<span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">search</span>
-<span class="text-[10px] font-bold uppercase tracking-wider">Search</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-primary relative" href="#">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
-<span class="text-[10px] font-bold uppercase tracking-wider">Cart</span>
-<div class="absolute -top-1 -right-1 size-4 bg-primary text-white text-[8px] flex items-center justify-center rounded-full border-2 border-background-dark font-bold">3</div>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">favorite</span>
-<span class="text-[10px] font-bold uppercase tracking-wider">Saved</span>
-</a>
-<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="text-[10px] font-bold uppercase tracking-wider">Profile</span>
-</a>
-</div>
-</nav>
-</body></html>
+            </button>
+        </div>
+    </main>
+    <nav
+        class="sticky bottom-0 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pb-8 pt-2 px-6">
+        <div class="flex items-center justify-between max-w-md mx-auto">
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+                <span class="material-symbols-outlined">home</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+                <span class="material-symbols-outlined">search</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Search</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-primary relative" href="#">
+                <span class="material-symbols-outlined text-primary"
+                    style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Cart</span>
+                <div
+                    class="absolute -top-1 -right-1 size-4 bg-primary text-white text-[8px] flex items-center justify-center rounded-full border-2 border-background-dark font-bold">
+                    3</div>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+                <span class="material-symbols-outlined">favorite</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Saved</span>
+            </a>
+            <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+                <span class="material-symbols-outlined">person</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider">Profile</span>
+            </a>
+        </div>
+    </nav>
+</body>
+
+</html>
