@@ -23,6 +23,8 @@ import 'package:style_cart/features/orders/presentation/screens/order_tracking_s
 import 'package:style_cart/features/admin/dashboard/presentation/screens/admin_dashboard_screen.dart';
 import 'package:style_cart/features/admin/products/presentation/screens/admin_products_screen.dart';
 import 'package:style_cart/features/admin/products/presentation/screens/add_edit_product_screen.dart';
+import 'package:style_cart/features/admin/orders/presentation/screens/admin_orders_screen.dart';
+import 'package:style_cart/features/admin/analytics/presentation/screens/admin_analytics_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -135,26 +137,36 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: RouteNames.adminProducts,
             builder: (context, state) => const AdminProductsScreen(),
-          ),
-          GoRoute(
-            path: RouteNames.adminAddProduct,
-            builder: (context, state) => const AddEditProductScreen(),
-          ),
-          GoRoute(
-            path: RouteNames.adminEditProduct,
-            builder: (context, state) {
-              final productId = state.pathParameters['productId']!;
-              return AddEditProductScreen(productId: productId);
-            },
+            routes: [
+              GoRoute(
+                path: 'add',
+                builder: (context, state) => const AddEditProductScreen(),
+              ),
+              GoRoute(
+                path: ':productId/edit',
+                builder: (context, state) {
+                  final productId = state.pathParameters['productId']!;
+                  return AddEditProductScreen(productId: productId);
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: RouteNames.adminOrders,
-            builder: (context, state) => const AdminOrdersScreenPlaceholder(),
+            builder: (context, state) => const AdminOrdersScreen(),
+            routes: [
+              GoRoute(
+                path: ':orderId',
+                builder: (context, state) {
+                  final orderId = state.pathParameters['orderId']!;
+                  return OrderTrackingScreen(orderId: orderId);
+                },
+              ),
+            ],
           ),
           GoRoute(
             path: RouteNames.adminAnalytics,
-            builder: (context, state) =>
-                const AdminAnalyticsScreenPlaceholder(),
+            builder: (context, state) => const AdminAnalyticsScreen(),
           ),
         ],
       ),

@@ -11,65 +11,83 @@ class AdminShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(body: child, bottomNavigationBar: _buildBottomNav(context));
-  }
-
-  Widget _buildBottomNav(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
+    final activeIndex = _getActiveIndex(location);
 
-    var currentIndex = 0;
-    if (location.startsWith('/admin')) {
-      if (location == '/admin') {
-        currentIndex = 0;
-      } else if (location.contains('/products')) {
-        currentIndex = 1;
-      } else if (location.contains('/orders')) {
-        currentIndex = 2;
-      } else if (location.contains('/analytics')) {
-        currentIndex = 3;
-      }
-    }
-
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            context.go(RouteNames.adminDashboard);
-          case 1:
-            context.go(RouteNames.adminProducts);
-          case 2:
-            context.go(RouteNames.adminOrders);
-          case 3:
-            context.go(RouteNames.adminAnalytics);
-        }
-      },
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: AppColors.backgroundCard,
-      selectedItemColor: AppColors.gold,
-      unselectedItemColor: AppColors.textMuted,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard_outlined),
-          activeIcon: Icon(Icons.dashboard),
-          label: 'Dashboard',
+    return Scaffold(
+      body: child,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: AppColors.backgroundCard,
+          border: Border(
+            top: BorderSide(
+              color: AppColors.borderDefault,
+              width: 1,
+            ),
+          ),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.inventory_2_outlined),
-          activeIcon: Icon(Icons.inventory_2),
-          label: 'Products',
+        child: BottomNavigationBar(
+          currentIndex: activeIndex,
+          onTap: (index) => context.go(_adminTabs[index].route),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: AppColors.gold,
+          unselectedItemColor: AppColors.textMuted,
+          selectedLabelStyle: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontSize: 10,
+          ),
+          items: _adminTabs
+              .map(
+                (tab) => BottomNavigationBarItem(
+                  icon: Icon(tab.icon),
+                  activeIcon: Icon(tab.activeIcon),
+                  label: tab.label,
+                ),
+              )
+              .toList(),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.receipt_long_outlined),
-          activeIcon: Icon(Icons.receipt_long),
-          label: 'Orders',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.analytics_outlined),
-          activeIcon: Icon(Icons.analytics),
-          label: 'Analytics',
-        ),
-      ],
+      ),
     );
   }
+
+  int _getActiveIndex(String location) {
+    if (location.startsWith(RouteNames.adminProducts)) return 1;
+    if (location.startsWith(RouteNames.adminOrders)) return 2;
+    if (location.startsWith(RouteNames.adminAnalytics)) return 3;
+    return 0; // dashboard
+  }
 }
+
+// Admin tab definitions
+final _adminTabs = [
+  (
+    icon: Icons.grid_view_outlined,
+    activeIcon: Icons.grid_view,
+    label: 'DASHBOARD',
+    route: RouteNames.adminDashboard,
+  ),
+  (
+    icon: Icons.inventory_2_outlined,
+    activeIcon: Icons.inventory_2,
+    label: 'PRODUCTS',
+    route: RouteNames.adminProducts,
+  ),
+  (
+    icon: Icons.shopping_bag_outlined,
+    activeIcon: Icons.shopping_bag,
+    label: 'ORDERS',
+    route: RouteNames.adminOrders,
+  ),
+  (
+    icon: Icons.bar_chart_outlined,
+    activeIcon: Icons.bar_chart,
+    label: 'ANALYTICS',
+    route: RouteNames.adminAnalytics,
+  ),
+];
