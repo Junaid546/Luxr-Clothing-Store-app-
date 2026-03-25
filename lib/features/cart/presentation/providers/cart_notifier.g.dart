@@ -24,7 +24,7 @@ final cartItemsProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CartItemsRef = AutoDisposeStreamProviderRef<List<CartItemModel>>;
-String _$cartTotalHash() => r'dd06af4d2c5de47098039e324fa52fced919ce04';
+String _$cartTotalHash() => r'bdea507a8ec86fa5dae022aefc0b84e51fff2a85';
 
 /// See also [CartTotal].
 @ProviderFor(CartTotal)

@@ -478,7 +478,7 @@ class _CheckoutBar extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: isEmpty ? null : () => context.push(RouteNames.checkout),
+        onPressed: isEmpty ? null : () => context.pushNamed(RouteNames.checkout),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           minimumSize: const Size(double.infinity, 56),

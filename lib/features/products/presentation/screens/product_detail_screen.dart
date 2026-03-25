@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:style_cart/app/router/app_router.dart';
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
@@ -97,17 +98,23 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         ),
       ),
       (_) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(
+        if (!context.mounted) return;
+        final messenger = ScaffoldMessenger.of(context);
+        messenger.hideCurrentSnackBar();
+        messenger.showSnackBar(
           SnackBar(
             content: const Text('Added to cart!'),
             backgroundColor: AppColors.success,
             behavior: SnackBarBehavior.floating,
-            duration: const Duration(seconds: 2),
+            duration: const Duration(seconds: 3),
             action: SnackBarAction(
               label: 'VIEW CART',
               textColor: Colors.white,
-              onPressed: () => context.push(RouteNames.cart),
+              onPressed: () {
+                if (AppRouter.navigatorKey.currentContext?.mounted ?? false) {
+                  AppRouter.navigatorKey.currentContext?.pushNamed(RouteNames.cart);
+                }
+              },
             ),
           ),
         );

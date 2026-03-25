@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:style_cart/core/errors/failures.dart';
 import 'package:style_cart/core/providers/repository_providers.dart';
@@ -29,31 +29,7 @@ class CartTotal extends _$CartTotal {
   @override
   CartSummary build() {
     final items = ref.watch(cartItemsProvider).value ?? [];
-    final threshold = double.parse(dotenv.env['FREE_SHIPPING_THRESHOLD'] ?? '100');
-    
-    double subtotal = 0;
-    double savings = 0;
-    
-    for (final item in items) {
-      subtotal += item.lineTotal;
-      savings += (item.unitPrice - item.finalPrice) * item.quantity;
-    }
-    
-    final freeShipping = subtotal >= threshold;
-    final shipping = (items.isNotEmpty && !freeShipping) 
-        ? double.parse(dotenv.env['EXPRESS_SHIPPING_COST'] ?? '25')
-        : 0.0;
-        
-    final total = subtotal + shipping;
-    
-    return CartSummary(
-      subtotal: subtotal,
-      shippingCost: shipping,
-      discountAmount: savings, // Total discount from SRP
-      totalSavings: savings,
-      total: total,
-      freeShippingEligible: freeShipping,
-    );
+    return CartSummary.compute(items: items);
   }
 }
 

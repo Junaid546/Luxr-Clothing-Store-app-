@@ -16,6 +16,9 @@ import 'package:style_cart/features/products/presentation/screens/product_detail
 import 'package:style_cart/features/wishlist/presentation/screens/wishlist_screen.dart';
 import 'package:style_cart/features/cart/presentation/screens/cart_screen.dart';
 import 'package:style_cart/features/profile/presentation/screens/profile_screen.dart';
+import 'package:style_cart/features/checkout/presentation/screens/checkout_screen.dart';
+import 'package:style_cart/features/orders/presentation/screens/order_confirmation_screen.dart';
+import 'package:style_cart/features/orders/presentation/screens/my_orders_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -57,18 +60,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: RouteNames.home,
+            name: RouteNames.home,
             builder: (context, state) => const HomeScreen(),
           ),
           GoRoute(
             path: RouteNames.shop,
+            name: RouteNames.shop,
             builder: (context, state) => const ShopScreen(),
           ),
           GoRoute(
             path: RouteNames.cart,
+            name: RouteNames.cart,
             builder: (context, state) => const CartScreen(),
           ),
           GoRoute(
             path: RouteNames.productDetail,
+            name: RouteNames.productDetail,
             builder: (context, state) {
               final productId = state.pathParameters['productId']!;
               return ProductDetailScreen(productId: productId);
@@ -76,11 +83,40 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: RouteNames.wishlist,
+            name: RouteNames.wishlist,
             builder: (context, state) => const WishlistScreen(),
           ),
           GoRoute(
             path: RouteNames.profile,
+            name: RouteNames.profile,
             builder: (context, state) => const ProfileScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.checkout,
+            name: RouteNames.checkout,
+            builder: (context, state) => const CheckoutScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.orderConfirmation,
+            name: RouteNames.orderConfirmation,
+            builder: (context, state) {
+              final orderId = state.pathParameters['orderId']!;
+              return OrderConfirmationScreen(orderId: orderId);
+            },
+          ),
+          GoRoute(
+            path: RouteNames.myOrders,
+            name: RouteNames.myOrders,
+            builder: (context, state) => const MyOrdersScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.orderTracking,
+            name: RouteNames.orderTracking,
+            builder: (context, state) {
+              final orderId = state.pathParameters['orderId']!;
+              // For now, redirect tracking to detail or keep it as placeholder
+              return OrderConfirmationScreen(orderId: orderId); // Placeholder
+            },
           ),
         ],
       ),
