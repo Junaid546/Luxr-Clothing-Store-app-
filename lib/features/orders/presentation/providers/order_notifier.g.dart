@@ -6,7 +6,7 @@ part of 'order_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myOrdersNotifierHash() => r'7f21410c6daafa50e0ac340874e05cf5b335a38f';
+String _$myOrdersNotifierHash() => r'fe45c9a22328ec494792d40afbc9c793e4da8632';
 
 /// See also [MyOrdersNotifier].
 @ProviderFor(MyOrdersNotifier)
@@ -23,7 +23,7 @@ final myOrdersNotifierProvider =
 
 typedef _$MyOrdersNotifier = AutoDisposeNotifier<MyOrdersState>;
 String _$orderTrackingNotifierHash() =>
-    r'6d94c7bedace7c6d361950aa54ecdde89e92338d';
+    r'44c2d0544481968da1457209b8b060a6b32155e9';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -20,6 +20,9 @@ import 'package:style_cart/features/checkout/presentation/screens/checkout_scree
 import 'package:style_cart/features/orders/presentation/screens/order_confirmation_screen.dart';
 import 'package:style_cart/features/orders/presentation/screens/my_orders_screen.dart';
 import 'package:style_cart/features/orders/presentation/screens/order_tracking_screen.dart';
+import 'package:style_cart/features/admin/dashboard/presentation/screens/admin_dashboard_screen.dart';
+import 'package:style_cart/features/admin/products/presentation/screens/admin_products_screen.dart';
+import 'package:style_cart/features/admin/products/presentation/screens/add_edit_product_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -127,12 +130,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(
             path: RouteNames.adminDashboard,
-            builder: (context, state) =>
-                const AdminDashboardScreenPlaceholder(),
+            builder: (context, state) => const AdminDashboardScreen(),
           ),
           GoRoute(
             path: RouteNames.adminProducts,
-            builder: (context, state) => const AdminProductsScreenPlaceholder(),
+            builder: (context, state) => const AdminProductsScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.adminAddProduct,
+            builder: (context, state) => const AddEditProductScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.adminEditProduct,
+            builder: (context, state) {
+              final productId = state.pathParameters['productId']!;
+              return AddEditProductScreen(productId: productId);
+            },
           ),
           GoRoute(
             path: RouteNames.adminOrders,
