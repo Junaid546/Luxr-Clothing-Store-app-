@@ -19,6 +19,7 @@ import 'package:style_cart/features/profile/presentation/screens/profile_screen.
 import 'package:style_cart/features/checkout/presentation/screens/checkout_screen.dart';
 import 'package:style_cart/features/orders/presentation/screens/order_confirmation_screen.dart';
 import 'package:style_cart/features/orders/presentation/screens/my_orders_screen.dart';
+import 'package:style_cart/features/orders/presentation/screens/order_tracking_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -75,7 +76,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: RouteNames.productDetail,
-            name: RouteNames.productDetail,
+            name: RouteNames.productDetailName,
             builder: (context, state) {
               final productId = state.pathParameters['productId']!;
               return ProductDetailScreen(productId: productId);
@@ -98,7 +99,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: RouteNames.orderConfirmation,
-            name: RouteNames.orderConfirmation,
+            name: RouteNames.orderConfirmationName,
             builder: (context, state) {
               final orderId = state.pathParameters['orderId']!;
               return OrderConfirmationScreen(orderId: orderId);
@@ -111,11 +112,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: RouteNames.orderTracking,
-            name: RouteNames.orderTracking,
+            name: RouteNames.orderTrackingName,
             builder: (context, state) {
               final orderId = state.pathParameters['orderId']!;
-              // For now, redirect tracking to detail or keep it as placeholder
-              return OrderConfirmationScreen(orderId: orderId); // Placeholder
+              return OrderTrackingScreen(orderId: orderId);
             },
           ),
         ],

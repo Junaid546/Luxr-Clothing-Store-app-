@@ -40,9 +40,8 @@ class CartSummary {
     String shippingMethod = ShippingMethod.standard,
     double discountAmount = 0,
   }) {
-    final threshold = double.parse(
-      dotenv.env['FREE_SHIPPING_THRESHOLD'] ?? '100',
-    );
+    final thresholdString = dotenv.env['FREE_SHIPPING_THRESHOLD'] ?? '100';
+    final threshold = double.tryParse(thresholdString) ?? 100.0;
 
     final subtotal = items.fold(0.0, (sum, i) => sum + i.lineTotal);
     final totalItems = items.fold(0, (sum, i) => sum + i.quantity);
@@ -50,9 +49,8 @@ class CartSummary {
 
     double shippingCost = 0.0;
     if (shippingMethod == ShippingMethod.express) {
-      shippingCost = double.parse(
-        dotenv.env['EXPRESS_SHIPPING_COST'] ?? '25',
-      );
+      final expressCostString = dotenv.env['EXPRESS_SHIPPING_COST'] ?? '25';
+      shippingCost = double.tryParse(expressCostString) ?? 25.0;
     } else if (!isFreeShipping && items.isNotEmpty) {
       shippingCost = 0.0; // Standard is free in our app
     }

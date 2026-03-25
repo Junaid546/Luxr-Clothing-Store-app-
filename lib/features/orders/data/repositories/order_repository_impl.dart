@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:style_cart/core/constants/firestore_constants.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
 import 'package:style_cart/core/data/firestore_base_repository.dart';
 import 'package:style_cart/core/errors/exceptions.dart';
@@ -31,7 +32,7 @@ class OrderRepositoryImpl
       _ordersRef.doc(orderId)
           .snapshots()
           .where((doc) => doc.exists)
-          .map(OrderModel.fromFirestore),
+          .map((doc) => OrderModel.fromFirestore(doc).toEntity()),
     );
   }
 
@@ -49,7 +50,7 @@ class OrderRepositoryImpl
           .limit(20)
           .snapshots()
           .map((snap) => snap.docs
-              .map(OrderModel.fromFirestore)
+              .map((doc) => OrderModel.fromFirestore(doc).toEntity())
               .toList()),
     );
   }
@@ -66,7 +67,7 @@ class OrderRepositoryImpl
       if (!doc.exists) {
         throw const NotFoundException('Order not found');
       }
-      return OrderModel.fromFirestore(doc);
+      return OrderModel.fromFirestore(doc).toEntity();
     });
   }
 
@@ -99,7 +100,7 @@ class OrderRepositoryImpl
 
       final snap = await query.limit(limit).get();
       return snap.docs
-          .map(OrderModel.fromFirestore)
+          .map((doc) => OrderModel.fromFirestore(doc).toEntity())
           .toList();
     });
   }
@@ -172,33 +173,41 @@ class OrderRepositoryImpl
           }]),
         });
 
-        // WRITE: Release stock for all items
+        // WRITE: Release stock for all items (Grouped by product)
+        final handledProducts = <String>{};
         for (int i = 0; i < items.length; i++) {
-          final item = items[i];
-          final snap = productSnaps[i];
+          final pId = items[i].productId;
+          if (handledProducts.contains(pId)) continue;
 
-          if (!snap.exists) continue; // product deleted — skip
+          final snap = productSnaps[i];
+          if (!snap.exists) continue;
 
           final data = snap.data()!;
-          final inv = Map<String, dynamic>.from(
-            data['inventory'] as Map? ?? {},
-          );
-          final currentQty =
-              (inv[item.size] as num?)?.toInt() ?? 0;
-          final currentTotal =
-              (data['totalStock'] as num?)?.toInt() ?? 0;
-          final currentSold =
-              (data['soldCount'] as num?)?.toInt() ?? 0;
-
-          txn.update(productRefs[i], {
-            'inventory.${item.size}':
-                currentQty + item.quantity,
-            'totalStock':
-                currentTotal + item.quantity,
-            'soldCount': (currentSold - item.quantity)
-                .clamp(0, double.maxFinite.toInt()),
+          final inv = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
+          
+          final productItems = items.where((item) => item.productId == pId).toList();
+          final updateMap = <String, dynamic>{
             'updatedAt': FieldValue.serverTimestamp(),
-          });
+          };
+
+          int totalRelease = 0;
+          for (final item in productItems) {
+            final currentQty = (inv[item.size] as num?)?.toInt() ?? 0;
+            final newQty = currentQty + item.quantity;
+            
+            updateMap['inventory.${item.size}'] = newQty;
+            inv[item.size] = newQty;
+            totalRelease += item.quantity;
+          }
+
+          final currentTotal = (data['totalStock'] as num?)?.toInt() ?? 0;
+          final currentSold = (data['soldCount'] as num?)?.toInt() ?? 0;
+
+          updateMap['totalStock'] = currentTotal + totalRelease;
+          updateMap['soldCount'] = (currentSold - totalRelease).clamp(0, 999999);
+
+          txn.update(productRefs[i], updateMap);
+          handledProducts.add(pId);
         }
       });
     });
@@ -305,7 +314,7 @@ class OrderRepositoryImpl
 
       final snap = await query.limit(limit).get();
       return snap.docs
-          .map(OrderModel.fromFirestore)
+          .map((doc) => OrderModel.fromFirestore(doc).toEntity())
           .toList();
     });
   }
@@ -333,7 +342,7 @@ class OrderRepositoryImpl
 
     return safeFirestoreStream(() =>
       query.snapshots().map((snap) =>
-          snap.docs.map(OrderModel.fromFirestore).toList()),
+          snap.docs.map((doc) => OrderModel.fromFirestore(doc).toEntity()).toList()),
     );
   }
 
@@ -431,32 +440,41 @@ class OrderRepositoryImpl
           }]),
         });
 
-        // RELEASE stock
+        // RELEASE stock (Grouped by product)
+        final handledProducts = <String>{};
         for (int i = 0; i < items.length; i++) {
-          final item = items[i];
+          final pId = items[i].productId;
+          if (handledProducts.contains(pId)) continue;
+
           final snap = productSnaps[i];
           if (!snap.exists) continue;
 
           final d = snap.data()!;
-          final inv = Map<String, dynamic>.from(
-            d['inventory'] as Map? ?? {},
-          );
-          final currentQty =
-              (inv[item.size] as num?)?.toInt() ?? 0;
-          final currentTotal =
-              (d['totalStock'] as num?)?.toInt() ?? 0;
-          final currentSold =
-              (d['soldCount'] as num?)?.toInt() ?? 0;
-
-          txn.update(productRefs[i], {
-            'inventory.${item.size}':
-                currentQty + item.quantity,
-            'totalStock':
-                currentTotal + item.quantity,
-            'soldCount': (currentSold - item.quantity)
-                .clamp(0, double.maxFinite.toInt()),
+          final inv = Map<String, dynamic>.from(d['inventory'] as Map? ?? {});
+          
+          final productItems = items.where((item) => item.productId == pId).toList();
+          final updateMap = <String, dynamic>{
             'updatedAt': FieldValue.serverTimestamp(),
-          });
+          };
+
+          int totalRelease = 0;
+          for (final item in productItems) {
+            final currentQty = (inv[item.size] as num?)?.toInt() ?? 0;
+            final newQty = currentQty + item.quantity;
+            
+            updateMap['inventory.${item.size}'] = newQty;
+            inv[item.size] = newQty;
+            totalRelease += item.quantity;
+          }
+
+          final currentTotal = (d['totalStock'] as num?)?.toInt() ?? 0;
+          final currentSold = (d['soldCount'] as num?)?.toInt() ?? 0;
+
+          updateMap['totalStock'] = currentTotal + totalRelease;
+          updateMap['soldCount'] = (currentSold - totalRelease).clamp(0, 999999);
+
+          txn.update(productRefs[i], updateMap);
+          handledProducts.add(pId);
         }
       });
     });
@@ -480,7 +498,7 @@ class OrderRepositoryImpl
             .doc(query.toUpperCase())
             .get();
         if (doc.exists) {
-          results.add(OrderModel.fromFirestore(doc));
+          results.add(OrderModel.fromFirestore(doc).toEntity());
         }
         return results;
       }
@@ -493,7 +511,7 @@ class OrderRepositoryImpl
           .get();
 
       results.addAll(
-        emailSnap.docs.map(OrderModel.fromFirestore),
+        emailSnap.docs.map((doc) => OrderModel.fromFirestore(doc).toEntity()),
       );
 
       return results;

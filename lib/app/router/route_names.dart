@@ -27,4 +27,9 @@ abstract final class RouteNames {
   static const String adminOrders = '/admin/orders';
   static const String adminOrderDetail = '/admin/orders/:orderId';
   static const String adminAnalytics = '/admin/analytics';
+
+  // Descriptive Names for goNamed
+  static const String orderConfirmationName = 'order_confirmation';
+  static const String orderTrackingName = 'order_tracking';
+  static const String productDetailName = 'product_detail';
 }

@@ -49,10 +49,9 @@ class OrderPlacementService {
         0.0,
         (sum, item) => sum + (item.finalPrice * item.quantity),
       );
+      final expressCostString = dotenv.env['EXPRESS_SHIPPING_COST'] ?? '25';
       final shippingCost = shippingMethod == ShippingMethod.express
-          ? double.parse(
-              dotenv.env['EXPRESS_SHIPPING_COST'] ?? '25',
-            )
+          ? double.tryParse(expressCostString) ?? 25.0
           : 0.0;
       final total = subtotal + shippingCost - discountAmount;
 
@@ -129,23 +128,40 @@ class OrderPlacementService {
         }
 
         // ── PHASE 4: WRITE STOCK DEDUCTIONS ───────
+        final handledProducts = <String>{};
         for (int i = 0; i < items.length; i++) {
-          final item = items[i];
-          final data = productSnaps[i].data()!;
-          final inv = Map<String, dynamic>.from(
-            data['inventory'] as Map? ?? {},
-          );
+          final pId = items[i].productId;
+          if (handledProducts.contains(pId)) continue;
 
-          final currentQty = (inv[item.size] as num?)?.toInt() ?? 0;
+          final snap = productSnaps[i];
+          final data = snap.data()!;
+          final inv = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
+
+          // Find all items in THIS order for THIS product
+          final productItems = items.where((item) => item.productId == pId).toList();
+
+          final updateMap = <String, dynamic>{
+            'updatedAt': FieldValue.serverTimestamp(),
+          };
+
+          int totalDeduction = 0;
+          for (final orderItem in productItems) {
+            final currentQty = (inv[orderItem.size] as num?)?.toInt() ?? 0;
+            final newQty = currentQty - orderItem.quantity;
+            
+            updateMap['inventory.${orderItem.size}'] = newQty;
+            inv[orderItem.size] = newQty; // Update local map for other variants of same size
+            totalDeduction += orderItem.quantity;
+          }
+
           final currentTotal = (data['totalStock'] as num?)?.toInt() ?? 0;
           final currentSold = (data['soldCount'] as num?)?.toInt() ?? 0;
 
-          txn.update(productDocRefs[i], {
-            'inventory.${item.size}': currentQty - item.quantity,
-            'totalStock': currentTotal - item.quantity,
-            'soldCount': currentSold + item.quantity,
-            'updatedAt': FieldValue.serverTimestamp(),
-          });
+          updateMap['totalStock'] = currentTotal - totalDeduction;
+          updateMap['soldCount'] = currentSold + totalDeduction;
+
+          txn.update(productDocRefs[i], updateMap);
+          handledProducts.add(pId);
         }
 
         // ── PHASE 5: CREATE ORDER DOCUMENT ────────
@@ -171,7 +187,7 @@ class OrderPlacementService {
           'statusHistory': [
             {
               'status': OrderStatus.pending,
-              'timestamp': FieldValue.serverTimestamp(),
+              'timestamp': Timestamp.now(),
               'note': 'Order placed successfully',
               'updatedBy': 'system',
             },

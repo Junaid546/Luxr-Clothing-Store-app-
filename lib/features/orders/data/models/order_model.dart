@@ -1,8 +1,9 @@
-﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
+// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 
 part 'order_model.freezed.dart';
 
@@ -125,6 +126,31 @@ class OrderModel with _$OrderModel {
     );
   }
 
+  OrderEntity toEntity() => OrderEntity(
+        orderId: orderId,
+        userId: userId,
+        userEmail: userEmail,
+        userName: userName,
+        items: items.map((i) => i.toEntity()).toList(),
+        subtotal: subtotal,
+        shippingCost: shippingCost,
+        discountAmount: discountAmount,
+        taxAmount: taxAmount,
+        total: total,
+        shippingMethod: shippingMethod,
+        shippingAddress: shippingAddress.toEntity(),
+        estimatedDelivery: estimatedDelivery.toEntity(),
+        paymentMethod: paymentMethod,
+        paymentStatus: paymentStatus,
+        transactionId: transactionId,
+        status: status,
+        statusHistory: statusHistory.map((h) => h.toEntity()).toList(),
+        courier: courier?.toEntity(),
+        placedAt: placedAt,
+        updatedAt: updatedAt,
+        deliveredAt: deliveredAt,
+      );
+
   Map<String, dynamic> toFirestore() => {
     'orderId':           orderId,
     'userId':            userId,
@@ -197,6 +223,20 @@ class OrderItemModel extends Equatable {
         lineTotal:   (m['lineTotal']  as num?)?.toDouble() ?? 0,
       );
 
+  OrderItemEntity toEntity() => OrderItemEntity(
+        productId: productId,
+        productName: productName,
+        brand: brand,
+        imageUrl: imageUrl,
+        size: size,
+        color: color,
+        quantity: quantity,
+        unitPrice: unitPrice,
+        discountPct: discountPct,
+        finalPrice: finalPrice,
+        lineTotal: lineTotal,
+      );
+
   Map<String, dynamic> toMap() => {
     'productId':   productId,
     'productName': productName,
@@ -246,6 +286,16 @@ class ShippingAddressModel extends Equatable {
     country:  m['country']  as String? ?? '',
   );
 
+  ShippingAddressEntity toEntity() => ShippingAddressEntity(
+        fullName: fullName,
+        phone: phone,
+        street: street,
+        city: city,
+        state: state,
+        zipCode: zipCode,
+        country: country,
+      );
+
   Map<String, dynamic> toMap() => {
     'fullName': fullName, 'phone': phone,
     'street': street,     'city': city,
@@ -275,6 +325,11 @@ class EstimatedDeliveryModel extends Equatable {
     from: (m['from'] as Timestamp?)?.toDate() ?? DateTime.now(),
     to:   (m['to']   as Timestamp?)?.toDate() ?? DateTime.now(),
   );
+
+  EstimatedDeliveryEntity toEntity() => EstimatedDeliveryEntity(
+        from: from,
+        to: to,
+      );
 
   Map<String, dynamic> toMap() => {
     'from': Timestamp.fromDate(from),
@@ -323,6 +378,13 @@ class StatusHistoryEntry extends Equatable {
     updatedBy: m['updatedBy'] as String? ?? 'system',
   );
 
+  StatusHistoryEntity toEntity() => StatusHistoryEntity(
+        status: status,
+        timestamp: timestamp,
+        note: note,
+        updatedBy: updatedBy,
+      );
+
   Map<String, dynamic> toMap() => {
     'status':    status,
     'timestamp': FieldValue.serverTimestamp(),
@@ -348,6 +410,12 @@ class CourierModel extends Equatable {
         name:          m['name'] as String?,
         trackingNumber:m['trackingNumber'] as String?,
         estimatedTime: m['estimatedTime'] as String?,
+      );
+
+  CourierEntity toEntity() => CourierEntity(
+        name: name,
+        trackingNumber: trackingNumber,
+        estimatedTime: estimatedTime,
       );
 
   Map<String, dynamic> toMap() => {

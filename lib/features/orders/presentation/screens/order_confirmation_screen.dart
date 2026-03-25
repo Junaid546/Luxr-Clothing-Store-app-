@@ -97,7 +97,7 @@ class OrderConfirmationScreen extends ConsumerWidget {
                   onPressed: () {
                     // Navigate to Order Details/Tracking
                     context.goNamed(
-                      RouteNames.orderTracking,
+                      RouteNames.orderTrackingName,
                       pathParameters: {'orderId': orderId},
                     );
                   },

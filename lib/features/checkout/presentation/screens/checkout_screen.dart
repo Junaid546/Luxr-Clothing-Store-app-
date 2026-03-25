@@ -48,14 +48,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final cartItems = ref.watch(cartItemsProvider).value ?? [];
 
     // Sync handle success
-      ref.listen(checkoutNotifierProvider, (prev, next) {
-      if (next.successOrderId != null) {
+    ref.listen(checkoutNotifierProvider, (prev, next) {
+      if (next.successOrderId != null && next.successOrderId != prev?.successOrderId) {
         context.goNamed(
-          RouteNames.orderConfirmation,
+          RouteNames.orderConfirmationName,
           pathParameters: {'orderId': next.successOrderId!},
         );
       }
-      if (next.error != null) {
+      if (next.error != null && next.error != prev?.error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(next.error!),
