@@ -1,7 +1,8 @@
-﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
+// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:style_cart/features/products/domain/entities/product_entity.dart';
 
 part 'product_model.freezed.dart';
 
@@ -166,22 +167,21 @@ class ProductModel with _$ProductModel {
   }
 }
 
-// â”€â”€ Supporting classes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Supporting classes ──────────────────────────────────────
 class ProductColor extends Equatable {
   final String name;
   final String hexCode;
   const ProductColor({required this.name, required this.hexCode});
 
-  factory ProductColor.fromMap(Map<String, dynamic> map) =>
-      ProductColor(
-        name:    map['name'] as String? ?? '',
+  factory ProductColor.fromMap(Map<String, dynamic> map) => ProductColor(
+        name: map['name'] as String? ?? '',
         hexCode: map['hexCode'] as String? ?? '#000000',
       );
 
   Map<String, dynamic> toMap() => {
-    'name':    name,
-    'hexCode': hexCode,
-  };
+        'name': name,
+        'hexCode': hexCode,
+      };
 
   @override
   List<Object> get props => [name, hexCode];
@@ -191,11 +191,47 @@ enum StockStatus { inStock, low, outOfStock }
 
 extension StockStatusExtension on StockStatus {
   String get label => switch (this) {
-    StockStatus.inStock     => 'IN STOCK',
-    StockStatus.low         => 'LOW STOCK',
-    StockStatus.outOfStock  => 'OUT OF STOCK',
-  };
+        StockStatus.inStock => 'IN STOCK',
+        StockStatus.low => 'LOW STOCK',
+        StockStatus.outOfStock => 'OUT OF STOCK',
+      };
   bool get isAvailable => this != StockStatus.outOfStock;
+}
+
+extension ProductModelMapper on ProductModel {
+  ProductEntity toEntity() {
+    return ProductEntity(
+      productId: productId,
+      name: name,
+      brand: brand,
+      description: description,
+      category: category,
+      subcategory: subcategory,
+      tags: tags,
+      price: price,
+      discountPct: discountPct,
+      finalPrice: finalPrice,
+      imageUrls: imageUrls,
+      thumbnailUrl: thumbnailUrl,
+      inventory: inventory,
+      totalStock: totalStock,
+      lowStockThreshold: lowStockThreshold,
+      colors: colors
+          .map((c) => ProductColorEntity(name: c.name, hexCode: c.hexCode))
+          .toList(),
+      isActive: isActive,
+      isFeatured: isFeatured,
+      isNewArrival: isNewArrival,
+      isLimitedEdition: isLimitedEdition,
+      avgRating: avgRating,
+      reviewCount: reviewCount,
+      soldCount: soldCount,
+      viewCount: viewCount,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      createdBy: createdBy,
+    );
+  }
 }
 
 

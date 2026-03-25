@@ -14,39 +14,7 @@ import 'package:style_cart/features/products/domain/entities/product_filter_enti
 import 'package:style_cart/features/products/domain/repositories/image_repository.dart';
 import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
 
-extension ProductModelMapper on ProductModel {
-  ProductEntity toEntity() {
-    return ProductEntity(
-      productId: productId,
-      name: name,
-      brand: brand,
-      description: description,
-      category: category,
-      subcategory: subcategory,
-      tags: tags,
-      price: price,
-      discountPct: discountPct,
-      finalPrice: finalPrice,
-      imageUrls: imageUrls,
-      thumbnailUrl: thumbnailUrl,
-      inventory: inventory,
-      totalStock: totalStock,
-      lowStockThreshold: lowStockThreshold,
-      colors: colors.map((c) => ProductColorEntity(name: c.name, hexCode: c.hexCode)).toList(),
-      isActive: isActive,
-      isFeatured: isFeatured,
-      isNewArrival: isNewArrival,
-      isLimitedEdition: isLimitedEdition,
-      avgRating: avgRating,
-      reviewCount: reviewCount,
-      soldCount: soldCount,
-      viewCount: viewCount,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      createdBy: createdBy,
-    );
-  }
-}
+
 
 class ProductRepositoryImpl
     extends FirestoreBaseRepository

@@ -1,0 +1,122 @@
+import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
+
+class DashboardStats extends Equatable {
+  final double totalRevenue;
+  final int totalOrders;
+  final int newClients;
+  final double conversionRate;
+  final double revenueChange;
+  final double ordersChange;
+  final double clientsChange;
+  final double conversionChange;
+
+  const DashboardStats({
+    required this.totalRevenue,
+    required this.totalOrders,
+    required this.newClients,
+    required this.conversionRate,
+    required this.revenueChange,
+    required this.ordersChange,
+    required this.clientsChange,
+    required this.conversionChange,
+  });
+
+  bool get isRevenueUp => revenueChange >= 0;
+  bool get isOrdersUp => ordersChange >= 0;
+  bool get isClientsUp => clientsChange >= 0;
+  bool get isConversionUp => conversionChange >= 0;
+
+  static const DashboardStats empty = DashboardStats(
+    totalRevenue: 0,
+    totalOrders: 0,
+    newClients: 0,
+    conversionRate: 0,
+    revenueChange: 0,
+    ordersChange: 0,
+    clientsChange: 0,
+    conversionChange: 0,
+  );
+
+  @override
+  List<Object> get props => [
+        totalRevenue,
+        totalOrders,
+        newClients,
+        conversionRate,
+        revenueChange,
+        ordersChange,
+        clientsChange,
+        conversionChange,
+      ];
+}
+
+class WeeklyRevenueData extends Equatable {
+  final List<DailyRevenue> days;
+
+  const WeeklyRevenueData({required this.days});
+
+  double get total => days.fold(0.0, (sum, d) => sum + d.revenue);
+
+  double get maxRevenue =>
+      days.fold(0.0, (max, d) => d.revenue > max ? d.revenue : max);
+
+  @override
+  List<Object> get props => [days];
+}
+
+class DailyRevenue extends Equatable {
+  final DateTime date;
+  final double revenue;
+  final int orderCount;
+
+  const DailyRevenue({
+    required this.date,
+    required this.revenue,
+    required this.orderCount,
+  });
+
+  String get dayLabel => DateFormat('EEE').format(date).toUpperCase();
+
+  @override
+  List<Object> get props => [date, revenue, orderCount];
+}
+
+class ActivityItem extends Equatable {
+  final String type; // 'order' | 'customer'
+  final String title;
+  final String subtitle;
+  final double? amount;
+  final DateTime timestamp;
+  final String? orderId;
+  final String? userId;
+
+  const ActivityItem({
+    required this.type,
+    required this.title,
+    required this.subtitle,
+    this.amount,
+    required this.timestamp,
+    this.orderId,
+    this.userId,
+  });
+
+  String get timeAgo {
+    final diff = DateTime.now().difference(timestamp);
+    if (diff.inSeconds < 60) return 'Just now';
+    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
+    if (diff.inHours < 24) return '${diff.inHours}h ago';
+    return DateFormat('MMM dd').format(timestamp);
+  }
+
+  @override
+  List<Object?> get props => [
+        type,
+        title,
+        subtitle,
+        amount,
+        timestamp,
+        orderId,
+        userId,
+      ];
+}

@@ -34,6 +34,12 @@ class ProfileScreen extends ConsumerWidget {
               context,
               title: 'PERSONAL MANAGEMENT',
               items: [
+                if (user.isAdmin)
+                  _MenuItemData(
+                    icon: Icons.dashboard_customize_outlined,
+                    label: 'Admin Panel',
+                    onTap: () => context.push(RouteNames.adminDashboard),
+                  ),
                 _MenuItemData(
                   icon: Icons.shopping_bag_outlined,
                   label: 'My Orders',
