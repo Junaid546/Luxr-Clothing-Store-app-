@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:style_cart/core/usecases/usecase.dart';
 import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
 import 'package:style_cart/features/auth/domain/usecases/register_with_email_usecase.dart';
 import 'package:style_cart/features/auth/domain/usecases/send_password_reset_usecase.dart';
@@ -45,9 +46,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   void _listenToAuthChanges() {
     final repository = _ref.read(authRepositoryProvider);
-    repository.authStateChanges.listen((user) {
+    repository.authStateChanges.listen((user) async {
       if (user != null) {
         state = AuthAuthenticated(user);
+        // Initialize FCM
+        await _ref.read(fcmServiceProvider).initialize(user.uid);
       } else {
         state = const AuthUnauthenticated();
       }
@@ -111,7 +114,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
     final result = await _ref.read(signOutUseCaseProvider).call(NoParams());
     result.fold(
       (failure) => state = AuthError(failure.message),
-      (_) => state = const AuthUnauthenticated(),
+      (_) async {
+        final user = currentUser;
+        if (user != null) {
+          await _ref.read(fcmServiceProvider).clearToken(user.uid);
+        }
+        state = const AuthUnauthenticated();
+      },
     );
   }
 

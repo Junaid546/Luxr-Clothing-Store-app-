@@ -25,6 +25,7 @@ import 'package:style_cart/features/admin/products/presentation/screens/admin_pr
 import 'package:style_cart/features/admin/products/presentation/screens/add_edit_product_screen.dart';
 import 'package:style_cart/features/admin/orders/presentation/screens/admin_orders_screen.dart';
 import 'package:style_cart/features/admin/analytics/presentation/screens/admin_analytics_screen.dart';
+import 'package:style_cart/features/notifications/presentation/screens/notification_center_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -91,6 +92,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: RouteNames.wishlist,
             name: RouteNames.wishlist,
             builder: (context, state) => const WishlistScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.notifications,
+            name: RouteNames.notifications,
+            builder: (context, state) => const NotificationCenterScreen(),
           ),
           GoRoute(
             path: RouteNames.profile,
@@ -205,20 +211,18 @@ String? _handleRedirect(AuthRedirectStatus status, GoRouterState state) {
     RouteNames.shop,
   ].contains(location) || location.startsWith('/product/');
 
-  final isAdminRoute = location.startsWith('/admin');
 
   // 2. Routing logic based on Auth Status
   return switch (status) {
     AuthRedirectStatus.loading => RouteNames.splash,
 
+    // Unauthenticated: must go to login for protected routes
     AuthRedirectStatus.unauthenticated =>
       (isAuthRoute || isPublicRoute) ? null : RouteNames.login,
 
-    AuthRedirectStatus.customer =>
-      (isAuthRoute || isAdminRoute) ? RouteNames.home : null,
-
-    AuthRedirectStatus.admin =>
-      (isAuthRoute || !isAdminRoute) ? RouteNames.adminDashboard : null,
+    // Customer OR Admin: allow all navigation, screen-level guards handle admin access
+    AuthRedirectStatus.customer || AuthRedirectStatus.admin =>
+      isAuthRoute ? RouteNames.home : null,
   };
 }
 

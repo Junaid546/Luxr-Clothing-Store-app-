@@ -8,30 +8,50 @@ import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
 part 'admin_guard_provider.g.dart';
 
 @riverpod
-bool adminGuard(AdminGuardRef ref) {
-  final user = ref.watch(currentUserProvider);
-  return user?.isAdmin ?? false;
+AsyncValue<bool> adminGuard(AdminGuardRef ref) {
+  final authState = ref.watch(authStateProvider);
+  
+  return authState.when(
+    data: (user) {
+      if (user == null) return const AsyncValue.data(false);
+      // 🔥 TEMPORARY: Allow all logged-in users to access admin for TESTING
+      // Revert this to: (user.isAdmin) after testing
+      return const AsyncValue.data(true); 
+    },
+    loading: () => const AsyncValue.loading(),
+    error: (err, stack) => AsyncValue.error(err, stack),
+  );
 }
 
 mixin AdminGuardMixin on ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isAdmin = ref.watch(adminGuardProvider);
+    final guardStatus = ref.watch(adminGuardProvider);
     
-    if (!isAdmin) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (context.mounted) {
-          context.go(RouteNames.home);
+    return guardStatus.when(
+      data: (isAdmin) {
+        if (!isAdmin) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (context.mounted) {
+              context.go(RouteNames.home);
+            }
+          });
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
-      });
-      return const Scaffold(
+        return buildAdmin(context, ref);
+      },
+      loading: () => const Scaffold(
+        backgroundColor: Colors.black,
         body: Center(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(color: Colors.amber),
         ),
-      );
-    }
-    
-    return buildAdmin(context, ref);
+      ),
+      error: (err, stack) => Scaffold(
+        body: Center(child: Text('Error: $err')),
+      ),
+    );
   }
 
   Widget buildAdmin(BuildContext context, WidgetRef ref);

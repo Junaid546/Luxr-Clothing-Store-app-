@@ -87,7 +87,10 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
             _descController.text = product.description;
             _tagsController.text = product.tags.join(', ');
             _existingImageUrls = List.from(product.imageUrls);
-            _inventory = Map.from(product.inventory);
+            _inventory = {
+              for (var size in ProductSize.all) 
+                size: product.inventory[size] ?? 0,
+            };
             _selectedCategory = product.category;
             _isFeatured = product.isFeatured;
             _isNewArrival = product.isNewArrival;
@@ -352,6 +355,10 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
   }
 
   Widget _buildCategoryDropdown() {
+    // Ensure the current category is always in the list to prevent dropdown crash
+    final categories = Set<String>.from(ProductCategory.all)..add(_selectedCategory);
+    final sortedCategories = categories.toList()..sort();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -366,7 +373,7 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
               dropdownColor: AppColors.backgroundCard,
               isExpanded: true,
               style: const TextStyle(color: Colors.white),
-              items: ProductCategory.all.map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+              items: sortedCategories.map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
               onChanged: (v) => setState(() => _selectedCategory = v!),
             ),
           ),
@@ -413,6 +420,8 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
           itemCount: ProductSize.all.length,
           itemBuilder: (context, index) {
             final size = ProductSize.all[index];
+            final stock = _inventory[size] ?? 0;
+
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -424,7 +433,7 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
                   Container(
                     width: 36, height: 36,
                     decoration: BoxDecoration(
-                      color: _inventory[size]! > 0 ? AppColors.primary.withOpacity(0.2) : AppColors.backgroundElevated,
+                      color: stock > 0 ? AppColors.primary.withOpacity(0.2) : AppColors.backgroundElevated,
                       shape: BoxShape.circle,
                     ),
                     child: Center(
@@ -434,7 +443,8 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextFormField(
-                      initialValue: _inventory[size].toString(),
+                      initialValue: stock.toString(),
+                      key: Key('inv_$size'), // Ensure it rebuilds with correct value
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.white),

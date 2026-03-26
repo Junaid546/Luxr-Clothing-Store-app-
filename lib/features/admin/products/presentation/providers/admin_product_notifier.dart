@@ -34,7 +34,8 @@ class AdminProductState with _$AdminProductState {
 class AdminProductNotifier extends _$AdminProductNotifier {
   @override
   AdminProductState build() {
-    _loadProducts();
+    // Initial load - defer to next microtask to avoid state modification during build
+    Future.microtask(_loadProducts);
     return const AdminProductState(isLoading: true);
   }
 

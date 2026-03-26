@@ -19,6 +19,7 @@ import 'package:style_cart/features/wishlist/presentation/providers/wishlist_not
 import 'package:style_cart/shared/utils/wishlist_helper.dart';
 import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
 import 'package:style_cart/shared/widgets/section_header_widget.dart';
+import 'package:style_cart/features/notifications/presentation/widgets/notification_bell.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -73,41 +74,8 @@ class _AppBar extends StatelessWidget {
             ),
           ),
 
-          // Notification bell with badge
-          Stack(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: const BoxDecoration(
-                  color: Color(0xFF1E1E2A),
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.notifications_outlined,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  onPressed: () {
-                    // Navigate to notifications overlay
-                  },
-                ),
-              ),
-              Positioned(
-                right: 8,
-                top: 8,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFff6b6b),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Notification bell with live count badge
+          const NotificationBell(),
         ],
       ),
     );

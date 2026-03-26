@@ -29,11 +29,22 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isAdmin = ref.watch(adminGuardProvider);
-    if (!isAdmin) {
-      return const SizedBox.shrink();
+    final guardState = ref.watch(adminGuardProvider);
+
+    // 1. Handle Guard Loading/Error States
+    if (guardState.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    
+    if (guardState.hasError) {
+      return Center(child: Text('Error: ${guardState.error}'));
     }
 
+    // 2. Handle Unauthorized
+    final isAdmin = guardState.valueOrNull ?? false;
+    if (!isAdmin) return const SizedBox.shrink();
+
+    // 3. Watch State (only if admin)
     final state = ref.watch(adminProductNotifierProvider);
     final notifier = ref.read(adminProductNotifierProvider.notifier);
     final products = notifier.filteredProducts;

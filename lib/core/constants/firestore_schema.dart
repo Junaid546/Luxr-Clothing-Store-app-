@@ -720,10 +720,14 @@ class ProductCategory {
   static const String jewelry    = 'Jewelry';
   static const String beauty     = 'Beauty';
   static const String winterWear = 'Winter Wear';
+  static const String outerwear  = 'Outerwear';
+  static const String shirts     = 'Shirts';
+  static const String hoodies    = 'Hoodies';
 
   static const List<String> all = [
     apparel, footwear, accessories, bags,
     watches, jewelry, beauty, winterWear,
+    outerwear, shirts, hoodies,
   ];
 }
 
@@ -736,6 +740,6 @@ class ProductSize {
   static const String xxl     = 'XXL';
   static const String oneSize = 'ONE_SIZE';
 
-  static const List<String> all = [xs, s, m, l, xl, xxl];
+  static const List<String> all = [xs, s, m, l, xl, xxl, oneSize];
   static const List<String> accessories = [oneSize];
 }
