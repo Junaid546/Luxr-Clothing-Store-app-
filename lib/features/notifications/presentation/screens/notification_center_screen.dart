@@ -347,7 +347,7 @@ class _NotificationTile extends StatelessWidget {
             context.go(notification.data.route!);
           } else if (notification.type == NotificationType.orderUpdate &&
               notification.data.orderId != null) {
-            context.go(
+            context.goNamed(
               RouteNames.orderTrackingName,
               pathParameters: {'orderId': notification.data.orderId!},
             );

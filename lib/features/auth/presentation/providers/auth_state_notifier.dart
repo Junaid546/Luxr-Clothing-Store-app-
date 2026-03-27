@@ -49,8 +49,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     repository.authStateChanges.listen((user) async {
       if (user != null) {
         state = AuthAuthenticated(user);
-        // Initialize FCM
-        await _ref.read(fcmServiceProvider).initialize(user.uid);
+        // FCM Initialization is now handled by fcmInitializerProvider in app.dart
       } else {
         state = const AuthUnauthenticated();
       }

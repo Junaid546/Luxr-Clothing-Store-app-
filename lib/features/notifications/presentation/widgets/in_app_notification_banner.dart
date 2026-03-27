@@ -168,7 +168,7 @@ class _InAppNotificationBannerState
       notification.type == NotificationType.orderUpdate &&
       notification.data.orderId != null
     ) {
-      context.go(
+      context.goNamed(
         RouteNames.orderTrackingName,
         pathParameters: {'orderId': notification.data.orderId!},
       );

@@ -388,6 +388,36 @@ class OrderRepositoryImpl
       }
 
       await _ordersRef.doc(orderId).update(updateData);
+
+      // ── AUTO-NOTIFICATION for Customer ──
+      try {
+        final orderDoc = await _ordersRef.doc(orderId).get();
+        final orderData = orderDoc.data();
+        final orderUserId = orderData?['userId'] as String?;
+
+        if (orderUserId != null) {
+          final statusMsg = _getStatusMessage(newStatus);
+          
+          await firestore
+              .collection(FirestoreConstants.notifications)
+              .add({
+            'userId':    orderUserId,
+            'title':     statusMsg.title,
+            'body':      statusMsg.body.replaceAll('{orderId}', orderId),
+            'type':      'order_update',
+            'data': {
+              'type':    'order_update',
+              'orderId': orderId,
+              'route':   '/order-tracking/$orderId',
+            },
+            'isRead':    false,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+        }
+      } catch (e) {
+        // Silently fail notification, don't break order update
+        // In production, log this error
+      }
     });
   }
 
@@ -530,4 +560,41 @@ class OrderRepositoryImpl
     OrderStatus.returned       => 'Return processed',
     _                          => 'Status updated',
   };
+
+  // ── Status message helper ──────────────────────────
+  ({String title, String body}) _getStatusMessage(String status) =>
+      switch (status) {
+        OrderStatus.confirmed => (
+          title: 'Order Confirmed! 🎉',
+          body: 'Your order #{orderId} has been confirmed.',
+        ),
+        OrderStatus.processing => (
+          title: 'Order Being Prepared 📦',
+          body: 'Your order #{orderId} is being prepared.',
+        ),
+        OrderStatus.packed => (
+          title: 'Order Packed! 📫',
+          body: 'Your order #{orderId} is packed and ready.',
+        ),
+        OrderStatus.shipped => (
+          title: 'Order Shipped! 🚚',
+          body: 'Your order #{orderId} is on its way to you.',
+        ),
+        OrderStatus.outForDelivery => (
+          title: 'Out for Delivery! 🏍️',
+          body: 'Your order #{orderId} is almost there!',
+        ),
+        OrderStatus.delivered => (
+          title: 'Order Delivered! ✅',
+          body: 'Your order #{orderId} has been delivered.',
+        ),
+        OrderStatus.cancelled => (
+          title: 'Order Cancelled',
+          body: 'Your order #{orderId} has been cancelled.',
+        ),
+        _ => (
+          title: 'Order Update',
+          body: 'Your order #{orderId} status has been updated.',
+        ),
+      };
 }

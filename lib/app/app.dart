@@ -16,22 +16,21 @@ class StyleCartApp extends ConsumerWidget {
     // Initialize FCM (watches auth state)
     ref.watch(fcmInitializerProvider);
 
-    return InAppNotificationBanner(
-      child: MaterialApp.router(
-        title: 'StyleCart',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.darkTheme,
-        routerConfig: router,
-        builder: (context, child) {
-          // Ensure the app takes full screen and proper MediaQuery settings
-          return MediaQuery(
+    return MaterialApp.router(
+      title: 'StyleCart',
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.darkTheme,
+      routerConfig: router,
+      builder: (context, child) {
+        return InAppNotificationBanner(
+          child: MediaQuery(
             data: MediaQuery.of(
               context,
             ).copyWith(textScaler: TextScaler.noScaling),
             child: child ?? const SizedBox.expand(),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

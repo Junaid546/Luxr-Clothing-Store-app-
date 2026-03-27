@@ -12,15 +12,15 @@ final notificationRepositoryProvider = Provider<NotificationRepository>((ref) {
   return NotificationRepositoryImpl(firestore);
 });
 
+/// Tracks if the notification permission dialog has been shown in the current session.
+final notificationPermissionDialogShownProvider = StateProvider<bool>((ref) => false);
+
 final fcmServiceProvider = Provider<FCMService>((ref) {
   final messaging = ref.watch(firebaseMessagingProvider);
   final firestore = ref.watch(firestoreProvider);
-  final router = ref.watch(appRouterProvider);
-
   return FCMService(
     messaging: messaging,
     firestore: firestore,
-    router: router,
   );
 });
 
@@ -47,6 +47,11 @@ final notificationsStreamProvider = StreamProvider.autoDispose<List<Notification
 final fcmInitializerProvider = Provider<void>((ref) {
   final authState = ref.watch(authNotifierProvider);
   if (authState is AuthAuthenticated) {
-    ref.read(fcmServiceProvider).initialize(authState.user.uid);
+    final fcmService = ref.read(fcmServiceProvider);
+    final router = ref.read(appRouterProvider);
+    
+    // Set router first to break circular dependency at creation time
+    fcmService.setRouter(router);
+    fcmService.initialize(authState.user.uid);
   }
 });

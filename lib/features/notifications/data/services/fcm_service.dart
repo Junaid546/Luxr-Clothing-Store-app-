@@ -15,33 +15,33 @@ import 'package:style_cart/features/notifications/domain/entities/notification_e
 class FCMService {
   final FirebaseMessaging _messaging;
   final FirebaseFirestore _firestore;
-  final GoRouter _router;
+  GoRouter? _router;
 
   static FCMService? _instance;
 
   FCMService._({
     required FirebaseMessaging messaging,
     required FirebaseFirestore firestore,
-    required GoRouter router,
   }) : _messaging = messaging,
-       _firestore = firestore,
-       _router = router;
+       _firestore = firestore;
 
   factory FCMService({
     required FirebaseMessaging messaging,
     required FirebaseFirestore firestore,
-    required GoRouter router,
   }) {
     _instance ??= FCMService._(
       messaging: messaging,
       firestore: firestore,
-      router: router,
     );
     return _instance!;
   }
 
+  void setRouter(GoRouter router) {
+    _router = router;
+  }
+
   Future<void> initialize(String? userId) async {
-    await _requestPermission();
+    await requestPermission();
 
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -77,7 +77,7 @@ class FCMService {
     }
   }
 
-  Future<NotificationSettings> _requestPermission() async {
+  Future<NotificationSettings> requestPermission() async {
     final settings = await _messaging.requestPermission(
       alert: true,
       announcement: false,
@@ -218,15 +218,15 @@ class FCMService {
     final route = data['route'] as String?;
 
     if (route != null && route.isNotEmpty) {
-      _router.go(route);
+      _router?.go(route);
     } else {
       final type = data['type'] as String? ?? '';
       final orderId = data['orderId'] as String?;
 
       if (type == 'order_update' && orderId != null) {
-        _router.go(RouteNames.orderTracking.replaceAll(':orderId', orderId));
+        _router?.go(RouteNames.orderTracking.replaceAll(':orderId', orderId));
       } else {
-        _router.go(RouteNames.home);
+        _router?.go(RouteNames.home);
       }
     }
   }
@@ -242,9 +242,9 @@ class FCMService {
       final type = data['type'] as String? ?? '';
 
       if (route != null && route.isNotEmpty) {
-        _router.go(route);
+        _router?.go(route);
       } else if (type == 'order_update' && orderId != null) {
-        _router.go(RouteNames.orderTracking.replaceAll(':orderId', orderId));
+        _router?.go(RouteNames.orderTracking.replaceAll(':orderId', orderId));
       }
     } catch (e) {
       debugPrint('Notification tap parse error: $e');

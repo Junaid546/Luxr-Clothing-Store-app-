@@ -36,6 +36,11 @@ class UserEntity extends Equatable {
     required this.totalOrders,
     required this.eliteStatus,
     required this.emailVerified,
+    this.notificationPrefs = const {
+      'orderUpdates': true,
+      'promotions': true,
+      'newArrivals': true,
+    },
   });
   final String uid;
   final String email;
@@ -47,6 +52,7 @@ class UserEntity extends Equatable {
   final int totalOrders;
   final String eliteStatus;
   final bool emailVerified;
+  final Map<String, bool> notificationPrefs;
 
   /// Check if user has admin role
   bool get isAdmin => role == UserRole.admin;
@@ -66,6 +72,7 @@ class UserEntity extends Equatable {
     int? totalOrders,
     String? eliteStatus,
     bool? emailVerified,
+    Map<String, bool>? notificationPrefs,
   }) {
     return UserEntity(
       uid: uid ?? this.uid,
@@ -78,6 +85,7 @@ class UserEntity extends Equatable {
       totalOrders: totalOrders ?? this.totalOrders,
       eliteStatus: eliteStatus ?? this.eliteStatus,
       emailVerified: emailVerified ?? this.emailVerified,
+      notificationPrefs: notificationPrefs ?? this.notificationPrefs,
     );
   }
 
@@ -93,5 +101,6 @@ class UserEntity extends Equatable {
     totalOrders,
     eliteStatus,
     emailVerified,
+    notificationPrefs,
   ];
 }

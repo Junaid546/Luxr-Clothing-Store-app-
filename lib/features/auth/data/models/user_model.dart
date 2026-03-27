@@ -1,4 +1,4 @@
-﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
+// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:style_cart/core/constants/firestore_constants.dart';
@@ -18,6 +18,7 @@ class UserModel extends UserEntity {
     required super.emailVerified,
     super.photoUrl,
     super.fcmToken,
+    super.notificationPrefs,
   });
 
   /// Create UserModel from Firestore DocumentSnapshot
@@ -39,6 +40,13 @@ class UserModel extends UserEntity {
       eliteStatus:
           (data[FirestoreConstants.totalOrders] as int? ?? 0).eliteStatus,
       emailVerified: data['emailVerified'] as bool? ?? false,
+      notificationPrefs: Map<String, bool>.from(
+        data['notificationPrefs'] as Map? ?? {
+          'orderUpdates': true,
+          'promotions': true,
+          'newArrivals': true,
+        },
+      ),
     );
   }
 
@@ -54,6 +62,7 @@ class UserModel extends UserEntity {
       'emailVerified': emailVerified,
       FirestoreConstants.totalOrders: totalOrders,
       FirestoreConstants.eliteStatus: eliteStatus,
+      'notificationPrefs': notificationPrefs,
     };
   }
 
@@ -83,7 +92,7 @@ class UserModel extends UserEntity {
       'notificationPrefs': {
         'orderUpdates': true,
         'promotions': true,
-        'newArrivals': false,
+        'newArrivals': true,
       },
     };
   }
@@ -101,6 +110,7 @@ class UserModel extends UserEntity {
     int? totalOrders,
     String? eliteStatus,
     bool? emailVerified,
+    Map<String, bool>? notificationPrefs,
   }) {
     return UserModel(
       uid: uid ?? this.uid,
@@ -113,9 +123,7 @@ class UserModel extends UserEntity {
       totalOrders: totalOrders ?? this.totalOrders,
       eliteStatus: eliteStatus ?? this.eliteStatus,
       emailVerified: emailVerified ?? this.emailVerified,
+      notificationPrefs: notificationPrefs ?? this.notificationPrefs,
     );
   }
 }
-
-
-

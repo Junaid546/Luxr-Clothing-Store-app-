@@ -26,6 +26,8 @@ import 'package:style_cart/features/admin/products/presentation/screens/add_edit
 import 'package:style_cart/features/admin/orders/presentation/screens/admin_orders_screen.dart';
 import 'package:style_cart/features/admin/analytics/presentation/screens/admin_analytics_screen.dart';
 import 'package:style_cart/features/notifications/presentation/screens/notification_center_screen.dart';
+import 'package:style_cart/features/notifications/presentation/screens/notification_preferences_screen.dart';
+import 'package:style_cart/features/admin/notifications/presentation/screens/admin_send_notification_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -104,6 +106,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const ProfileScreen(),
           ),
           GoRoute(
+            path: RouteNames.notificationPreferences,
+            name: RouteNames.notificationPreferences,
+            builder: (context, state) => const NotificationPreferencesScreen(),
+          ),
+          GoRoute(
             path: RouteNames.checkout,
             name: RouteNames.checkout,
             builder: (context, state) => const CheckoutScreen(),
@@ -173,6 +180,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: RouteNames.adminAnalytics,
             builder: (context, state) => const AdminAnalyticsScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.adminSendNotification,
+            builder: (context, state) => const AdminSendNotificationScreen(),
           ),
         ],
       ),

@@ -20,6 +20,8 @@ import 'package:style_cart/shared/utils/wishlist_helper.dart';
 import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
 import 'package:style_cart/shared/widgets/section_header_widget.dart';
 import 'package:style_cart/features/notifications/presentation/widgets/notification_bell.dart';
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
+import 'package:style_cart/features/notifications/presentation/widgets/notification_permission_dialog.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -29,6 +31,43 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Show permission dialog after a short delay if not already shown
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkNotificationPermissions();
+    });
+  }
+
+  void _checkNotificationPermissions() {
+    // Check if the dialog has already been shown in this session
+    final hasBeenShown = ref.read(notificationPermissionDialogShownProvider);
+    if (hasBeenShown) return;
+
+    // Mark as shown immediately to prevent race conditions during navigation
+    ref.read(notificationPermissionDialogShownProvider.notifier).state = true;
+
+    final fcmService = ref.read(fcmServiceProvider);
+    
+    // If not requested yet, show after 2 seconds
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        showDialog<void>(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => NotificationPermissionDialog(
+            onAllow: () {
+              fcmService.requestPermission();
+              Navigator.pop(context);
+            },
+            onSkip: () => Navigator.pop(context),
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

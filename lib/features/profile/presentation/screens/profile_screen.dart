@@ -8,6 +8,7 @@ import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
 import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
 import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -22,6 +23,9 @@ class ProfileScreen extends ConsumerWidget {
         body: Center(child: CircularProgressIndicator()),
       );
     }
+
+    final unreadCountAsync = ref.watch(unreadNotificationCountProvider);
+    final hasUnread = unreadCountAsync.valueOrNull != null && unreadCountAsync.value! > 0;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
@@ -59,12 +63,15 @@ class ProfileScreen extends ConsumerWidget {
                   },
                 ),
                 _MenuItemData(
-                  icon: Icons.notifications_outlined,
+                  icon: Icons.notifications_active_outlined,
+                  label: 'Notification Preferences',
+                  onTap: () => context.push(RouteNames.notificationPreferences),
+                ),
+                _MenuItemData(
+                  icon: Icons.notifications_none_outlined,
                   label: 'Notifications',
-                  hasNotification: true,
-                  onTap: () {
-                    // TODO: Implement notifications
-                  },
+                  hasNotification: hasUnread,
+                  onTap: () => context.push(RouteNames.notifications),
                 ),
                 _MenuItemData(
                   icon: Icons.star_outline,

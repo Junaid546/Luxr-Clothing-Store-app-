@@ -2,17 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
 import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
 import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
 import 'package:style_cart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
 import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 
 class AdminDashboardScreen extends ConsumerWidget with AdminGuardMixin {
   const AdminDashboardScreen({super.key});
@@ -108,7 +106,14 @@ class _DashboardAppBar extends ConsumerWidget {
                   size: 20,
                 ),
               ),
-              Positioned(
+          Consumer(
+            builder: (context, ref, child) {
+              final unreadCountAsync = ref.watch(unreadNotificationCountProvider);
+              final count = unreadCountAsync.valueOrNull ?? 0;
+              
+              if (count == 0) return const SizedBox.shrink();
+              
+              return Positioned(
                 right: -2,
                 top: -2,
                 child: Container(
@@ -118,16 +123,19 @@ class _DashboardAppBar extends ConsumerWidget {
                     color: AppColors.primary,
                     shape: BoxShape.circle,
                   ),
-                  child: const Text(
-                    '3',
-                    style: TextStyle(
+                  child: Text(
+                    count > 9 ? '9+' : count.toString(),
+                    style: const TextStyle(
                       fontSize: 8,
                       color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
-              ),
+              );
+            },
+          ),
             ],
           ),
           const SizedBox(width: 10),

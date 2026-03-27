@@ -13,6 +13,7 @@ abstract final class RouteNames {
   static const String wishlist = '/wishlist';
   static const String profile = '/profile';
   static const String notifications = '/notifications';
+  static const String notificationPreferences = '/notification-preferences';
 
   // Checkout flow
   static const String checkout = '/checkout';
@@ -28,6 +29,7 @@ abstract final class RouteNames {
   static const String adminOrders = '/admin/orders';
   static const String adminOrderDetail = '/admin/orders/:orderId';
   static const String adminAnalytics = '/admin/analytics';
+  static const String adminSendNotification = '/admin/notifications/send';
 
   // Descriptive Names for goNamed
   static const String orderConfirmationName = 'order_confirmation';
