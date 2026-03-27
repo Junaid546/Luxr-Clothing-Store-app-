@@ -1,58 +1,66 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-/coverage/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-# Environment files
+# ── Environment & Secrets ─────────────────────────────
 .env
+.env.*
 .env.local
+.env.development
+.env.production
+.env.staging
+*.env
 
-# Firebase
-*.jks
-*.keystore
+# ── Firebase Config Files ─────────────────────────────
+# These contain your project's API keys
 google-services.json
 GoogleService-Info.plist
 
-# iOS
+# ── Android Signing ───────────────────────────────────
+*.jks
+*.keystore
+key.properties
+android/key.properties
+android/app/key.properties
+**/keystore/**
+
+# ── iOS Signing ───────────────────────────────────────
+*.mobileprovision
+*.p12
+*.cer
+*.certSigningRequest
 ios/Runner/GoogleService-Info.plist
+
+# ── Flutter/Dart ──────────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock  # Keep this for apps (remove for packages)
+build/
+*.g.dart      # Generated files (regenerate with build_runner)
+*.freezed.dart
+
+# ── IDE ───────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+.vscode/settings.json
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Test coverage ─────────────────────────────────────
+coverage/
+*.lcov
+
+# ── Fastlane ─────────────────────────────────────────
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**
+fastlane/test_output
+
+# ── Firebase Emulator ─────────────────────────────────
+.firebaserc.local
+firebase-debug.log
+firestore-debug.log
+storage-debug.log
+ui-debug.log
+database-debug.log

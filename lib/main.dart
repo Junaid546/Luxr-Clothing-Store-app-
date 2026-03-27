@@ -7,6 +7,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:style_cart/features/notifications/data/services/fcm_background_handler.dart';
 
 import 'package:style_cart/app/app.dart';
+import 'package:style_cart/core/config/app_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ Future<void> main() async {
 
   // Load .env before Firebase initialization
   await dotenv.load();
+  AppConfig.validateEnvironment();
 
   // Initialize Firebase - handle duplicate app error
   // Use try-catch to handle race condition on hot reload
@@ -51,11 +53,10 @@ Future<void> main() async {
 
 FirebaseOptions _buildFirebaseOptions() {
   return FirebaseOptions(
-    apiKey: dotenv.env['FIREBASE_WEB_API_KEY'] ?? 'demo_key',
-    projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? 'demo_project',
-    storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? 'demo_bucket',
-    messagingSenderId:
-        dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? 'demo_sender',
-    appId: dotenv.env['FIREBASE_APP_ID'] ?? 'demo_app_id',
+    apiKey: AppConfig.firebaseWebApiKey,
+    projectId: AppConfig.firebaseProjectId,
+    storageBucket: AppConfig.firebaseStorageBucket,
+    messagingSenderId: AppConfig.firebaseMessagingSenderId,
+    appId: AppConfig.firebaseAppId,
   );
 }
