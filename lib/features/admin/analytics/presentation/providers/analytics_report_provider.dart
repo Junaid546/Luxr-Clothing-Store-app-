@@ -35,7 +35,7 @@ Future<AnalyticsReport> analyticsReport(
   final customRange = ref.watch(customDateRangeProvider);
 
   // Add slight debounce to prevent rapid re-fetches
-  await Future.delayed(const Duration(milliseconds: 100));
+  await Future<void>.delayed(const Duration(milliseconds: 100));
 
   try {
     return await ref
