@@ -15,6 +15,9 @@ final notificationRepositoryProvider = Provider<NotificationRepository>((ref) {
 /// Tracks if the notification permission dialog has been shown in the current session.
 final notificationPermissionDialogShownProvider = StateProvider<bool>((ref) => false);
 
+/// Tracks if the "Welcome" badge for new accounts has been shown/dismissed.
+final welcomeBadgeDismissedProvider = StateProvider<bool>((ref) => false);
+
 final fcmServiceProvider = Provider<FCMService>((ref) {
   final messaging = ref.watch(firebaseMessagingProvider);
   final firestore = ref.watch(firestoreProvider);
@@ -25,12 +28,22 @@ final fcmServiceProvider = Provider<FCMService>((ref) {
 });
 
 final unreadNotificationCountProvider = StreamProvider<int>((ref) {
-  final repository = ref.watch(notificationRepositoryProvider);
   final authState = ref.watch(authNotifierProvider);
+  final isDismissed = ref.watch(welcomeBadgeDismissedProvider);
 
   if (authState is AuthAuthenticated) {
-    return repository.watchUnreadCount(authState.user.uid);
+    // Logic: Only show badge if account is "new" (created in last 5 minutes)
+    // and hasn't been dismissed in this session.
+    final user = authState.user;
+    final now = DateTime.now();
+    final isNewAccount = now.difference(user.createdAt).inMinutes < 5;
+
+    if (isNewAccount && !isDismissed) {
+      return Stream<int>.value(1);
+    }
   }
+  
+  // Per user request: "otherwise not" - do not show for any other reason.
   return Stream<int>.value(0);
 });
 

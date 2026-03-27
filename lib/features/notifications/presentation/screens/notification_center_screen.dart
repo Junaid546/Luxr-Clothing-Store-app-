@@ -7,6 +7,7 @@ import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
 import 'package:style_cart/features/notifications/presentation/providers/notification_notifier.dart';
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 
 class NotificationCenterScreen extends ConsumerStatefulWidget {
   const NotificationCenterScreen({super.key});
@@ -17,6 +18,15 @@ class NotificationCenterScreen extends ConsumerStatefulWidget {
 }
 
 class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Mark the welcome badge as dismissed once the user accesses this screen
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(welcomeBadgeDismissedProvider.notifier).state = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(notificationNotifierProvider);

@@ -31,13 +31,20 @@ Future<DashboardStats> dashboardStats(DashboardStatsRef ref) async {
         periodStart: periodStart,
         periodEnd: now,
       );
-  return result.getOrElse(() => DashboardStats.empty);
+  
+  return result.fold(
+    (l) => throw Exception(l.message),
+    (r) => r,
+  );
 }
 
 @riverpod
 Future<WeeklyRevenueData> weeklyRevenue(WeeklyRevenueRef ref) async {
   final result = await ref.read(dashboardRepositoryProvider).getWeeklyRevenue();
-  return result.getOrElse(() => const WeeklyRevenueData(days: []));
+  return result.fold(
+    (l) => throw Exception(l.message),
+    (r) => r,
+  );
 }
 
 @riverpod

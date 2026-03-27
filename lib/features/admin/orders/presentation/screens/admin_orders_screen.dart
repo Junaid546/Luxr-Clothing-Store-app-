@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
+import 'package:style_cart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
 import 'package:style_cart/features/admin/orders/presentation/providers/admin_order_notifier.dart';
 import 'package:style_cart/features/admin/orders/presentation/widgets/admin_order_card.dart';
 import 'package:style_cart/features/admin/orders/presentation/widgets/status_update_dialog.dart';
@@ -71,6 +72,9 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
                 ),
               ),
             ),
+
+            // Low Stock Alert
+            const _LowStockBanner(),
 
             // Order List
             Expanded(
@@ -183,5 +187,46 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
       5 => OrderStatus.returned,
       _ => 'all',
     };
+  }
+}
+
+class _LowStockBanner extends ConsumerWidget {
+  const _LowStockBanner();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final countAsync = ref.watch(adminLowStockCountProvider);
+
+    return countAsync.when(
+      data: (count) => count > 0
+          ? Container(
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.error.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.error.withOpacity(0.3)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.inventory_2_outlined, color: AppColors.error, size: 20),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      '$count items are low on stock!',
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.error,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const Icon(Icons.chevron_right, color: AppColors.error, size: 18),
+                ],
+              ),
+            )
+          : const SizedBox.shrink(),
+      loading: () => const SizedBox.shrink(),
+      error: (_, __) => const SizedBox.shrink(),
+    );
   }
 }

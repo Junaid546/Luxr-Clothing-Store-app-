@@ -7,6 +7,7 @@ import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
+import 'package:style_cart/features/admin/analytics/presentation/providers/quick_stats_provider.dart';
 import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
 import 'package:style_cart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
 import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
@@ -19,8 +20,9 @@ class AdminDashboardScreen extends ConsumerWidget with AdminGuardMixin {
   Widget buildAdmin(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
-      body: CustomScrollView(
-        slivers: [
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
           const SliverToBoxAdapter(child: _DashboardAppBar()),
           const SliverToBoxAdapter(child: _KPICardsGrid()),
           const SliverToBoxAdapter(child: _WeeklyPerformanceChart()),
@@ -30,6 +32,7 @@ class AdminDashboardScreen extends ConsumerWidget with AdminGuardMixin {
           const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),
+    ),
     );
   }
 }
@@ -43,50 +46,56 @@ class _DashboardAppBar extends ConsumerWidget {
     if (user == null) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Text('LUXR',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.gold,
-                        letterSpacing: 3,
-                      )),
-                  const SizedBox(width: 8),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.gold.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(
-                        color: AppColors.gold.withOpacity(0.5),
-                      ),
-                    ),
-                    child: const Text('ADMIN',
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text('LUXR',
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
                           color: AppColors.gold,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
+                          letterSpacing: 2,
                         )),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 2),
-              Text(
-                'Welcome back, ${user.displayName}',
-                style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
-              ),
-            ],
+                    const SizedBox(width: 8),
+                    Container(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: AppColors.gold.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: AppColors.gold.withOpacity(0.5),
+                        ),
+                      ),
+                      child: const Text('ADMIN',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: AppColors.gold,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                          )),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'Welcome back, ${user.displayName}',
+                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
+          // Removed Spacer() to prevent forcing icons to the very edge on narrow screens
+          const SizedBox(width: 8),
           Stack(
             clipBehavior: Clip.none,
             children: [
@@ -139,6 +148,16 @@ class _DashboardAppBar extends ConsumerWidget {
             ],
           ),
           const SizedBox(width: 10),
+          IconButton(
+            onPressed: () {
+              ref.invalidate(dashboardStatsProvider);
+              ref.invalidate(weeklyRevenueProvider);
+              ref.invalidate(topSellingProductsProvider);
+              ref.invalidate(todayQuickStatsProvider);
+            },
+            icon: const Icon(Icons.refresh, color: AppColors.textSecondary),
+          ),
+          const SizedBox(width: 4),
           Container(
             width: 40,
             height: 40,
@@ -174,14 +193,42 @@ class _KPICardsGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final statsAsync = ref.watch(dashboardStatsProvider);
 
-    return statsAsync.when(
-      data: (stats) => GridView.count(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('KPI OVERVIEW',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: AppColors.textMuted,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.bold,
+                  )),
+              TextButton.icon(
+                onPressed: () => context.push(RouteNames.adminAnalytics),
+                icon: const Icon(Icons.analytics_outlined, size: 14),
+                label: const Text('Full Reports', style: TextStyle(fontSize: 12)),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.gold,
+                  padding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                ),
+              ),
+            ],
+          ),
+        ),
+        statsAsync.when(
+          data: (stats) => GridView.count(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         crossAxisCount: 2,
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
-        childAspectRatio: 1.4,
+        childAspectRatio: 1.22, // Increased from 1.4 to prevent bottom overflow
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         children: [
           _KPICard(
@@ -204,6 +251,7 @@ class _KPICardsGrid extends ConsumerWidget {
             value: stats.newClients.toString(),
             change: stats.clientsChange,
             isUp: stats.isClientsUp,
+            subtitle: 'Total: ${stats.totalClients}',
           ),
           _KPICard(
             icon: Icons.trending_up,
@@ -215,7 +263,12 @@ class _KPICardsGrid extends ConsumerWidget {
         ],
       ),
       loading: () => const _KPIShimmerGrid(),
-      error: (err, stack) => Center(child: Text(err.toString())),
+      error: (err, _) => _DashboardErrorCard(
+        title: 'KPI Data Unavailable',
+        message: err.toString(),
+      ),
+    ),
+      ],
     );
   }
 }
@@ -226,6 +279,7 @@ class _KPICard extends StatelessWidget {
   final String value;
   final double change;
   final bool isUp;
+  final String? subtitle;
 
   const _KPICard({
     required this.icon,
@@ -233,6 +287,7 @@ class _KPICard extends StatelessWidget {
     required this.value,
     required this.change,
     required this.isUp,
+    this.subtitle,
   });
 
   @override
@@ -291,13 +346,29 @@ class _KPICard extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              if (subtitle != null) ...[
+                const SizedBox(height: 2),
+                Text(
+                  subtitle!,
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: AppColors.textSecondary.withOpacity(0.8),
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ],
           ),
           Text(
             label,
@@ -409,7 +480,10 @@ class _WeeklyPerformanceChart extends ConsumerWidget {
         ),
       ),
       loading: () => const SizedBox(height: 200),
-      error: (err, stack) => const SizedBox.shrink(),
+      error: (err, _) => _DashboardErrorCard(
+        title: 'Revenue Chart Unavailable',
+        message: err.toString(),
+      ),
     );
   }
 }
@@ -810,6 +884,48 @@ class _KPIShimmerGrid extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
       )),
+    );
+  }
+}
+
+class _DashboardErrorCard extends StatelessWidget {
+  final String title;
+  final String message;
+
+  const _DashboardErrorCard({required this.title, required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.error.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.error.withOpacity(0.2)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.error_outline, color: AppColors.error, size: 28),
+          const SizedBox(height: 12),
+          Text(
+            title,
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            message.contains('index') 
+                ? 'Firestore index required. Check console for link.' 
+                : message,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 11),
+          ),
+        ],
+      ),
     );
   }
 }

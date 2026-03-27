@@ -70,7 +70,7 @@ class AnalyticsComputationService {
       prevCustomerStats,
       range,
     );
-    final productMetrics = _computeProductMetrics(products);
+    final productMetrics = _computeProductMetrics(products, currentOrders);
     final revenueSeries = _buildTimeSeries(
       currentOrders,
       range,
@@ -89,7 +89,7 @@ class AnalyticsComputationService {
       currentOrders,
       products,
     );
-    final topCustomersList = await _computeTopCustomers();
+    final topCustomersList = _computeTopCustomersForPeriod(currentOrders);
 
     return AnalyticsReport(
       period: period,
@@ -277,7 +277,23 @@ class AnalyticsComputationService {
   // ══════════════════════════════════════════════════
   ProductMetrics _computeProductMetrics(
     List<Map<String, dynamic>> products,
+    List<Map<String, dynamic>> currentOrders,
   ) {
+    // 1. Calculate units sold in THIS period from orders
+    final periodSoldMap = <String, int>{};
+    for (final order in currentOrders) {
+      if (order['status'] == OrderStatus.cancelled) continue;
+      final items = order['items'] as List? ?? [];
+      for (final item in items) {
+        final map = item as Map<String, dynamic>;
+        final pid = map['productId'] as String? ?? '';
+        final qty = (map['quantity'] as num?)?.toInt() ?? 0;
+        periodSoldMap[pid] = (periodSoldMap[pid] ?? 0) + qty;
+      }
+    }
+
+    final totalPeriodSold = periodSoldMap.values.fold(0, (a, b) => a + b);
+
     final threshold = int.parse(
       dotenv.env['LOW_STOCK_THRESHOLD'] ?? '5',
     );
@@ -286,7 +302,6 @@ class AnalyticsComputationService {
     int outOfStock = 0;
     int lowStock = 0;
     double inventoryValue = 0;
-    int totalSold = 0;
     int totalStock = 0;
     double ratingSum = 0;
     int ratedProducts = 0;
@@ -306,7 +321,6 @@ class AnalyticsComputationService {
 
       // Inventory value = price × current stock
       inventoryValue += price * stock;
-      totalSold += sold;
       totalStock += stock;
 
       if (stock == 0) {
@@ -324,8 +338,9 @@ class AnalyticsComputationService {
     }
 
     // Sell-through = sold / (sold + stock) × 100
-    final totalUnits = totalSold + totalStock;
-    final sellThrough = totalUnits > 0 ? (totalSold / totalUnits * 100) : 0.0;
+    // Using PERIOD units for better accuracy across different ranges
+    final totalUnitsAtStart = totalPeriodSold + totalStock;
+    final sellThrough = totalUnitsAtStart > 0 ? (totalPeriodSold / totalUnitsAtStart * 100) : 0.0;
 
     final avgRating = ratedProducts > 0 ? ratingSum / ratedProducts : 0.0;
 
@@ -335,7 +350,7 @@ class AnalyticsComputationService {
       totalLowStock: lowStock,
       inventoryValue: inventoryValue,
       sellThroughRate: sellThrough,
-      totalUnitsSold: totalSold,
+      totalUnitsSold: totalPeriodSold, // Use period sold, not all-time
       avgProductRating: avgRating,
       productsWithNoSales: noSales,
     );
@@ -513,28 +528,41 @@ class AnalyticsComputationService {
   }
 
   // ══════════════════════════════════════════════════
-  // COMPUTE TOP CUSTOMERS (lifetime value)
+  // COMPUTE TOP CUSTOMERS FOR PERIOD
+  // Based on orders in current range
   // ══════════════════════════════════════════════════
-  Future<List<TopCustomer>> _computeTopCustomers() async {
-    final snap = await _usersRef
-        .where('role', isEqualTo: 'customer')
-        .where('totalOrders', isGreaterThan: 0)
-        .orderBy('totalOrders', descending: true)
-        .orderBy('totalSpent', descending: true)
-        .limit(10)
-        .get();
+  List<TopCustomer> _computeTopCustomersForPeriod(
+    List<Map<String, dynamic>> orders,
+  ) {
+    final customerSpent = <String, double>{};
+    final customerOrders = <String, int>{};
+    final customerNames = <String, String>{};
+    final customerEmails = <String, String>{};
 
-    return snap.docs.map((doc) {
-      final d = doc.data();
+    for (final order in orders) {
+      if (order['status'] == OrderStatus.cancelled) continue;
+      final uid = order['userId'] as String? ?? '';
+      if (uid.isEmpty) continue;
+
+      customerSpent[uid] = (customerSpent[uid] ?? 0) + ((order['total'] as num?)?.toDouble() ?? 0);
+      customerOrders[uid] = (customerOrders[uid] ?? 0) + 1;
+      customerNames[uid] = order['userName'] as String? ?? 'Unknown';
+      customerEmails[uid] = order['userEmail'] as String? ?? '';
+    }
+
+    final sortedUids = customerSpent.keys.toList()
+      ..sort((a, b) => (customerSpent[b] ?? 0).compareTo(customerSpent[a] ?? 0));
+
+    return sortedUids.take(10).map((uid) {
       return TopCustomer(
-        userId: doc.id,
-        displayName: d['displayName'] as String? ?? '',
-        email: d['email'] as String? ?? '',
-        photoUrl: d['photoUrl'] as String?,
-        totalOrders: (d['totalOrders'] as num?)?.toInt() ?? 0,
-        totalSpent: (d['totalSpent'] as num?)?.toDouble() ?? 0,
-        eliteStatus: d['eliteStatus'] as String? ?? 'BRONZE',
-        lastOrderDate: DateTime.now(), // simplified
+        userId: uid,
+        displayName: customerNames[uid]!,
+        email: customerEmails[uid]!,
+        photoUrl: null, // order doesn't store this, but that's okay for the list
+        totalOrders: customerOrders[uid]!,
+        totalSpent: customerSpent[uid]!,
+        eliteStatus: 'N/A', // computed only on whole user object
+        lastOrderDate: DateTime.now(), 
       );
     }).toList();
   }
@@ -606,7 +634,11 @@ class AnalyticsComputationService {
     _CustomerStatsRaw previous,
     DateRange range,
   ) {
-    final repeatRate = current.totalCount > 0 ? (current.returningCount / current.totalCount * 100) : 0.0;
+    // Repeat Purchase Rate: users who have placed more than 1 order EVER (all-time returning status)
+    // but purchased in this period.
+    final repeatRate = current.totalCount > 0 
+        ? (current.returningCount / current.totalCount * 100) 
+        : 0.0;
 
     final avgLTV = current.totalCount > 0 ? current.totalSpent / current.totalCount : 0.0;
 

@@ -5,6 +5,7 @@ class DashboardStats extends Equatable {
   final double totalRevenue;
   final int totalOrders;
   final int newClients;
+  final int totalClients;
   final double conversionRate;
   final double revenueChange;
   final double ordersChange;
@@ -15,6 +16,7 @@ class DashboardStats extends Equatable {
     required this.totalRevenue,
     required this.totalOrders,
     required this.newClients,
+    required this.totalClients,
     required this.conversionRate,
     required this.revenueChange,
     required this.ordersChange,
@@ -31,6 +33,7 @@ class DashboardStats extends Equatable {
     totalRevenue: 0,
     totalOrders: 0,
     newClients: 0,
+    totalClients: 0,
     conversionRate: 0,
     revenueChange: 0,
     ordersChange: 0,
@@ -43,6 +46,7 @@ class DashboardStats extends Equatable {
         totalRevenue,
         totalOrders,
         newClients,
+        totalClients,
         conversionRate,
         revenueChange,
         ordersChange,

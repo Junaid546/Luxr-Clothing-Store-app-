@@ -104,7 +104,8 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
       return DashboardStats(
         totalRevenue: allTimeRevenue,
         totalOrders: allOrdersCount.count ?? 0,
-        newClients: allClientsCount.count ?? 0,
+        newClients: newClients,
+        totalClients: allClientsCount.count ?? 0,
         conversionRate: currentOrderCount > 0
             ? (currentOrderCount / (newClients > 0 ? newClients : 1) * 100).clamp(0.0, 100.0)
             : 0.0,

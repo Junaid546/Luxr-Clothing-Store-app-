@@ -37,16 +37,12 @@ Future<AnalyticsReport> analyticsReport(
   // Add slight debounce to prevent rapid re-fetches
   await Future<void>.delayed(const Duration(milliseconds: 100));
 
-  try {
-    return await ref
-        .read(analyticsComputationServiceProvider)
-        .generateReport(
-          period,
-          customRange: customRange,
-        );
-  } catch (e) {
-    return AnalyticsReport.empty(period);
-  }
+  return await ref
+      .read(analyticsComputationServiceProvider)
+      .generateReport(
+        period,
+        customRange: customRange,
+      );
 }
 
 // ── Comparison metrics (current vs previous) ──────────

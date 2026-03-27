@@ -433,6 +433,29 @@ class GaugeChartPainter extends CustomPainter {
       5,
       Paint()..color = Colors.white,
     );
+
+    // Percentage Text (below the pin)
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: '${(value * animationValue).toInt()}%',
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 0.5,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    );
+
+    textPainter.layout();
+    textPainter.paint(
+      canvas,
+      Offset(
+        center.dx - textPainter.width / 2,
+        center.dy + 12, // Positioned 12px below the pin center
+      ),
+    );
   }
 
   @override

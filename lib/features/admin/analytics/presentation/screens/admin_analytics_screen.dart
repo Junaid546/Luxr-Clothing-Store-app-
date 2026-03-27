@@ -10,6 +10,7 @@ import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/features/admin/analytics/domain/models/analytics_models.dart';
 import 'package:style_cart/features/admin/analytics/presentation/providers/analytics_report_provider.dart';
 import 'package:style_cart/features/admin/analytics/presentation/widgets/chart_painters.dart';
+import 'package:style_cart/features/admin/analytics/presentation/widgets/export_bottom_sheet.dart';
 import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
 
 class AdminAnalyticsScreen extends ConsumerStatefulWidget {
@@ -55,9 +56,14 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
-      body: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(child: _AnalyticsAppBar()),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+            child: _AnalyticsAppBar(
+              currentReport: reportAsync.valueOrNull,
+            ),
+          ),
           const SliverToBoxAdapter(child: _PeriodSelectorRow()),
           reportAsync.when(
             data: (report) => SliverList(
@@ -79,11 +85,48 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen> {
               child: Center(child: CircularProgressIndicator(color: AppColors.gold)),
             ),
             error: (err, stack) => SliverFillRemaining(
-              child: Center(child: Text('Error computing analytics: $err', style: const TextStyle(color: Colors.white))),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.analytics_outlined, color: AppColors.gold, size: 64),
+                      const SizedBox(height: 24),
+                      const Text(
+                        'Unable to Load Analytics',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        err.toString().contains('index')
+                            ? 'Your database requires composite indexes to run these reports. Please check the log/link below to create them.'
+                            : 'An unexpected error occurred while computing metrics.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          err.toString(),
+                          style: const TextStyle(color: AppColors.error, fontSize: 11, fontFamily: 'monospace'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ],
       ),
+    ),
     );
   }
 }
@@ -92,7 +135,9 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen> {
 // APP BAR
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _AnalyticsAppBar extends ConsumerWidget {
-  const _AnalyticsAppBar();
+  /// If non-null, the export button becomes active
+  final AnalyticsReport? currentReport;
+  const _AnalyticsAppBar({this.currentReport});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,23 +152,37 @@ class _AnalyticsAppBar extends ConsumerWidget {
             constraints: const BoxConstraints(),
           ),
           const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('ANALYTICS & REPORTS',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 1.2,
-                  )),
-              Text(
-                'Performance Overview',
-                style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('ANALYTICS & REPORTS',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 1.2,
+                    )),
+                Text(
+                  'Performance Overview',
+                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                ),
+              ],
+            ),
           ),
           const Spacer(),
+          // Export button (active only when report is loaded)
+          if (currentReport != null)
+            IconButton(
+              tooltip: 'Export Report',
+              onPressed: () => showModalBottomSheet<void>(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (_) => ExportBottomSheet(report: currentReport!),
+              ),
+              icon: const Icon(Icons.download_outlined, color: AppColors.gold),
+            ),
           IconButton(
             onPressed: () => ref.invalidate(analyticsReportProvider),
             icon: const Icon(Icons.refresh, color: AppColors.textSecondary),
@@ -818,25 +877,13 @@ class _ProductPerformanceSection extends StatelessWidget {
                 children: [
                   const Text('SELL-THROUGH RATE', style: AppTextStyles.labelSmall),
                   const SizedBox(height: 16),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      AnimatedChart(
-                        width: 140,
-                        height: 80,
-                        painterBuilder: (anim) => GaugeChartPainter(
-                          value: report.products.sellThroughRate,
-                          animationValue: anim,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        child: Text(
-                          '${report.products.sellThroughRate.toStringAsFixed(1)}%',
-                          style: AppTextStyles.titleLarge.copyWith(color: AppColors.gold, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
+                  AnimatedChart(
+                    width: 140,
+                    height: 100,
+                    painterBuilder: (anim) => GaugeChartPainter(
+                      value: report.products.sellThroughRate,
+                      animationValue: anim,
+                    ),
                   ),
                 ],
               ),
