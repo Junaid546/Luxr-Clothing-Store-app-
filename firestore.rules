@@ -1,0 +1,187 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ════════════════════════════════════════════════
+    // HELPER FUNCTIONS
+    // ════════════════════════════════════════════════
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isCustomer() {
+      return isAuthenticated() &&
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'customer';
+    }
+
+    function hasField(field) {
+      return field in request.resource.data;
+    }
+
+    function fieldsUnchanged(fields) {
+      return fields.toSet().difference(
+        request.resource.data.diff(resource.data).affectedKeys()
+      ).size() == fields.size();
+    }
+
+    function onlyModifies(allowedFields) {
+      return request.resource.data.diff(resource.data)
+          .affectedKeys()
+          .hasOnly(allowedFields.toSet());
+    }
+
+    function validLength(field, min, max) {
+      return request.resource.data[field] is string &&
+             request.resource.data[field].size() >= min &&
+             request.resource.data[field].size() <= max;
+    }
+
+    function inRange(field, min, max) {
+      return request.resource.data[field] is number &&
+             request.resource.data[field] >= min &&
+             request.resource.data[field] <= max;
+    }
+
+    // ════════════════════════════════════════════════
+    // COLLECTION: /users/{userId}
+    // ════════════════════════════════════════════════
+
+    match /users/{userId} {
+      allow read: if isUser(userId) || isAdmin();
+
+      allow create: if isUser(userId) &&
+        request.resource.data.uid == request.auth.uid &&
+        request.resource.data.role == 'customer' &&
+        request.resource.data.email == request.auth.token.email &&
+        request.resource.data.totalOrders == 0 &&
+        request.resource.data.totalSpent == 0.0 &&
+        request.resource.data.eliteStatus == 'BRONZE' &&
+        validLength('displayName', 2, 60);
+
+      allow update: if (
+        isUser(userId) &&
+        fieldsUnchanged([
+          'uid', 'role', 'email',
+          'totalOrders', 'totalSpent',
+          'eliteStatus', 'createdAt',
+        ]) &&
+        onlyModifies([
+          'displayName', 'photoUrl', 'fcmToken',
+          'notificationPrefs', 'addresses',
+          'updatedAt', 'lastLoginAt', 'emailVerified',
+          'wishlistCount',
+        ])
+      ) || isAdmin();
+
+      allow delete: if isAdmin();
+
+      match /cart/{cartItemId} {
+        allow read: if isUser(userId);
+        allow create: if isUser(userId) &&
+          hasField('productId') &&
+          hasField('quantity') &&
+          inRange('quantity', 1, 10) &&
+          request.resource.data.unitPrice > 0;
+        allow update: if isUser(userId) &&
+          fieldsUnchanged(['productId', 'size', 'color']) &&
+          inRange('quantity', 0, 10);
+        allow delete: if isUser(userId);
+      }
+
+      match /wishlist/{productId} {
+        allow read: if isUser(userId);
+        allow create: if isUser(userId) &&
+          productId == request.resource.data.productId;
+        allow update: if false;
+        allow delete: if isUser(userId);
+      }
+    }
+
+    // ════════════════════════════════════════════════
+    // COLLECTION: /products/{productId}
+    // ════════════════════════════════════════════════
+
+    match /products/{productId} {
+      allow read: if isAuthenticated() && (isAdmin() || resource.data.isActive == true);
+      allow create: if isAdmin();
+      allow update: if isAdmin() ||
+        (isAuthenticated() && onlyModifies(['viewCount']) && request.resource.data.viewCount > resource.data.viewCount);
+      allow delete: if isAdmin();
+
+      match /reviews/{reviewId} {
+        allow read: if isAuthenticated() && (resource.data.isVisible == true || isAdmin());
+        allow create: if isCustomer() && reviewId == request.auth.uid && inRange('rating', 1, 5);
+        allow update: if resource.data.userId == request.auth.uid && fieldsUnchanged(['userId', 'orderId']);
+        allow delete: if isAdmin();
+      }
+    }
+
+    // ════════════════════════════════════════════════
+    // COLLECTION: /orders/{orderId}
+    // ════════════════════════════════════════════════
+
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && (isAdmin() || resource.data.userId == request.auth.uid);
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid &&
+        request.resource.data.status == 'pending' && request.resource.data.total > 0;
+      allow update: if isAdmin() || (
+        isUser(resource.data.userId) &&
+        request.resource.data.status == 'cancelled' &&
+        resource.data.status in ['pending', 'confirmed'] &&
+        fieldsUnchanged(['total', 'items', 'userId'])
+      );
+      allow delete: if false;
+    }
+
+    // ════════════════════════════════════════════════
+    // COLLECTION: /notifications/{notificationId}
+    // ════════════════════════════════════════════════
+
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated() && (isAdmin() || resource.data.userId == request.auth.uid);
+      allow create: if isAdmin() || (isAuthenticated() && request.resource.data.userId == request.auth.uid);
+      allow update: if isAuthenticated() && (isAdmin() || (isUser(resource.data.userId) && onlyModifies(['isRead'])));
+      allow delete: if isAuthenticated() && (isAdmin() || isUser(resource.data.userId));
+    }
+
+    // ════════════════════════════════════════════════
+    // OTHER COLLECTIONS
+    // ════════════════════════════════════════════════
+
+    match /categories/{categoryId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /banners/{bannerId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    match /analytics/{dateKey} {
+      allow read, write: if isAdmin();
+    }
+
+    match /admin_notifications/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
