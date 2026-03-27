@@ -8,9 +8,15 @@ import 'package:style_cart/features/notifications/data/services/fcm_background_h
 
 import 'package:style_cart/app/app.dart';
 import 'package:style_cart/core/config/app_config.dart';
+import 'package:style_cart/core/errors/global_error_handler.dart';
+import 'package:style_cart/core/security/sensitive_data_guard.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Global Error Handler & Security
+  await GlobalErrorHandler.initialize();
+  SensitiveDataGuard.setupDebugLogging();
 
   // Register background handler
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);

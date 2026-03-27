@@ -7,11 +7,11 @@ import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
 import 'package:style_cart/features/auth/domain/usecases/register_with_email_usecase.dart';
 import 'package:style_cart/features/auth/domain/usecases/send_password_reset_usecase.dart';
 import 'package:style_cart/features/auth/domain/usecases/sign_in_with_email_usecase.dart';
-import 'package:style_cart/features/auth/domain/usecases/sign_in_with_google_usecase.dart';
-import 'package:style_cart/features/auth/domain/usecases/sign_out_usecase.dart';
 import 'package:style_cart/core/utils/validators.dart';
 import 'package:style_cart/core/utils/sanitizer.dart';
 import 'package:style_cart/core/security/rate_limiter.dart';
+import 'package:style_cart/core/errors/global_error_handler.dart';
+import 'package:style_cart/core/storage/secure_storage_service.dart';
 
 // ── Auth State ────────────────────────────────────────────────
 sealed class AuthState {
@@ -52,6 +52,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     repository.authStateChanges.listen((user) async {
       if (user != null) {
         state = AuthAuthenticated(user);
+        GlobalErrorHandler.setUserContext(user.uid, user.email);
         // FCM Initialization is now handled by fcmInitializerProvider in app.dart
       } else {
         state = const AuthUnauthenticated();
@@ -179,6 +180,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
         if (user != null) {
           await _ref.read(fcmServiceProvider).clearToken(user.uid);
         }
+        await GlobalErrorHandler.clearUserContext();
+        final secureStorage = await _ref.read(secureStorageServiceProvider.future);
+        await secureStorage.clearAllSecure();
         state = const AuthUnauthenticated();
       },
     );
