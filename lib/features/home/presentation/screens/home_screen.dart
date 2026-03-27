@@ -108,8 +108,8 @@ class _AppBar extends StatelessWidget {
             'LUXR',
             style: AppTextStyles.headlineLarge.copyWith(
               color: AppColors.gold,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 3,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 4,
             ),
           ),
 
@@ -647,17 +647,20 @@ class _TrendingBanner extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  CachedNetworkImage(
-                    imageUrl:
-                        'https://via.placeholder.com/800x450', // Replace with real asset/image later
+                  Image.asset(
+                    'assets/images/trending now card image.jpg',
                     fit: BoxFit.cover,
-                    errorWidget: (context, url, err) =>
+                    errorBuilder: (context, error, stackTrace) =>
                         Container(color: AppColors.backgroundCard),
                   ),
                   Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.black87, Colors.transparent],
+                        colors: [
+                          Colors.black.withOpacity(0.8),
+                          AppColors.gold.withOpacity(0.1),
+                          Colors.transparent,
+                        ],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ),
@@ -675,9 +678,9 @@ class _TrendingBanner extends StatelessWidget {
                         Text(
                           'MUST HAVE',
                           style: AppTextStyles.labelSmall.copyWith(
-                            color: AppColors.primary,
-                            letterSpacing: 2,
-                            fontWeight: FontWeight.bold,
+                            color: AppColors.gold,
+                            letterSpacing: 2.5,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -686,18 +689,21 @@ class _TrendingBanner extends StatelessWidget {
                           style: AppTextStyles.headlineMedium.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
+                            height: 1.2,
                           ),
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
                           onPressed: () => context.push(RouteNames.shop),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
+                            backgroundColor: AppColors.gold,
                             foregroundColor: Colors.black,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32,
                               vertical: 12,
                             ),
+                            elevation: 8,
+                            shadowColor: AppColors.gold.withOpacity(0.3),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(24),
                             ),
@@ -705,8 +711,9 @@ class _TrendingBanner extends StatelessWidget {
                           child: const Text(
                             'Discover',
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w900,
                               fontSize: 14,
+                              letterSpacing: 1,
                             ),
                           ),
                         ),

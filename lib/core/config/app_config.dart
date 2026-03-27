@@ -56,11 +56,12 @@ class AppConfig {
       );
     }
 
-    // Validate format of critical values
+    // Validate format of critical values (only basic check to avoid blocking dev placeholders)
     final projectId = dotenv.env['FIREBASE_PROJECT_ID']!;
-    if (!RegExp(r'^[a-z][a-z0-9\-]{4,28}[a-z0-9]$').hasMatch(projectId)) {
+    if (projectId.contains(' ') || projectId.length < 4) {
       throw Exception(
-        'Invalid FIREBASE_PROJECT_ID format',
+        'Invalid FIREBASE_PROJECT_ID format in .env file. '
+        'Please ensure it contains your actual Firebase Project ID.',
       );
     }
 

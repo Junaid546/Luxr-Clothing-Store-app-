@@ -63,7 +63,7 @@ class CustomerShell extends ConsumerWidget {
         onTap: (index) => context.go(_tabs[index].route),
         backgroundColor: AppColors.backgroundCard,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: AppColors.gold,
         unselectedItemColor: AppColors.textMuted,
         selectedLabelStyle: const TextStyle(fontSize: 10, letterSpacing: 0.5),
         unselectedLabelStyle: const TextStyle(fontSize: 10),
@@ -105,7 +105,7 @@ class _CartIconWithBadge extends ConsumerWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Icon(icon, color: isActive ? AppColors.primary : AppColors.textMuted),
+        Icon(icon, color: isActive ? AppColors.gold : AppColors.textMuted),
         countAsync.when(
           data: (count) {
             if (count == 0) return const SizedBox.shrink();
@@ -116,7 +116,7 @@ class _CartIconWithBadge extends ConsumerWidget {
                 width: 16,
                 height: 16,
                 decoration: const BoxDecoration(
-                  color: AppColors.primary,
+                  color: AppColors.gold,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
