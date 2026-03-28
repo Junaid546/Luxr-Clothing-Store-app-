@@ -1,8 +1,14 @@
 rules_version = '2';
 
+// ══════════════════════════════════════════════════
+// STYLECART PRODUCTION STORAGE RULES
+// ══════════════════════════════════════════════════
+
 service firebase.storage {
   match /b/{bucket}/o {
 
+    // ── Helper Functions ────────────────────────────
+    
     function isAuthenticated() {
       return request.auth != null;
     }
@@ -15,27 +21,53 @@ service firebase.storage {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
+    // Comprehensive image validation
     function isValidImage() {
       return request.resource.contentType.matches('image/.*') &&
-             request.resource.size < 5 * 1024 * 1024;
+             request.resource.size < 5 * 1024 * 1024; // 5MB limit
     }
 
+    // ── Product Media ──────────────────────────────
+    
     match /products/{productId}/{filename} {
+      // Publicly readable for marketplace browsing
+      allow read: if true;
+      // Only admins can manage product assets
+      allow write: if isAdmin() && isValidImage();
+      allow delete: if isAdmin();
+    }
+
+    // ── Banners & Promotional Content ──────────────
+    
+    match /banners/{bannerId}/{filename} {
       allow read: if true;
       allow write: if isAdmin() && isValidImage();
       allow delete: if isAdmin();
     }
 
+    // ── User Profiles (Avatars) ────────────────────
+    
     match /users/{userId}/{filename} {
-      allow read: if isAuthenticated() && (isOwner(userId) || isAdmin());
-      allow write: if isOwner(userId) && isValidImage() && filename.matches('profile_.*');
+      // Publicly readable (optional, for reviews/social)
+      // or restricted to isAuthenticated() if preferred
+      allow read: if true;
+      // Owner can upload their own profile image
+      // Restricted to 'profile_' prefix for consistency
+      allow write: if isOwner(userId) && 
+                     isValidImage() && 
+                     filename.matches('profile_.*');
       allow delete: if isOwner(userId) || isAdmin();
     }
 
+    // ── Admin Exports (Reports/Logs) ───────────────
+    
     match /exports/{adminId}/{filename} {
+      // Heavily restricted to the specific admin who generated it
       allow read, write, delete: if isAdmin() && isOwner(adminId);
     }
 
+    // ── Catch-all Deny ───────────────────────────────
+    
     match /{allPaths=**} {
       allow read, write: if false;
     }
