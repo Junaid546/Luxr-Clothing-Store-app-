@@ -29,8 +29,8 @@ class PaginationState<T> with _$PaginationState<T> {
 }
 
 // ── Pagination Controller ─────────────────────────────
-abstract class PaginationController<T>
-    extends StateNotifier<PaginationState<T>> {
+// Abstract class — extend for each paginated list.
+abstract class PaginationController<T> extends StateNotifier<PaginationState<T>> {
   PaginationController() : super(const PaginationState());
 
   // Page size for this controller
@@ -38,7 +38,7 @@ abstract class PaginationController<T>
 
   // Override this to fetch data from Firestore
   Future<List<T>> fetchPage({
-    int limit,
+    required int limit,
     Object? lastDocument,
   });
 
@@ -100,9 +100,7 @@ abstract class PaginationController<T>
         hasMore: newItems.length >= pageSize,
         pageIndex: state.pageIndex + 1,
         totalLoaded: state.totalLoaded + newItems.length,
-        lastDocumentSnapshot: newItems.isNotEmpty
-            ? getCursor(newItems.last)
-            : state.lastDocumentSnapshot,
+        lastDocumentSnapshot: newItems.isNotEmpty ? getCursor(newItems.last) : state.lastDocumentSnapshot,
       );
     } catch (e) {
       state = state.copyWith(
@@ -116,25 +114,16 @@ abstract class PaginationController<T>
   // ── Refresh (pull-to-refresh) ──────────────────────
   Future<void> refresh() => loadFirstPage();
 
-  // ── Prepend single item (optimistic UI) ───────────
+  // ── Optimistic UI Helpers ──────────────────────────
   void prependItem(T item) {
-    state = state.copyWith(
-      items: [item, ...state.items],
-    );
+    state = state.copyWith(items: [item, ...state.items]);
   }
 
-  // ── Remove item (optimistic UI) ───────────────────
   void removeItem(bool Function(T) matcher) {
-    state = state.copyWith(
-      items: state.items.where((i) => !matcher(i)).toList(),
-    );
+    state = state.copyWith(items: state.items.where((i) => !matcher(i)).toList());
   }
 
-  // ── Update item (optimistic UI) ───────────────────
-  void updateItem(
-    bool Function(T) matcher,
-    T Function(T) updater,
-  ) {
+  void updateItem(bool Function(T) matcher, T Function(T) updater) {
     state = state.copyWith(
       items: state.items.map((i) => matcher(i) ? updater(i) : i).toList(),
     );

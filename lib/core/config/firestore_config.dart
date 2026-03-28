@@ -10,7 +10,7 @@ class FirestoreConfig {
     // ── Enable offline persistence ─────────────────
     // Firestore caches data locally (SQLite on mobile).
     // App works offline; syncs when back online.
-    // Cache size: UNLIMITED as requested
+    // Cache size: UNLIMITED (controlled by disk space)
     firestore.settings = const Settings(
       persistenceEnabled: true,
       cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
@@ -26,9 +26,7 @@ class FirestoreConfig {
       // Already enabled — ignore
     }
 
-    debugPrint(
-      '✓ Firestore configured: persistence enabled',
-    );
+    debugPrint('✓ Firestore configured: persistence enabled');
   }
 
   // ── Disable network (for offline mode / testing) ──

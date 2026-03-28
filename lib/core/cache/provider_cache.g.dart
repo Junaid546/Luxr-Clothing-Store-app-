@@ -7,7 +7,7 @@ part of 'provider_cache.dart';
 // **************************************************************************
 
 String _$watchProductCachedHash() =>
-    r'c86388f9efff81e1120d9d3f71b71f1e7d8f0154';
+    r'2faf4069a82b2610409b45549b1be9b5ab9b4efa';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -149,7 +149,7 @@ class _WatchProductCachedProviderElement
   String get productId => (origin as WatchProductCachedProvider).productId;
 }
 
-String _$cachedCategoriesHash() => r'b0fbd73abac99c526cb3b4aca37d8db5866df2c4';
+String _$cachedCategoriesHash() => r'18dfd64ada56ca828f613f75dba03733fd277a8e';
 
 /// See also [cachedCategories].
 @ProviderFor(cachedCategories)
@@ -167,12 +167,12 @@ final cachedCategoriesProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CachedCategoriesRef = AutoDisposeFutureProviderRef<List<String>>;
-String _$cachedBannersHash() => r'fb06efcc2a8abd55db658c4511b6fe03ab21a612';
+String _$cachedBannersHash() => r'61ad5d0741b4224dd4938a7f19bc9029be488e44';
 
 /// See also [cachedBanners].
 @ProviderFor(cachedBanners)
 final cachedBannersProvider =
-    AutoDisposeFutureProvider<List<ProductModel>>.internal(
+    AutoDisposeFutureProvider<List<BannerModel>>.internal(
       cachedBanners,
       name: r'cachedBannersProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -184,7 +184,7 @@ final cachedBannersProvider =
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CachedBannersRef = AutoDisposeFutureProviderRef<List<ProductModel>>;
+typedef CachedBannersRef = AutoDisposeFutureProviderRef<List<BannerModel>>;
 String _$cachedFeaturedProductsHash() =>
     r'246870cc33cd212579379a32f893d1705b4ec5ce';
 
