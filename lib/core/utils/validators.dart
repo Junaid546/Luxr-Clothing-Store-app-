@@ -281,7 +281,8 @@ class Validators {
 
   // ── Compatibility Aliases ─────────────────────────
   static String? validateName(String? value) => validateDisplayName(value);
-  static String? validateBrand(String? value) => value != null && value.trim().isEmpty ? 'Brand required' : null;
+  static String? validateBrand(String? value) =>
+      value != null && value.trim().isEmpty ? 'Brand required' : null;
 
   // ── Search Query ──────────────────────────────────
   static String? validateSearchQuery(String? value) {

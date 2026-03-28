@@ -1,18 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/data/firestore_base_repository.dart';
-import 'package:style_cart/core/errors/exceptions.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/orders/data/models/order_model.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/data/firestore_base_repository.dart';
+import 'package:stylecart/core/errors/exceptions.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/orders/data/models/order_model.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/domain/repositories/order_repository.dart';
 
-class OrderRepositoryImpl
-    extends FirestoreBaseRepository
+class OrderRepositoryImpl extends FirestoreBaseRepository
     implements OrderRepository {
-
   OrderRepositoryImpl(super.firestore);
 
   CollectionReference<Map<String, dynamic>> get _ordersRef =>
@@ -28,8 +26,9 @@ class OrderRepositoryImpl
   Stream<Either<Failure, OrderEntity>> watchOrder(
     String orderId,
   ) {
-    return safeFirestoreStream(() =>
-      _ordersRef.doc(orderId)
+    return safeFirestoreStream(
+      () => _ordersRef
+          .doc(orderId)
           .snapshots()
           .where((doc) => doc.exists)
           .map((doc) => OrderModel.fromFirestore(doc).toEntity()),
@@ -43,8 +42,8 @@ class OrderRepositoryImpl
   Stream<Either<Failure, List<OrderEntity>>> watchUserOrders(
     String userId,
   ) {
-    return safeFirestoreStream(() =>
-      _ordersRef
+    return safeFirestoreStream(
+      () => _ordersRef
           .where('userId', isEqualTo: userId)
           .orderBy('placedAt', descending: true)
           .limit(20)
@@ -88,7 +87,8 @@ class OrderRepositoryImpl
 
       if (statusFilter != null && statusFilter != 'all') {
         query = query.where(
-          'status', isEqualTo: statusFilter,
+          'status',
+          isEqualTo: statusFilter,
         );
       }
 
@@ -116,9 +116,7 @@ class OrderRepositoryImpl
     String? reason,
   }) {
     return safeFirestoreCall(() async {
-
       await firestore.runTransaction((txn) async {
-
         // READ order first to verify it can be cancelled
         final orderRef = _ordersRef.doc(orderId);
         final orderSnap = await txn.get(orderRef);
@@ -128,8 +126,7 @@ class OrderRepositoryImpl
         }
 
         final orderData = orderSnap.data()!;
-        final currentStatus =
-            orderData['status'] as String? ?? '';
+        final currentStatus = orderData['status'] as String? ?? '';
 
         // Security: verify this order belongs to user
         if (orderData['userId'] != userId) {
@@ -150,10 +147,9 @@ class OrderRepositoryImpl
         }
 
         // READ all products for stock release
-        final productRefs = items
-            .map((i) => _productsRef.doc(i.productId))
-            .toList();
-        
+        final productRefs =
+            items.map((i) => _productsRef.doc(i.productId)).toList();
+
         // We can't use await Future.wait inside txn for multiple distinct docs if we need to guarantee consistency properly in some Firestore versions,
         // but here it's fine as we are just reading them.
         final productSnaps = <DocumentSnapshot<Map<String, dynamic>>>[];
@@ -163,14 +159,16 @@ class OrderRepositoryImpl
 
         // WRITE: Update order status
         txn.update(orderRef, {
-          'status':    OrderStatus.cancelled,
+          'status': OrderStatus.cancelled,
           'updatedAt': FieldValue.serverTimestamp(),
-          'statusHistory': FieldValue.arrayUnion([{
-            'status':    OrderStatus.cancelled,
-            'timestamp': Timestamp.now(),
-            'note':      reason ?? 'Cancelled by customer',
-            'updatedBy': userId,
-          }]),
+          'statusHistory': FieldValue.arrayUnion([
+            {
+              'status': OrderStatus.cancelled,
+              'timestamp': Timestamp.now(),
+              'note': reason ?? 'Cancelled by customer',
+              'updatedBy': userId,
+            }
+          ]),
         });
 
         // WRITE: Release stock for all items (Grouped by product)
@@ -183,9 +181,11 @@ class OrderRepositoryImpl
           if (!snap.exists) continue;
 
           final data = snap.data()!;
-          final inv = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
-          
-          final productItems = items.where((item) => item.productId == pId).toList();
+          final inv =
+              Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
+
+          final productItems =
+              items.where((item) => item.productId == pId).toList();
           final updateMap = <String, dynamic>{
             'updatedAt': FieldValue.serverTimestamp(),
           };
@@ -194,7 +194,7 @@ class OrderRepositoryImpl
           for (final item in productItems) {
             final currentQty = (inv[item.size] as num?)?.toInt() ?? 0;
             final newQty = currentQty + item.quantity;
-            
+
             updateMap['inventory.${item.size}'] = newQty;
             inv[item.size] = newQty;
             totalRelease += item.quantity;
@@ -204,7 +204,8 @@ class OrderRepositoryImpl
           final currentSold = (data['soldCount'] as num?)?.toInt() ?? 0;
 
           updateMap['totalStock'] = currentTotal + totalRelease;
-          updateMap['soldCount'] = (currentSold - totalRelease).clamp(0, 999999);
+          updateMap['soldCount'] =
+              (currentSold - totalRelease).clamp(0, 999999);
 
           txn.update(productRefs[i], updateMap);
           handledProducts.add(pId);
@@ -246,11 +247,9 @@ class OrderRepositoryImpl
       }
 
       // 7-day return window check
-      final deliveredAt =
-          (data['deliveredAt'] as Timestamp?)?.toDate();
+      final deliveredAt = (data['deliveredAt'] as Timestamp?)?.toDate();
       if (deliveredAt != null) {
-        final daysSinceDelivery =
-            DateTime.now().difference(deliveredAt).inDays;
+        final daysSinceDelivery = DateTime.now().difference(deliveredAt).inDays;
         if (daysSinceDelivery > 7) {
           throw const ValidationException(
             'Return window has expired (7 days from delivery)',
@@ -259,14 +258,16 @@ class OrderRepositoryImpl
       }
 
       await _ordersRef.doc(orderId).update({
-        'status':    OrderStatus.returnRequested,
+        'status': OrderStatus.returnRequested,
         'updatedAt': FieldValue.serverTimestamp(),
-        'statusHistory': FieldValue.arrayUnion([{
-          'status':    OrderStatus.returnRequested,
-          'timestamp': Timestamp.now(),
-          'note':      reason,
-          'updatedBy': userId,
-        }]),
+        'statusHistory': FieldValue.arrayUnion([
+          {
+            'status': OrderStatus.returnRequested,
+            'timestamp': Timestamp.now(),
+            'note': reason,
+            'updatedBy': userId,
+          }
+        ]),
       });
     });
   }
@@ -283,8 +284,8 @@ class OrderRepositoryImpl
     Object? lastDocument,
   }) {
     return safeFirestoreCall(() async {
-      Query<Map<String, dynamic>> query = _ordersRef
-          .orderBy('placedAt', descending: true);
+      Query<Map<String, dynamic>> query =
+          _ordersRef.orderBy('placedAt', descending: true);
 
       if (statusFilter != null && statusFilter != 'all') {
         query = _ordersRef
@@ -335,14 +336,13 @@ class OrderRepositoryImpl
           .orderBy('placedAt', descending: true)
           .limit(limit);
     } else {
-      query = _ordersRef
-          .orderBy('placedAt', descending: true)
-          .limit(limit);
+      query = _ordersRef.orderBy('placedAt', descending: true).limit(limit);
     }
 
-    return safeFirestoreStream(() =>
-      query.snapshots().map((snap) =>
-          snap.docs.map((doc) => OrderModel.fromFirestore(doc).toEntity()).toList()),
+    return safeFirestoreStream(
+      () => query.snapshots().map((snap) => snap.docs
+          .map((doc) => OrderModel.fromFirestore(doc).toEntity())
+          .toList()),
     );
   }
 
@@ -360,30 +360,30 @@ class OrderRepositoryImpl
   }) {
     return safeFirestoreCall(() async {
       final updateData = <String, dynamic>{
-        'status':    newStatus,
+        'status': newStatus,
         'updatedAt': FieldValue.serverTimestamp(),
-        'statusHistory': FieldValue.arrayUnion([{
-          'status':    newStatus,
-          'timestamp': Timestamp.now(),
-          'note':      note ?? _defaultNote(newStatus),
-          'updatedBy': updatedBy,
-        }]),
+        'statusHistory': FieldValue.arrayUnion([
+          {
+            'status': newStatus,
+            'timestamp': Timestamp.now(),
+            'note': note ?? _defaultNote(newStatus),
+            'updatedBy': updatedBy,
+          }
+        ]),
       };
 
       // Add courier info when shipped
-      if (newStatus == OrderStatus.shipped &&
-          courier != null) {
+      if (newStatus == OrderStatus.shipped && courier != null) {
         updateData['courier'] = {
-          'name':          courier.name,
-          'trackingNumber':courier.trackingNumber,
+          'name': courier.name,
+          'trackingNumber': courier.trackingNumber,
           'estimatedTime': courier.estimatedTime,
         };
       }
 
       // Set deliveredAt timestamp
       if (newStatus == OrderStatus.delivered) {
-        updateData['deliveredAt'] =
-            FieldValue.serverTimestamp();
+        updateData['deliveredAt'] = FieldValue.serverTimestamp();
         updateData['paymentStatus'] = 'paid';
       }
 
@@ -397,20 +397,18 @@ class OrderRepositoryImpl
 
         if (orderUserId != null) {
           final statusMsg = _getStatusMessage(newStatus);
-          
-          await firestore
-              .collection(FirestoreConstants.notifications)
-              .add({
-            'userId':    orderUserId,
-            'title':     statusMsg.title,
-            'body':      statusMsg.body.replaceAll('{orderId}', orderId),
-            'type':      'order_update',
+
+          await firestore.collection(FirestoreConstants.notifications).add({
+            'userId': orderUserId,
+            'title': statusMsg.title,
+            'body': statusMsg.body.replaceAll('{orderId}', orderId),
+            'type': 'order_update',
             'data': {
-              'type':    'order_update',
+              'type': 'order_update',
               'orderId': orderId,
-              'route':   '/order-tracking/$orderId',
+              'route': '/order-tracking/$orderId',
             },
-            'isRead':    false,
+            'isRead': false,
             'createdAt': FieldValue.serverTimestamp(),
           });
         }
@@ -432,7 +430,6 @@ class OrderRepositoryImpl
   }) {
     return safeFirestoreCall(() async {
       await firestore.runTransaction((txn) async {
-
         final orderRef = _ordersRef.doc(orderId);
         final orderSnap = await txn.get(orderRef);
 
@@ -448,10 +445,9 @@ class OrderRepositoryImpl
         }
 
         // READ products for stock release
-        final productRefs = items
-            .map((i) => _productsRef.doc(i.productId))
-            .toList();
-        
+        final productRefs =
+            items.map((i) => _productsRef.doc(i.productId)).toList();
+
         final productSnaps = <DocumentSnapshot<Map<String, dynamic>>>[];
         for (final ref in productRefs) {
           productSnaps.add(await txn.get(ref));
@@ -459,15 +455,17 @@ class OrderRepositoryImpl
 
         // UPDATE order status
         txn.update(orderRef, {
-          'status':       OrderStatus.returned,
+          'status': OrderStatus.returned,
           'paymentStatus': 'refunded',
-          'updatedAt':    FieldValue.serverTimestamp(),
-          'statusHistory': FieldValue.arrayUnion([{
-            'status':    OrderStatus.returned,
-            'timestamp': Timestamp.now(),
-            'note':      'Return confirmed by admin',
-            'updatedBy': adminId,
-          }]),
+          'updatedAt': FieldValue.serverTimestamp(),
+          'statusHistory': FieldValue.arrayUnion([
+            {
+              'status': OrderStatus.returned,
+              'timestamp': Timestamp.now(),
+              'note': 'Return confirmed by admin',
+              'updatedBy': adminId,
+            }
+          ]),
         });
 
         // RELEASE stock (Grouped by product)
@@ -481,8 +479,9 @@ class OrderRepositoryImpl
 
           final d = snap.data()!;
           final inv = Map<String, dynamic>.from(d['inventory'] as Map? ?? {});
-          
-          final productItems = items.where((item) => item.productId == pId).toList();
+
+          final productItems =
+              items.where((item) => item.productId == pId).toList();
           final updateMap = <String, dynamic>{
             'updatedAt': FieldValue.serverTimestamp(),
           };
@@ -491,7 +490,7 @@ class OrderRepositoryImpl
           for (final item in productItems) {
             final currentQty = (inv[item.size] as num?)?.toInt() ?? 0;
             final newQty = currentQty + item.quantity;
-            
+
             updateMap['inventory.${item.size}'] = newQty;
             inv[item.size] = newQty;
             totalRelease += item.quantity;
@@ -501,7 +500,8 @@ class OrderRepositoryImpl
           final currentSold = (d['soldCount'] as num?)?.toInt() ?? 0;
 
           updateMap['totalStock'] = currentTotal + totalRelease;
-          updateMap['soldCount'] = (currentSold - totalRelease).clamp(0, 999999);
+          updateMap['soldCount'] =
+              (currentSold - totalRelease).clamp(0, 999999);
 
           txn.update(productRefs[i], updateMap);
           handledProducts.add(pId);
@@ -524,9 +524,7 @@ class OrderRepositoryImpl
 
       // Search by exact order ID
       if (query.toUpperCase().startsWith('SC-')) {
-        final doc = await _ordersRef
-            .doc(query.toUpperCase())
-            .get();
+        final doc = await _ordersRef.doc(query.toUpperCase()).get();
         if (doc.exists) {
           results.add(OrderModel.fromFirestore(doc).toEntity());
         }
@@ -550,51 +548,51 @@ class OrderRepositoryImpl
 
   // ── Default status notes ───────────────────────────
   String _defaultNote(String status) => switch (status) {
-    OrderStatus.confirmed      => 'Order confirmed',
-    OrderStatus.processing     => 'Being prepared',
-    OrderStatus.packed         => 'Packed and ready',
-    OrderStatus.shipped        => 'Shipped to courier',
-    OrderStatus.outForDelivery => 'Out for delivery',
-    OrderStatus.delivered      => 'Delivered successfully',
-    OrderStatus.cancelled      => 'Order cancelled',
-    OrderStatus.returned       => 'Return processed',
-    _                          => 'Status updated',
-  };
+        OrderStatus.confirmed => 'Order confirmed',
+        OrderStatus.processing => 'Being prepared',
+        OrderStatus.packed => 'Packed and ready',
+        OrderStatus.shipped => 'Shipped to courier',
+        OrderStatus.outForDelivery => 'Out for delivery',
+        OrderStatus.delivered => 'Delivered successfully',
+        OrderStatus.cancelled => 'Order cancelled',
+        OrderStatus.returned => 'Return processed',
+        _ => 'Status updated',
+      };
 
   // ── Status message helper ──────────────────────────
   ({String title, String body}) _getStatusMessage(String status) =>
       switch (status) {
         OrderStatus.confirmed => (
-          title: 'Order Confirmed! 🎉',
-          body: 'Your order #{orderId} has been confirmed.',
-        ),
+            title: 'Order Confirmed! 🎉',
+            body: 'Your order #{orderId} has been confirmed.',
+          ),
         OrderStatus.processing => (
-          title: 'Order Being Prepared 📦',
-          body: 'Your order #{orderId} is being prepared.',
-        ),
+            title: 'Order Being Prepared 📦',
+            body: 'Your order #{orderId} is being prepared.',
+          ),
         OrderStatus.packed => (
-          title: 'Order Packed! 📫',
-          body: 'Your order #{orderId} is packed and ready.',
-        ),
+            title: 'Order Packed! 📫',
+            body: 'Your order #{orderId} is packed and ready.',
+          ),
         OrderStatus.shipped => (
-          title: 'Order Shipped! 🚚',
-          body: 'Your order #{orderId} is on its way to you.',
-        ),
+            title: 'Order Shipped! 🚚',
+            body: 'Your order #{orderId} is on its way to you.',
+          ),
         OrderStatus.outForDelivery => (
-          title: 'Out for Delivery! 🏍️',
-          body: 'Your order #{orderId} is almost there!',
-        ),
+            title: 'Out for Delivery! 🏍️',
+            body: 'Your order #{orderId} is almost there!',
+          ),
         OrderStatus.delivered => (
-          title: 'Order Delivered! ✅',
-          body: 'Your order #{orderId} has been delivered.',
-        ),
+            title: 'Order Delivered! ✅',
+            body: 'Your order #{orderId} has been delivered.',
+          ),
         OrderStatus.cancelled => (
-          title: 'Order Cancelled',
-          body: 'Your order #{orderId} has been cancelled.',
-        ),
+            title: 'Order Cancelled',
+            body: 'Your order #{orderId} has been cancelled.',
+          ),
         _ => (
-          title: 'Order Update',
-          body: 'Your order #{orderId} status has been updated.',
-        ),
+            title: 'Order Update',
+            body: 'Your order #{orderId} status has been updated.',
+          ),
       };
 }

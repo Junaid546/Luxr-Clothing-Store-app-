@@ -1,4 +1,4 @@
-﻿// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering, sort_constructors_first, avoid_positional_boolean_parameters
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering, sort_constructors_first, avoid_positional_boolean_parameters
 
 import 'package:equatable/equatable.dart';
 
@@ -15,7 +15,7 @@ class ProductEntity extends Equatable {
   final double finalPrice;
   final List<String> imageUrls;
   final String thumbnailUrl;
-  final Map<String, int> inventory; // size â†’ qty
+  final Map<String, int> inventory; // size → qty
   final int totalStock;
   final int lowStockThreshold;
   final List<ProductColorEntity> colors;
@@ -61,7 +61,7 @@ class ProductEntity extends Equatable {
     required this.createdBy,
   });
 
-  // â”€â”€ Business logic (pure, no Firebase) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Business logic (pure, no Firebase) ───────────
 
   StockStatus get stockStatus {
     if (totalStock == 0) return StockStatus.outOfStock;
@@ -84,31 +84,34 @@ class ProductEntity extends Equatable {
   bool get isOutOfStock => stockStatus == StockStatus.outOfStock;
 
   // Available sizes (stock > 0)
-  List<String> get availableSizes => inventory.entries
-      .where((e) => e.value > 0)
-      .map((e) => e.key)
-      .toList();
+  List<String> get availableSizes =>
+      inventory.entries.where((e) => e.value > 0).map((e) => e.key).toList();
 
   // Total units across all sizes
-  int get computedTotalStock =>
-      inventory.values.fold(0, (a, b) => a + b);
+  int get computedTotalStock => inventory.values.fold(0, (a, b) => a + b);
 
   @override
   List<Object?> get props => [
-    productId, name, brand, price, discountPct,
-    inventory, totalStock, isActive,
-  ];
+        productId,
+        name,
+        brand,
+        price,
+        discountPct,
+        inventory,
+        totalStock,
+        isActive,
+      ];
 }
 
 class ProductColorEntity extends Equatable {
   final String name;
   final String hexCode;
-  
+
   const ProductColorEntity({
-    required this.name, 
+    required this.name,
     required this.hexCode,
   });
-  
+
   @override
   List<Object> get props => [name, hexCode];
 }
@@ -117,18 +120,17 @@ enum StockStatus { inStock, low, outOfStock }
 
 extension StockStatusX on StockStatus {
   String get label => switch (this) {
-    StockStatus.inStock    => 'IN STOCK',
-    StockStatus.low        => 'LOW STOCK',
-    StockStatus.outOfStock => 'OUT OF STOCK',
-  };
+        StockStatus.inStock => 'IN STOCK',
+        StockStatus.low => 'LOW STOCK',
+        StockStatus.outOfStock => 'OUT OF STOCK',
+      };
 
   bool get isAvailable => this != StockStatus.outOfStock;
 
   // Color token name for UI
   String get colorToken => switch (this) {
-    StockStatus.inStock    => 'inStock',
-    StockStatus.low        => 'lowStock',
-    StockStatus.outOfStock => 'outOfStock',
-  };
+        StockStatus.inStock => 'inStock',
+        StockStatus.low => 'lowStock',
+        StockStatus.outOfStock => 'outOfStock',
+      };
 }
-

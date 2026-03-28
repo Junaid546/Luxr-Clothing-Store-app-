@@ -1,14 +1,14 @@
-﻿// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering, sort_constructors_first, avoid_positional_boolean_parameters
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, document_ignores, always_put_required_named_parameters_first, cascade_invocations, avoid_catches_without_on_clauses, use_if_null_to_convert_nulls_to_bools, omit_local_variable_types, directives_ordering, sort_constructors_first, avoid_positional_boolean_parameters
 
 import 'package:equatable/equatable.dart';
 
 // Encapsulates all filter/sort state for product listing
 class ProductFilter extends Equatable {
   final String? category;
-  final String sortBy;       // 'newest'|'price_asc'|'price_desc'|'rating'|'popular'
+  final String sortBy; // 'newest'|'price_asc'|'price_desc'|'rating'|'popular'
   final double? minPrice;
   final double? maxPrice;
-  final List<String> sizes;  // filter by available sizes
+  final List<String> sizes; // filter by available sizes
   final bool? isFeatured;
   final bool? isNewArrival;
   final bool? isLimitedEdition;
@@ -54,25 +54,31 @@ class ProductFilter extends Equatable {
     bool? isNewArrival,
     bool? isLimitedEdition,
     int? pageSize,
-  }) => ProductFilter(
-    category:        category        ?? this.category,
-    sortBy:          sortBy          ?? this.sortBy,
-    minPrice:        minPrice        ?? this.minPrice,
-    maxPrice:        maxPrice        ?? this.maxPrice,
-    sizes:           sizes           ?? this.sizes,
-    isFeatured:      isFeatured      ?? this.isFeatured,
-    isNewArrival:    isNewArrival    ?? this.isNewArrival,
-    isLimitedEdition: isLimitedEdition ?? this.isLimitedEdition,
-    pageSize:        pageSize        ?? this.pageSize,
-  );
+  }) =>
+      ProductFilter(
+        category: category ?? this.category,
+        sortBy: sortBy ?? this.sortBy,
+        minPrice: minPrice ?? this.minPrice,
+        maxPrice: maxPrice ?? this.maxPrice,
+        sizes: sizes ?? this.sizes,
+        isFeatured: isFeatured ?? this.isFeatured,
+        isNewArrival: isNewArrival ?? this.isNewArrival,
+        isLimitedEdition: isLimitedEdition ?? this.isLimitedEdition,
+        pageSize: pageSize ?? this.pageSize,
+      );
 
   // Reset to defaults
   ProductFilter get cleared => const ProductFilter();
 
   @override
   List<Object?> get props => [
-    category, sortBy, minPrice, maxPrice,
-    sizes, isFeatured, isNewArrival, isLimitedEdition,
-  ];
+        category,
+        sortBy,
+        minPrice,
+        maxPrice,
+        sizes,
+        isFeatured,
+        isNewArrival,
+        isLimitedEdition,
+      ];
 }
-

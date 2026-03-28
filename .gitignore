@@ -1,66 +1,65 @@
-# ── Environment & Secrets ─────────────────────────────
+# ── Secrets & Environment ─────────────────────────────
 .env
 .env.*
-.env.local
-.env.development
-.env.production
-.env.staging
 *.env
+!.env.example
 
-# ── Firebase Config Files ─────────────────────────────
-# These contain your project's API keys
+# ── Firebase Config ───────────────────────────────────
 google-services.json
 GoogleService-Info.plist
+firebase_options.dart
 
 # ── Android Signing ───────────────────────────────────
 *.jks
 *.keystore
 key.properties
 android/key.properties
-android/app/key.properties
-**/keystore/**
+**/keystore/
 
-# ── iOS Signing ───────────────────────────────────────
-*.mobileprovision
-*.p12
-*.cer
-*.certSigningRequest
-ios/Runner/GoogleService-Info.plist
-
-# ── Flutter/Dart ──────────────────────────────────────
+# ── Flutter Generated ─────────────────────────────────
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.packages
-pubspec.lock  # Keep this for apps (remove for packages)
 build/
-*.g.dart      # Generated files (regenerate with build_runner)
+*.g.dart
 *.freezed.dart
+*.mocks.dart
 
 # ── IDE ───────────────────────────────────────────────
 .idea/
 *.iml
-*.iws
 .vscode/settings.json
+.vscode/launch.json
 *.swp
-*.swo
+
+# ── macOS ─────────────────────────────────────────────
 .DS_Store
-Thumbs.db
+*.DS_Store
 
-# ── Test coverage ─────────────────────────────────────
+# ── iOS ───────────────────────────────────────────────
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# ── Coverage ──────────────────────────────────────────
 coverage/
-*.lcov
-
-# ── Fastlane ─────────────────────────────────────────
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots/**
-fastlane/test_output
+lcov.info
 
 # ── Firebase Emulator ─────────────────────────────────
-.firebaserc.local
+.firebase/
 firebase-debug.log
 firestore-debug.log
 storage-debug.log
 ui-debug.log
-database-debug.log
+.firebaserc.local
+
+# ── Build Output ──────────────────────────────────────
+*.apk
+*.aab
+*.ipa
+build/debug_info/
+
+# ── Logs ──────────────────────────────────────────────
+*.log
+npm-debug.log*

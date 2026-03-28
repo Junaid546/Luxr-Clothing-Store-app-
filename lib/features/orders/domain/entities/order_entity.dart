@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
 
 class OrderEntity extends Equatable {
   final String orderId;
@@ -54,9 +54,9 @@ class OrderEntity extends Equatable {
   // ── Business Logic ────────────────────────────────
 
   bool get isCancellable => [
-    OrderStatus.pending,
-    OrderStatus.confirmed,
-  ].contains(status);
+        OrderStatus.pending,
+        OrderStatus.confirmed,
+      ].contains(status);
 
   bool get isReturnable =>
       status == OrderStatus.delivered &&
@@ -64,67 +64,68 @@ class OrderEntity extends Equatable {
       DateTime.now().difference(deliveredAt!).inDays <= 7;
 
   bool get isActive => ![
-    OrderStatus.delivered,
-    OrderStatus.cancelled,
-    OrderStatus.returned,
-  ].contains(status);
+        OrderStatus.delivered,
+        OrderStatus.cancelled,
+        OrderStatus.returned,
+      ].contains(status);
 
   bool get isDelivered => status == OrderStatus.delivered;
   bool get isCancelled => status == OrderStatus.cancelled;
   bool get isShipped =>
-      status == OrderStatus.shipped ||
-      status == OrderStatus.outForDelivery;
+      status == OrderStatus.shipped || status == OrderStatus.outForDelivery;
 
-  int get totalItems =>
-      items.fold(0, (sum, i) => sum + i.quantity);
+  int get totalItems => items.fold(0, (sum, i) => sum + i.quantity);
 
   double get totalSavings => items.fold(
-    0.0,
-    (sum, item) => sum +
-        ((item.unitPrice - item.finalPrice) * item.quantity),
-  );
+        0.0,
+        (sum, item) =>
+            sum + ((item.unitPrice - item.finalPrice) * item.quantity),
+      );
 
   // Current status index for timeline UI (0-based)
   int get statusIndex => switch (status) {
-    OrderStatus.pending          => 0,
-    OrderStatus.confirmed        => 1,
-    OrderStatus.processing       => 2,
-    OrderStatus.packed           => 2,
-    OrderStatus.shipped          => 3,
-    OrderStatus.outForDelivery   => 3,
-    OrderStatus.delivered        => 4,
-    _                            => 0,
-  };
+        OrderStatus.pending => 0,
+        OrderStatus.confirmed => 1,
+        OrderStatus.processing => 2,
+        OrderStatus.packed => 2,
+        OrderStatus.shipped => 3,
+        OrderStatus.outForDelivery => 3,
+        OrderStatus.delivered => 4,
+        _ => 0,
+      };
 
   String get statusDisplay => switch (status) {
-    OrderStatus.pending          => 'Order Placed',
-    OrderStatus.confirmed        => 'Confirmed',
-    OrderStatus.processing       => 'Processing',
-    OrderStatus.packed           => 'Packed',
-    OrderStatus.shipped          => 'Shipped',
-    OrderStatus.outForDelivery   => 'Out for Delivery',
-    OrderStatus.delivered        => 'Delivered',
-    OrderStatus.cancelled        => 'Cancelled',
-    OrderStatus.returnRequested  => 'Return Requested',
-    OrderStatus.returned         => 'Returned',
-    _                            => status,
-  };
+        OrderStatus.pending => 'Order Placed',
+        OrderStatus.confirmed => 'Confirmed',
+        OrderStatus.processing => 'Processing',
+        OrderStatus.packed => 'Packed',
+        OrderStatus.shipped => 'Shipped',
+        OrderStatus.outForDelivery => 'Out for Delivery',
+        OrderStatus.delivered => 'Delivered',
+        OrderStatus.cancelled => 'Cancelled',
+        OrderStatus.returnRequested => 'Return Requested',
+        OrderStatus.returned => 'Returned',
+        _ => status,
+      };
 
   // Next status in lifecycle
   String? get nextStatus => switch (status) {
-    OrderStatus.pending        => OrderStatus.confirmed,
-    OrderStatus.confirmed      => OrderStatus.processing,
-    OrderStatus.processing     => OrderStatus.packed,
-    OrderStatus.packed         => OrderStatus.shipped,
-    OrderStatus.shipped        => OrderStatus.outForDelivery,
-    OrderStatus.outForDelivery => OrderStatus.delivered,
-    _                          => null, // terminal states
-  };
+        OrderStatus.pending => OrderStatus.confirmed,
+        OrderStatus.confirmed => OrderStatus.processing,
+        OrderStatus.processing => OrderStatus.packed,
+        OrderStatus.packed => OrderStatus.shipped,
+        OrderStatus.shipped => OrderStatus.outForDelivery,
+        OrderStatus.outForDelivery => OrderStatus.delivered,
+        _ => null, // terminal states
+      };
 
   @override
   List<Object?> get props => [
-    orderId, status, userId, updatedAt,
-  ];
+        orderId,
+        status,
+        userId,
+        updatedAt,
+      ];
 }
 
 class OrderItemEntity extends Equatable {
@@ -155,8 +156,7 @@ class OrderItemEntity extends Equatable {
   });
 
   bool get hasDiscount => discountPct > 0;
-  double get savings =>
-      (unitPrice - finalPrice) * quantity;
+  double get savings => (unitPrice - finalPrice) * quantity;
 
   @override
   List<Object> get props => [productId, size, color];
@@ -176,18 +176,18 @@ class StatusHistoryEntity extends Equatable {
   });
 
   String get statusDisplay => switch (status) {
-    OrderStatus.pending          => 'Order Placed',
-    OrderStatus.confirmed        => 'Order Confirmed',
-    OrderStatus.processing       => 'Processing',
-    OrderStatus.packed           => 'Packed',
-    OrderStatus.shipped          => 'Shipped',
-    OrderStatus.outForDelivery   => 'Out for Delivery',
-    OrderStatus.delivered        => 'Delivered',
-    OrderStatus.cancelled        => 'Cancelled',
-    OrderStatus.returnRequested  => 'Return Requested',
-    OrderStatus.returned         => 'Returned',
-    _                            => status,
-  };
+        OrderStatus.pending => 'Order Placed',
+        OrderStatus.confirmed => 'Order Confirmed',
+        OrderStatus.processing => 'Processing',
+        OrderStatus.packed => 'Packed',
+        OrderStatus.shipped => 'Shipped',
+        OrderStatus.outForDelivery => 'Out for Delivery',
+        OrderStatus.delivered => 'Delivered',
+        OrderStatus.cancelled => 'Cancelled',
+        OrderStatus.returnRequested => 'Return Requested',
+        OrderStatus.returned => 'Returned',
+        _ => status,
+      };
 
   @override
   List<Object?> get props => [status, timestamp];
@@ -231,8 +231,7 @@ class ShippingAddressEntity extends Equatable {
     required this.country,
   });
 
-  String get singleLine =>
-      '$street, $city, $state $zipCode';
+  String get singleLine => '$street, $city, $state $zipCode';
 
   String get fullFormatted =>
       '$fullName\n$street\n$city, $state $zipCode\n$country';
@@ -253,18 +252,15 @@ class EstimatedDeliveryEntity extends Equatable {
   String get displayRange {
     final formatter = DateFormat('MMM dd');
     return '${formatter.format(from).toUpperCase()}'
-           ' - '
-           '${formatter.format(to).toUpperCase()}';
+        ' - '
+        '${formatter.format(to).toUpperCase()}';
   }
 
-  bool get isOverdue =>
-      DateTime.now().isAfter(to) && !isToday;
+  bool get isOverdue => DateTime.now().isAfter(to) && !isToday;
 
   bool get isToday {
     final now = DateTime.now();
-    return to.year == now.year &&
-           to.month == now.month &&
-           to.day == now.day;
+    return to.year == now.year && to.month == now.month && to.day == now.day;
   }
 
   @override

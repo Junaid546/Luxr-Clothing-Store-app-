@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:uuid/uuid.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
 
 class NotificationModel extends NotificationEntity {
   const NotificationModel({
@@ -19,29 +19,29 @@ class NotificationModel extends NotificationEntity {
     final d = doc.data() as Map<String, dynamic>;
     return NotificationModel(
       notificationId: doc.id,
-      userId:   d['userId']  as String? ?? '',
-      title:    d['title']   as String? ?? '',
-      body:     d['body']    as String? ?? '',
-      type:     NotificationType.fromString(
+      userId: d['userId'] as String? ?? '',
+      title: d['title'] as String? ?? '',
+      body: d['body'] as String? ?? '',
+      type: NotificationType.fromString(
         d['type'] as String? ?? 'system',
       ),
       data: NotificationData.fromMap(
         (d['data'] as Map<String, dynamic>?) ?? {},
       ),
-      isRead:    d['isRead']   as bool?  ?? false,
+      isRead: d['isRead'] as bool? ?? false,
       createdAt: (d['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 
   Map<String, dynamic> toFirestore() => {
-    'userId':         userId,
-    'title':          title,
-    'body':           body,
-    'type':           type.value,
-    'data':           data.toMap(),
-    'isRead':         isRead,
-    'createdAt':      FieldValue.serverTimestamp(),
-  };
+        'userId': userId,
+        'title': title,
+        'body': body,
+        'type': type.value,
+        'data': data.toMap(),
+        'isRead': isRead,
+        'createdAt': FieldValue.serverTimestamp(),
+      };
 
   factory NotificationModel.fromFCM({
     required String userId,
@@ -50,14 +50,14 @@ class NotificationModel extends NotificationEntity {
     final msgData = message.data;
     return NotificationModel(
       notificationId: message.messageId ?? const Uuid().v4(),
-      userId:    userId,
-      title:     message.notification?.title ?? '',
-      body:      message.notification?.body  ?? '',
+      userId: userId,
+      title: message.notification?.title ?? '',
+      body: message.notification?.body ?? '',
       type: NotificationType.fromString(
         msgData['type'] as String? ?? 'system',
       ),
       data: NotificationData.fromMap(msgData),
-      isRead:    false,
+      isRead: false,
       createdAt: DateTime.now(),
     );
   }

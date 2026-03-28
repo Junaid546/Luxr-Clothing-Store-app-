@@ -13,9 +13,8 @@ String _$firestoreHash() => r'ef4a6b0737caace50a6d79dd3e4e2aa1bc3031d5';
 final firestoreProvider = AutoDisposeProvider<FirebaseFirestore>.internal(
   firestore,
   name: r'firestoreProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$firestoreHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$firestoreHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -29,14 +28,14 @@ String _$productRepositoryHash() => r'f6bd1b1cd29c84d60cf7fa0d34e17f370ab62415';
 @ProviderFor(productRepository)
 final productRepositoryProvider =
     AutoDisposeProvider<ProductRepository>.internal(
-      productRepository,
-      name: r'productRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$productRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  productRepository,
+  name: r'productRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$productRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -65,14 +64,14 @@ String _$wishlistRepositoryHash() =>
 @ProviderFor(wishlistRepository)
 final wishlistRepositoryProvider =
     AutoDisposeProvider<WishlistRepository>.internal(
-      wishlistRepository,
-      name: r'wishlistRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$wishlistRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  wishlistRepository,
+  name: r'wishlistRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$wishlistRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

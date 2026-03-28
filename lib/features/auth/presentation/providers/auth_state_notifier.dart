@@ -1,17 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:style_cart/core/usecases/usecase.dart';
-import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
-import 'package:style_cart/features/auth/domain/usecases/register_with_email_usecase.dart';
-import 'package:style_cart/features/auth/domain/usecases/send_password_reset_usecase.dart';
-import 'package:style_cart/features/auth/domain/usecases/sign_in_with_email_usecase.dart';
-import 'package:style_cart/core/utils/validators.dart';
-import 'package:style_cart/core/utils/sanitizer.dart';
-import 'package:style_cart/core/security/rate_limiter.dart';
-import 'package:style_cart/core/errors/global_error_handler.dart';
-import 'package:style_cart/core/storage/secure_storage_service.dart';
+import 'package:stylecart/core/usecases/usecase.dart';
+import 'package:stylecart/features/auth/data/providers/auth_providers.dart';
+import 'package:stylecart/features/notifications/data/providers/notification_providers.dart';
+import 'package:stylecart/features/auth/domain/entities/user_entity.dart';
+import 'package:stylecart/features/auth/domain/usecases/register_with_email_usecase.dart';
+import 'package:stylecart/features/auth/domain/usecases/send_password_reset_usecase.dart';
+import 'package:stylecart/features/auth/domain/usecases/sign_in_with_email_usecase.dart';
+import 'package:stylecart/core/utils/validators.dart';
+import 'package:stylecart/core/utils/sanitizer.dart';
+import 'package:stylecart/core/security/rate_limiter.dart';
+import 'package:stylecart/core/errors/global_error_handler.dart';
+import 'package:stylecart/core/storage/secure_storage_service.dart';
 
 // ── Auth State ────────────────────────────────────────────────
 sealed class AuthState {
@@ -141,9 +141,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
 
     state = const AuthLoading();
-    final result = await _ref
-        .read(registerWithEmailUseCaseProvider)
-        .call(
+    final result = await _ref.read(registerWithEmailUseCaseProvider).call(
           RegisterParams(
             email: sanitizedEmail,
             password: password,
@@ -160,9 +158,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
   // ── Google Sign In ───────────────────────────────────────
   Future<void> signInWithGoogle() async {
     state = const AuthLoading();
-    final result = await _ref
-        .read(signInWithGoogleUseCaseProvider)
-        .call(NoParams());
+    final result =
+        await _ref.read(signInWithGoogleUseCaseProvider).call(NoParams());
     result.fold(
       (failure) => state = AuthError(failure.message),
       (user) => state = AuthAuthenticated(user),
@@ -181,7 +178,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
           await _ref.read(fcmServiceProvider).clearToken(user.uid);
         }
         await GlobalErrorHandler.clearUserContext();
-        final secureStorage = await _ref.read(secureStorageServiceProvider.future);
+        final secureStorage =
+            await _ref.read(secureStorageServiceProvider.future);
         await secureStorage.clearAllSecure();
         state = const AuthUnauthenticated();
       },

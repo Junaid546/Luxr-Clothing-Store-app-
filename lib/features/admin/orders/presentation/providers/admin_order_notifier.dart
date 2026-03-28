@@ -2,15 +2,15 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
-import 'package:style_cart/features/orders/data/providers/order_providers.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/domain/usecases/confirm_return_usecase.dart';
-import 'package:style_cart/features/orders/domain/usecases/search_orders_usecase.dart';
-import 'package:style_cart/features/orders/domain/usecases/update_order_status_usecase.dart';
-import 'package:style_cart/features/orders/domain/usecases/watch_order_usecase.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/auth/data/providers/auth_providers.dart';
+import 'package:stylecart/features/orders/data/providers/order_providers.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/domain/usecases/confirm_return_usecase.dart';
+import 'package:stylecart/features/orders/domain/usecases/search_orders_usecase.dart';
+import 'package:stylecart/features/orders/domain/usecases/update_order_status_usecase.dart';
+import 'package:stylecart/features/orders/domain/usecases/watch_order_usecase.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
 
 part 'admin_order_notifier.freezed.dart';
 part 'admin_order_notifier.g.dart';
@@ -74,13 +74,14 @@ class AdminOrderNotifier extends _$AdminOrderNotifier {
 
   List<OrderEntity> get filteredOrders {
     if (state.searchQuery.isEmpty) return state.orders;
-    
+
     final q = state.searchQuery.toLowerCase();
-    return state.orders.where((OrderEntity o) => 
-      o.orderId.toLowerCase().contains(q) || 
-      o.userEmail.toLowerCase().contains(q) ||
-      o.userName.toLowerCase().contains(q)
-    ).toList();
+    return state.orders
+        .where((OrderEntity o) =>
+            o.orderId.toLowerCase().contains(q) ||
+            o.userEmail.toLowerCase().contains(q) ||
+            o.userName.toLowerCase().contains(q))
+        .toList();
   }
 
   Future<Either<Failure, void>> updateStatus({
@@ -90,17 +91,17 @@ class AdminOrderNotifier extends _$AdminOrderNotifier {
     CourierEntity? courier,
   }) async {
     state = state.copyWith(isSaving: true);
-    
+
     final adminId = ref.read(currentUserProvider)?.uid ?? 'admin';
     final result = await ref.read(updateOrderStatusUseCaseProvider).call(
-      UpdateOrderStatusParams(
-        orderId: orderId,
-        newStatus: status,
-        updatedBy: adminId,
-        note: note,
-        courier: courier,
-      ),
-    );
+          UpdateOrderStatusParams(
+            orderId: orderId,
+            newStatus: status,
+            updatedBy: adminId,
+            note: note,
+            courier: courier,
+          ),
+        );
 
     state = state.copyWith(isSaving: false);
     return result;
@@ -108,15 +109,15 @@ class AdminOrderNotifier extends _$AdminOrderNotifier {
 
   Future<Either<Failure, void>> confirmReturn(OrderEntity order) async {
     state = state.copyWith(isSaving: true);
-    
+
     final adminId = ref.read(currentUserProvider)?.uid ?? 'admin';
     final result = await ref.read(confirmReturnUseCaseProvider).call(
-      ConfirmReturnParams(
-        orderId: order.orderId,
-        items: order.items,
-        adminId: adminId,
-      ),
-    );
+          ConfirmReturnParams(
+            orderId: order.orderId,
+            items: order.items,
+            adminId: adminId,
+          ),
+        );
 
     state = state.copyWith(isSaving: false);
     return result;

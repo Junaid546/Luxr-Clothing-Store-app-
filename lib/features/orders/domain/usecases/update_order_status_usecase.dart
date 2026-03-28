@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/usecases/usecase.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/usecases/usecase.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/domain/repositories/order_repository.dart';
 
 class UpdateOrderStatusParams extends Equatable {
   final String orderId;
@@ -32,11 +32,12 @@ class UpdateOrderStatusUseCase
   @override
   Future<Either<Failure, void>> call(
     UpdateOrderStatusParams params,
-  ) => _repo.updateOrderStatus(
-        orderId:   params.orderId,
+  ) =>
+      _repo.updateOrderStatus(
+        orderId: params.orderId,
         newStatus: params.newStatus,
         updatedBy: params.updatedBy,
-        note:      params.note,
-        courier:   params.courier,
+        note: params.note,
+        courier: params.courier,
       );
 }

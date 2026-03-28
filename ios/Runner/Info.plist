@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Luxr Clothing</string>
+	<string>Luxr</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,18 +15,57 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>luxr_clothing</string>
+	<string>Luxr</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+
+  <!-- Camera permission (for profile photo) -->
+  <key>NSCameraUsageDescription</key>
+  <string>Luxr needs camera access to update your profile photo</string>
+
+  <!-- Photo library permission -->
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Luxr needs photo library access to upload product images and profile photos</string>
+
+  <!-- Face ID permission (for secure storage) -->
+  <key>NSFaceIDUsageDescription</key>
+  <string>Luxr uses Face ID for secure authentication</string>
+
+  <!-- Push notifications -->
+  <key>UIBackgroundModes</key>
+  <array>
+    <string>fetch</string>
+    <string>remote-notification</string>
+  </array>
+
+  <!-- Deep linking scheme -->
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <string>luxr</string>
+      </array>
+    </dict>
+  </array>
+
+  <!-- Prevent mixed content -->
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <false/>
+  </dict>
+
 	<key>UIApplicationSceneManifest</key>
+
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>

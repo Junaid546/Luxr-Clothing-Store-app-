@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
 
 abstract interface class OrderRepository {
-
   // ── Customer operations ───────────────────────────
 
   // Real-time stream of single order (for tracking)

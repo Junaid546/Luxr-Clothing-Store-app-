@@ -40,15 +40,21 @@ class IsProductWishlistedFamily extends Family<bool> {
   const IsProductWishlistedFamily();
 
   /// See also [isProductWishlisted].
-  IsProductWishlistedProvider call(String productId) {
-    return IsProductWishlistedProvider(productId);
+  IsProductWishlistedProvider call(
+    String productId,
+  ) {
+    return IsProductWishlistedProvider(
+      productId,
+    );
   }
 
   @override
   IsProductWishlistedProvider getProviderOverride(
     covariant IsProductWishlistedProvider provider,
   ) {
-    return call(provider.productId);
+    return call(
+      provider.productId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -69,19 +75,24 @@ class IsProductWishlistedFamily extends Family<bool> {
 /// See also [isProductWishlisted].
 class IsProductWishlistedProvider extends AutoDisposeProvider<bool> {
   /// See also [isProductWishlisted].
-  IsProductWishlistedProvider(String productId)
-    : this._internal(
-        (ref) => isProductWishlisted(ref as IsProductWishlistedRef, productId),
-        from: isProductWishlistedProvider,
-        name: r'isProductWishlistedProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$isProductWishlistedHash,
-        dependencies: IsProductWishlistedFamily._dependencies,
-        allTransitiveDependencies:
-            IsProductWishlistedFamily._allTransitiveDependencies,
-        productId: productId,
-      );
+  IsProductWishlistedProvider(
+    String productId,
+  ) : this._internal(
+          (ref) => isProductWishlisted(
+            ref as IsProductWishlistedRef,
+            productId,
+          ),
+          from: isProductWishlistedProvider,
+          name: r'isProductWishlistedProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$isProductWishlistedHash,
+          dependencies: IsProductWishlistedFamily._dependencies,
+          allTransitiveDependencies:
+              IsProductWishlistedFamily._allTransitiveDependencies,
+          productId: productId,
+        );
 
   IsProductWishlistedProvider._internal(
     super._createNotifier, {
@@ -96,7 +107,9 @@ class IsProductWishlistedProvider extends AutoDisposeProvider<bool> {
   final String productId;
 
   @override
-  Override overrideWith(bool Function(IsProductWishlistedRef provider) create) {
+  Override overrideWith(
+    bool Function(IsProductWishlistedRef provider) create,
+  ) {
     return ProviderOverride(
       origin: this,
       override: IsProductWishlistedProvider._internal(
@@ -138,8 +151,7 @@ mixin IsProductWishlistedRef on AutoDisposeProviderRef<bool> {
 }
 
 class _IsProductWishlistedProviderElement
-    extends AutoDisposeProviderElement<bool>
-    with IsProductWishlistedRef {
+    extends AutoDisposeProviderElement<bool> with IsProductWishlistedRef {
   _IsProductWishlistedProviderElement(super.provider);
 
   @override
@@ -152,14 +164,14 @@ String _$wishlistNotifierHash() => r'3241cdf8926ae94246e2bdd8d3655107e5a6dbd3';
 @ProviderFor(WishlistNotifier)
 final wishlistNotifierProvider =
     AutoDisposeNotifierProvider<WishlistNotifier, WishlistState>.internal(
-      WishlistNotifier.new,
-      name: r'wishlistNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$wishlistNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  WishlistNotifier.new,
+  name: r'wishlistNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$wishlistNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$WishlistNotifier = AutoDisposeNotifier<WishlistState>;
 // ignore_for_file: type=lint

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
 
 class AdminOrderCard extends StatelessWidget {
   final OrderEntity order;
@@ -51,27 +51,30 @@ class AdminOrderCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
-              
+
               // Customer & Date
               Row(
                 children: [
-                  const Icon(Icons.person_outline, size: 16, color: AppColors.textSecondary),
+                  const Icon(Icons.person_outline,
+                      size: 16, color: AppColors.textSecondary),
                   const SizedBox(width: 8),
                   Text(
                     order.userName,
                     style: const TextStyle(color: Colors.white70, fontSize: 13),
                   ),
                   const Spacer(),
-                  const Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.textSecondary),
+                  const Icon(Icons.calendar_today_outlined,
+                      size: 14, color: AppColors.textSecondary),
                   const SizedBox(width: 6),
                   Text(
                     DateFormat('MMM dd, yyyy').format(order.placedAt),
-                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                    style: const TextStyle(
+                        color: AppColors.textSecondary, fontSize: 12),
                   ),
                 ],
               ),
               const Divider(height: 24, color: Colors.white10),
-              
+
               // Items Preview & Price
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -82,14 +85,16 @@ class AdminOrderCard extends StatelessWidget {
                       children: [
                         Text(
                           '${order.items.length} ${order.items.length == 1 ? 'Item' : 'Items'}',
-                          style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                          style: const TextStyle(
+                              color: AppColors.textSecondary, fontSize: 12),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           order.items.map((i) => i.productName).join(', '),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(color: Colors.white, fontSize: 14),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 14),
                         ),
                       ],
                     ),
@@ -104,14 +109,14 @@ class AdminOrderCard extends StatelessWidget {
                   ),
                 ],
               ),
-              
+
               // Quick Actions
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  if (order.status != OrderStatus.delivered && 
-                      order.status != OrderStatus.cancelled && 
+                  if (order.status != OrderStatus.delivered &&
+                      order.status != OrderStatus.cancelled &&
                       order.status != OrderStatus.returned)
                     TextButton.icon(
                       onPressed: () => _showStatusPicker(context),
@@ -153,17 +158,17 @@ class AdminOrderCard extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     return switch (status) {
-      OrderStatus.pending        => Colors.orange,
-      OrderStatus.confirmed      => Colors.blue,
-      OrderStatus.processing     => Colors.blueAccent,
-      OrderStatus.packed         => Colors.cyan,
-      OrderStatus.shipped        => Colors.indigoAccent,
+      OrderStatus.pending => Colors.orange,
+      OrderStatus.confirmed => Colors.blue,
+      OrderStatus.processing => Colors.blueAccent,
+      OrderStatus.packed => Colors.cyan,
+      OrderStatus.shipped => Colors.indigoAccent,
       OrderStatus.outForDelivery => Colors.deepPurpleAccent,
-      OrderStatus.delivered      => Colors.green,
-      OrderStatus.cancelled      => Colors.red,
-      OrderStatus.returnRequested=> Colors.amber,
-      OrderStatus.returned       => Colors.brown,
-      _                          => Colors.grey,
+      OrderStatus.delivered => Colors.green,
+      OrderStatus.cancelled => Colors.red,
+      OrderStatus.returnRequested => Colors.amber,
+      OrderStatus.returned => Colors.brown,
+      _ => Colors.grey,
     };
   }
 

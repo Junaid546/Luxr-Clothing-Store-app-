@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/providers/repository_providers.dart';
-import 'package:style_cart/features/products/data/models/product_model.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart' hide productRepositoryProvider;
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
-import 'package:style_cart/features/products/domain/usecases/get_products_usecase.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/providers/repository_providers.dart';
+import 'package:stylecart/features/products/data/models/product_model.dart';
+import 'package:stylecart/features/products/data/providers/product_data_providers.dart'
+    hide productRepositoryProvider;
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/domain/entities/product_filter_entity.dart';
+import 'package:stylecart/features/products/domain/usecases/get_products_usecase.dart';
 
 part 'provider_cache.g.dart';
 
@@ -55,10 +56,10 @@ Stream<ProductEntity> watchProductCached(
       .watch(productRepositoryProvider)
       .watchProduct(productId)
       .map<ProductEntity>((result) {
-        return result.getOrElse(
-          () => throw Exception('Product not found'),
-        );
-      });
+    return result.getOrElse(
+      () => throw Exception('Product not found'),
+    );
+  });
 }
 
 @riverpod
@@ -122,8 +123,8 @@ class ProductMemoryCache {
 
   void put(String key, ProductEntity value) {
     if (_cache.length >= _maxSize) {
-      final oldest = _cache.entries.reduce((a, b) =>
-          a.value.timestamp.isBefore(b.value.timestamp) ? a : b);
+      final oldest = _cache.entries.reduce(
+          (a, b) => a.value.timestamp.isBefore(b.value.timestamp) ? a : b);
       _cache.remove(oldest.key);
     }
     _cache[key] = _CacheEntry(
@@ -136,7 +137,8 @@ class ProductMemoryCache {
     final entry = _cache[key];
     if (entry == null) return null;
 
-    if (DateTime.now().difference(entry.timestamp) > CacheDuration.productDetail) {
+    if (DateTime.now().difference(entry.timestamp) >
+        CacheDuration.productDetail) {
       _cache.remove(key);
       return null;
     }

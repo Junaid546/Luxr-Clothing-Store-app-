@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
 // Note: AppDimensions, AppTextStyles and extensions will be added during analyze fix
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/app/theme/app_dimensions.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/app/theme/app_dimensions.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 class ProductCardWidget extends StatelessWidget {
   final ProductEntity product;
@@ -62,7 +62,8 @@ class ProductCardWidget extends StatelessWidget {
               // Stock status badge (top-left, below discount)
               if (product.isLowStock || product.isOutOfStock)
                 Positioned(
-                  top: (product.hasDiscount && product.discountPct > 0) ? 36 : 8,
+                  top:
+                      (product.hasDiscount && product.discountPct > 0) ? 36 : 8,
                   left: 8,
                   child: _StockBadge(
                     status: product.stockStatus,
@@ -87,9 +88,10 @@ class ProductCardWidget extends StatelessWidget {
           Text(
             product.category.toUpperCase(),
             style: AppTextStyles.labelSmall?.copyWith(
-              color: AppColors.textMuted,
-              letterSpacing: 1.2,
-            ) ?? const TextStyle(color: AppColors.textMuted, fontSize: 10),
+                  color: AppColors.textMuted,
+                  letterSpacing: 1.2,
+                ) ??
+                const TextStyle(color: AppColors.textMuted, fontSize: 10),
           ),
 
           const SizedBox(height: 2),
@@ -108,8 +110,7 @@ class ProductCardWidget extends StatelessWidget {
           _PriceRow(product: product),
 
           // Rating row (if has reviews)
-          if (product.reviewCount > 0)
-            _RatingRow(product: product),
+          if (product.reviewCount > 0) _RatingRow(product: product),
         ],
       ),
     );
@@ -124,18 +125,20 @@ class _DiscountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(
-      horizontal: 8, vertical: 4,
-    ),
-    decoration: BoxDecoration(
-      color: AppColors.primary,
-      borderRadius: BorderRadius.circular(6),
-    ),
-    child: Text(
-      '-$pct%',
-      style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
-    ),
-  );
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 4,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Text(
+          '-$pct%',
+          style: const TextStyle(
+              color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+        ),
+      );
 }
 
 class _StockBadge extends StatelessWidget {
@@ -145,12 +148,12 @@ class _StockBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // We assume warning color is orange.
-    final color = status == StockStatus.low
-        ? AppColors.warning
-        : AppColors.error;
+    final color =
+        status == StockStatus.low ? AppColors.warning : AppColors.error;
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 6, vertical: 3,
+        horizontal: 6,
+        vertical: 3,
       ),
       decoration: BoxDecoration(
         color: color,
@@ -159,9 +162,10 @@ class _StockBadge extends StatelessWidget {
       child: Text(
         status.label,
         style: AppTextStyles.labelSmall?.copyWith(
-          color: Colors.white,
-          fontSize: 9,
-        ) ?? const TextStyle(color: Colors.white, fontSize: 9),
+              color: Colors.white,
+              fontSize: 9,
+            ) ??
+            const TextStyle(color: Colors.white, fontSize: 9),
       ),
     );
   }
@@ -177,21 +181,21 @@ class _WishlistButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-    onTap: onTap,
-    child: Container(
-      width: 32,
-      height: 32,
-      decoration: const BoxDecoration(
-        color: AppColors.backgroundDark, // using a dark background color
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        isWishlisted ? Icons.favorite : Icons.favorite_border,
-        color: isWishlisted ? AppColors.primary : Colors.white,
-        size: 18,
-      ),
-    ),
-  );
+        onTap: onTap,
+        child: Container(
+          width: 32,
+          height: 32,
+          decoration: const BoxDecoration(
+            color: AppColors.backgroundDark, // using a dark background color
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            isWishlisted ? Icons.favorite : Icons.favorite_border,
+            color: isWishlisted ? AppColors.primary : Colors.white,
+            size: 18,
+          ),
+        ),
+      );
 }
 
 class _PriceRow extends StatelessWidget {
@@ -200,23 +204,31 @@ class _PriceRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-    children: [
-      Text(
-        '\$${product.finalPrice.toStringAsFixed(2)}', // Assuming toCurrencyString
-        style: const TextStyle(color: AppColors.primary, fontSize: 14, fontFamily: 'monospace', fontWeight: FontWeight.bold),
-      ),
-      if (product.hasDiscount && product.discountPct > 0) ...[
-        const SizedBox(width: 6),
-        Text(
-          '\$${product.price.toStringAsFixed(2)}',
-          style: AppTextStyles.bodySmall?.copyWith(
-            color: AppColors.textMuted,
-            decoration: TextDecoration.lineThrough,
-          ) ?? const TextStyle(color: AppColors.textMuted, fontSize: 12, decoration: TextDecoration.lineThrough),
-        ),
-      ],
-    ],
-  );
+        children: [
+          Text(
+            '\$${product.finalPrice.toStringAsFixed(2)}', // Assuming toCurrencyString
+            style: const TextStyle(
+                color: AppColors.primary,
+                fontSize: 14,
+                fontFamily: 'monospace',
+                fontWeight: FontWeight.bold),
+          ),
+          if (product.hasDiscount && product.discountPct > 0) ...[
+            const SizedBox(width: 6),
+            Text(
+              '\$${product.price.toStringAsFixed(2)}',
+              style: AppTextStyles.bodySmall?.copyWith(
+                    color: AppColors.textMuted,
+                    decoration: TextDecoration.lineThrough,
+                  ) ??
+                  const TextStyle(
+                      color: AppColors.textMuted,
+                      fontSize: 12,
+                      decoration: TextDecoration.lineThrough),
+            ),
+          ],
+        ],
+      );
 }
 
 class _RatingRow extends StatelessWidget {
@@ -225,31 +237,33 @@ class _RatingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-    children: [
-      const Icon(
-        Icons.star, color: Colors.orangeAccent, size: 14, // using internal bright color
-      ),
-      const SizedBox(width: 4),
-      Text(
-        product.avgRating.toStringAsFixed(1),
-        style: AppTextStyles.labelMedium?.copyWith(
-          color: AppColors.textSecondary,
-        ) ?? const TextStyle(color: AppColors.textSecondary, fontSize: 12),
-      ),
-    ],
-  );
+        children: [
+          const Icon(
+            Icons.star, color: Colors.orangeAccent,
+            size: 14, // using internal bright color
+          ),
+          const SizedBox(width: 4),
+          Text(
+            product.avgRating.toStringAsFixed(1),
+            style: AppTextStyles.labelMedium?.copyWith(
+                  color: AppColors.textSecondary,
+                ) ??
+                const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+          ),
+        ],
+      );
 }
 
 Widget _buildShimmer() => Shimmer.fromColors(
-  baseColor: AppColors.backgroundLight,
-  highlightColor: AppColors.backgroundDark,
-  child: Container(color: AppColors.backgroundLight),
-);
+      baseColor: AppColors.backgroundLight,
+      highlightColor: AppColors.backgroundDark,
+      child: Container(color: AppColors.backgroundLight),
+    );
 
 Widget _buildErrorPlaceholder() => Container(
-  color: AppColors.backgroundLight,
-  child: const Icon(
-    Icons.image_not_supported_outlined,
-    color: AppColors.textMuted,
-  ),
-);
+      color: AppColors.backgroundLight,
+      child: const Icon(
+        Icons.image_not_supported_outlined,
+        color: AppColors.textMuted,
+      ),
+    );

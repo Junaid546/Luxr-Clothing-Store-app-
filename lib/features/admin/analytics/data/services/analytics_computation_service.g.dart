@@ -13,18 +13,18 @@ String _$analyticsComputationServiceHash() =>
 @ProviderFor(analyticsComputationService)
 final analyticsComputationServiceProvider =
     AutoDisposeProvider<AnalyticsComputationService>.internal(
-      analyticsComputationService,
-      name: r'analyticsComputationServiceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$analyticsComputationServiceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  analyticsComputationService,
+  name: r'analyticsComputationServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$analyticsComputationServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AnalyticsComputationServiceRef =
-    AutoDisposeProviderRef<AnalyticsComputationService>;
+typedef AnalyticsComputationServiceRef
+    = AutoDisposeProviderRef<AnalyticsComputationService>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

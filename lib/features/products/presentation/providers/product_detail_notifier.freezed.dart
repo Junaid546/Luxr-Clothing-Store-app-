@@ -12,8 +12,7 @@ part of 'product_detail_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ProductDetailState {
@@ -37,21 +36,19 @@ mixin _$ProductDetailState {
 /// @nodoc
 abstract class $ProductDetailStateCopyWith<$Res> {
   factory $ProductDetailStateCopyWith(
-    ProductDetailState value,
-    $Res Function(ProductDetailState) then,
-  ) = _$ProductDetailStateCopyWithImpl<$Res, ProductDetailState>;
+          ProductDetailState value, $Res Function(ProductDetailState) then) =
+      _$ProductDetailStateCopyWithImpl<$Res, ProductDetailState>;
   @useResult
-  $Res call({
-    ProductEntity? product,
-    bool isLoading,
-    bool hasError,
-    String errorMessage,
-    String? selectedSize,
-    String? selectedColor,
-    int quantity,
-    int currentImageIndex,
-    bool isWishlisted,
-  });
+  $Res call(
+      {ProductEntity? product,
+      bool isLoading,
+      bool hasError,
+      String errorMessage,
+      String? selectedSize,
+      String? selectedColor,
+      int quantity,
+      int currentImageIndex,
+      bool isWishlisted});
 }
 
 /// @nodoc
@@ -79,80 +76,74 @@ class _$ProductDetailStateCopyWithImpl<$Res, $Val extends ProductDetailState>
     Object? currentImageIndex = null,
     Object? isWishlisted = null,
   }) {
-    return _then(
-      _value.copyWith(
-            product: freezed == product
-                ? _value.product
-                : product // ignore: cast_nullable_to_non_nullable
-                      as ProductEntity?,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasError: null == hasError
-                ? _value.hasError
-                : hasError // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: null == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String,
-            selectedSize: freezed == selectedSize
-                ? _value.selectedSize
-                : selectedSize // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            selectedColor: freezed == selectedColor
-                ? _value.selectedColor
-                : selectedColor // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            quantity: null == quantity
-                ? _value.quantity
-                : quantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            currentImageIndex: null == currentImageIndex
-                ? _value.currentImageIndex
-                : currentImageIndex // ignore: cast_nullable_to_non_nullable
-                      as int,
-            isWishlisted: null == isWishlisted
-                ? _value.isWishlisted
-                : isWishlisted // ignore: cast_nullable_to_non_nullable
-                      as bool,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      product: freezed == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductEntity?,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedSize: freezed == selectedSize
+          ? _value.selectedSize
+          : selectedSize // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedColor: freezed == selectedColor
+          ? _value.selectedColor
+          : selectedColor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentImageIndex: null == currentImageIndex
+          ? _value.currentImageIndex
+          : currentImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isWishlisted: null == isWishlisted
+          ? _value.isWishlisted
+          : isWishlisted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$ProductDetailStateImplCopyWith<$Res>
     implements $ProductDetailStateCopyWith<$Res> {
-  factory _$$ProductDetailStateImplCopyWith(
-    _$ProductDetailStateImpl value,
-    $Res Function(_$ProductDetailStateImpl) then,
-  ) = __$$ProductDetailStateImplCopyWithImpl<$Res>;
+  factory _$$ProductDetailStateImplCopyWith(_$ProductDetailStateImpl value,
+          $Res Function(_$ProductDetailStateImpl) then) =
+      __$$ProductDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    ProductEntity? product,
-    bool isLoading,
-    bool hasError,
-    String errorMessage,
-    String? selectedSize,
-    String? selectedColor,
-    int quantity,
-    int currentImageIndex,
-    bool isWishlisted,
-  });
+  $Res call(
+      {ProductEntity? product,
+      bool isLoading,
+      bool hasError,
+      String errorMessage,
+      String? selectedSize,
+      String? selectedColor,
+      int quantity,
+      int currentImageIndex,
+      bool isWishlisted});
 }
 
 /// @nodoc
 class __$$ProductDetailStateImplCopyWithImpl<$Res>
     extends _$ProductDetailStateCopyWithImpl<$Res, _$ProductDetailStateImpl>
     implements _$$ProductDetailStateImplCopyWith<$Res> {
-  __$$ProductDetailStateImplCopyWithImpl(
-    _$ProductDetailStateImpl _value,
-    $Res Function(_$ProductDetailStateImpl) _then,
-  ) : super(_value, _then);
+  __$$ProductDetailStateImplCopyWithImpl(_$ProductDetailStateImpl _value,
+      $Res Function(_$ProductDetailStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProductDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -169,63 +160,60 @@ class __$$ProductDetailStateImplCopyWithImpl<$Res>
     Object? currentImageIndex = null,
     Object? isWishlisted = null,
   }) {
-    return _then(
-      _$ProductDetailStateImpl(
-        product: freezed == product
-            ? _value.product
-            : product // ignore: cast_nullable_to_non_nullable
-                  as ProductEntity?,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasError: null == hasError
-            ? _value.hasError
-            : hasError // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: null == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String,
-        selectedSize: freezed == selectedSize
-            ? _value.selectedSize
-            : selectedSize // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        selectedColor: freezed == selectedColor
-            ? _value.selectedColor
-            : selectedColor // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        quantity: null == quantity
-            ? _value.quantity
-            : quantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        currentImageIndex: null == currentImageIndex
-            ? _value.currentImageIndex
-            : currentImageIndex // ignore: cast_nullable_to_non_nullable
-                  as int,
-        isWishlisted: null == isWishlisted
-            ? _value.isWishlisted
-            : isWishlisted // ignore: cast_nullable_to_non_nullable
-                  as bool,
-      ),
-    );
+    return _then(_$ProductDetailStateImpl(
+      product: freezed == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductEntity?,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedSize: freezed == selectedSize
+          ? _value.selectedSize
+          : selectedSize // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedColor: freezed == selectedColor
+          ? _value.selectedColor
+          : selectedColor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentImageIndex: null == currentImageIndex
+          ? _value.currentImageIndex
+          : currentImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isWishlisted: null == isWishlisted
+          ? _value.isWishlisted
+          : isWishlisted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$ProductDetailStateImpl implements _ProductDetailState {
-  const _$ProductDetailStateImpl({
-    this.product,
-    this.isLoading = false,
-    this.hasError = false,
-    this.errorMessage = '',
-    this.selectedSize,
-    this.selectedColor,
-    this.quantity = 1,
-    this.currentImageIndex = 0,
-    this.isWishlisted = false,
-  });
+  const _$ProductDetailStateImpl(
+      {this.product,
+      this.isLoading = false,
+      this.hasError = false,
+      this.errorMessage = '',
+      this.selectedSize,
+      this.selectedColor,
+      this.quantity = 1,
+      this.currentImageIndex = 0,
+      this.isWishlisted = false});
 
   @override
   final ProductEntity? product;
@@ -283,17 +271,16 @@ class _$ProductDetailStateImpl implements _ProductDetailState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    product,
-    isLoading,
-    hasError,
-    errorMessage,
-    selectedSize,
-    selectedColor,
-    quantity,
-    currentImageIndex,
-    isWishlisted,
-  );
+      runtimeType,
+      product,
+      isLoading,
+      hasError,
+      errorMessage,
+      selectedSize,
+      selectedColor,
+      quantity,
+      currentImageIndex,
+      isWishlisted);
 
   /// Create a copy of ProductDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -302,23 +289,20 @@ class _$ProductDetailStateImpl implements _ProductDetailState {
   @pragma('vm:prefer-inline')
   _$$ProductDetailStateImplCopyWith<_$ProductDetailStateImpl> get copyWith =>
       __$$ProductDetailStateImplCopyWithImpl<_$ProductDetailStateImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _ProductDetailState implements ProductDetailState {
-  const factory _ProductDetailState({
-    final ProductEntity? product,
-    final bool isLoading,
-    final bool hasError,
-    final String errorMessage,
-    final String? selectedSize,
-    final String? selectedColor,
-    final int quantity,
-    final int currentImageIndex,
-    final bool isWishlisted,
-  }) = _$ProductDetailStateImpl;
+  const factory _ProductDetailState(
+      {final ProductEntity? product,
+      final bool isLoading,
+      final bool hasError,
+      final String errorMessage,
+      final String? selectedSize,
+      final String? selectedColor,
+      final int quantity,
+      final int currentImageIndex,
+      final bool isWishlisted}) = _$ProductDetailStateImpl;
 
   @override
   ProductEntity? get product;

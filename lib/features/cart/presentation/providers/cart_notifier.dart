@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/providers/repository_providers.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
-import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/providers/repository_providers.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/features/cart/data/models/cart_item_model.dart';
+import 'package:stylecart/features/cart/domain/entities/cart_entity.dart';
 
 part 'cart_notifier.g.dart';
 
@@ -15,8 +15,11 @@ Stream<List<CartItemModel>> cartItems(CartItemsRef ref) {
   if (authState is! AuthAuthenticated) {
     return Stream.value([]);
   }
-  
-  return ref.watch(cartRepositoryProvider).watchCart(authState.user.uid).map((result) {
+
+  return ref
+      .watch(cartRepositoryProvider)
+      .watchCart(authState.user.uid)
+      .map((result) {
     return result.fold(
       (failure) => [],
       (items) => items,
@@ -48,10 +51,10 @@ class CartNotifier extends _$CartNotifier {
     }
 
     await ref.read(cartRepositoryProvider).updateQuantity(
-      userId: authState.user.uid,
-      cartItemId: cartItemId,
-      quantity: quantity,
-    );
+          userId: authState.user.uid,
+          cartItemId: cartItemId,
+          quantity: quantity,
+        );
     state = false;
   }
 
@@ -64,9 +67,9 @@ class CartNotifier extends _$CartNotifier {
     }
 
     await ref.read(cartRepositoryProvider).removeFromCart(
-      userId: authState.user.uid,
-      cartItemId: cartItemId,
-    );
+          userId: authState.user.uid,
+          cartItemId: cartItemId,
+        );
     state = false;
   }
 

@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
-import 'package:style_cart/features/notifications/data/models/notification_model.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/features/auth/data/providers/auth_providers.dart';
+import 'package:stylecart/features/notifications/data/models/notification_model.dart';
+import 'package:stylecart/features/notifications/data/providers/notification_providers.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
 
 part 'notification_notifier.freezed.dart';
 part 'notification_notifier.g.dart';
@@ -100,7 +100,7 @@ class NotificationNotifier extends _$NotificationNotifier {
       );
 
       // Prepend to current list (newest first) if it matches filter or filter is 'all'
-      if (state.activeFilter == 'all' || 
+      if (state.activeFilter == 'all' ||
           newNotification.type.value == state.activeFilter) {
         final updatedList = [
           newNotification,
@@ -199,9 +199,8 @@ class NotificationNotifier extends _$NotificationNotifier {
 
     state = state.copyWith(
       notifications: updatedList,
-      unreadCount: wasUnread
-          ? (state.unreadCount - 1).clamp(0, 999)
-          : state.unreadCount,
+      unreadCount:
+          wasUnread ? (state.unreadCount - 1).clamp(0, 999) : state.unreadCount,
     );
 
     await ref

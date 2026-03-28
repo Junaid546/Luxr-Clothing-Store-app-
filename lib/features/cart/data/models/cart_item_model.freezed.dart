@@ -12,8 +12,7 @@ part of 'cart_item_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CartItemModel {
@@ -42,26 +41,24 @@ mixin _$CartItemModel {
 /// @nodoc
 abstract class $CartItemModelCopyWith<$Res> {
   factory $CartItemModelCopyWith(
-    CartItemModel value,
-    $Res Function(CartItemModel) then,
-  ) = _$CartItemModelCopyWithImpl<$Res, CartItemModel>;
+          CartItemModel value, $Res Function(CartItemModel) then) =
+      _$CartItemModelCopyWithImpl<$Res, CartItemModel>;
   @useResult
-  $Res call({
-    String cartItemId,
-    String productId,
-    String productName,
-    String brand,
-    String imageUrl,
-    String size,
-    String color,
-    String colorHex,
-    int quantity,
-    double unitPrice,
-    int discountPct,
-    double finalPrice,
-    DateTime addedAt,
-    DateTime updatedAt,
-  });
+  $Res call(
+      {String cartItemId,
+      String productId,
+      String productName,
+      String brand,
+      String imageUrl,
+      String size,
+      String color,
+      String colorHex,
+      int quantity,
+      double unitPrice,
+      int discountPct,
+      double finalPrice,
+      DateTime addedAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -94,67 +91,64 @@ class _$CartItemModelCopyWithImpl<$Res, $Val extends CartItemModel>
     Object? addedAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(
-      _value.copyWith(
-            cartItemId: null == cartItemId
-                ? _value.cartItemId
-                : cartItemId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            productId: null == productId
-                ? _value.productId
-                : productId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            productName: null == productName
-                ? _value.productName
-                : productName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            brand: null == brand
-                ? _value.brand
-                : brand // ignore: cast_nullable_to_non_nullable
-                      as String,
-            imageUrl: null == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String,
-            size: null == size
-                ? _value.size
-                : size // ignore: cast_nullable_to_non_nullable
-                      as String,
-            color: null == color
-                ? _value.color
-                : color // ignore: cast_nullable_to_non_nullable
-                      as String,
-            colorHex: null == colorHex
-                ? _value.colorHex
-                : colorHex // ignore: cast_nullable_to_non_nullable
-                      as String,
-            quantity: null == quantity
-                ? _value.quantity
-                : quantity // ignore: cast_nullable_to_non_nullable
-                      as int,
-            unitPrice: null == unitPrice
-                ? _value.unitPrice
-                : unitPrice // ignore: cast_nullable_to_non_nullable
-                      as double,
-            discountPct: null == discountPct
-                ? _value.discountPct
-                : discountPct // ignore: cast_nullable_to_non_nullable
-                      as int,
-            finalPrice: null == finalPrice
-                ? _value.finalPrice
-                : finalPrice // ignore: cast_nullable_to_non_nullable
-                      as double,
-            addedAt: null == addedAt
-                ? _value.addedAt
-                : addedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            updatedAt: null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      cartItemId: null == cartItemId
+          ? _value.cartItemId
+          : cartItemId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productName: null == productName
+          ? _value.productName
+          : productName // ignore: cast_nullable_to_non_nullable
+              as String,
+      brand: null == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      size: null == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      colorHex: null == colorHex
+          ? _value.colorHex
+          : colorHex // ignore: cast_nullable_to_non_nullable
+              as String,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      unitPrice: null == unitPrice
+          ? _value.unitPrice
+          : unitPrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      discountPct: null == discountPct
+          ? _value.discountPct
+          : discountPct // ignore: cast_nullable_to_non_nullable
+              as int,
+      finalPrice: null == finalPrice
+          ? _value.finalPrice
+          : finalPrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      addedAt: null == addedAt
+          ? _value.addedAt
+          : addedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
@@ -162,27 +156,25 @@ class _$CartItemModelCopyWithImpl<$Res, $Val extends CartItemModel>
 abstract class _$$CartItemModelImplCopyWith<$Res>
     implements $CartItemModelCopyWith<$Res> {
   factory _$$CartItemModelImplCopyWith(
-    _$CartItemModelImpl value,
-    $Res Function(_$CartItemModelImpl) then,
-  ) = __$$CartItemModelImplCopyWithImpl<$Res>;
+          _$CartItemModelImpl value, $Res Function(_$CartItemModelImpl) then) =
+      __$$CartItemModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String cartItemId,
-    String productId,
-    String productName,
-    String brand,
-    String imageUrl,
-    String size,
-    String color,
-    String colorHex,
-    int quantity,
-    double unitPrice,
-    int discountPct,
-    double finalPrice,
-    DateTime addedAt,
-    DateTime updatedAt,
-  });
+  $Res call(
+      {String cartItemId,
+      String productId,
+      String productName,
+      String brand,
+      String imageUrl,
+      String size,
+      String color,
+      String colorHex,
+      int quantity,
+      double unitPrice,
+      int discountPct,
+      double finalPrice,
+      DateTime addedAt,
+      DateTime updatedAt});
 }
 
 /// @nodoc
@@ -190,9 +182,8 @@ class __$$CartItemModelImplCopyWithImpl<$Res>
     extends _$CartItemModelCopyWithImpl<$Res, _$CartItemModelImpl>
     implements _$$CartItemModelImplCopyWith<$Res> {
   __$$CartItemModelImplCopyWithImpl(
-    _$CartItemModelImpl _value,
-    $Res Function(_$CartItemModelImpl) _then,
-  ) : super(_value, _then);
+      _$CartItemModelImpl _value, $Res Function(_$CartItemModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CartItemModel
   /// with the given fields replaced by the non-null parameter values.
@@ -214,88 +205,86 @@ class __$$CartItemModelImplCopyWithImpl<$Res>
     Object? addedAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(
-      _$CartItemModelImpl(
-        cartItemId: null == cartItemId
-            ? _value.cartItemId
-            : cartItemId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        productId: null == productId
-            ? _value.productId
-            : productId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        productName: null == productName
-            ? _value.productName
-            : productName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        brand: null == brand
-            ? _value.brand
-            : brand // ignore: cast_nullable_to_non_nullable
-                  as String,
-        imageUrl: null == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String,
-        size: null == size
-            ? _value.size
-            : size // ignore: cast_nullable_to_non_nullable
-                  as String,
-        color: null == color
-            ? _value.color
-            : color // ignore: cast_nullable_to_non_nullable
-                  as String,
-        colorHex: null == colorHex
-            ? _value.colorHex
-            : colorHex // ignore: cast_nullable_to_non_nullable
-                  as String,
-        quantity: null == quantity
-            ? _value.quantity
-            : quantity // ignore: cast_nullable_to_non_nullable
-                  as int,
-        unitPrice: null == unitPrice
-            ? _value.unitPrice
-            : unitPrice // ignore: cast_nullable_to_non_nullable
-                  as double,
-        discountPct: null == discountPct
-            ? _value.discountPct
-            : discountPct // ignore: cast_nullable_to_non_nullable
-                  as int,
-        finalPrice: null == finalPrice
-            ? _value.finalPrice
-            : finalPrice // ignore: cast_nullable_to_non_nullable
-                  as double,
-        addedAt: null == addedAt
-            ? _value.addedAt
-            : addedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        updatedAt: null == updatedAt
-            ? _value.updatedAt
-            : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$CartItemModelImpl(
+      cartItemId: null == cartItemId
+          ? _value.cartItemId
+          : cartItemId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productName: null == productName
+          ? _value.productName
+          : productName // ignore: cast_nullable_to_non_nullable
+              as String,
+      brand: null == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      size: null == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String,
+      colorHex: null == colorHex
+          ? _value.colorHex
+          : colorHex // ignore: cast_nullable_to_non_nullable
+              as String,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      unitPrice: null == unitPrice
+          ? _value.unitPrice
+          : unitPrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      discountPct: null == discountPct
+          ? _value.discountPct
+          : discountPct // ignore: cast_nullable_to_non_nullable
+              as int,
+      finalPrice: null == finalPrice
+          ? _value.finalPrice
+          : finalPrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      addedAt: null == addedAt
+          ? _value.addedAt
+          : addedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$CartItemModelImpl extends _CartItemModel {
-  const _$CartItemModelImpl({
-    required this.cartItemId,
-    required this.productId,
-    required this.productName,
-    required this.brand,
-    required this.imageUrl,
-    required this.size,
-    required this.color,
-    required this.colorHex,
-    required this.quantity,
-    required this.unitPrice,
-    required this.discountPct,
-    required this.finalPrice,
-    required this.addedAt,
-    required this.updatedAt,
-  }) : super._();
+  const _$CartItemModelImpl(
+      {required this.cartItemId,
+      required this.productId,
+      required this.productName,
+      required this.brand,
+      required this.imageUrl,
+      required this.size,
+      required this.color,
+      required this.colorHex,
+      required this.quantity,
+      required this.unitPrice,
+      required this.discountPct,
+      required this.finalPrice,
+      required this.addedAt,
+      required this.updatedAt})
+      : super._();
 
   @override
   final String cartItemId;
@@ -364,22 +353,21 @@ class _$CartItemModelImpl extends _CartItemModel {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    cartItemId,
-    productId,
-    productName,
-    brand,
-    imageUrl,
-    size,
-    color,
-    colorHex,
-    quantity,
-    unitPrice,
-    discountPct,
-    finalPrice,
-    addedAt,
-    updatedAt,
-  );
+      runtimeType,
+      cartItemId,
+      productId,
+      productName,
+      brand,
+      imageUrl,
+      size,
+      color,
+      colorHex,
+      quantity,
+      unitPrice,
+      discountPct,
+      finalPrice,
+      addedAt,
+      updatedAt);
 
   /// Create a copy of CartItemModel
   /// with the given fields replaced by the non-null parameter values.
@@ -391,22 +379,21 @@ class _$CartItemModelImpl extends _CartItemModel {
 }
 
 abstract class _CartItemModel extends CartItemModel {
-  const factory _CartItemModel({
-    required final String cartItemId,
-    required final String productId,
-    required final String productName,
-    required final String brand,
-    required final String imageUrl,
-    required final String size,
-    required final String color,
-    required final String colorHex,
-    required final int quantity,
-    required final double unitPrice,
-    required final int discountPct,
-    required final double finalPrice,
-    required final DateTime addedAt,
-    required final DateTime updatedAt,
-  }) = _$CartItemModelImpl;
+  const factory _CartItemModel(
+      {required final String cartItemId,
+      required final String productId,
+      required final String productName,
+      required final String brand,
+      required final String imageUrl,
+      required final String size,
+      required final String color,
+      required final String colorHex,
+      required final int quantity,
+      required final double unitPrice,
+      required final int discountPct,
+      required final double finalPrice,
+      required final DateTime addedAt,
+      required final DateTime updatedAt}) = _$CartItemModelImpl;
   const _CartItemModel._() : super._();
 
   @override

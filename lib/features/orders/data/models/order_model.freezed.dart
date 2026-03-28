@@ -12,8 +12,7 @@ part of 'order_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$OrderModel {
@@ -53,34 +52,32 @@ mixin _$OrderModel {
 /// @nodoc
 abstract class $OrderModelCopyWith<$Res> {
   factory $OrderModelCopyWith(
-    OrderModel value,
-    $Res Function(OrderModel) then,
-  ) = _$OrderModelCopyWithImpl<$Res, OrderModel>;
+          OrderModel value, $Res Function(OrderModel) then) =
+      _$OrderModelCopyWithImpl<$Res, OrderModel>;
   @useResult
-  $Res call({
-    String orderId,
-    String userId,
-    String userEmail,
-    String userName,
-    List<OrderItemModel> items,
-    double subtotal,
-    double shippingCost,
-    double discountAmount,
-    double taxAmount,
-    double total,
-    String shippingMethod,
-    ShippingAddressModel shippingAddress,
-    EstimatedDeliveryModel estimatedDelivery,
-    String paymentMethod,
-    String paymentStatus,
-    String? transactionId,
-    String status,
-    List<StatusHistoryEntry> statusHistory,
-    CourierModel? courier,
-    DateTime placedAt,
-    DateTime updatedAt,
-    DateTime? deliveredAt,
-  });
+  $Res call(
+      {String orderId,
+      String userId,
+      String userEmail,
+      String userName,
+      List<OrderItemModel> items,
+      double subtotal,
+      double shippingCost,
+      double discountAmount,
+      double taxAmount,
+      double total,
+      String shippingMethod,
+      ShippingAddressModel shippingAddress,
+      EstimatedDeliveryModel estimatedDelivery,
+      String paymentMethod,
+      String paymentStatus,
+      String? transactionId,
+      String status,
+      List<StatusHistoryEntry> statusHistory,
+      CourierModel? courier,
+      DateTime placedAt,
+      DateTime updatedAt,
+      DateTime? deliveredAt});
 }
 
 /// @nodoc
@@ -121,99 +118,96 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
     Object? updatedAt = null,
     Object? deliveredAt = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            orderId: null == orderId
-                ? _value.orderId
-                : orderId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            userId: null == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            userEmail: null == userEmail
-                ? _value.userEmail
-                : userEmail // ignore: cast_nullable_to_non_nullable
-                      as String,
-            userName: null == userName
-                ? _value.userName
-                : userName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            items: null == items
-                ? _value.items
-                : items // ignore: cast_nullable_to_non_nullable
-                      as List<OrderItemModel>,
-            subtotal: null == subtotal
-                ? _value.subtotal
-                : subtotal // ignore: cast_nullable_to_non_nullable
-                      as double,
-            shippingCost: null == shippingCost
-                ? _value.shippingCost
-                : shippingCost // ignore: cast_nullable_to_non_nullable
-                      as double,
-            discountAmount: null == discountAmount
-                ? _value.discountAmount
-                : discountAmount // ignore: cast_nullable_to_non_nullable
-                      as double,
-            taxAmount: null == taxAmount
-                ? _value.taxAmount
-                : taxAmount // ignore: cast_nullable_to_non_nullable
-                      as double,
-            total: null == total
-                ? _value.total
-                : total // ignore: cast_nullable_to_non_nullable
-                      as double,
-            shippingMethod: null == shippingMethod
-                ? _value.shippingMethod
-                : shippingMethod // ignore: cast_nullable_to_non_nullable
-                      as String,
-            shippingAddress: null == shippingAddress
-                ? _value.shippingAddress
-                : shippingAddress // ignore: cast_nullable_to_non_nullable
-                      as ShippingAddressModel,
-            estimatedDelivery: null == estimatedDelivery
-                ? _value.estimatedDelivery
-                : estimatedDelivery // ignore: cast_nullable_to_non_nullable
-                      as EstimatedDeliveryModel,
-            paymentMethod: null == paymentMethod
-                ? _value.paymentMethod
-                : paymentMethod // ignore: cast_nullable_to_non_nullable
-                      as String,
-            paymentStatus: null == paymentStatus
-                ? _value.paymentStatus
-                : paymentStatus // ignore: cast_nullable_to_non_nullable
-                      as String,
-            transactionId: freezed == transactionId
-                ? _value.transactionId
-                : transactionId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            status: null == status
-                ? _value.status
-                : status // ignore: cast_nullable_to_non_nullable
-                      as String,
-            statusHistory: null == statusHistory
-                ? _value.statusHistory
-                : statusHistory // ignore: cast_nullable_to_non_nullable
-                      as List<StatusHistoryEntry>,
-            courier: freezed == courier
-                ? _value.courier
-                : courier // ignore: cast_nullable_to_non_nullable
-                      as CourierModel?,
-            placedAt: null == placedAt
-                ? _value.placedAt
-                : placedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            updatedAt: null == updatedAt
-                ? _value.updatedAt
-                : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            deliveredAt: freezed == deliveredAt
-                ? _value.deliveredAt
-                : deliveredAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userEmail: null == userEmail
+          ? _value.userEmail
+          : userEmail // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<OrderItemModel>,
+      subtotal: null == subtotal
+          ? _value.subtotal
+          : subtotal // ignore: cast_nullable_to_non_nullable
+              as double,
+      shippingCost: null == shippingCost
+          ? _value.shippingCost
+          : shippingCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      discountAmount: null == discountAmount
+          ? _value.discountAmount
+          : discountAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      taxAmount: null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      total: null == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as double,
+      shippingMethod: null == shippingMethod
+          ? _value.shippingMethod
+          : shippingMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      shippingAddress: null == shippingAddress
+          ? _value.shippingAddress
+          : shippingAddress // ignore: cast_nullable_to_non_nullable
+              as ShippingAddressModel,
+      estimatedDelivery: null == estimatedDelivery
+          ? _value.estimatedDelivery
+          : estimatedDelivery // ignore: cast_nullable_to_non_nullable
+              as EstimatedDeliveryModel,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      transactionId: freezed == transactionId
+          ? _value.transactionId
+          : transactionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      statusHistory: null == statusHistory
+          ? _value.statusHistory
+          : statusHistory // ignore: cast_nullable_to_non_nullable
+              as List<StatusHistoryEntry>,
+      courier: freezed == courier
+          ? _value.courier
+          : courier // ignore: cast_nullable_to_non_nullable
+              as CourierModel?,
+      placedAt: null == placedAt
+          ? _value.placedAt
+          : placedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      deliveredAt: freezed == deliveredAt
+          ? _value.deliveredAt
+          : deliveredAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
   }
 }
 
@@ -221,35 +215,33 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
 abstract class _$$OrderModelImplCopyWith<$Res>
     implements $OrderModelCopyWith<$Res> {
   factory _$$OrderModelImplCopyWith(
-    _$OrderModelImpl value,
-    $Res Function(_$OrderModelImpl) then,
-  ) = __$$OrderModelImplCopyWithImpl<$Res>;
+          _$OrderModelImpl value, $Res Function(_$OrderModelImpl) then) =
+      __$$OrderModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String orderId,
-    String userId,
-    String userEmail,
-    String userName,
-    List<OrderItemModel> items,
-    double subtotal,
-    double shippingCost,
-    double discountAmount,
-    double taxAmount,
-    double total,
-    String shippingMethod,
-    ShippingAddressModel shippingAddress,
-    EstimatedDeliveryModel estimatedDelivery,
-    String paymentMethod,
-    String paymentStatus,
-    String? transactionId,
-    String status,
-    List<StatusHistoryEntry> statusHistory,
-    CourierModel? courier,
-    DateTime placedAt,
-    DateTime updatedAt,
-    DateTime? deliveredAt,
-  });
+  $Res call(
+      {String orderId,
+      String userId,
+      String userEmail,
+      String userName,
+      List<OrderItemModel> items,
+      double subtotal,
+      double shippingCost,
+      double discountAmount,
+      double taxAmount,
+      double total,
+      String shippingMethod,
+      ShippingAddressModel shippingAddress,
+      EstimatedDeliveryModel estimatedDelivery,
+      String paymentMethod,
+      String paymentStatus,
+      String? transactionId,
+      String status,
+      List<StatusHistoryEntry> statusHistory,
+      CourierModel? courier,
+      DateTime placedAt,
+      DateTime updatedAt,
+      DateTime? deliveredAt});
 }
 
 /// @nodoc
@@ -257,9 +249,8 @@ class __$$OrderModelImplCopyWithImpl<$Res>
     extends _$OrderModelCopyWithImpl<$Res, _$OrderModelImpl>
     implements _$$OrderModelImplCopyWith<$Res> {
   __$$OrderModelImplCopyWithImpl(
-    _$OrderModelImpl _value,
-    $Res Function(_$OrderModelImpl) _then,
-  ) : super(_value, _then);
+      _$OrderModelImpl _value, $Res Function(_$OrderModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of OrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -289,130 +280,128 @@ class __$$OrderModelImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? deliveredAt = freezed,
   }) {
-    return _then(
-      _$OrderModelImpl(
-        orderId: null == orderId
-            ? _value.orderId
-            : orderId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        userId: null == userId
-            ? _value.userId
-            : userId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        userEmail: null == userEmail
-            ? _value.userEmail
-            : userEmail // ignore: cast_nullable_to_non_nullable
-                  as String,
-        userName: null == userName
-            ? _value.userName
-            : userName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        items: null == items
-            ? _value._items
-            : items // ignore: cast_nullable_to_non_nullable
-                  as List<OrderItemModel>,
-        subtotal: null == subtotal
-            ? _value.subtotal
-            : subtotal // ignore: cast_nullable_to_non_nullable
-                  as double,
-        shippingCost: null == shippingCost
-            ? _value.shippingCost
-            : shippingCost // ignore: cast_nullable_to_non_nullable
-                  as double,
-        discountAmount: null == discountAmount
-            ? _value.discountAmount
-            : discountAmount // ignore: cast_nullable_to_non_nullable
-                  as double,
-        taxAmount: null == taxAmount
-            ? _value.taxAmount
-            : taxAmount // ignore: cast_nullable_to_non_nullable
-                  as double,
-        total: null == total
-            ? _value.total
-            : total // ignore: cast_nullable_to_non_nullable
-                  as double,
-        shippingMethod: null == shippingMethod
-            ? _value.shippingMethod
-            : shippingMethod // ignore: cast_nullable_to_non_nullable
-                  as String,
-        shippingAddress: null == shippingAddress
-            ? _value.shippingAddress
-            : shippingAddress // ignore: cast_nullable_to_non_nullable
-                  as ShippingAddressModel,
-        estimatedDelivery: null == estimatedDelivery
-            ? _value.estimatedDelivery
-            : estimatedDelivery // ignore: cast_nullable_to_non_nullable
-                  as EstimatedDeliveryModel,
-        paymentMethod: null == paymentMethod
-            ? _value.paymentMethod
-            : paymentMethod // ignore: cast_nullable_to_non_nullable
-                  as String,
-        paymentStatus: null == paymentStatus
-            ? _value.paymentStatus
-            : paymentStatus // ignore: cast_nullable_to_non_nullable
-                  as String,
-        transactionId: freezed == transactionId
-            ? _value.transactionId
-            : transactionId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        status: null == status
-            ? _value.status
-            : status // ignore: cast_nullable_to_non_nullable
-                  as String,
-        statusHistory: null == statusHistory
-            ? _value._statusHistory
-            : statusHistory // ignore: cast_nullable_to_non_nullable
-                  as List<StatusHistoryEntry>,
-        courier: freezed == courier
-            ? _value.courier
-            : courier // ignore: cast_nullable_to_non_nullable
-                  as CourierModel?,
-        placedAt: null == placedAt
-            ? _value.placedAt
-            : placedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        updatedAt: null == updatedAt
-            ? _value.updatedAt
-            : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        deliveredAt: freezed == deliveredAt
-            ? _value.deliveredAt
-            : deliveredAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-      ),
-    );
+    return _then(_$OrderModelImpl(
+      orderId: null == orderId
+          ? _value.orderId
+          : orderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userEmail: null == userEmail
+          ? _value.userEmail
+          : userEmail // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: null == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<OrderItemModel>,
+      subtotal: null == subtotal
+          ? _value.subtotal
+          : subtotal // ignore: cast_nullable_to_non_nullable
+              as double,
+      shippingCost: null == shippingCost
+          ? _value.shippingCost
+          : shippingCost // ignore: cast_nullable_to_non_nullable
+              as double,
+      discountAmount: null == discountAmount
+          ? _value.discountAmount
+          : discountAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      taxAmount: null == taxAmount
+          ? _value.taxAmount
+          : taxAmount // ignore: cast_nullable_to_non_nullable
+              as double,
+      total: null == total
+          ? _value.total
+          : total // ignore: cast_nullable_to_non_nullable
+              as double,
+      shippingMethod: null == shippingMethod
+          ? _value.shippingMethod
+          : shippingMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      shippingAddress: null == shippingAddress
+          ? _value.shippingAddress
+          : shippingAddress // ignore: cast_nullable_to_non_nullable
+              as ShippingAddressModel,
+      estimatedDelivery: null == estimatedDelivery
+          ? _value.estimatedDelivery
+          : estimatedDelivery // ignore: cast_nullable_to_non_nullable
+              as EstimatedDeliveryModel,
+      paymentMethod: null == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      paymentStatus: null == paymentStatus
+          ? _value.paymentStatus
+          : paymentStatus // ignore: cast_nullable_to_non_nullable
+              as String,
+      transactionId: freezed == transactionId
+          ? _value.transactionId
+          : transactionId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      statusHistory: null == statusHistory
+          ? _value._statusHistory
+          : statusHistory // ignore: cast_nullable_to_non_nullable
+              as List<StatusHistoryEntry>,
+      courier: freezed == courier
+          ? _value.courier
+          : courier // ignore: cast_nullable_to_non_nullable
+              as CourierModel?,
+      placedAt: null == placedAt
+          ? _value.placedAt
+          : placedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedAt: null == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      deliveredAt: freezed == deliveredAt
+          ? _value.deliveredAt
+          : deliveredAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$OrderModelImpl extends _OrderModel {
-  const _$OrderModelImpl({
-    required this.orderId,
-    required this.userId,
-    required this.userEmail,
-    required this.userName,
-    required final List<OrderItemModel> items,
-    required this.subtotal,
-    required this.shippingCost,
-    required this.discountAmount,
-    required this.taxAmount,
-    required this.total,
-    required this.shippingMethod,
-    required this.shippingAddress,
-    required this.estimatedDelivery,
-    required this.paymentMethod,
-    required this.paymentStatus,
-    this.transactionId,
-    required this.status,
-    required final List<StatusHistoryEntry> statusHistory,
-    this.courier,
-    required this.placedAt,
-    required this.updatedAt,
-    this.deliveredAt,
-  }) : _items = items,
-       _statusHistory = statusHistory,
-       super._();
+  const _$OrderModelImpl(
+      {required this.orderId,
+      required this.userId,
+      required this.userEmail,
+      required this.userName,
+      required final List<OrderItemModel> items,
+      required this.subtotal,
+      required this.shippingCost,
+      required this.discountAmount,
+      required this.taxAmount,
+      required this.total,
+      required this.shippingMethod,
+      required this.shippingAddress,
+      required this.estimatedDelivery,
+      required this.paymentMethod,
+      required this.paymentStatus,
+      this.transactionId,
+      required this.status,
+      required final List<StatusHistoryEntry> statusHistory,
+      this.courier,
+      required this.placedAt,
+      required this.updatedAt,
+      this.deliveredAt})
+      : _items = items,
+        _statusHistory = statusHistory,
+        super._();
 
   @override
   final String orderId;
@@ -510,10 +499,8 @@ class _$OrderModelImpl extends _OrderModel {
             (identical(other.transactionId, transactionId) ||
                 other.transactionId == transactionId) &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality().equals(
-              other._statusHistory,
-              _statusHistory,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._statusHistory, _statusHistory) &&
             (identical(other.courier, courier) || other.courier == courier) &&
             (identical(other.placedAt, placedAt) ||
                 other.placedAt == placedAt) &&
@@ -525,30 +512,30 @@ class _$OrderModelImpl extends _OrderModel {
 
   @override
   int get hashCode => Object.hashAll([
-    runtimeType,
-    orderId,
-    userId,
-    userEmail,
-    userName,
-    const DeepCollectionEquality().hash(_items),
-    subtotal,
-    shippingCost,
-    discountAmount,
-    taxAmount,
-    total,
-    shippingMethod,
-    shippingAddress,
-    estimatedDelivery,
-    paymentMethod,
-    paymentStatus,
-    transactionId,
-    status,
-    const DeepCollectionEquality().hash(_statusHistory),
-    courier,
-    placedAt,
-    updatedAt,
-    deliveredAt,
-  ]);
+        runtimeType,
+        orderId,
+        userId,
+        userEmail,
+        userName,
+        const DeepCollectionEquality().hash(_items),
+        subtotal,
+        shippingCost,
+        discountAmount,
+        taxAmount,
+        total,
+        shippingMethod,
+        shippingAddress,
+        estimatedDelivery,
+        paymentMethod,
+        paymentStatus,
+        transactionId,
+        status,
+        const DeepCollectionEquality().hash(_statusHistory),
+        courier,
+        placedAt,
+        updatedAt,
+        deliveredAt
+      ]);
 
   /// Create a copy of OrderModel
   /// with the given fields replaced by the non-null parameter values.
@@ -560,30 +547,29 @@ class _$OrderModelImpl extends _OrderModel {
 }
 
 abstract class _OrderModel extends OrderModel {
-  const factory _OrderModel({
-    required final String orderId,
-    required final String userId,
-    required final String userEmail,
-    required final String userName,
-    required final List<OrderItemModel> items,
-    required final double subtotal,
-    required final double shippingCost,
-    required final double discountAmount,
-    required final double taxAmount,
-    required final double total,
-    required final String shippingMethod,
-    required final ShippingAddressModel shippingAddress,
-    required final EstimatedDeliveryModel estimatedDelivery,
-    required final String paymentMethod,
-    required final String paymentStatus,
-    final String? transactionId,
-    required final String status,
-    required final List<StatusHistoryEntry> statusHistory,
-    final CourierModel? courier,
-    required final DateTime placedAt,
-    required final DateTime updatedAt,
-    final DateTime? deliveredAt,
-  }) = _$OrderModelImpl;
+  const factory _OrderModel(
+      {required final String orderId,
+      required final String userId,
+      required final String userEmail,
+      required final String userName,
+      required final List<OrderItemModel> items,
+      required final double subtotal,
+      required final double shippingCost,
+      required final double discountAmount,
+      required final double taxAmount,
+      required final double total,
+      required final String shippingMethod,
+      required final ShippingAddressModel shippingAddress,
+      required final EstimatedDeliveryModel estimatedDelivery,
+      required final String paymentMethod,
+      required final String paymentStatus,
+      final String? transactionId,
+      required final String status,
+      required final List<StatusHistoryEntry> statusHistory,
+      final CourierModel? courier,
+      required final DateTime placedAt,
+      required final DateTime updatedAt,
+      final DateTime? deliveredAt}) = _$OrderModelImpl;
   const _OrderModel._() : super._();
 
   @override

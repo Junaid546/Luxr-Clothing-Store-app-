@@ -5,16 +5,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/errors/exceptions.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/core/providers/repository_providers.dart' hide firestoreProvider;
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
-import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
-import 'package:style_cart/features/orders/data/models/order_model.dart';
-import 'package:style_cart/features/cart/domain/repositories/cart_repository.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/errors/exceptions.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/core/providers/repository_providers.dart'
+    hide firestoreProvider;
+import 'package:stylecart/features/auth/domain/entities/user_entity.dart';
+import 'package:stylecart/features/cart/domain/entities/cart_entity.dart';
+import 'package:stylecart/features/orders/data/models/order_model.dart';
+import 'package:stylecart/features/cart/domain/repositories/cart_repository.dart';
 
 part 'order_placement_service.g.dart';
 
@@ -75,7 +76,8 @@ class OrderPlacementService {
           .toList();
 
       // 4. Compute estimated delivery
-      final estimatedDelivery = EstimatedDeliveryModel.forMethod(shippingMethod);
+      final estimatedDelivery =
+          EstimatedDeliveryModel.forMethod(shippingMethod);
 
       // ── BEGIN TRANSACTION ────────────────────────
       await _firestore.runTransaction((txn) async {
@@ -84,7 +86,8 @@ class OrderPlacementService {
         final ordersRef = _firestore.collection(FirestoreConstants.orders);
 
         // ── PHASE 1: READ ALL PRODUCTS ─────────────
-        final productDocRefs = items.map((i) => productsRef.doc(i.productId)).toList();
+        final productDocRefs =
+            items.map((i) => productsRef.doc(i.productId)).toList();
 
         final productSnaps = await Future.wait(
           productDocRefs.map((ref) => txn.get(ref)),
@@ -135,10 +138,12 @@ class OrderPlacementService {
 
           final snap = productSnaps[i];
           final data = snap.data()!;
-          final inv = Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
+          final inv =
+              Map<String, dynamic>.from(data['inventory'] as Map? ?? {});
 
           // Find all items in THIS order for THIS product
-          final productItems = items.where((item) => item.productId == pId).toList();
+          final productItems =
+              items.where((item) => item.productId == pId).toList();
 
           final updateMap = <String, dynamic>{
             'updatedAt': FieldValue.serverTimestamp(),
@@ -148,9 +153,10 @@ class OrderPlacementService {
           for (final orderItem in productItems) {
             final currentQty = (inv[orderItem.size] as num?)?.toInt() ?? 0;
             final newQty = currentQty - orderItem.quantity;
-            
+
             updateMap['inventory.${orderItem.size}'] = newQty;
-            inv[orderItem.size] = newQty; // Update local map for other variants of same size
+            inv[orderItem.size] =
+                newQty; // Update local map for other variants of same size
             totalDeduction += orderItem.quantity;
           }
 
@@ -181,7 +187,9 @@ class OrderPlacementService {
           'shippingAddress': shippingAddress.toMap(),
           'estimatedDelivery': estimatedDelivery.toMap(),
           'paymentMethod': paymentMethod,
-          'paymentStatus': paymentMethod == PaymentMethod.online ? PaymentStatus.paid : PaymentStatus.pending,
+          'paymentStatus': paymentMethod == PaymentMethod.online
+              ? PaymentStatus.paid
+              : PaymentStatus.pending,
           'transactionId': null,
           'status': OrderStatus.pending,
           'statusHistory': [
@@ -201,8 +209,9 @@ class OrderPlacementService {
         // ── PHASE 6: UPDATE USER STATS ─────────────
         final userData = userSnap.data() ?? {};
         final currentOrders = (userData['totalOrders'] as num?)?.toInt() ?? 0;
-        final currentSpent = (userData['totalSpent'] as num?)?.toDouble() ?? 0.0;
-        
+        final currentSpent =
+            (userData['totalSpent'] as num?)?.toDouble() ?? 0.0;
+
         final newOrderCount = currentOrders + 1;
         final newTotalSpent = currentSpent + total;
         final newEliteStatus = newOrderCount.eliteStatus;
@@ -235,14 +244,18 @@ class OrderPlacementService {
 
   // ── Order ID generation ────────────────────────────
   String _generateOrderId() {
-    final timestamp = DateTime.now().millisecondsSinceEpoch.toString().substring(7); // last 6 digits
+    final timestamp = DateTime.now()
+        .millisecondsSinceEpoch
+        .toString()
+        .substring(7); // last 6 digits
     final random = Random().nextInt(9999).toString().padLeft(4, '0');
     return 'SC-$timestamp-$random'.toUpperCase();
   }
 }
 
 @riverpod
-OrderPlacementService orderPlacementService(OrderPlacementServiceRef ref) => OrderPlacementService(
+OrderPlacementService orderPlacementService(OrderPlacementServiceRef ref) =>
+    OrderPlacementService(
       firestore: ref.watch(firestoreProvider),
       cartRepo: ref.watch(cartRepositoryProvider),
     );

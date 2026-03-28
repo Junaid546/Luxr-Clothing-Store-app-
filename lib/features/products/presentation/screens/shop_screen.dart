@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
-import 'package:style_cart/features/products/presentation/providers/product_list_notifier.dart';
-import 'package:style_cart/features/products/presentation/providers/search_notifier.dart';
-import 'package:style_cart/shared/widgets/cards/product_grid_widget.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/features/products/domain/entities/product_filter_entity.dart';
+import 'package:stylecart/features/products/presentation/providers/product_list_notifier.dart';
+import 'package:stylecart/features/products/presentation/providers/search_notifier.dart';
+import 'package:stylecart/shared/widgets/cards/product_grid_widget.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
 
 class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
@@ -25,7 +25,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     super.initState();
     _searchController = TextEditingController();
     _searchFocusNode = FocusNode();
-    
+
     // Defer loading to avoid changing providers during build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(productListNotifierProvider.notifier).loadProducts();
@@ -102,15 +102,24 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
             children: [
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: Text('Sort By', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                child: Text('Sort By',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold)),
               ),
               ...sortOptions.entries.map((entry) {
                 final isSelected = currentFilter.sortBy == entry.key;
                 return ListTile(
-                  title: Text(entry.value, style: const TextStyle(color: Colors.white)),
-                  trailing: isSelected ? const Icon(Icons.check, color: AppColors.primary) : null,
+                  title: Text(entry.value,
+                      style: const TextStyle(color: Colors.white)),
+                  trailing: isSelected
+                      ? const Icon(Icons.check, color: AppColors.primary)
+                      : null,
                   onTap: () {
-                    ref.read(productListNotifierProvider.notifier).sortBy(entry.key);
+                    ref
+                        .read(productListNotifierProvider.notifier)
+                        .sortBy(entry.key);
                     Navigator.pop(context);
                   },
                 );
@@ -166,7 +175,8 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     );
   }
 
-  Widget _buildSearchHeader(int activeFilterCount, ProductFilter filter, SearchNotifier notifier) {
+  Widget _buildSearchHeader(
+      int activeFilterCount, ProductFilter filter, SearchNotifier notifier) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
@@ -183,7 +193,8 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
               decoration: InputDecoration(
                 hintText: 'Search luxury fashion',
                 hintStyle: const TextStyle(color: AppColors.textMuted),
-                prefixIcon: const Icon(Icons.search, color: AppColors.textMuted),
+                prefixIcon:
+                    const Icon(Icons.search, color: AppColors.textMuted),
                 filled: true,
                 fillColor: AppColors.inputBg,
                 border: OutlineInputBorder(
@@ -192,7 +203,8 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                 ),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.close, color: AppColors.textMuted),
+                        icon:
+                            const Icon(Icons.close, color: AppColors.textMuted),
                         onPressed: () {
                           _searchController.clear();
                           notifier.clearQuery();
@@ -244,7 +256,8 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     );
   }
 
-  Widget _buildActiveFilterChips(ProductFilter filter, ProductListNotifier notifier) {
+  Widget _buildActiveFilterChips(
+      ProductFilter filter, ProductListNotifier notifier) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -270,7 +283,11 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
           if (filter.isFiltered)
             TextButton(
               onPressed: () => notifier.clearFilters(),
-              child: const Text('Clear All', style: TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.bold)),
+              child: const Text('Clear All',
+                  style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold)),
             ),
         ],
       ),
@@ -285,7 +302,8 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
         children: [
           Text(
             '$resultCount Results',
-            style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+            style:
+                const TextStyle(color: AppColors.textSecondary, fontSize: 14),
           ),
           GestureDetector(
             onTap: () => _showSortSheet(context, filter),
@@ -300,10 +318,14 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                 children: [
                   Text(
                     'SORT BY: ${_sortLabel(filter.sortBy)}',
-                    style: const TextStyle(color: AppColors.textSecondary, fontSize: 10, letterSpacing: 0.5),
+                    style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 10,
+                        letterSpacing: 0.5),
                   ),
                   const SizedBox(width: 4),
-                  const Icon(Icons.keyboard_arrow_down, color: AppColors.textSecondary, size: 16),
+                  const Icon(Icons.keyboard_arrow_down,
+                      color: AppColors.textSecondary, size: 16),
                 ],
               ),
             ),
@@ -313,10 +335,12 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     );
   }
 
-  Widget _buildSearchResults(SearchState searchState, SearchNotifier searchNotifier) {
+  Widget _buildSearchResults(
+      SearchState searchState, SearchNotifier searchNotifier) {
     // If we have search results properly integrated into searchState, use them.
     // Assuming searchState has `recentSearches`.
-    if (_searchController.text.isEmpty && searchState.recentSearches.isNotEmpty) {
+    if (_searchController.text.isEmpty &&
+        searchState.recentSearches.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -325,17 +349,24 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Recent Searches', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                const Text('Recent Searches',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
                 TextButton(
                   onPressed: () => searchNotifier.clearRecentSearches(),
-                  child: const Text('Clear', style: TextStyle(color: AppColors.gold, fontSize: 12)),
+                  child: const Text('Clear',
+                      style: TextStyle(color: AppColors.gold, fontSize: 12)),
                 ),
               ],
             ),
           ),
           ...searchState.recentSearches.map((search) => ListTile(
-                leading: const Icon(Icons.history, color: AppColors.textMuted, size: 20),
-                title: Text(search, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                leading: const Icon(Icons.history,
+                    color: AppColors.textMuted, size: 20),
+                title: Text(search,
+                    style: const TextStyle(color: Colors.white, fontSize: 14)),
                 onTap: () {
                   _searchController.text = search;
                   searchNotifier.onQueryChanged(search);
@@ -346,7 +377,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
         ],
       );
     }
-    
+
     // Fallback: If query is not empty and we are simulating standard results:
     // In a real scenario, SearchNotifier might fetch separate products,
     // but the prompt hints that search changes the ProductGridWidget or SearchResults.
@@ -376,7 +407,11 @@ class _RemovableChip extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(label, style: const TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.w500)),
+          Text(label,
+              style: const TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
           const SizedBox(width: 6),
           GestureDetector(
             onTap: onRemove,
@@ -420,7 +455,11 @@ class _FilterSheetState extends State<_FilterSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Filters', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text('Filters',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
               IconButton(
                 icon: const Icon(Icons.close, color: Colors.white),
                 onPressed: () => Navigator.pop(context),
@@ -433,7 +472,8 @@ class _FilterSheetState extends State<_FilterSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Category', style: TextStyle(color: Colors.white, fontSize: 16)),
+                  const Text('Category',
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
                   const SizedBox(height: 12),
                   Wrap(
                     spacing: 8,
@@ -447,18 +487,21 @@ class _FilterSheetState extends State<_FilterSheet> {
                         backgroundColor: AppColors.backgroundDark,
                         labelStyle: TextStyle(
                           color: isSelected ? Colors.black : Colors.white,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.normal,
                         ),
                         onSelected: (selected) {
                           setState(() {
-                            _localFilter = _localFilter.copyWith(category: selected ? cat : null);
+                            _localFilter = _localFilter.copyWith(
+                                category: selected ? cat : null);
                           });
                         },
                       );
                     }).toList(),
                   ),
                   const SizedBox(height: 24),
-                  const Text('Price Range', style: TextStyle(color: Colors.white, fontSize: 16)),
+                  const Text('Price Range',
+                      style: TextStyle(color: Colors.white, fontSize: 16)),
                   RangeSlider(
                     values: RangeValues(
                       _localFilter.minPrice ?? 0,
@@ -480,18 +523,24 @@ class _FilterSheetState extends State<_FilterSheet> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$${(_localFilter.minPrice ?? 0).toInt()}', style: const TextStyle(color: AppColors.textSecondary)),
-                      Text('\$${(_localFilter.maxPrice ?? 5000).toInt()}', style: const TextStyle(color: AppColors.textSecondary)),
+                      Text('\$${(_localFilter.minPrice ?? 0).toInt()}',
+                          style:
+                              const TextStyle(color: AppColors.textSecondary)),
+                      Text('\$${(_localFilter.maxPrice ?? 5000).toInt()}',
+                          style:
+                              const TextStyle(color: AppColors.textSecondary)),
                     ],
                   ),
                   const SizedBox(height: 24),
                   SwitchListTile(
-                    title: const Text('Limited Edition', style: TextStyle(color: Colors.white)),
+                    title: const Text('Limited Edition',
+                        style: TextStyle(color: Colors.white)),
                     activeColor: AppColors.primary,
                     value: _localFilter.isLimitedEdition ?? false,
                     onChanged: (val) {
                       setState(() {
-                        _localFilter = _localFilter.copyWith(isLimitedEdition: val ? true : null);
+                        _localFilter = _localFilter.copyWith(
+                            isLimitedEdition: val ? true : null);
                       });
                     },
                     contentPadding: EdgeInsets.zero,
@@ -512,9 +561,11 @@ class _FilterSheetState extends State<_FilterSheet> {
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: AppColors.textMuted),
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
-                  child: const Text('RESET', style: TextStyle(color: Colors.white)),
+                  child: const Text('RESET',
+                      style: TextStyle(color: Colors.white)),
                 ),
               ),
               const SizedBox(width: 16),
@@ -525,9 +576,12 @@ class _FilterSheetState extends State<_FilterSheet> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
-                  child: const Text('APPLY FILTER', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: const Text('APPLY FILTER',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],

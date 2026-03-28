@@ -12,14 +12,14 @@ String _$featuredProductsHash() => r'5fc84f202b8b3354759e6b357e1b5b64801edf07';
 @ProviderFor(featuredProducts)
 final featuredProductsProvider =
     AutoDisposeFutureProvider<List<ProductEntity>>.internal(
-      featuredProducts,
-      name: r'featuredProductsProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$featuredProductsHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  featuredProducts,
+  name: r'featuredProductsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$featuredProductsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -31,19 +31,19 @@ String _$newArrivalProductsHash() =>
 @ProviderFor(newArrivalProducts)
 final newArrivalProductsProvider =
     AutoDisposeFutureProvider<List<ProductEntity>>.internal(
-      newArrivalProducts,
-      name: r'newArrivalProductsProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$newArrivalProductsHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  newArrivalProducts,
+  name: r'newArrivalProductsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$newArrivalProductsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef NewArrivalProductsRef =
-    AutoDisposeFutureProviderRef<List<ProductEntity>>;
+typedef NewArrivalProductsRef
+    = AutoDisposeFutureProviderRef<List<ProductEntity>>;
 String _$bestSellerProductsHash() =>
     r'bf5b263da6b31bd89ddce5fea2774d3313f6275a';
 
@@ -51,33 +51,32 @@ String _$bestSellerProductsHash() =>
 @ProviderFor(bestSellerProducts)
 final bestSellerProductsProvider =
     AutoDisposeFutureProvider<List<ProductEntity>>.internal(
-      bestSellerProducts,
-      name: r'bestSellerProductsProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$bestSellerProductsHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  bestSellerProducts,
+  name: r'bestSellerProductsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$bestSellerProductsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef BestSellerProductsRef =
-    AutoDisposeFutureProviderRef<List<ProductEntity>>;
+typedef BestSellerProductsRef
+    = AutoDisposeFutureProviderRef<List<ProductEntity>>;
 String _$homeBannersHash() => r'0456aa1f93fd553e8aa6eee0e83148e6a27ce92f';
 
 /// See also [homeBanners].
 @ProviderFor(homeBanners)
 final homeBannersProvider =
     AutoDisposeFutureProvider<List<BannerModel>>.internal(
-      homeBanners,
-      name: r'homeBannersProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$homeBannersHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  homeBanners,
+  name: r'homeBannersProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$homeBannersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -88,14 +87,14 @@ String _$productCategoriesHash() => r'ea4314911e12c8d546ab1e3e8902bee3f9a1bb95';
 @ProviderFor(productCategories)
 final productCategoriesProvider =
     AutoDisposeFutureProvider<List<String>>.internal(
-      productCategories,
-      name: r'productCategoriesProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$productCategoriesHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  productCategories,
+  name: r'productCategoriesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$productCategoriesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

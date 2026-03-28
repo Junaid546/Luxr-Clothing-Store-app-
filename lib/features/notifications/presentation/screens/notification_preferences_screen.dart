@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app_settings/app_settings.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/features/auth/data/providers/auth_providers.dart';
 
 class NotificationPreferencesScreen extends ConsumerStatefulWidget {
   const NotificationPreferencesScreen({super.key});

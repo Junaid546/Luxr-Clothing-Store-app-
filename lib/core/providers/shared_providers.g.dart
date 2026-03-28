@@ -30,9 +30,8 @@ String _$currentUserHash() => r'a1e4ed2ba7d54889088cf9741525ab7494d0903a';
 final currentUserProvider = AutoDisposeProvider<UserEntity?>.internal(
   currentUser,
   name: r'currentUserProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$currentUserHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentUserHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -47,9 +46,8 @@ String _$isAdminHash() => r'ff48dc49a94fbddc9c841a976cc7488c9d2c247e';
 final isAdminProvider = AutoDisposeProvider<bool>.internal(
   isAdmin,
   name: r'isAdminProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$isAdminHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$isAdminHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

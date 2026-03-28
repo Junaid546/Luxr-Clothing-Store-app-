@@ -13,14 +13,14 @@ String _$validateCartUseCaseHash() =>
 @ProviderFor(ValidateCartUseCase)
 final validateCartUseCaseProvider =
     AutoDisposeNotifierProvider<ValidateCartUseCase, void>.internal(
-      ValidateCartUseCase.new,
-      name: r'validateCartUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$validateCartUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  ValidateCartUseCase.new,
+  name: r'validateCartUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$validateCartUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$ValidateCartUseCase = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

@@ -13,14 +13,14 @@ String _$reportExportServiceHash() =>
 @ProviderFor(reportExportService)
 final reportExportServiceProvider =
     AutoDisposeProvider<ReportExportService>.internal(
-      reportExportService,
-      name: r'reportExportServiceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$reportExportServiceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  reportExportService,
+  name: r'reportExportServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$reportExportServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

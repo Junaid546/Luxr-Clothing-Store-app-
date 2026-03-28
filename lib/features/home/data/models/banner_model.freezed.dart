@@ -12,8 +12,7 @@ part of 'banner_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$BannerModel {
@@ -39,23 +38,21 @@ mixin _$BannerModel {
 /// @nodoc
 abstract class $BannerModelCopyWith<$Res> {
   factory $BannerModelCopyWith(
-    BannerModel value,
-    $Res Function(BannerModel) then,
-  ) = _$BannerModelCopyWithImpl<$Res, BannerModel>;
+          BannerModel value, $Res Function(BannerModel) then) =
+      _$BannerModelCopyWithImpl<$Res, BannerModel>;
   @useResult
-  $Res call({
-    String bannerId,
-    String title,
-    String? subtitle,
-    String imageUrl,
-    String actionLabel,
-    String actionRoute,
-    int sortOrder,
-    bool isActive,
-    DateTime? startDate,
-    DateTime? endDate,
-    DateTime createdAt,
-  });
+  $Res call(
+      {String bannerId,
+      String title,
+      String? subtitle,
+      String imageUrl,
+      String actionLabel,
+      String actionRoute,
+      int sortOrder,
+      bool isActive,
+      DateTime? startDate,
+      DateTime? endDate,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -85,55 +82,52 @@ class _$BannerModelCopyWithImpl<$Res, $Val extends BannerModel>
     Object? endDate = freezed,
     Object? createdAt = null,
   }) {
-    return _then(
-      _value.copyWith(
-            bannerId: null == bannerId
-                ? _value.bannerId
-                : bannerId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            subtitle: freezed == subtitle
-                ? _value.subtitle
-                : subtitle // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            imageUrl: null == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String,
-            actionLabel: null == actionLabel
-                ? _value.actionLabel
-                : actionLabel // ignore: cast_nullable_to_non_nullable
-                      as String,
-            actionRoute: null == actionRoute
-                ? _value.actionRoute
-                : actionRoute // ignore: cast_nullable_to_non_nullable
-                      as String,
-            sortOrder: null == sortOrder
-                ? _value.sortOrder
-                : sortOrder // ignore: cast_nullable_to_non_nullable
-                      as int,
-            isActive: null == isActive
-                ? _value.isActive
-                : isActive // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            startDate: freezed == startDate
-                ? _value.startDate
-                : startDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            endDate: freezed == endDate
-                ? _value.endDate
-                : endDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      bannerId: null == bannerId
+          ? _value.bannerId
+          : bannerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      subtitle: freezed == subtitle
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      actionLabel: null == actionLabel
+          ? _value.actionLabel
+          : actionLabel // ignore: cast_nullable_to_non_nullable
+              as String,
+      actionRoute: null == actionRoute
+          ? _value.actionRoute
+          : actionRoute // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortOrder: null == sortOrder
+          ? _value.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
@@ -141,24 +135,22 @@ class _$BannerModelCopyWithImpl<$Res, $Val extends BannerModel>
 abstract class _$$BannerModelImplCopyWith<$Res>
     implements $BannerModelCopyWith<$Res> {
   factory _$$BannerModelImplCopyWith(
-    _$BannerModelImpl value,
-    $Res Function(_$BannerModelImpl) then,
-  ) = __$$BannerModelImplCopyWithImpl<$Res>;
+          _$BannerModelImpl value, $Res Function(_$BannerModelImpl) then) =
+      __$$BannerModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String bannerId,
-    String title,
-    String? subtitle,
-    String imageUrl,
-    String actionLabel,
-    String actionRoute,
-    int sortOrder,
-    bool isActive,
-    DateTime? startDate,
-    DateTime? endDate,
-    DateTime createdAt,
-  });
+  $Res call(
+      {String bannerId,
+      String title,
+      String? subtitle,
+      String imageUrl,
+      String actionLabel,
+      String actionRoute,
+      int sortOrder,
+      bool isActive,
+      DateTime? startDate,
+      DateTime? endDate,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -166,9 +158,8 @@ class __$$BannerModelImplCopyWithImpl<$Res>
     extends _$BannerModelCopyWithImpl<$Res, _$BannerModelImpl>
     implements _$$BannerModelImplCopyWith<$Res> {
   __$$BannerModelImplCopyWithImpl(
-    _$BannerModelImpl _value,
-    $Res Function(_$BannerModelImpl) _then,
-  ) : super(_value, _then);
+      _$BannerModelImpl _value, $Res Function(_$BannerModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of BannerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -187,73 +178,71 @@ class __$$BannerModelImplCopyWithImpl<$Res>
     Object? endDate = freezed,
     Object? createdAt = null,
   }) {
-    return _then(
-      _$BannerModelImpl(
-        bannerId: null == bannerId
-            ? _value.bannerId
-            : bannerId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        title: null == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                  as String,
-        subtitle: freezed == subtitle
-            ? _value.subtitle
-            : subtitle // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        imageUrl: null == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String,
-        actionLabel: null == actionLabel
-            ? _value.actionLabel
-            : actionLabel // ignore: cast_nullable_to_non_nullable
-                  as String,
-        actionRoute: null == actionRoute
-            ? _value.actionRoute
-            : actionRoute // ignore: cast_nullable_to_non_nullable
-                  as String,
-        sortOrder: null == sortOrder
-            ? _value.sortOrder
-            : sortOrder // ignore: cast_nullable_to_non_nullable
-                  as int,
-        isActive: null == isActive
-            ? _value.isActive
-            : isActive // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        startDate: freezed == startDate
-            ? _value.startDate
-            : startDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        endDate: freezed == endDate
-            ? _value.endDate
-            : endDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$BannerModelImpl(
+      bannerId: null == bannerId
+          ? _value.bannerId
+          : bannerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      subtitle: freezed == subtitle
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      actionLabel: null == actionLabel
+          ? _value.actionLabel
+          : actionLabel // ignore: cast_nullable_to_non_nullable
+              as String,
+      actionRoute: null == actionRoute
+          ? _value.actionRoute
+          : actionRoute // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortOrder: null == sortOrder
+          ? _value.sortOrder
+          : sortOrder // ignore: cast_nullable_to_non_nullable
+              as int,
+      isActive: null == isActive
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      endDate: freezed == endDate
+          ? _value.endDate
+          : endDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$BannerModelImpl extends _BannerModel {
-  const _$BannerModelImpl({
-    required this.bannerId,
-    required this.title,
-    this.subtitle,
-    required this.imageUrl,
-    required this.actionLabel,
-    required this.actionRoute,
-    required this.sortOrder,
-    required this.isActive,
-    this.startDate,
-    this.endDate,
-    required this.createdAt,
-  }) : super._();
+  const _$BannerModelImpl(
+      {required this.bannerId,
+      required this.title,
+      this.subtitle,
+      required this.imageUrl,
+      required this.actionLabel,
+      required this.actionRoute,
+      required this.sortOrder,
+      required this.isActive,
+      this.startDate,
+      this.endDate,
+      required this.createdAt})
+      : super._();
 
   @override
   final String bannerId;
@@ -312,19 +301,18 @@ class _$BannerModelImpl extends _BannerModel {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    bannerId,
-    title,
-    subtitle,
-    imageUrl,
-    actionLabel,
-    actionRoute,
-    sortOrder,
-    isActive,
-    startDate,
-    endDate,
-    createdAt,
-  );
+      runtimeType,
+      bannerId,
+      title,
+      subtitle,
+      imageUrl,
+      actionLabel,
+      actionRoute,
+      sortOrder,
+      isActive,
+      startDate,
+      endDate,
+      createdAt);
 
   /// Create a copy of BannerModel
   /// with the given fields replaced by the non-null parameter values.
@@ -336,19 +324,18 @@ class _$BannerModelImpl extends _BannerModel {
 }
 
 abstract class _BannerModel extends BannerModel {
-  const factory _BannerModel({
-    required final String bannerId,
-    required final String title,
-    final String? subtitle,
-    required final String imageUrl,
-    required final String actionLabel,
-    required final String actionRoute,
-    required final int sortOrder,
-    required final bool isActive,
-    final DateTime? startDate,
-    final DateTime? endDate,
-    required final DateTime createdAt,
-  }) = _$BannerModelImpl;
+  const factory _BannerModel(
+      {required final String bannerId,
+      required final String title,
+      final String? subtitle,
+      required final String imageUrl,
+      required final String actionLabel,
+      required final String actionRoute,
+      required final int sortOrder,
+      required final bool isActive,
+      final DateTime? startDate,
+      final DateTime? endDate,
+      required final DateTime createdAt}) = _$BannerModelImpl;
   const _BannerModel._() : super._();
 
   @override

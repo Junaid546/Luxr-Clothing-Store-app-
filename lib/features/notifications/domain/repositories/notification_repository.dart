@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
 
 abstract interface class NotificationRepository {
   /// Stream of notifications for a specific user

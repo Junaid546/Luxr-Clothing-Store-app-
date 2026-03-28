@@ -71,13 +71,17 @@ class Sanitizer {
     return sanitizeString(input, maxLength: 60)
         // Capitalize first letter of each word
         .split(' ')
-        .map((word) => word.isEmpty ? word : word[0].toUpperCase() + word.substring(1))
+        .map((word) =>
+            word.isEmpty ? word : word[0].toUpperCase() + word.substring(1))
         .join(' ');
   }
 
   // ── Search query sanitization ──────────────────────
   static String sanitizeSearchQuery(String input) {
-    return sanitizeString(input, maxLength: 100).toLowerCase().replaceAll(RegExp(r'[^\w\s]'), ' ').trim();
+    return sanitizeString(input, maxLength: 100)
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\w\s]'), ' ')
+        .trim();
   }
 
   // ── Tags sanitization ─────────────────────────────

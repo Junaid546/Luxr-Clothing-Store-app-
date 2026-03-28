@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/notifications/data/models/notification_model.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
-import 'package:style_cart/features/notifications/domain/repositories/notification_repository.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/notifications/data/models/notification_model.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/features/notifications/domain/repositories/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final FirebaseFirestore _firestore;
@@ -58,7 +58,8 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteNotification(String notificationId) async {
+  Future<Either<Failure, void>> deleteNotification(
+      String notificationId) async {
     try {
       await _notifications.doc(notificationId).delete();
       return const Right(null);
@@ -80,9 +81,8 @@ class NotificationRepositoryImpl implements NotificationRepository {
   Future<Either<Failure, void>> clearAll(String userId) async {
     try {
       final batch = _firestore.batch();
-      final snapshots = await _notifications
-          .where('userId', isEqualTo: userId)
-          .get();
+      final snapshots =
+          await _notifications.where('userId', isEqualTo: userId).get();
 
       for (var doc in snapshots.docs) {
         batch.delete(doc.reference);

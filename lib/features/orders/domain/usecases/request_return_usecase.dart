@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/usecases/usecase.dart';
-import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/usecases/usecase.dart';
+import 'package:stylecart/features/orders/domain/repositories/order_repository.dart';
 
 class RequestReturnParams extends Equatable {
   final String orderId;
@@ -19,8 +19,7 @@ class RequestReturnParams extends Equatable {
   List<Object> get props => [orderId, userId, reason];
 }
 
-class RequestReturnUseCase
-    implements UseCase<void, RequestReturnParams> {
+class RequestReturnUseCase implements UseCase<void, RequestReturnParams> {
   final OrderRepository _repo;
   const RequestReturnUseCase(this._repo);
 
@@ -37,8 +36,8 @@ class RequestReturnUseCase
     }
     return _repo.requestReturn(
       orderId: params.orderId,
-      userId:  params.userId,
-      reason:  params.reason,
+      userId: params.userId,
+      reason: params.reason,
     );
   }
 }

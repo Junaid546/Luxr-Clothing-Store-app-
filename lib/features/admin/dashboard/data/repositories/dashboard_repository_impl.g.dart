@@ -13,14 +13,14 @@ String _$dashboardRepositoryHash() =>
 @ProviderFor(dashboardRepository)
 final dashboardRepositoryProvider =
     AutoDisposeProvider<DashboardRepository>.internal(
-      dashboardRepository,
-      name: r'dashboardRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$dashboardRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  dashboardRepository,
+  name: r'dashboardRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dashboardRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

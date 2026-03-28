@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/router/route_names.dart';
 
 class AdminShell extends ConsumerWidget {
   const AdminShell({required this.child, super.key});

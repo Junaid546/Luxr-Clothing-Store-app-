@@ -2,15 +2,15 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/home/data/models/banner_model.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
-import 'package:style_cart/features/products/domain/usecases/get_low_stock_products_usecase.dart';
-import 'package:style_cart/features/products/domain/usecases/get_products_usecase.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/features/home/data/models/banner_model.dart';
+import 'package:stylecart/features/products/data/providers/product_data_providers.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/domain/entities/product_filter_entity.dart';
+import 'package:stylecart/features/products/domain/usecases/get_low_stock_products_usecase.dart';
+import 'package:stylecart/features/products/domain/usecases/get_products_usecase.dart';
 
 part 'home_providers.g.dart';
 
@@ -19,14 +19,13 @@ part 'home_providers.g.dart';
 Future<List<ProductEntity>> featuredProducts(
   FeaturedProductsRef ref,
 ) async {
-  final result = await ref
-      .read(getProductsUseCaseProvider)
-      .call(const GetProductsParams(
-        filter: ProductFilter(
-          isFeatured: true,
-          pageSize: 10,
-        ),
-      ));
+  final result =
+      await ref.read(getProductsUseCaseProvider).call(const GetProductsParams(
+            filter: ProductFilter(
+              isFeatured: true,
+              pageSize: 10,
+            ),
+          ));
   return result.fold(
     (f) => throw Exception(f.message),
     (data) => data,
@@ -38,15 +37,14 @@ Future<List<ProductEntity>> featuredProducts(
 Future<List<ProductEntity>> newArrivalProducts(
   NewArrivalProductsRef ref,
 ) async {
-  final result = await ref
-      .read(getProductsUseCaseProvider)
-      .call(const GetProductsParams(
-        filter: ProductFilter(
-          isNewArrival: true,
-          sortBy: 'newest',
-          pageSize: 10,
-        ),
-      ));
+  final result =
+      await ref.read(getProductsUseCaseProvider).call(const GetProductsParams(
+            filter: ProductFilter(
+              isNewArrival: true,
+              sortBy: 'newest',
+              pageSize: 10,
+            ),
+          ));
   return result.fold(
     (f) => throw Exception(f.message),
     (data) => data,
@@ -58,14 +56,13 @@ Future<List<ProductEntity>> newArrivalProducts(
 Future<List<ProductEntity>> bestSellerProducts(
   BestSellerProductsRef ref,
 ) async {
-  final result = await ref
-      .read(getProductsUseCaseProvider)
-      .call(const GetProductsParams(
-        filter: ProductFilter(
-          sortBy: 'popular',
-          pageSize: 6,
-        ),
-      ));
+  final result =
+      await ref.read(getProductsUseCaseProvider).call(const GetProductsParams(
+            filter: ProductFilter(
+              sortBy: 'popular',
+              pageSize: 6,
+            ),
+          ));
   return result.fold(
     (f) => throw Exception(f.message),
     (data) => data,
@@ -86,12 +83,11 @@ Future<List<BannerModel>> homeBanners(
 
     return snap.docs
         .map(BannerModel.fromFirestore)
-        .where((b) =>
-          b.isActive &&
-          (b.startDate == null || 
-           b.startDate!.isBefore(DateTime.now())) &&
-          (b.endDate == null || 
-           b.endDate!.isAfter(DateTime.now())),
+        .where(
+          (b) =>
+              b.isActive &&
+              (b.startDate == null || b.startDate!.isBefore(DateTime.now())) &&
+              (b.endDate == null || b.endDate!.isAfter(DateTime.now())),
         )
         .toList();
   } catch (_) {
@@ -112,8 +108,7 @@ Future<List<String>> productCategories(
 @riverpod
 Future<int> lowStockCount(LowStockCountRef ref) async {
   const threshold = 5;
-  final result = await ref
-      .read(getLowStockProductsUseCaseProvider)
-      .call(threshold);
+  final result =
+      await ref.read(getLowStockProductsUseCaseProvider).call(threshold);
   return result.fold((_) => 0, (products) => products.length);
 }

@@ -1,4 +1,4 @@
-﻿// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
+// ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -29,48 +29,46 @@ class CartItemModel with _$CartItemModel {
 
   // Document ID generation: productId_size_colorNoSpaces
   static String generateId(
-    String productId, String size, String color,
-  ) => '${productId}_${size}_${color.replaceAll(' ', '')}';
+    String productId,
+    String size,
+    String color,
+  ) =>
+      '${productId}_${size}_${color.replaceAll(' ', '')}';
 
   factory CartItemModel.fromFirestore(DocumentSnapshot doc) {
     final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
     return CartItemModel(
-      cartItemId:  doc.id,
-      productId:   d['productId']   as String? ?? '',
+      cartItemId: doc.id,
+      productId: d['productId'] as String? ?? '',
       productName: d['productName'] as String? ?? '',
-      brand:       d['brand']       as String? ?? '',
-      imageUrl:    d['imageUrl']    as String? ?? '',
-      size:        d['size']        as String? ?? '',
-      color:       d['color']       as String? ?? '',
-      colorHex:    d['colorHex']    as String? ?? '#000000',
-      quantity:    (d['quantity']   as num?)?.toInt() ?? 1,
-      unitPrice:   (d['unitPrice']  as num?)?.toDouble() ?? 0,
+      brand: d['brand'] as String? ?? '',
+      imageUrl: d['imageUrl'] as String? ?? '',
+      size: d['size'] as String? ?? '',
+      color: d['color'] as String? ?? '',
+      colorHex: d['colorHex'] as String? ?? '#000000',
+      quantity: (d['quantity'] as num?)?.toInt() ?? 1,
+      unitPrice: (d['unitPrice'] as num?)?.toDouble() ?? 0,
       discountPct: (d['discountPct'] as num?)?.toInt() ?? 0,
-      finalPrice:  (d['finalPrice'] as num?)?.toDouble() ?? 0,
-      addedAt:     (d['addedAt']    as Timestamp?)?.toDate()
-                     ?? DateTime.now(),
-      updatedAt:   (d['updatedAt']  as Timestamp?)?.toDate()
-                     ?? DateTime.now(),
+      finalPrice: (d['finalPrice'] as num?)?.toDouble() ?? 0,
+      addedAt: (d['addedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      updatedAt: (d['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 
   Map<String, dynamic> toFirestore() => {
-    'cartItemId':  cartItemId,
-    'productId':   productId,
-    'productName': productName,
-    'brand':       brand,
-    'imageUrl':    imageUrl,
-    'size':        size,
-    'color':       color,
-    'colorHex':    colorHex,
-    'quantity':    quantity,
-    'unitPrice':   unitPrice,
-    'discountPct': discountPct,
-    'finalPrice':  finalPrice,
-    'addedAt':     FieldValue.serverTimestamp(),
-    'updatedAt':   FieldValue.serverTimestamp(),
-  };
+        'cartItemId': cartItemId,
+        'productId': productId,
+        'productName': productName,
+        'brand': brand,
+        'imageUrl': imageUrl,
+        'size': size,
+        'color': color,
+        'colorHex': colorHex,
+        'quantity': quantity,
+        'unitPrice': unitPrice,
+        'discountPct': discountPct,
+        'finalPrice': finalPrice,
+        'addedAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      };
 }
-
-
-

@@ -12,8 +12,7 @@ part of 'admin_order_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AdminOrderState {
@@ -35,19 +34,17 @@ mixin _$AdminOrderState {
 /// @nodoc
 abstract class $AdminOrderStateCopyWith<$Res> {
   factory $AdminOrderStateCopyWith(
-    AdminOrderState value,
-    $Res Function(AdminOrderState) then,
-  ) = _$AdminOrderStateCopyWithImpl<$Res, AdminOrderState>;
+          AdminOrderState value, $Res Function(AdminOrderState) then) =
+      _$AdminOrderStateCopyWithImpl<$Res, AdminOrderState>;
   @useResult
-  $Res call({
-    List<OrderEntity> orders,
-    bool isLoading,
-    bool isSaving,
-    bool hasError,
-    String errorMessage,
-    String activeTab,
-    String searchQuery,
-  });
+  $Res call(
+      {List<OrderEntity> orders,
+      bool isLoading,
+      bool isSaving,
+      bool hasError,
+      String errorMessage,
+      String activeTab,
+      String searchQuery});
 }
 
 /// @nodoc
@@ -73,60 +70,55 @@ class _$AdminOrderStateCopyWithImpl<$Res, $Val extends AdminOrderState>
     Object? activeTab = null,
     Object? searchQuery = null,
   }) {
-    return _then(
-      _value.copyWith(
-            orders: null == orders
-                ? _value.orders
-                : orders // ignore: cast_nullable_to_non_nullable
-                      as List<OrderEntity>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isSaving: null == isSaving
-                ? _value.isSaving
-                : isSaving // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasError: null == hasError
-                ? _value.hasError
-                : hasError // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: null == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String,
-            activeTab: null == activeTab
-                ? _value.activeTab
-                : activeTab // ignore: cast_nullable_to_non_nullable
-                      as String,
-            searchQuery: null == searchQuery
-                ? _value.searchQuery
-                : searchQuery // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      orders: null == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<OrderEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: null == isSaving
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      activeTab: null == activeTab
+          ? _value.activeTab
+          : activeTab // ignore: cast_nullable_to_non_nullable
+              as String,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$AdminOrderStateImplCopyWith<$Res>
     implements $AdminOrderStateCopyWith<$Res> {
-  factory _$$AdminOrderStateImplCopyWith(
-    _$AdminOrderStateImpl value,
-    $Res Function(_$AdminOrderStateImpl) then,
-  ) = __$$AdminOrderStateImplCopyWithImpl<$Res>;
+  factory _$$AdminOrderStateImplCopyWith(_$AdminOrderStateImpl value,
+          $Res Function(_$AdminOrderStateImpl) then) =
+      __$$AdminOrderStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<OrderEntity> orders,
-    bool isLoading,
-    bool isSaving,
-    bool hasError,
-    String errorMessage,
-    String activeTab,
-    String searchQuery,
-  });
+  $Res call(
+      {List<OrderEntity> orders,
+      bool isLoading,
+      bool isSaving,
+      bool hasError,
+      String errorMessage,
+      String activeTab,
+      String searchQuery});
 }
 
 /// @nodoc
@@ -134,9 +126,8 @@ class __$$AdminOrderStateImplCopyWithImpl<$Res>
     extends _$AdminOrderStateCopyWithImpl<$Res, _$AdminOrderStateImpl>
     implements _$$AdminOrderStateImplCopyWith<$Res> {
   __$$AdminOrderStateImplCopyWithImpl(
-    _$AdminOrderStateImpl _value,
-    $Res Function(_$AdminOrderStateImpl) _then,
-  ) : super(_value, _then);
+      _$AdminOrderStateImpl _value, $Res Function(_$AdminOrderStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of AdminOrderState
   /// with the given fields replaced by the non-null parameter values.
@@ -151,53 +142,51 @@ class __$$AdminOrderStateImplCopyWithImpl<$Res>
     Object? activeTab = null,
     Object? searchQuery = null,
   }) {
-    return _then(
-      _$AdminOrderStateImpl(
-        orders: null == orders
-            ? _value._orders
-            : orders // ignore: cast_nullable_to_non_nullable
-                  as List<OrderEntity>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isSaving: null == isSaving
-            ? _value.isSaving
-            : isSaving // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasError: null == hasError
-            ? _value.hasError
-            : hasError // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: null == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String,
-        activeTab: null == activeTab
-            ? _value.activeTab
-            : activeTab // ignore: cast_nullable_to_non_nullable
-                  as String,
-        searchQuery: null == searchQuery
-            ? _value.searchQuery
-            : searchQuery // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
+    return _then(_$AdminOrderStateImpl(
+      orders: null == orders
+          ? _value._orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<OrderEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: null == isSaving
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      activeTab: null == activeTab
+          ? _value.activeTab
+          : activeTab // ignore: cast_nullable_to_non_nullable
+              as String,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$AdminOrderStateImpl implements _AdminOrderState {
-  const _$AdminOrderStateImpl({
-    final List<OrderEntity> orders = const [],
-    this.isLoading = true,
-    this.isSaving = false,
-    this.hasError = false,
-    this.errorMessage = '',
-    this.activeTab = 'all',
-    this.searchQuery = '',
-  }) : _orders = orders;
+  const _$AdminOrderStateImpl(
+      {final List<OrderEntity> orders = const [],
+      this.isLoading = true,
+      this.isSaving = false,
+      this.hasError = false,
+      this.errorMessage = '',
+      this.activeTab = 'all',
+      this.searchQuery = ''})
+      : _orders = orders;
 
   final List<OrderEntity> _orders;
   @override
@@ -254,15 +243,14 @@ class _$AdminOrderStateImpl implements _AdminOrderState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_orders),
-    isLoading,
-    isSaving,
-    hasError,
-    errorMessage,
-    activeTab,
-    searchQuery,
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_orders),
+      isLoading,
+      isSaving,
+      hasError,
+      errorMessage,
+      activeTab,
+      searchQuery);
 
   /// Create a copy of AdminOrderState
   /// with the given fields replaced by the non-null parameter values.
@@ -271,21 +259,18 @@ class _$AdminOrderStateImpl implements _AdminOrderState {
   @pragma('vm:prefer-inline')
   _$$AdminOrderStateImplCopyWith<_$AdminOrderStateImpl> get copyWith =>
       __$$AdminOrderStateImplCopyWithImpl<_$AdminOrderStateImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _AdminOrderState implements AdminOrderState {
-  const factory _AdminOrderState({
-    final List<OrderEntity> orders,
-    final bool isLoading,
-    final bool isSaving,
-    final bool hasError,
-    final String errorMessage,
-    final String activeTab,
-    final String searchQuery,
-  }) = _$AdminOrderStateImpl;
+  const factory _AdminOrderState(
+      {final List<OrderEntity> orders,
+      final bool isLoading,
+      final bool isSaving,
+      final bool hasError,
+      final String errorMessage,
+      final String activeTab,
+      final String searchQuery}) = _$AdminOrderStateImpl;
 
   @override
   List<OrderEntity> get orders;

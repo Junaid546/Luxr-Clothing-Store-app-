@@ -4,18 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/errors/exceptions.dart';
-import 'package:style_cart/features/auth/data/models/user_model.dart';
-import 'package:style_cart/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/errors/exceptions.dart';
+import 'package:stylecart/features/auth/data/models/user_model.dart';
+import 'package:stylecart/features/auth/data/datasources/auth_remote_datasource.dart';
 
 /// Implementation of AuthRemoteDataSource using Firebase
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   const AuthRemoteDataSourceImpl({
     required FirebaseAuth auth,
     required FirebaseFirestore firestore,
-  }) : _auth = auth,
-       _firestore = firestore;
+  })  : _auth = auth,
+        _firestore = firestore;
   final FirebaseAuth _auth;
   final FirebaseFirestore _firestore;
 

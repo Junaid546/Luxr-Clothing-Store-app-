@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/providers/repository_providers.dart';
-import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
-import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
-import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/providers/repository_providers.dart';
+import 'package:stylecart/features/cart/data/models/cart_item_model.dart';
+import 'package:stylecart/features/cart/domain/entities/cart_entity.dart';
+import 'package:stylecart/features/products/domain/repositories/product_repository.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 part 'validate_cart_use_case.g.dart';
 
@@ -24,12 +24,15 @@ class ValidateCartUseCase extends _$ValidateCartUseCase {
   @override
   void build() {}
 
-  Future<Either<Failure, CartValidationResult>> call(ValidateCartParams params) async {
+  Future<Either<Failure, CartValidationResult>> call(
+      ValidateCartParams params) async {
     final productRepo = ref.read(productRepositoryProvider);
-    
+
     // 1. Get live products for all IDs in cart
-    final productIds = params.cartItems.map((i) => i.productId).toSet().toList();
-    final Either<Failure, List<ProductEntity>> productsResult = await productRepo.getProductsByIds(productIds);
+    final productIds =
+        params.cartItems.map((i) => i.productId).toSet().toList();
+    final Either<Failure, List<ProductEntity>> productsResult =
+        await productRepo.getProductsByIds(productIds);
 
     return productsResult.fold(
       (Failure failure) => Left<Failure, CartValidationResult>(failure),
@@ -65,9 +68,9 @@ class ValidateCartUseCase extends _$ValidateCartUseCase {
               size: cartItem.size,
               requested: cartItem.quantity,
               available: availableStock,
-              reason: availableStock == 0 
-                ? '${product.name} (Size ${cartItem.size}) is sold out.'
-                : 'Only $availableStock left in ${product.name} (Size ${cartItem.size}).',
+              reason: availableStock == 0
+                  ? '${product.name} (Size ${cartItem.size}) is sold out.'
+                  : 'Only $availableStock left in ${product.name} (Size ${cartItem.size}).',
             ));
           }
 

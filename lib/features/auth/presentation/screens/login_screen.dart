@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_dimensions.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_dimensions.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -61,9 +61,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _handleSignIn() async {
     if (!_formKey.currentState!.validate()) return;
 
-    await ref
-        .read(authNotifierProvider.notifier)
-        .signInWithEmail(
+    await ref.read(authNotifierProvider.notifier).signInWithEmail(
           email: _emailController.text.trim(),
           password: _passwordController.text,
         );
@@ -303,8 +301,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                             strokeWidth: 2,
                                             valueColor:
                                                 AlwaysStoppedAnimation<Color>(
-                                                  Colors.white,
-                                                ),
+                                              Colors.white,
+                                            ),
                                           ),
                                         )
                                       : const Text(

@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/usecases/usecase.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/usecases/usecase.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/domain/repositories/order_repository.dart';
 
 class CancelOrderParams extends Equatable {
   final String orderId;
@@ -35,9 +35,9 @@ class CancelOrderUseCase implements UseCase<void, CancelOrderParams> {
     }
     return _repo.cancelOrder(
       orderId: params.orderId,
-      userId:  params.userId,
-      items:   params.items,
-      reason:  params.reason,
+      userId: params.userId,
+      items: params.items,
+      reason: params.reason,
     );
   }
 }

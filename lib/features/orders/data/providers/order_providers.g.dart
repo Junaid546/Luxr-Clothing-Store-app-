@@ -29,14 +29,14 @@ String _$watchOrderUseCaseHash() => r'09e6c0d07617599342d40221b54d62ebcf9e18fa';
 @ProviderFor(watchOrderUseCase)
 final watchOrderUseCaseProvider =
     AutoDisposeProvider<WatchOrderUseCase>.internal(
-      watchOrderUseCase,
-      name: r'watchOrderUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$watchOrderUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  watchOrderUseCase,
+  name: r'watchOrderUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$watchOrderUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -48,19 +48,19 @@ String _$watchUserOrdersUseCaseHash() =>
 @ProviderFor(watchUserOrdersUseCase)
 final watchUserOrdersUseCaseProvider =
     AutoDisposeProvider<WatchUserOrdersUseCase>.internal(
-      watchUserOrdersUseCase,
-      name: r'watchUserOrdersUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$watchUserOrdersUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  watchUserOrdersUseCase,
+  name: r'watchUserOrdersUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$watchUserOrdersUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef WatchUserOrdersUseCaseRef =
-    AutoDisposeProviderRef<WatchUserOrdersUseCase>;
+typedef WatchUserOrdersUseCaseRef
+    = AutoDisposeProviderRef<WatchUserOrdersUseCase>;
 String _$getUserOrdersUseCaseHash() =>
     r'b43fbeda41ddb4bea4a92cf190a542eeb216b0b3';
 
@@ -68,14 +68,14 @@ String _$getUserOrdersUseCaseHash() =>
 @ProviderFor(getUserOrdersUseCase)
 final getUserOrdersUseCaseProvider =
     AutoDisposeProvider<GetUserOrdersUseCase>.internal(
-      getUserOrdersUseCase,
-      name: r'getUserOrdersUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getUserOrdersUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  getUserOrdersUseCase,
+  name: r'getUserOrdersUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getUserOrdersUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -87,14 +87,14 @@ String _$cancelOrderUseCaseHash() =>
 @ProviderFor(cancelOrderUseCase)
 final cancelOrderUseCaseProvider =
     AutoDisposeProvider<CancelOrderUseCase>.internal(
-      cancelOrderUseCase,
-      name: r'cancelOrderUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$cancelOrderUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  cancelOrderUseCase,
+  name: r'cancelOrderUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$cancelOrderUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -106,14 +106,14 @@ String _$requestReturnUseCaseHash() =>
 @ProviderFor(requestReturnUseCase)
 final requestReturnUseCaseProvider =
     AutoDisposeProvider<RequestReturnUseCase>.internal(
-      requestReturnUseCase,
-      name: r'requestReturnUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$requestReturnUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  requestReturnUseCase,
+  name: r'requestReturnUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$requestReturnUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -125,19 +125,19 @@ String _$updateOrderStatusUseCaseHash() =>
 @ProviderFor(updateOrderStatusUseCase)
 final updateOrderStatusUseCaseProvider =
     AutoDisposeProvider<UpdateOrderStatusUseCase>.internal(
-      updateOrderStatusUseCase,
-      name: r'updateOrderStatusUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$updateOrderStatusUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  updateOrderStatusUseCase,
+  name: r'updateOrderStatusUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$updateOrderStatusUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef UpdateOrderStatusUseCaseRef =
-    AutoDisposeProviderRef<UpdateOrderStatusUseCase>;
+typedef UpdateOrderStatusUseCaseRef
+    = AutoDisposeProviderRef<UpdateOrderStatusUseCase>;
 String _$confirmReturnUseCaseHash() =>
     r'bebf82c2b93063265c45ba1c4710e611cdd4601a';
 
@@ -145,14 +145,14 @@ String _$confirmReturnUseCaseHash() =>
 @ProviderFor(confirmReturnUseCase)
 final confirmReturnUseCaseProvider =
     AutoDisposeProvider<ConfirmReturnUseCase>.internal(
-      confirmReturnUseCase,
-      name: r'confirmReturnUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$confirmReturnUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  confirmReturnUseCase,
+  name: r'confirmReturnUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$confirmReturnUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -164,14 +164,14 @@ String _$getAllOrdersUseCaseHash() =>
 @ProviderFor(getAllOrdersUseCase)
 final getAllOrdersUseCaseProvider =
     AutoDisposeProvider<GetAllOrdersUseCase>.internal(
-      getAllOrdersUseCase,
-      name: r'getAllOrdersUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$getAllOrdersUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  getAllOrdersUseCase,
+  name: r'getAllOrdersUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getAllOrdersUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -183,14 +183,14 @@ String _$searchOrdersUseCaseHash() =>
 @ProviderFor(searchOrdersUseCase)
 final searchOrdersUseCaseProvider =
     AutoDisposeProvider<SearchOrdersUseCase>.internal(
-      searchOrdersUseCase,
-      name: r'searchOrdersUseCaseProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$searchOrdersUseCaseHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  searchOrdersUseCase,
+  name: r'searchOrdersUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$searchOrdersUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

@@ -11,19 +11,16 @@ String _$adminProductNotifierHash() =>
 
 /// See also [AdminProductNotifier].
 @ProviderFor(AdminProductNotifier)
-final adminProductNotifierProvider =
-    AutoDisposeNotifierProvider<
-      AdminProductNotifier,
-      AdminProductState
-    >.internal(
-      AdminProductNotifier.new,
-      name: r'adminProductNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$adminProductNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final adminProductNotifierProvider = AutoDisposeNotifierProvider<
+    AdminProductNotifier, AdminProductState>.internal(
+  AdminProductNotifier.new,
+  name: r'adminProductNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$adminProductNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AdminProductNotifier = AutoDisposeNotifier<AdminProductState>;
 // ignore_for_file: type=lint

@@ -12,8 +12,7 @@ part of 'wishlist_item_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$WishlistItemModel {
@@ -38,22 +37,20 @@ mixin _$WishlistItemModel {
 /// @nodoc
 abstract class $WishlistItemModelCopyWith<$Res> {
   factory $WishlistItemModelCopyWith(
-    WishlistItemModel value,
-    $Res Function(WishlistItemModel) then,
-  ) = _$WishlistItemModelCopyWithImpl<$Res, WishlistItemModel>;
+          WishlistItemModel value, $Res Function(WishlistItemModel) then) =
+      _$WishlistItemModelCopyWithImpl<$Res, WishlistItemModel>;
   @useResult
-  $Res call({
-    String productId,
-    String productName,
-    String brand,
-    String imageUrl,
-    double price,
-    int discountPct,
-    double finalPrice,
-    String category,
-    bool isLimitedEdition,
-    DateTime addedAt,
-  });
+  $Res call(
+      {String productId,
+      String productName,
+      String brand,
+      String imageUrl,
+      double price,
+      int discountPct,
+      double finalPrice,
+      String category,
+      bool isLimitedEdition,
+      DateTime addedAt});
 }
 
 /// @nodoc
@@ -82,85 +79,79 @@ class _$WishlistItemModelCopyWithImpl<$Res, $Val extends WishlistItemModel>
     Object? isLimitedEdition = null,
     Object? addedAt = null,
   }) {
-    return _then(
-      _value.copyWith(
-            productId: null == productId
-                ? _value.productId
-                : productId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            productName: null == productName
-                ? _value.productName
-                : productName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            brand: null == brand
-                ? _value.brand
-                : brand // ignore: cast_nullable_to_non_nullable
-                      as String,
-            imageUrl: null == imageUrl
-                ? _value.imageUrl
-                : imageUrl // ignore: cast_nullable_to_non_nullable
-                      as String,
-            price: null == price
-                ? _value.price
-                : price // ignore: cast_nullable_to_non_nullable
-                      as double,
-            discountPct: null == discountPct
-                ? _value.discountPct
-                : discountPct // ignore: cast_nullable_to_non_nullable
-                      as int,
-            finalPrice: null == finalPrice
-                ? _value.finalPrice
-                : finalPrice // ignore: cast_nullable_to_non_nullable
-                      as double,
-            category: null == category
-                ? _value.category
-                : category // ignore: cast_nullable_to_non_nullable
-                      as String,
-            isLimitedEdition: null == isLimitedEdition
-                ? _value.isLimitedEdition
-                : isLimitedEdition // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            addedAt: null == addedAt
-                ? _value.addedAt
-                : addedAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productName: null == productName
+          ? _value.productName
+          : productName // ignore: cast_nullable_to_non_nullable
+              as String,
+      brand: null == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      discountPct: null == discountPct
+          ? _value.discountPct
+          : discountPct // ignore: cast_nullable_to_non_nullable
+              as int,
+      finalPrice: null == finalPrice
+          ? _value.finalPrice
+          : finalPrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      isLimitedEdition: null == isLimitedEdition
+          ? _value.isLimitedEdition
+          : isLimitedEdition // ignore: cast_nullable_to_non_nullable
+              as bool,
+      addedAt: null == addedAt
+          ? _value.addedAt
+          : addedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$WishlistItemModelImplCopyWith<$Res>
     implements $WishlistItemModelCopyWith<$Res> {
-  factory _$$WishlistItemModelImplCopyWith(
-    _$WishlistItemModelImpl value,
-    $Res Function(_$WishlistItemModelImpl) then,
-  ) = __$$WishlistItemModelImplCopyWithImpl<$Res>;
+  factory _$$WishlistItemModelImplCopyWith(_$WishlistItemModelImpl value,
+          $Res Function(_$WishlistItemModelImpl) then) =
+      __$$WishlistItemModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String productId,
-    String productName,
-    String brand,
-    String imageUrl,
-    double price,
-    int discountPct,
-    double finalPrice,
-    String category,
-    bool isLimitedEdition,
-    DateTime addedAt,
-  });
+  $Res call(
+      {String productId,
+      String productName,
+      String brand,
+      String imageUrl,
+      double price,
+      int discountPct,
+      double finalPrice,
+      String category,
+      bool isLimitedEdition,
+      DateTime addedAt});
 }
 
 /// @nodoc
 class __$$WishlistItemModelImplCopyWithImpl<$Res>
     extends _$WishlistItemModelCopyWithImpl<$Res, _$WishlistItemModelImpl>
     implements _$$WishlistItemModelImplCopyWith<$Res> {
-  __$$WishlistItemModelImplCopyWithImpl(
-    _$WishlistItemModelImpl _value,
-    $Res Function(_$WishlistItemModelImpl) _then,
-  ) : super(_value, _then);
+  __$$WishlistItemModelImplCopyWithImpl(_$WishlistItemModelImpl _value,
+      $Res Function(_$WishlistItemModelImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of WishlistItemModel
   /// with the given fields replaced by the non-null parameter values.
@@ -178,68 +169,66 @@ class __$$WishlistItemModelImplCopyWithImpl<$Res>
     Object? isLimitedEdition = null,
     Object? addedAt = null,
   }) {
-    return _then(
-      _$WishlistItemModelImpl(
-        productId: null == productId
-            ? _value.productId
-            : productId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        productName: null == productName
-            ? _value.productName
-            : productName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        brand: null == brand
-            ? _value.brand
-            : brand // ignore: cast_nullable_to_non_nullable
-                  as String,
-        imageUrl: null == imageUrl
-            ? _value.imageUrl
-            : imageUrl // ignore: cast_nullable_to_non_nullable
-                  as String,
-        price: null == price
-            ? _value.price
-            : price // ignore: cast_nullable_to_non_nullable
-                  as double,
-        discountPct: null == discountPct
-            ? _value.discountPct
-            : discountPct // ignore: cast_nullable_to_non_nullable
-                  as int,
-        finalPrice: null == finalPrice
-            ? _value.finalPrice
-            : finalPrice // ignore: cast_nullable_to_non_nullable
-                  as double,
-        category: null == category
-            ? _value.category
-            : category // ignore: cast_nullable_to_non_nullable
-                  as String,
-        isLimitedEdition: null == isLimitedEdition
-            ? _value.isLimitedEdition
-            : isLimitedEdition // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        addedAt: null == addedAt
-            ? _value.addedAt
-            : addedAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$WishlistItemModelImpl(
+      productId: null == productId
+          ? _value.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+      productName: null == productName
+          ? _value.productName
+          : productName // ignore: cast_nullable_to_non_nullable
+              as String,
+      brand: null == brand
+          ? _value.brand
+          : brand // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      discountPct: null == discountPct
+          ? _value.discountPct
+          : discountPct // ignore: cast_nullable_to_non_nullable
+              as int,
+      finalPrice: null == finalPrice
+          ? _value.finalPrice
+          : finalPrice // ignore: cast_nullable_to_non_nullable
+              as double,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      isLimitedEdition: null == isLimitedEdition
+          ? _value.isLimitedEdition
+          : isLimitedEdition // ignore: cast_nullable_to_non_nullable
+              as bool,
+      addedAt: null == addedAt
+          ? _value.addedAt
+          : addedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$WishlistItemModelImpl extends _WishlistItemModel {
-  const _$WishlistItemModelImpl({
-    required this.productId,
-    required this.productName,
-    required this.brand,
-    required this.imageUrl,
-    required this.price,
-    required this.discountPct,
-    required this.finalPrice,
-    required this.category,
-    required this.isLimitedEdition,
-    required this.addedAt,
-  }) : super._();
+  const _$WishlistItemModelImpl(
+      {required this.productId,
+      required this.productName,
+      required this.brand,
+      required this.imageUrl,
+      required this.price,
+      required this.discountPct,
+      required this.finalPrice,
+      required this.category,
+      required this.isLimitedEdition,
+      required this.addedAt})
+      : super._();
 
   @override
   final String productId;
@@ -293,18 +282,17 @@ class _$WishlistItemModelImpl extends _WishlistItemModel {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    productId,
-    productName,
-    brand,
-    imageUrl,
-    price,
-    discountPct,
-    finalPrice,
-    category,
-    isLimitedEdition,
-    addedAt,
-  );
+      runtimeType,
+      productId,
+      productName,
+      brand,
+      imageUrl,
+      price,
+      discountPct,
+      finalPrice,
+      category,
+      isLimitedEdition,
+      addedAt);
 
   /// Create a copy of WishlistItemModel
   /// with the given fields replaced by the non-null parameter values.
@@ -313,24 +301,21 @@ class _$WishlistItemModelImpl extends _WishlistItemModel {
   @pragma('vm:prefer-inline')
   _$$WishlistItemModelImplCopyWith<_$WishlistItemModelImpl> get copyWith =>
       __$$WishlistItemModelImplCopyWithImpl<_$WishlistItemModelImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _WishlistItemModel extends WishlistItemModel {
-  const factory _WishlistItemModel({
-    required final String productId,
-    required final String productName,
-    required final String brand,
-    required final String imageUrl,
-    required final double price,
-    required final int discountPct,
-    required final double finalPrice,
-    required final String category,
-    required final bool isLimitedEdition,
-    required final DateTime addedAt,
-  }) = _$WishlistItemModelImpl;
+  const factory _WishlistItemModel(
+      {required final String productId,
+      required final String productName,
+      required final String brand,
+      required final String imageUrl,
+      required final double price,
+      required final int discountPct,
+      required final double finalPrice,
+      required final String category,
+      required final bool isLimitedEdition,
+      required final DateTime addedAt}) = _$WishlistItemModelImpl;
   const _WishlistItemModel._() : super._();
 
   @override

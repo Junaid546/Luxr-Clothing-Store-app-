@@ -10,8 +10,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/admin/analytics/domain/models/analytics_models.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/admin/analytics/domain/models/analytics_models.dart';
 
 part 'report_export_service.g.dart';
 
@@ -37,21 +37,30 @@ class ReportExportService {
 
       // ── Header ───────────────────────────────────
       buffer.writeln('STYLECART ANALYTICS REPORT');
-      buffer.writeln('Generated: ${DateFormat('yyyy-MM-dd HH:mm').format(report.generatedAt)}');
+      buffer.writeln(
+          'Generated: ${DateFormat('yyyy-MM-dd HH:mm').format(report.generatedAt)}');
       buffer.writeln('Period: ${report.dateRange.displayLabel}');
       buffer.writeln();
 
       // ── Section 1: Revenue Summary ───────────────
       buffer.writeln('=== REVENUE SUMMARY ===');
       buffer.writeln('Metric,Value');
-      buffer.writeln('Total Revenue,\$${report.revenue.totalRevenue.toStringAsFixed(2)}');
-      buffer.writeln('Gross Revenue,\$${report.revenue.grossRevenue.toStringAsFixed(2)}');
-      buffer.writeln('Net Revenue,\$${report.revenue.netRevenue.toStringAsFixed(2)}');
-      buffer.writeln('Discount Given,\$${report.revenue.discountGiven.toStringAsFixed(2)}');
-      buffer.writeln('Shipping Revenue,\$${report.revenue.shippingRevenue.toStringAsFixed(2)}');
-      buffer.writeln('Avg Order Value,\$${report.revenue.avgOrderValue.toStringAsFixed(2)}');
-      buffer.writeln('Revenue Growth,${report.revenue.revenueGrowthPct.toStringAsFixed(1)}%');
-      buffer.writeln('Projected Monthly,\$${report.revenue.projectedMonthly.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Total Revenue,\$${report.revenue.totalRevenue.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Gross Revenue,\$${report.revenue.grossRevenue.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Net Revenue,\$${report.revenue.netRevenue.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Discount Given,\$${report.revenue.discountGiven.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Shipping Revenue,\$${report.revenue.shippingRevenue.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Avg Order Value,\$${report.revenue.avgOrderValue.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Revenue Growth,${report.revenue.revenueGrowthPct.toStringAsFixed(1)}%');
+      buffer.writeln(
+          'Projected Monthly,\$${report.revenue.projectedMonthly.toStringAsFixed(2)}');
       buffer.writeln();
 
       // ── Section 2: Order Metrics ─────────────────
@@ -63,9 +72,12 @@ class ReportExportService {
       buffer.writeln('Returned,${report.orders.returnedOrders}');
       buffer.writeln('Pending,${report.orders.pendingOrders}');
       buffer.writeln('Processing,${report.orders.processingOrders}');
-      buffer.writeln('Fulfillment Rate,${report.orders.fulfillmentRate.toStringAsFixed(1)}%');
-      buffer.writeln('Cancellation Rate,${report.orders.cancellationRate.toStringAsFixed(1)}%');
-      buffer.writeln('Refund Rate,${report.orders.refundRate.toStringAsFixed(1)}%');
+      buffer.writeln(
+          'Fulfillment Rate,${report.orders.fulfillmentRate.toStringAsFixed(1)}%');
+      buffer.writeln(
+          'Cancellation Rate,${report.orders.cancellationRate.toStringAsFixed(1)}%');
+      buffer.writeln(
+          'Refund Rate,${report.orders.refundRate.toStringAsFixed(1)}%');
       buffer.writeln('Avg Delivery Days,${report.orders.avgDeliveryDays}');
       buffer.writeln();
 
@@ -97,7 +109,8 @@ class ReportExportService {
 
       // ── Section 5: Top Products ───────────────────
       buffer.writeln('=== TOP PRODUCTS ===');
-      buffer.writeln('Rank,Product,Brand,Category,Units Sold,Revenue,Rating,Stock');
+      buffer.writeln(
+          'Rank,Product,Brand,Category,Units Sold,Revenue,Rating,Stock');
       for (int i = 0; i < report.topProducts.length; i++) {
         final p = report.topProducts[i];
         // Wrap name in quotes to handle commas
@@ -135,16 +148,20 @@ class ReportExportService {
       buffer.writeln('Metric,Value');
       buffer.writeln('Total Customers,${report.customers.totalCustomers}');
       buffer.writeln('New Customers,${report.customers.newCustomers}');
-      buffer.writeln('Returning Customers,${report.customers.returningCustomers}');
-      buffer.writeln('Repeat Purchase Rate,${report.customers.repeatPurchaseRate.toStringAsFixed(1)}%');
-      buffer.writeln('Avg Lifetime Value,\$${report.customers.avgLifetimeValue.toStringAsFixed(2)}');
+      buffer.writeln(
+          'Returning Customers,${report.customers.returningCustomers}');
+      buffer.writeln(
+          'Repeat Purchase Rate,${report.customers.repeatPurchaseRate.toStringAsFixed(1)}%');
+      buffer.writeln(
+          'Avg Lifetime Value,\$${report.customers.avgLifetimeValue.toStringAsFixed(2)}');
       buffer.writeln('Bronze Members,${report.customers.bronzeCount}');
       buffer.writeln('Silver Members,${report.customers.silverCount}');
       buffer.writeln('Gold Members,${report.customers.goldCount}');
       buffer.writeln('Platinum Members,${report.customers.platinumCount}');
 
       // Save to temporary directory (per-session path)
-      final fileName = 'stylecart_analytics_${DateFormat('yyyy_MM_dd').format(report.generatedAt)}';
+      final fileName =
+          'stylecart_analytics_${DateFormat('yyyy_MM_dd').format(report.generatedAt)}';
       final dir = await getTemporaryDirectory();
       final file = File('${dir.path}/$fileName.csv');
       await file.writeAsString(buffer.toString());
@@ -215,7 +232,8 @@ class ReportExportService {
                       pw.SizedBox(height: 4),
                       pw.Text(
                         'Analytics Report',
-                        style: pw.TextStyle(fontSize: 14, color: PdfColors.white),
+                        style:
+                            pw.TextStyle(fontSize: 14, color: PdfColors.white),
                       ),
                     ],
                   ),
@@ -224,12 +242,14 @@ class ReportExportService {
                     children: [
                       pw.Text(
                         report.dateRange.displayLabel,
-                        style: pw.TextStyle(color: PdfColors.white, fontSize: 12),
+                        style:
+                            pw.TextStyle(color: PdfColors.white, fontSize: 12),
                       ),
                       pw.SizedBox(height: 4),
                       pw.Text(
                         'Generated: ${DateFormat('MMM dd, yyyy').format(now)}',
-                        style: pw.TextStyle(color: PdfColor.fromHex('9E9E9E'), fontSize: 10),
+                        style: pw.TextStyle(
+                            color: PdfColor.fromHex('9E9E9E'), fontSize: 10),
                       ),
                     ],
                   ),
@@ -248,10 +268,26 @@ class ReportExportService {
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               children: [
-                _buildPDFKPICard('Total Revenue', '\$${report.revenue.totalRevenue.toStringAsFixed(2)}', '${report.revenue.formattedGrowth} vs prev', PdfColor.fromHex('D4AF37')),
-                _buildPDFKPICard('Avg Order Value', '\$${report.revenue.avgOrderValue.toStringAsFixed(2)}', '${report.orders.totalOrders} orders', PdfColor.fromHex('E8614A')),
-                _buildPDFKPICard('Fulfillment Rate', '${report.orders.fulfillmentRate.toStringAsFixed(1)}%', '${report.orders.deliveredOrders} delivered', PdfColor.fromHex('26C6A6')),
-                _buildPDFKPICard('New Customers', '${report.customers.newCustomers}', 'Repeat: ${report.customers.repeatPurchaseRate.toStringAsFixed(1)}%', PdfColor.fromHex('4CAF50')),
+                _buildPDFKPICard(
+                    'Total Revenue',
+                    '\$${report.revenue.totalRevenue.toStringAsFixed(2)}',
+                    '${report.revenue.formattedGrowth} vs prev',
+                    PdfColor.fromHex('D4AF37')),
+                _buildPDFKPICard(
+                    'Avg Order Value',
+                    '\$${report.revenue.avgOrderValue.toStringAsFixed(2)}',
+                    '${report.orders.totalOrders} orders',
+                    PdfColor.fromHex('E8614A')),
+                _buildPDFKPICard(
+                    'Fulfillment Rate',
+                    '${report.orders.fulfillmentRate.toStringAsFixed(1)}%',
+                    '${report.orders.deliveredOrders} delivered',
+                    PdfColor.fromHex('26C6A6')),
+                _buildPDFKPICard(
+                    'New Customers',
+                    '${report.customers.newCustomers}',
+                    'Repeat: ${report.customers.repeatPurchaseRate.toStringAsFixed(1)}%',
+                    PdfColor.fromHex('4CAF50')),
               ],
             ),
 
@@ -263,7 +299,11 @@ class ReportExportService {
             _buildPDFTable(
               headers: ['Date', 'Revenue', 'Orders'],
               rows: report.revenueSeries
-                  .map((p) => [DateFormat('MMM dd').format(p.date), '\$${p.value.toStringAsFixed(2)}', '${p.count}'])
+                  .map((p) => [
+                        DateFormat('MMM dd').format(p.date),
+                        '\$${p.value.toStringAsFixed(2)}',
+                        '${p.count}'
+                      ])
                   .toList(),
             ),
 
@@ -275,7 +315,12 @@ class ReportExportService {
             _buildPDFTable(
               headers: ['Category', 'Revenue', 'Units', 'Share'],
               rows: report.categoryBreakdown.values
-                  .map((c) => [c.category, '\$${c.revenue.toStringAsFixed(2)}', '${c.unitsSold}', '${c.revenueShare.toStringAsFixed(1)}%'])
+                  .map((c) => [
+                        c.category,
+                        '\$${c.revenue.toStringAsFixed(2)}',
+                        '${c.unitsSold}',
+                        '${c.revenueShare.toStringAsFixed(1)}%'
+                      ])
                   .toList(),
             ),
           ],
@@ -292,10 +337,18 @@ class ReportExportService {
             _pdfSectionTitle('TOP PERFORMING PRODUCTS'),
             pw.SizedBox(height: 8),
             _buildPDFTable(
-              headers: ['Rank', 'Product', 'Units', 'Revenue', 'Rating', 'Stock'],
+              headers: [
+                'Rank',
+                'Product',
+                'Units',
+                'Revenue',
+                'Rating',
+                'Stock'
+              ],
               rows: report.topProducts.asMap().entries.map((e) {
                 final name = e.value.productName;
-                final truncated = name.length > 25 ? '${name.substring(0, 25)}…' : name;
+                final truncated =
+                    name.length > 25 ? '${name.substring(0, 25)}…' : name;
                 return [
                   '#${e.key + 1}',
                   truncated,
@@ -313,13 +366,17 @@ class ReportExportService {
             pw.SizedBox(height: 8),
             _buildPDFTable(
               headers: ['Rank', 'Customer', 'Orders', 'Spent', 'Status'],
-              rows: report.topCustomers.asMap().entries.map((e) => [
-                    '#${e.key + 1}',
-                    e.value.displayName,
-                    '${e.value.totalOrders}',
-                    '\$${e.value.totalSpent.toStringAsFixed(2)}',
-                    e.value.eliteStatus,
-                  ]).toList(),
+              rows: report.topCustomers
+                  .asMap()
+                  .entries
+                  .map((e) => [
+                        '#${e.key + 1}',
+                        e.value.displayName,
+                        '${e.value.totalOrders}',
+                        '\$${e.value.totalSpent.toStringAsFixed(2)}',
+                        e.value.eliteStatus,
+                      ])
+                  .toList(),
             ),
 
             pw.SizedBox(height: 24),
@@ -329,14 +386,18 @@ class ReportExportService {
             pw.SizedBox(height: 8),
             pw.Text(
               'Confidential — StyleCart Analytics Report. Do not distribute without authorization.',
-              style: pw.TextStyle(fontSize: 9, color: PdfColor.fromHex('5A5A5A'), fontStyle: pw.FontStyle.italic),
+              style: pw.TextStyle(
+                  fontSize: 9,
+                  color: PdfColor.fromHex('5A5A5A'),
+                  fontStyle: pw.FontStyle.italic),
             ),
           ],
         ),
       );
 
       // Save PDF to temporary directory
-      final fileName = 'stylecart_report_${DateFormat('yyyy_MM_dd').format(now)}';
+      final fileName =
+          'stylecart_report_${DateFormat('yyyy_MM_dd').format(now)}';
       final dir = await getTemporaryDirectory();
       final file = File('${dir.path}/$fileName.pdf');
       await file.writeAsBytes(await pdf.save());
@@ -382,11 +443,19 @@ class ReportExportService {
         child: pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            pw.Text(label, style: pw.TextStyle(fontSize: 10, color: PdfColor.fromHex('9E9E9E'))),
+            pw.Text(label,
+                style: pw.TextStyle(
+                    fontSize: 10, color: PdfColor.fromHex('9E9E9E'))),
             pw.SizedBox(height: 4),
-            pw.Text(value, style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold, color: accentColor)),
+            pw.Text(value,
+                style: pw.TextStyle(
+                    fontSize: 18,
+                    fontWeight: pw.FontWeight.bold,
+                    color: accentColor)),
             pw.SizedBox(height: 2),
-            pw.Text(subtitle, style: pw.TextStyle(fontSize: 9, color: PdfColor.fromHex('5A5A5A'))),
+            pw.Text(subtitle,
+                style: pw.TextStyle(
+                    fontSize: 9, color: PdfColor.fromHex('5A5A5A'))),
           ],
         ),
       );
@@ -396,8 +465,11 @@ class ReportExportService {
     required List<List<String>> rows,
   }) =>
       pw.Table(
-        border: pw.TableBorder.all(color: PdfColor.fromHex('2A1515'), width: 0.5),
-        columnWidths: {for (int i = 0; i < headers.length; i++) i: const pw.FlexColumnWidth()},
+        border:
+            pw.TableBorder.all(color: PdfColor.fromHex('2A1515'), width: 0.5),
+        columnWidths: {
+          for (int i = 0; i < headers.length; i++) i: const pw.FlexColumnWidth()
+        },
         children: [
           // Header row
           pw.TableRow(
@@ -405,19 +477,26 @@ class ReportExportService {
             children: headers
                 .map((h) => pw.Padding(
                       padding: const pw.EdgeInsets.all(8),
-                      child: pw.Text(h, style: pw.TextStyle(fontSize: 10, fontWeight: pw.FontWeight.bold, color: PdfColor.fromHex('D4AF37'))),
+                      child: pw.Text(h,
+                          style: pw.TextStyle(
+                              fontSize: 10,
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColor.fromHex('D4AF37'))),
                     ))
                 .toList(),
           ),
           // Data rows with alternating background
           ...rows.asMap().entries.map((entry) => pw.TableRow(
                 decoration: pw.BoxDecoration(
-                  color: entry.key % 2 == 0 ? PdfColors.white : PdfColor.fromHex('F9F9F9'),
+                  color: entry.key % 2 == 0
+                      ? PdfColors.white
+                      : PdfColor.fromHex('F9F9F9'),
                 ),
                 children: entry.value
                     .map((cell) => pw.Padding(
                           padding: const pw.EdgeInsets.all(7),
-                          child: pw.Text(cell, style: const pw.TextStyle(fontSize: 9)),
+                          child: pw.Text(cell,
+                              style: const pw.TextStyle(fontSize: 9)),
                         ))
                     .toList(),
               )),

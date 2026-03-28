@@ -13,14 +13,17 @@ class AppConfig {
 
   static String get firebaseProjectId => _require('FIREBASE_PROJECT_ID');
 
-  static String get firebaseStorageBucket => _require('FIREBASE_STORAGE_BUCKET');
+  static String get firebaseStorageBucket =>
+      _require('FIREBASE_STORAGE_BUCKET');
 
-  static String get firebaseMessagingSenderId => _require('FIREBASE_MESSAGING_SENDER_ID');
+  static String get firebaseMessagingSenderId =>
+      _require('FIREBASE_MESSAGING_SENDER_ID');
 
   static String get firebaseAppId => _require('FIREBASE_APP_ID');
 
   // ── Business Config ────────────────────────────────
-  static int get lowStockThreshold => int.parse(dotenv.env['LOW_STOCK_THRESHOLD'] ?? '5');
+  static int get lowStockThreshold =>
+      int.parse(dotenv.env['LOW_STOCK_THRESHOLD'] ?? '5');
 
   static double get freeShippingThreshold => double.parse(
         dotenv.env['FREE_SHIPPING_THRESHOLD'] ?? '100',
@@ -45,9 +48,11 @@ class AppConfig {
       'FIREBASE_APP_ID',
     ];
 
-    final missing = required.where(
-      (key) => dotenv.env[key]?.isEmpty ?? true,
-    ).toList();
+    final missing = required
+        .where(
+          (key) => dotenv.env[key]?.isEmpty ?? true,
+        )
+        .toList();
 
     if (missing.isNotEmpty) {
       throw Exception(

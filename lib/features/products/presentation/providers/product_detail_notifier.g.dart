@@ -34,7 +34,9 @@ abstract class _$ProductDetailNotifier
     extends BuildlessAutoDisposeNotifier<ProductDetailState> {
   late final String productId;
 
-  ProductDetailState build(String productId);
+  ProductDetailState build(
+    String productId,
+  );
 }
 
 /// See also [ProductDetailNotifier].
@@ -47,15 +49,21 @@ class ProductDetailNotifierFamily extends Family<ProductDetailState> {
   const ProductDetailNotifierFamily();
 
   /// See also [ProductDetailNotifier].
-  ProductDetailNotifierProvider call(String productId) {
-    return ProductDetailNotifierProvider(productId);
+  ProductDetailNotifierProvider call(
+    String productId,
+  ) {
+    return ProductDetailNotifierProvider(
+      productId,
+    );
   }
 
   @override
   ProductDetailNotifierProvider getProviderOverride(
     covariant ProductDetailNotifierProvider provider,
   ) {
-    return call(provider.productId);
+    return call(
+      provider.productId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -74,26 +82,24 @@ class ProductDetailNotifierFamily extends Family<ProductDetailState> {
 }
 
 /// See also [ProductDetailNotifier].
-class ProductDetailNotifierProvider
-    extends
-        AutoDisposeNotifierProviderImpl<
-          ProductDetailNotifier,
-          ProductDetailState
-        > {
+class ProductDetailNotifierProvider extends AutoDisposeNotifierProviderImpl<
+    ProductDetailNotifier, ProductDetailState> {
   /// See also [ProductDetailNotifier].
-  ProductDetailNotifierProvider(String productId)
-    : this._internal(
-        () => ProductDetailNotifier()..productId = productId,
-        from: productDetailNotifierProvider,
-        name: r'productDetailNotifierProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$productDetailNotifierHash,
-        dependencies: ProductDetailNotifierFamily._dependencies,
-        allTransitiveDependencies:
-            ProductDetailNotifierFamily._allTransitiveDependencies,
-        productId: productId,
-      );
+  ProductDetailNotifierProvider(
+    String productId,
+  ) : this._internal(
+          () => ProductDetailNotifier()..productId = productId,
+          from: productDetailNotifierProvider,
+          name: r'productDetailNotifierProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$productDetailNotifierHash,
+          dependencies: ProductDetailNotifierFamily._dependencies,
+          allTransitiveDependencies:
+              ProductDetailNotifierFamily._allTransitiveDependencies,
+          productId: productId,
+        );
 
   ProductDetailNotifierProvider._internal(
     super._createNotifier, {
@@ -111,7 +117,9 @@ class ProductDetailNotifierProvider
   ProductDetailState runNotifierBuild(
     covariant ProductDetailNotifier notifier,
   ) {
-    return notifier.build(productId);
+    return notifier.build(
+      productId,
+    );
   }
 
   @override
@@ -132,7 +140,7 @@ class ProductDetailNotifierProvider
 
   @override
   AutoDisposeNotifierProviderElement<ProductDetailNotifier, ProductDetailState>
-  createElement() {
+      createElement() {
     return _ProductDetailNotifierProviderElement(this);
   }
 
@@ -160,17 +168,12 @@ mixin ProductDetailNotifierRef
 }
 
 class _ProductDetailNotifierProviderElement
-    extends
-        AutoDisposeNotifierProviderElement<
-          ProductDetailNotifier,
-          ProductDetailState
-        >
-    with ProductDetailNotifierRef {
+    extends AutoDisposeNotifierProviderElement<ProductDetailNotifier,
+        ProductDetailState> with ProductDetailNotifierRef {
   _ProductDetailNotifierProviderElement(super.provider);
 
   @override
   String get productId => (origin as ProductDetailNotifierProvider).productId;
 }
-
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

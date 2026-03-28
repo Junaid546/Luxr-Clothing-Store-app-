@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/wishlist/data/models/wishlist_item_model.dart';
-import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/wishlist/data/models/wishlist_item_model.dart';
+import 'package:stylecart/features/wishlist/presentation/providers/wishlist_notifier.dart';
 
 Future<void> toggleWishlist(
   WidgetRef ref,

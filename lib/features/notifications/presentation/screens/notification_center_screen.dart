@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
-import 'package:style_cart/features/notifications/presentation/providers/notification_notifier.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/features/notifications/presentation/providers/notification_notifier.dart';
+import 'package:stylecart/features/notifications/data/providers/notification_providers.dart';
 
 class NotificationCenterScreen extends ConsumerStatefulWidget {
   const NotificationCenterScreen({super.key});
@@ -17,7 +17,8 @@ class NotificationCenterScreen extends ConsumerStatefulWidget {
       _NotificationCenterScreenState();
 }
 
-class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScreen> {
+class _NotificationCenterScreenState
+    extends ConsumerState<NotificationCenterScreen> {
   @override
   void initState() {
     super.initState();
@@ -119,12 +120,14 @@ class _NotificationAppBar extends StatelessWidget {
     );
   }
 
-  void _showClearAllDialog(BuildContext context, NotificationNotifier notifier) {
+  void _showClearAllDialog(
+      BuildContext context, NotificationNotifier notifier) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.cardDark,
-        title: const Text('Clear all notifications?', style: TextStyle(color: Colors.white)),
+        title: const Text('Clear all notifications?',
+            style: TextStyle(color: Colors.white)),
         content: const Text(
           'This will permanently delete all your notifications.',
           style: TextStyle(color: AppColors.textSecondary),
@@ -132,14 +135,16 @@ class _NotificationAppBar extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel', style: TextStyle(color: AppColors.textMuted)),
+            child: const Text('Cancel',
+                style: TextStyle(color: AppColors.textMuted)),
           ),
           TextButton(
             onPressed: () {
               notifier.clearAll();
               Navigator.pop(context);
             },
-            child: const Text('Clear All', style: TextStyle(color: AppColors.error)),
+            child: const Text('Clear All',
+                style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -198,8 +203,11 @@ class _FilterChipsRow extends StatelessWidget {
                   Text(
                     filter.$2,
                     style: AppTextStyles.labelMedium.copyWith(
-                      color: isActive ? AppColors.primary : AppColors.textSecondary,
-                      fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                      color: isActive
+                          ? AppColors.primary
+                          : AppColors.textSecondary,
+                      fontWeight:
+                          isActive ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
                   if (count > 0) ...[
@@ -208,7 +216,9 @@ class _FilterChipsRow extends StatelessWidget {
                       width: 18,
                       height: 18,
                       decoration: BoxDecoration(
-                        color: isActive ? AppColors.primary : AppColors.backgroundElevated,
+                        color: isActive
+                            ? AppColors.primary
+                            : AppColors.backgroundElevated,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
@@ -216,7 +226,8 @@ class _FilterChipsRow extends StatelessWidget {
                           '$count',
                           style: TextStyle(
                             fontSize: 9,
-                            color: isActive ? Colors.white : AppColors.textMuted,
+                            color:
+                                isActive ? Colors.white : AppColors.textMuted,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -242,7 +253,8 @@ class _NotificationsList extends StatelessWidget {
     required this.notifier,
   });
 
-  Map<String, List<NotificationEntity>> _groupByDate(List<NotificationEntity> notifications) {
+  Map<String, List<NotificationEntity>> _groupByDate(
+      List<NotificationEntity> notifications) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = today.subtract(const Duration(days: 1));
@@ -256,7 +268,8 @@ class _NotificationsList extends StatelessWidget {
     };
 
     for (final n in notifications) {
-      final notifDate = DateTime(n.createdAt.year, n.createdAt.month, n.createdAt.day);
+      final notifDate =
+          DateTime(n.createdAt.year, n.createdAt.month, n.createdAt.day);
       if (notifDate == today) {
         groups['Today']!.add(n);
       } else if (notifDate == yesterday) {
@@ -279,7 +292,8 @@ class _NotificationsList extends StatelessWidget {
 
     return ListView.builder(
       padding: const EdgeInsets.only(bottom: 16),
-      itemCount: keys.fold<int>(0, (sum, key) => sum + grouped[key]!.length + 1),
+      itemCount:
+          keys.fold<int>(0, (sum, key) => sum + grouped[key]!.length + 1),
       itemBuilder: (context, index) {
         int currentCount = 0;
         for (final key in keys) {
@@ -347,7 +361,8 @@ class _NotificationTile extends StatelessWidget {
         ),
         child: const Icon(Icons.delete_outline, color: Colors.white),
       ),
-      onDismissed: (_) => notifier.deleteNotification(notification.notificationId),
+      onDismissed: (_) =>
+          notifier.deleteNotification(notification.notificationId),
       child: GestureDetector(
         onTap: () {
           if (!notification.isRead) {
@@ -428,7 +443,8 @@ class _NotificationTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
                             color: notification.type.color.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
@@ -445,7 +461,8 @@ class _NotificationTile extends StatelessWidget {
                         ),
                         Text(
                           notification.timeAgo,
-                          style: AppTextStyles.bodySmall.copyWith(color: AppColors.textMuted),
+                          style: AppTextStyles.bodySmall
+                              .copyWith(color: AppColors.textMuted),
                         ),
                       ],
                     ),
@@ -453,9 +470,13 @@ class _NotificationTile extends StatelessWidget {
                     Text(
                       notification.title,
                       style: TextStyle(
-                        color: notification.isRead ? AppColors.textSecondary : Colors.white,
+                        color: notification.isRead
+                            ? AppColors.textSecondary
+                            : Colors.white,
                         fontSize: 14,
-                        fontWeight: notification.isRead ? FontWeight.normal : FontWeight.bold,
+                        fontWeight: notification.isRead
+                            ? FontWeight.normal
+                            : FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -473,7 +494,8 @@ class _NotificationTile extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(20),
@@ -559,7 +581,8 @@ class _EmptyState extends StatelessWidget {
             'We\'ll notify you about orders\n'
             'and exclusive deals.',
             textAlign: TextAlign.center,
-            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textMuted),
+            style:
+                AppTextStyles.bodyMedium.copyWith(color: AppColors.textMuted),
           ),
         ],
       ),

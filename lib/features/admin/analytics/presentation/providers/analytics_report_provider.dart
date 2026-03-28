@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/admin/analytics/data/services/analytics_computation_service.dart';
-import 'package:style_cart/features/admin/analytics/domain/models/analytics_models.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/features/admin/analytics/data/services/analytics_computation_service.dart';
+import 'package:stylecart/features/admin/analytics/domain/models/analytics_models.dart';
 
 part 'analytics_report_provider.g.dart';
 
@@ -33,15 +33,16 @@ class CustomDateRange extends _$CustomDateRange {
 // ── Latest order date state (used for auto-invalidation) ─────────────────────────
 @riverpod
 Stream<DateTime?> latestOrderDate(LatestOrderDateRef ref) {
-  return ref.watch(firestoreProvider)
+  return ref
+      .watch(firestoreProvider)
       .collection(FirestoreConstants.orders)
       .orderBy('placedAt', descending: true)
       .limit(1)
       .snapshots()
       .map((QuerySnapshot<Map<String, dynamic>> snap) {
-        if (snap.docs.isEmpty) return null;
-        return (snap.docs.first.data()['placedAt'] as Timestamp?)?.toDate();
-      });
+    if (snap.docs.isEmpty) return null;
+    return (snap.docs.first.data()['placedAt'] as Timestamp?)?.toDate();
+  });
 }
 
 // ── Main analytics report (auto-recomputes on period change or new order) ────────────────────────────
@@ -51,16 +52,14 @@ Future<AnalyticsReport> analyticsReport(
 ) async {
   final period = ref.watch(analyticsPeriodStateProvider);
   final customRange = ref.watch(customDateRangeProvider);
-  
+
   // Watch latest order date to trigger re-fetch when a new order is placed
   ref.watch(latestOrderDateProvider);
 
   // Add slight debounce to prevent rapid re-fetches
   await Future<void>.delayed(const Duration(milliseconds: 100));
 
-  return await ref
-      .read(analyticsComputationServiceProvider)
-      .generateReport(
+  return await ref.read(analyticsComputationServiceProvider).generateReport(
         period,
         customRange: customRange,
       );

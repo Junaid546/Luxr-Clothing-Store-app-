@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, always_put_required_named_parameters_first, invalid_annotation_target, sort_unnamed_constructors_first, lines_longer_than_80_chars, document_ignores
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/features/auth/domain/entities/user_entity.dart';
 
 /// User data model for Firebase Firestore
 /// Extends UserEntity (data layer CAN extend domain)
@@ -33,19 +33,19 @@ class UserModel extends UserEntity {
         data[FirestoreConstants.role] as String? ?? 'customer',
       ),
       fcmToken: data[FirestoreConstants.fcmToken] as String?,
-      createdAt:
-          (data[FirestoreConstants.createdAt] as Timestamp?)?.toDate() ??
+      createdAt: (data[FirestoreConstants.createdAt] as Timestamp?)?.toDate() ??
           DateTime.now(),
       totalOrders: data[FirestoreConstants.totalOrders] as int? ?? 0,
       eliteStatus:
           (data[FirestoreConstants.totalOrders] as int? ?? 0).eliteStatus,
       emailVerified: data['emailVerified'] as bool? ?? false,
       notificationPrefs: Map<String, bool>.from(
-        data['notificationPrefs'] as Map? ?? {
-          'orderUpdates': true,
-          'promotions': true,
-          'newArrivals': true,
-        },
+        data['notificationPrefs'] as Map? ??
+            {
+              'orderUpdates': true,
+              'promotions': true,
+              'newArrivals': true,
+            },
       ),
     );
   }

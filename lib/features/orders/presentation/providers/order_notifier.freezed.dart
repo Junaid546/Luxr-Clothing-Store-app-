@@ -12,8 +12,7 @@ part of 'order_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MyOrdersState {
@@ -36,20 +35,18 @@ mixin _$MyOrdersState {
 /// @nodoc
 abstract class $MyOrdersStateCopyWith<$Res> {
   factory $MyOrdersStateCopyWith(
-    MyOrdersState value,
-    $Res Function(MyOrdersState) then,
-  ) = _$MyOrdersStateCopyWithImpl<$Res, MyOrdersState>;
+          MyOrdersState value, $Res Function(MyOrdersState) then) =
+      _$MyOrdersStateCopyWithImpl<$Res, MyOrdersState>;
   @useResult
-  $Res call({
-    List<OrderEntity> orders,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasError,
-    String errorMessage,
-    String activeFilter,
-    bool hasMore,
-    Object? lastDocument,
-  });
+  $Res call(
+      {List<OrderEntity> orders,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasError,
+      String errorMessage,
+      String activeFilter,
+      bool hasMore,
+      Object? lastDocument});
 }
 
 /// @nodoc
@@ -76,42 +73,38 @@ class _$MyOrdersStateCopyWithImpl<$Res, $Val extends MyOrdersState>
     Object? hasMore = null,
     Object? lastDocument = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            orders: null == orders
-                ? _value.orders
-                : orders // ignore: cast_nullable_to_non_nullable
-                      as List<OrderEntity>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isLoadingMore: null == isLoadingMore
-                ? _value.isLoadingMore
-                : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasError: null == hasError
-                ? _value.hasError
-                : hasError // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: null == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String,
-            activeFilter: null == activeFilter
-                ? _value.activeFilter
-                : activeFilter // ignore: cast_nullable_to_non_nullable
-                      as String,
-            hasMore: null == hasMore
-                ? _value.hasMore
-                : hasMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            lastDocument: freezed == lastDocument
-                ? _value.lastDocument
-                : lastDocument,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      orders: null == orders
+          ? _value.orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<OrderEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      activeFilter: null == activeFilter
+          ? _value.activeFilter
+          : activeFilter // ignore: cast_nullable_to_non_nullable
+              as String,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastDocument:
+          freezed == lastDocument ? _value.lastDocument : lastDocument,
+    ) as $Val);
   }
 }
 
@@ -119,21 +112,19 @@ class _$MyOrdersStateCopyWithImpl<$Res, $Val extends MyOrdersState>
 abstract class _$$MyOrdersStateImplCopyWith<$Res>
     implements $MyOrdersStateCopyWith<$Res> {
   factory _$$MyOrdersStateImplCopyWith(
-    _$MyOrdersStateImpl value,
-    $Res Function(_$MyOrdersStateImpl) then,
-  ) = __$$MyOrdersStateImplCopyWithImpl<$Res>;
+          _$MyOrdersStateImpl value, $Res Function(_$MyOrdersStateImpl) then) =
+      __$$MyOrdersStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<OrderEntity> orders,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasError,
-    String errorMessage,
-    String activeFilter,
-    bool hasMore,
-    Object? lastDocument,
-  });
+  $Res call(
+      {List<OrderEntity> orders,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasError,
+      String errorMessage,
+      String activeFilter,
+      bool hasMore,
+      Object? lastDocument});
 }
 
 /// @nodoc
@@ -141,9 +132,8 @@ class __$$MyOrdersStateImplCopyWithImpl<$Res>
     extends _$MyOrdersStateCopyWithImpl<$Res, _$MyOrdersStateImpl>
     implements _$$MyOrdersStateImplCopyWith<$Res> {
   __$$MyOrdersStateImplCopyWithImpl(
-    _$MyOrdersStateImpl _value,
-    $Res Function(_$MyOrdersStateImpl) _then,
-  ) : super(_value, _then);
+      _$MyOrdersStateImpl _value, $Res Function(_$MyOrdersStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of MyOrdersState
   /// with the given fields replaced by the non-null parameter values.
@@ -159,57 +149,54 @@ class __$$MyOrdersStateImplCopyWithImpl<$Res>
     Object? hasMore = null,
     Object? lastDocument = freezed,
   }) {
-    return _then(
-      _$MyOrdersStateImpl(
-        orders: null == orders
-            ? _value._orders
-            : orders // ignore: cast_nullable_to_non_nullable
-                  as List<OrderEntity>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isLoadingMore: null == isLoadingMore
-            ? _value.isLoadingMore
-            : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasError: null == hasError
-            ? _value.hasError
-            : hasError // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: null == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String,
-        activeFilter: null == activeFilter
-            ? _value.activeFilter
-            : activeFilter // ignore: cast_nullable_to_non_nullable
-                  as String,
-        hasMore: null == hasMore
-            ? _value.hasMore
-            : hasMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        lastDocument: freezed == lastDocument
-            ? _value.lastDocument
-            : lastDocument,
-      ),
-    );
+    return _then(_$MyOrdersStateImpl(
+      orders: null == orders
+          ? _value._orders
+          : orders // ignore: cast_nullable_to_non_nullable
+              as List<OrderEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      activeFilter: null == activeFilter
+          ? _value.activeFilter
+          : activeFilter // ignore: cast_nullable_to_non_nullable
+              as String,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastDocument:
+          freezed == lastDocument ? _value.lastDocument : lastDocument,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$MyOrdersStateImpl implements _MyOrdersState {
-  const _$MyOrdersStateImpl({
-    final List<OrderEntity> orders = const [],
-    this.isLoading = false,
-    this.isLoadingMore = false,
-    this.hasError = false,
-    this.errorMessage = '',
-    this.activeFilter = 'all',
-    this.hasMore = true,
-    this.lastDocument,
-  }) : _orders = orders;
+  const _$MyOrdersStateImpl(
+      {final List<OrderEntity> orders = const [],
+      this.isLoading = false,
+      this.isLoadingMore = false,
+      this.hasError = false,
+      this.errorMessage = '',
+      this.activeFilter = 'all',
+      this.hasMore = true,
+      this.lastDocument})
+      : _orders = orders;
 
   final List<OrderEntity> _orders;
   @override
@@ -263,24 +250,21 @@ class _$MyOrdersStateImpl implements _MyOrdersState {
             (identical(other.activeFilter, activeFilter) ||
                 other.activeFilter == activeFilter) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            const DeepCollectionEquality().equals(
-              other.lastDocument,
-              lastDocument,
-            ));
+            const DeepCollectionEquality()
+                .equals(other.lastDocument, lastDocument));
   }
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_orders),
-    isLoading,
-    isLoadingMore,
-    hasError,
-    errorMessage,
-    activeFilter,
-    hasMore,
-    const DeepCollectionEquality().hash(lastDocument),
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_orders),
+      isLoading,
+      isLoadingMore,
+      hasError,
+      errorMessage,
+      activeFilter,
+      hasMore,
+      const DeepCollectionEquality().hash(lastDocument));
 
   /// Create a copy of MyOrdersState
   /// with the given fields replaced by the non-null parameter values.
@@ -292,16 +276,15 @@ class _$MyOrdersStateImpl implements _MyOrdersState {
 }
 
 abstract class _MyOrdersState implements MyOrdersState {
-  const factory _MyOrdersState({
-    final List<OrderEntity> orders,
-    final bool isLoading,
-    final bool isLoadingMore,
-    final bool hasError,
-    final String errorMessage,
-    final String activeFilter,
-    final bool hasMore,
-    final Object? lastDocument,
-  }) = _$MyOrdersStateImpl;
+  const factory _MyOrdersState(
+      {final List<OrderEntity> orders,
+      final bool isLoading,
+      final bool isLoadingMore,
+      final bool hasError,
+      final String errorMessage,
+      final String activeFilter,
+      final bool hasMore,
+      final Object? lastDocument}) = _$MyOrdersStateImpl;
 
   @override
   List<OrderEntity> get orders;

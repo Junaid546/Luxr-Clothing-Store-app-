@@ -1,6 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
-import 'package:style_cart/core/security/sensitive_data_guard.dart';
+import 'package:stylecart/core/security/sensitive_data_guard.dart';
 
 // Centralized error handling for the entire app.
 // Catches: Flutter framework errors, Dart errors,
@@ -55,7 +55,8 @@ class GlobalErrorHandler {
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
       // Pass Flutter errors to Crashlytics
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+      FlutterError.onError =
+          FirebaseCrashlytics.instance.recordFlutterFatalError;
     }
 
     debugPrint('✓ Global error handler initialized');
@@ -69,8 +70,9 @@ class GlobalErrorHandler {
     bool isFatal = false,
   }) {
     try {
-      final sanitizedMessage = SensitiveDataGuard.sanitizeErrorMessage(error.toString());
-      
+      final sanitizedMessage =
+          SensitiveDataGuard.sanitizeErrorMessage(error.toString());
+
       FirebaseCrashlytics.instance.recordError(
         sanitizedMessage,
         stack,
@@ -109,7 +111,8 @@ class GlobalErrorHandler {
       }
     }
 
-    final sanitizedMessage = SensitiveDataGuard.sanitizeErrorMessage(error.toString());
+    final sanitizedMessage =
+        SensitiveDataGuard.sanitizeErrorMessage(error.toString());
 
     FirebaseCrashlytics.instance.recordError(
       sanitizedMessage,
@@ -128,7 +131,8 @@ class GlobalErrorHandler {
   ) async {
     if (kReleaseMode) {
       await FirebaseCrashlytics.instance.setUserIdentifier(userId);
-      await FirebaseCrashlytics.instance.setCustomKey('email_hash', email.hashCode.toString());
+      await FirebaseCrashlytics.instance
+          .setCustomKey('email_hash', email.hashCode.toString());
       // NEVER log actual email — only hash
     }
   }

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/features/wishlist/presentation/providers/wishlist_notifier.dart';
+import 'package:stylecart/features/auth/domain/entities/user_entity.dart';
+import 'package:stylecart/features/notifications/data/providers/notification_providers.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -25,7 +25,8 @@ class ProfileScreen extends ConsumerWidget {
     }
 
     final unreadCountAsync = ref.watch(unreadNotificationCountProvider);
-    final hasUnread = unreadCountAsync.valueOrNull != null && unreadCountAsync.value! > 0;
+    final hasUnread =
+        unreadCountAsync.valueOrNull != null && unreadCountAsync.value! > 0;
 
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
@@ -138,7 +139,8 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.settings_outlined, color: Colors.white),
+                    icon: const Icon(Icons.settings_outlined,
+                        color: Colors.white),
                     onPressed: () {
                       // TODO: Implement settings
                     },
@@ -168,17 +170,20 @@ class ProfileScreen extends ConsumerWidget {
                             placeholder: (context, url) => Container(
                               color: AppColors.backgroundCard,
                               child: const Center(
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2),
                               ),
                             ),
                             errorWidget: (context, url, error) => Container(
                               color: AppColors.backgroundCard,
-                              child: const Icon(Icons.person, size: 50, color: AppColors.textMuted),
+                              child: const Icon(Icons.person,
+                                  size: 50, color: AppColors.textMuted),
                             ),
                           )
                         : Container(
                             color: AppColors.backgroundCard,
-                            child: const Icon(Icons.person, size: 50, color: AppColors.textMuted),
+                            child: const Icon(Icons.person,
+                                size: 50, color: AppColors.textMuted),
                           ),
                   ),
                 ),
@@ -331,7 +336,8 @@ class ProfileScreen extends ConsumerWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
             ),
-            child: const Text('Sign Out', style: TextStyle(color: Colors.white)),
+            child:
+                const Text('Sign Out', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -431,7 +437,8 @@ class _MenuItem extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-            const Icon(Icons.chevron_right, color: AppColors.textMuted, size: 20),
+            const Icon(Icons.chevron_right,
+                color: AppColors.textMuted, size: 20),
           ],
         ),
         onTap: data.onTap,

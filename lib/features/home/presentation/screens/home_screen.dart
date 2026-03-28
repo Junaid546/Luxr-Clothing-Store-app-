@@ -7,21 +7,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/features/home/data/models/banner_model.dart';
-import 'package:style_cart/features/home/presentation/providers/home_providers.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/features/home/data/models/banner_model.dart';
+import 'package:stylecart/features/home/presentation/providers/home_providers.dart';
 
-import 'package:style_cart/features/products/presentation/providers/product_list_notifier.dart';
-import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
-import 'package:style_cart/shared/utils/wishlist_helper.dart';
-import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
-import 'package:style_cart/shared/widgets/section_header_widget.dart';
-import 'package:style_cart/features/notifications/presentation/widgets/notification_bell.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
-import 'package:style_cart/features/notifications/presentation/widgets/notification_permission_dialog.dart';
+import 'package:stylecart/features/products/presentation/providers/product_list_notifier.dart';
+import 'package:stylecart/features/wishlist/presentation/providers/wishlist_notifier.dart';
+import 'package:stylecart/shared/utils/wishlist_helper.dart';
+import 'package:stylecart/shared/widgets/cards/product_card_widget.dart';
+import 'package:stylecart/shared/widgets/section_header_widget.dart';
+import 'package:stylecart/features/notifications/presentation/widgets/notification_bell.dart';
+import 'package:stylecart/features/notifications/data/providers/notification_providers.dart';
+import 'package:stylecart/features/notifications/presentation/widgets/notification_permission_dialog.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -49,7 +49,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.read(notificationPermissionDialogShownProvider.notifier).state = true;
 
     final fcmService = ref.read(fcmServiceProvider);
-    
+
     // If not requested yet, show after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
@@ -478,24 +478,26 @@ class _FeaturedSection extends ConsumerWidget {
                     width: 160,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 12),
-                        child: Consumer(
-                          builder: (context, ref, child) {
-                            final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
-                            return ProductCardWidget(
-                              product: products[index],
-                              imageAspectRatio: 2 / 3,
-                              onTap: () => context.push(
-                                RouteNames.productDetail.replaceAll(
-                                  ':productId',
-                                  products[index].productId,
-                                ),
+                      child: Consumer(
+                        builder: (context, ref, child) {
+                          final isWishlisted = ref.watch(
+                              isProductWishlistedProvider(
+                                  products[index].productId));
+                          return ProductCardWidget(
+                            product: products[index],
+                            imageAspectRatio: 2 / 3,
+                            onTap: () => context.push(
+                              RouteNames.productDetail.replaceAll(
+                                ':productId',
+                                products[index].productId,
                               ),
-                              isWishlisted: isWishlisted,
-                              onWishlistTap: () =>
-                                  toggleWishlist(ref, context, products[index]),
-                            );
-                          },
-                        ),
+                            ),
+                            isWishlisted: isWishlisted,
+                            onWishlistTap: () =>
+                                toggleWishlist(ref, context, products[index]),
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -519,12 +521,12 @@ class _FeaturedSection extends ConsumerWidget {
               ),
             ),
             error: (e, _) => Padding(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          e.toString(),
-          style: const TextStyle(color: Colors.red, fontSize: 12),
-        ),
-      ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                e.toString(),
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
           ),
         ),
       ],
@@ -562,7 +564,8 @@ class _NewArrivalsSection extends ConsumerWidget {
               itemCount: min(products.length, 4),
               itemBuilder: (_, index) => Consumer(
                 builder: (context, ref, child) {
-                  final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
+                  final isWishlisted = ref.watch(
+                      isProductWishlistedProvider(products[index].productId));
                   return ProductCardWidget(
                     product: products[index],
                     imageAspectRatio: 3 / 4,
@@ -603,12 +606,12 @@ class _NewArrivalsSection extends ConsumerWidget {
             ),
           ),
           error: (e, _) => Padding(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          e.toString(),
-          style: const TextStyle(color: Colors.red, fontSize: 12),
-        ),
-      ),
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              e.toString(),
+              style: const TextStyle(color: Colors.red, fontSize: 12),
+            ),
+          ),
         ),
       ],
     );
@@ -761,7 +764,9 @@ class _BestSellersSection extends ConsumerWidget {
                       padding: const EdgeInsets.only(right: 12),
                       child: Consumer(
                         builder: (context, ref, child) {
-                          final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
+                          final isWishlisted = ref.watch(
+                              isProductWishlistedProvider(
+                                  products[index].productId));
                           return ProductCardWidget(
                             product: products[index],
                             imageAspectRatio: 2 / 3,

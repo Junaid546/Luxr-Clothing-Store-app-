@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/presentation/providers/order_notifier.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/presentation/providers/order_notifier.dart';
 
 class MyOrdersScreen extends ConsumerStatefulWidget {
   const MyOrdersScreen({super.key});
@@ -68,7 +68,8 @@ class _MyOrdersScreenState extends ConsumerState<MyOrdersScreen> {
           Text(message, style: const TextStyle(color: Colors.white70)),
           TextButton(
             onPressed: () => ref.refresh(myOrdersNotifierProvider),
-            child: const Text('Retry', style: TextStyle(color: AppColors.primary)),
+            child:
+                const Text('Retry', style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -290,12 +291,14 @@ class _OrderCard extends ConsumerWidget {
                       if (order.totalItems > 1)
                         Text(
                           '+${order.totalItems - 1} more item(s)',
-                          style: const TextStyle(color: Colors.white54, fontSize: 12),
+                          style: const TextStyle(
+                              color: Colors.white54, fontSize: 12),
                         ),
                       const SizedBox(height: 4),
                       Text(
                         'Size: ${order.items.first.size}  × ${order.items.first.quantity}',
-                        style: const TextStyle(color: Colors.white54, fontSize: 12),
+                        style: const TextStyle(
+                            color: Colors.white54, fontSize: 12),
                       ),
                     ],
                   ),
@@ -333,7 +336,8 @@ class _OrderCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-                if (order.isCancellable || order.isReturnable) const SizedBox(width: 10),
+                if (order.isCancellable || order.isReturnable)
+                  const SizedBox(width: 10),
                 if (order.isCancellable)
                   Expanded(
                     child: OutlinedButton(
@@ -502,7 +506,8 @@ Future<void> _showCancelDialog(
                 value: reason,
                 groupValue: selectedReason,
                 onChanged: (v) => setState(() => selectedReason = v),
-                title: Text(reason, style: const TextStyle(color: Colors.white)),
+                title:
+                    Text(reason, style: const TextStyle(color: Colors.white)),
                 activeColor: AppColors.primary,
                 contentPadding: EdgeInsets.zero,
               ),
@@ -636,7 +641,10 @@ Future<void> _showReturnDialog(
               ),
             ),
             child: const Text('Submit Return Request',
-                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold)),
           ),
           const SizedBox(height: 10),
           TextButton(

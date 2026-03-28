@@ -2,8 +2,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/errors/exceptions.dart';
-import 'package:style_cart/core/errors/failures.dart';
+import 'package:stylecart/core/errors/exceptions.dart';
+import 'package:stylecart/core/errors/failures.dart';
 
 abstract class FirestoreBaseRepository {
   final FirebaseFirestore firestore;
@@ -38,12 +38,12 @@ abstract class FirestoreBaseRepository {
   Stream<Either<Failure, T>> safeFirestoreStream<T>(
     Stream<T> Function() streamBuilder,
   ) {
-    return streamBuilder().handleError(
-      (Object error) => Left<Failure, T>(
-        ServerFailure(error.toString()),
-      ),
-    ).map((data) => Right<Failure, T>(data));
+    return streamBuilder()
+        .handleError(
+          (Object error) => Left<Failure, T>(
+            ServerFailure(error.toString()),
+          ),
+        )
+        .map((data) => Right<Failure, T>(data));
   }
 }
-
-

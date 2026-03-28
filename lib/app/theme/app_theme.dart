@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_dimensions.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_dimensions.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
 
 abstract final class AppTheme {
   static ThemeData get darkTheme {

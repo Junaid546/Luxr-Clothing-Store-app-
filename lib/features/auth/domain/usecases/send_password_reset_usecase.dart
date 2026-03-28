@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/usecases/usecase.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/auth/domain/repositories/auth_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/usecases/usecase.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/auth/domain/repositories/auth_repository.dart';
 
 /// Parameters for password reset use case
 class PasswordResetParams extends Equatable {

@@ -1,6 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/features/cart/data/models/cart_item_model.dart';
 
 class CartEntity {
   final List<CartItemModel> items;

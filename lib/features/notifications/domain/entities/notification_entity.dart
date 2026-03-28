@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
 
 class NotificationEntity extends Equatable {
   final String notificationId;
@@ -43,8 +43,10 @@ class NotificationEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    notificationId, isRead, createdAt,
-  ];
+        notificationId,
+        isRead,
+        createdAt,
+      ];
 }
 
 enum NotificationType {
@@ -55,45 +57,44 @@ enum NotificationType {
   lowStock;
 
   String get value => switch (this) {
-    NotificationType.orderUpdate => 'order_update',
-    NotificationType.promotion   => 'promotion',
-    NotificationType.newArrival  => 'new_arrival',
-    NotificationType.system      => 'system',
-    NotificationType.lowStock    => 'low_stock',
-  };
+        NotificationType.orderUpdate => 'order_update',
+        NotificationType.promotion => 'promotion',
+        NotificationType.newArrival => 'new_arrival',
+        NotificationType.system => 'system',
+        NotificationType.lowStock => 'low_stock',
+      };
 
-  static NotificationType fromString(String value) =>
-      switch (value) {
+  static NotificationType fromString(String value) => switch (value) {
         'order_update' => NotificationType.orderUpdate,
-        'promotion'    => NotificationType.promotion,
-        'new_arrival'  => NotificationType.newArrival,
-        'low_stock'    => NotificationType.lowStock,
-        _              => NotificationType.system,
+        'promotion' => NotificationType.promotion,
+        'new_arrival' => NotificationType.newArrival,
+        'low_stock' => NotificationType.lowStock,
+        _ => NotificationType.system,
       };
 
   String get displayTitle => switch (this) {
-    NotificationType.orderUpdate => 'Order Update',
-    NotificationType.promotion   => 'Promotion',
-    NotificationType.newArrival  => 'New Arrival',
-    NotificationType.system      => 'System',
-    NotificationType.lowStock    => 'Low Stock Alert',
-  };
+        NotificationType.orderUpdate => 'Order Update',
+        NotificationType.promotion => 'Promotion',
+        NotificationType.newArrival => 'New Arrival',
+        NotificationType.system => 'System',
+        NotificationType.lowStock => 'Low Stock Alert',
+      };
 
   IconData get icon => switch (this) {
-    NotificationType.orderUpdate => Icons.local_shipping_outlined,
-    NotificationType.promotion   => Icons.local_offer_outlined,
-    NotificationType.newArrival  => Icons.new_releases_outlined,
-    NotificationType.system      => Icons.info_outline,
-    NotificationType.lowStock    => Icons.warning_amber_outlined,
-  };
+        NotificationType.orderUpdate => Icons.local_shipping_outlined,
+        NotificationType.promotion => Icons.local_offer_outlined,
+        NotificationType.newArrival => Icons.new_releases_outlined,
+        NotificationType.system => Icons.info_outline,
+        NotificationType.lowStock => Icons.warning_amber_outlined,
+      };
 
   Color get color => switch (this) {
-    NotificationType.orderUpdate => AppColors.primary,
-    NotificationType.promotion   => AppColors.gold,
-    NotificationType.newArrival  => AppColors.successTeal,
-    NotificationType.system      => AppColors.textSecondary,
-    NotificationType.lowStock    => AppColors.warning,
-  };
+        NotificationType.orderUpdate => AppColors.primary,
+        NotificationType.promotion => AppColors.gold,
+        NotificationType.newArrival => AppColors.successTeal,
+        NotificationType.system => AppColors.textSecondary,
+        NotificationType.lowStock => AppColors.warning,
+      };
 }
 
 class NotificationData extends Equatable {
@@ -109,21 +110,22 @@ class NotificationData extends Equatable {
     this.extra = const {},
   });
 
-  factory NotificationData.fromMap(Map<String, dynamic> map) => NotificationData(
-    orderId:   map['orderId'] as String?,
-    productId: map['productId'] as String?,
-    route:     map['route'] as String?,
-    extra: Map<String, String>.from(
-      (map['extra'] as Map?)?.cast<String, String>() ?? {},
-    ),
-  );
+  factory NotificationData.fromMap(Map<String, dynamic> map) =>
+      NotificationData(
+        orderId: map['orderId'] as String?,
+        productId: map['productId'] as String?,
+        route: map['route'] as String?,
+        extra: Map<String, String>.from(
+          (map['extra'] as Map?)?.cast<String, String>() ?? {},
+        ),
+      );
 
   Map<String, dynamic> toMap() => {
-    'orderId':   orderId,
-    'productId': productId,
-    'route':     route,
-    'extra':     extra,
-  };
+        'orderId': orderId,
+        'productId': productId,
+        'route': route,
+        'extra': extra,
+      };
 
   @override
   List<Object?> get props => [orderId, productId, route];

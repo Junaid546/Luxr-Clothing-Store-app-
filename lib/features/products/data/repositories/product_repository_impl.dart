@@ -4,22 +4,18 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/data/firestore_base_repository.dart';
-import 'package:style_cart/core/errors/exceptions.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/products/data/models/product_model.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
-import 'package:style_cart/features/products/domain/repositories/image_repository.dart';
-import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/data/firestore_base_repository.dart';
+import 'package:stylecart/core/errors/exceptions.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/products/data/models/product_model.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/domain/entities/product_filter_entity.dart';
+import 'package:stylecart/features/products/domain/repositories/image_repository.dart';
+import 'package:stylecart/features/products/domain/repositories/product_repository.dart';
 
-
-
-class ProductRepositoryImpl
-    extends FirestoreBaseRepository
+class ProductRepositoryImpl extends FirestoreBaseRepository
     implements ProductRepository {
-
   final ImageRepository _imageRepo;
 
   ProductRepositoryImpl(
@@ -44,7 +40,8 @@ class ProductRepositoryImpl
       // ── Apply filters ─────────────────────────────
       if (filter.category != null) {
         query = query.where(
-          'category', isEqualTo: filter.category,
+          'category',
+          isEqualTo: filter.category,
         );
       }
       if (filter.isFeatured == true) {
@@ -55,22 +52,19 @@ class ProductRepositoryImpl
       }
       if (filter.isLimitedEdition == true) {
         query = query.where(
-          'isLimitedEdition', isEqualTo: true,
+          'isLimitedEdition',
+          isEqualTo: true,
         );
       }
 
       // ── Apply sort ────────────────────────────────
       // IMPORTANT: sort field must match Firestore index
       query = switch (filter.sortBy) {
-        'price_asc'  => query.orderBy('finalPrice'),
-        'price_desc' => query.orderBy(
-                          'finalPrice', descending: true),
-        'rating'     => query.orderBy(
-                          'avgRating', descending: true),
-        'popular'    => query.orderBy(
-                          'soldCount', descending: true),
-        _            => query.orderBy(
-                          'createdAt', descending: true),
+        'price_asc' => query.orderBy('finalPrice'),
+        'price_desc' => query.orderBy('finalPrice', descending: true),
+        'rating' => query.orderBy('avgRating', descending: true),
+        'popular' => query.orderBy('soldCount', descending: true),
+        _ => query.orderBy('createdAt', descending: true),
       };
 
       // ── Pagination cursor ─────────────────────────
@@ -92,21 +86,21 @@ class ProductRepositoryImpl
       // Firestore can't do range + orderBy on different fields
       // So we filter price range client-side
       if (filter.minPrice != null) {
-        products = products
-            .where((p) => p.finalPrice >= filter.minPrice!)
-            .toList();
+        products =
+            products.where((p) => p.finalPrice >= filter.minPrice!).toList();
       }
       if (filter.maxPrice != null) {
-        products = products
-            .where((p) => p.finalPrice <= filter.maxPrice!)
-            .toList();
+        products =
+            products.where((p) => p.finalPrice <= filter.maxPrice!).toList();
       }
 
       // ── Client-side size filter ───────────────────
       if (filter.sizes.isNotEmpty) {
-        products = products.where((p) =>
-          filter.sizes.any((size) => p.isSizeAvailable(size)),
-        ).toList();
+        products = products
+            .where(
+              (p) => filter.sizes.any((size) => p.isSizeAvailable(size)),
+            )
+            .toList();
       }
 
       return products;
@@ -142,11 +136,8 @@ class ProductRepositoryImpl
   ) {
     return safeFirestoreCall(() async {
       // Tokenize the query for better matching
-      final tokens = query
-          .toLowerCase()
-          .split(' ')
-          .where((t) => t.length >= 2)
-          .toList();
+      final tokens =
+          query.toLowerCase().split(' ').where((t) => t.length >= 2).toList();
 
       if (tokens.isEmpty) return [];
 
@@ -176,8 +167,12 @@ class ProductRepositoryImpl
       // Since entity properties include name, brand, tags, we can just check those.
       if (tokens.length > 1) {
         results = results.where((product) {
-          final searchableText = '${product.name} ${product.brand} ${product.tags.join(' ')}'.toLowerCase();
-          return tokens.skip(1).every((token) => searchableText.contains(token));
+          final searchableText =
+              '${product.name} ${product.brand} ${product.tags.join(' ')}'
+                  .toLowerCase();
+          return tokens
+              .skip(1)
+              .every((token) => searchableText.contains(token));
         }).toList();
       }
 
@@ -199,20 +194,18 @@ class ProductRepositoryImpl
       final chunks = <List<String>>[];
       for (int i = 0; i < productIds.length; i += 30) {
         chunks.add(productIds.sublist(
-          i, 
-          (i + 30 > productIds.length) 
-              ? productIds.length 
-              : i + 30,
+          i,
+          (i + 30 > productIds.length) ? productIds.length : i + 30,
         ));
       }
 
       final results = <ProductEntity>[];
       for (final chunk in chunks) {
-        final snapshot = await _ref
-            .where(FieldPath.documentId, whereIn: chunk)
-            .get();
+        final snapshot =
+            await _ref.where(FieldPath.documentId, whereIn: chunk).get();
         results.addAll(
-          snapshot.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()),
+          snapshot.docs
+              .map((doc) => ProductModel.fromFirestore(doc).toEntity()),
         );
       }
       return results;
@@ -226,7 +219,10 @@ class ProductRepositoryImpl
   Stream<Either<Failure, ProductEntity>> watchProduct(
     String productId,
   ) {
-    return _ref.doc(productId).snapshots().map<Either<Failure, ProductEntity>>((doc) {
+    return _ref
+        .doc(productId)
+        .snapshots()
+        .map<Either<Failure, ProductEntity>>((doc) {
       if (!doc.exists) {
         return Left<Failure, ProductEntity>(
           NotFoundFailure('Product with ID $productId not found'),
@@ -267,8 +263,7 @@ class ProductRepositoryImpl
 
     // If upload fails → return failure (no Firestore doc created)
     if (uploadResult.isLeft()) {
-      return Left(uploadResult.fold((f) => f, (_) =>
-          const ServerFailure()));
+      return Left(uploadResult.fold((f) => f, (_) => const ServerFailure()));
     }
 
     final imageUrls = uploadResult.getOrElse(() => []);
@@ -287,43 +282,42 @@ class ProductRepositoryImpl
         );
       }
 
-      final computedTotal = product.inventory.values
-          .fold(0, (a, b) => a + b);
+      final computedTotal = product.inventory.values.fold(0, (a, b) => a + b);
 
       final data = <String, dynamic>{
-        'productId':        productId,
-        'name':             product.name,
-        'brand':            product.brand,
-        'description':      product.description,
-        'category':         product.category,
-        'subcategory':      product.subcategory,
-        'tags':             product.tags,
-        'searchIndex':      searchTerms.toList(),
-        'price':            product.price,
-        'discountPct':      product.discountPct,
-        'finalPrice':       product.price * 
-                            (1 - product.discountPct / 100),
-        'imageUrls':        imageUrls,
-        'thumbnailUrl':     imageUrls.isNotEmpty ? imageUrls.first : '',
-        'inventory':        product.inventory,
-        'totalStock':       computedTotal,
-        'lowStockThreshold':product.lowStockThreshold,
-        'colors':           product.colors
-                              .map((c) => {
-                                'name': c.name,
-                                'hexCode': c.hexCode,
-                              }).toList(),
-        'isActive':         true,
-        'isFeatured':       product.isFeatured,
-        'isNewArrival':     product.isNewArrival,
+        'productId': productId,
+        'name': product.name,
+        'brand': product.brand,
+        'description': product.description,
+        'category': product.category,
+        'subcategory': product.subcategory,
+        'tags': product.tags,
+        'searchIndex': searchTerms.toList(),
+        'price': product.price,
+        'discountPct': product.discountPct,
+        'finalPrice': product.price * (1 - product.discountPct / 100),
+        'imageUrls': imageUrls,
+        'thumbnailUrl': imageUrls.isNotEmpty ? imageUrls.first : '',
+        'inventory': product.inventory,
+        'totalStock': computedTotal,
+        'lowStockThreshold': product.lowStockThreshold,
+        'colors': product.colors
+            .map((c) => {
+                  'name': c.name,
+                  'hexCode': c.hexCode,
+                })
+            .toList(),
+        'isActive': true,
+        'isFeatured': product.isFeatured,
+        'isNewArrival': product.isNewArrival,
         'isLimitedEdition': product.isLimitedEdition,
-        'avgRating':        0.0,
-        'reviewCount':      0,
-        'soldCount':        0,
-        'viewCount':        0,
-        'createdAt':        FieldValue.serverTimestamp(),
-        'updatedAt':        FieldValue.serverTimestamp(),
-        'createdBy':        product.createdBy,
+        'avgRating': 0.0,
+        'reviewCount': 0,
+        'soldCount': 0,
+        'viewCount': 0,
+        'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+        'createdBy': product.createdBy,
       };
 
       await docRef.set(data);
@@ -345,14 +339,14 @@ class ProductRepositoryImpl
     var imageUrls = List<String>.from(product.imageUrls);
 
     if (newImageLocalPaths.isNotEmpty) {
-      final uploadResult = await _imageRepo
-          .uploadProductImages(
+      final uploadResult = await _imageRepo.uploadProductImages(
         localPaths: newImageLocalPaths,
         productId: product.productId,
       );
       if (uploadResult.isLeft()) {
         return Left(uploadResult.fold(
-          (f) => f, (_) => const ServerFailure(),
+          (f) => f,
+          (_) => const ServerFailure(),
         ));
       }
       imageUrls.addAll(uploadResult.getOrElse(() => []));
@@ -364,7 +358,9 @@ class ProductRepositoryImpl
         (url) => removedImageUrls.contains(url),
       );
       // Delete from Storage (best effort, non-blocking)
-      unawaited(_imageRepo.deleteImages(removedImageUrls).catchError((_) => const Right<Failure, void>(null)));
+      unawaited(_imageRepo
+          .deleteImages(removedImageUrls)
+          .catchError((_) => const Right<Failure, void>(null)));
     }
 
     if (imageUrls.isEmpty) {
@@ -377,41 +373,42 @@ class ProductRepositoryImpl
     return safeFirestoreCall(() async {
       final searchTerms = <String>{};
       for (final word in [
-        product.name, product.brand,
-        product.category, ...product.tags,
+        product.name,
+        product.brand,
+        product.category,
+        ...product.tags,
       ]) {
         searchTerms.addAll(word.toLowerCase().split(' '));
       }
 
-      final computedTotal = product.inventory.values
-          .fold(0, (a, b) => a + b);
+      final computedTotal = product.inventory.values.fold(0, (a, b) => a + b);
 
       await _ref.doc(product.productId).update({
-        'name':             product.name,
-        'brand':            product.brand,
-        'description':      product.description,
-        'category':         product.category,
-        'subcategory':      product.subcategory,
-        'tags':             product.tags,
-        'searchIndex':      searchTerms.toList(),
-        'price':            product.price,
-        'discountPct':      product.discountPct,
-        'finalPrice':       product.price *
-                            (1 - product.discountPct / 100),
-        'imageUrls':        imageUrls,
-        'thumbnailUrl':     imageUrls.isNotEmpty ? imageUrls.first : '',
-        'inventory':        product.inventory,
-        'totalStock':       computedTotal,
-        'lowStockThreshold':product.lowStockThreshold,
-        'colors':           product.colors
-                              .map((c) => {
-                                'name': c.name,
-                                'hexCode': c.hexCode,
-                              }).toList(),
-        'isFeatured':       product.isFeatured,
-        'isNewArrival':     product.isNewArrival,
+        'name': product.name,
+        'brand': product.brand,
+        'description': product.description,
+        'category': product.category,
+        'subcategory': product.subcategory,
+        'tags': product.tags,
+        'searchIndex': searchTerms.toList(),
+        'price': product.price,
+        'discountPct': product.discountPct,
+        'finalPrice': product.price * (1 - product.discountPct / 100),
+        'imageUrls': imageUrls,
+        'thumbnailUrl': imageUrls.isNotEmpty ? imageUrls.first : '',
+        'inventory': product.inventory,
+        'totalStock': computedTotal,
+        'lowStockThreshold': product.lowStockThreshold,
+        'colors': product.colors
+            .map((c) => {
+                  'name': c.name,
+                  'hexCode': c.hexCode,
+                })
+            .toList(),
+        'isFeatured': product.isFeatured,
+        'isNewArrival': product.isNewArrival,
         'isLimitedEdition': product.isLimitedEdition,
-        'updatedAt':        FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     });
   }
@@ -426,7 +423,7 @@ class ProductRepositoryImpl
   ) {
     return safeFirestoreCall(() async {
       await _ref.doc(productId).update({
-        'isActive':  isActive,
+        'isActive': isActive,
         'updatedAt': FieldValue.serverTimestamp(),
       });
     });
@@ -443,9 +440,9 @@ class ProductRepositoryImpl
     return safeFirestoreCall(() async {
       final total = inventory.values.fold(0, (a, b) => a + b);
       await _ref.doc(productId).update({
-        'inventory':  inventory,
+        'inventory': inventory,
         'totalStock': total,
-        'updatedAt':  FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
     });
   }
@@ -502,15 +499,14 @@ class ProductRepositoryImpl
         }
 
         final newSizeQty = current - quantity;
-        final currentTotal =
-            (data['totalStock'] as num?)?.toInt() ?? 0;
+        final currentTotal = (data['totalStock'] as num?)?.toInt() ?? 0;
 
         // Compute new total manually (no FieldValue inside txn)
         final newTotal = currentTotal - quantity;
 
         txn.update(ref, {
           'inventory.$size': newSizeQty,
-          'totalStock':      newTotal,
+          'totalStock': newTotal,
           'soldCount': (data['soldCount'] as num? ?? 0) + quantity,
           'updatedAt': FieldValue.serverTimestamp(),
         });
@@ -533,7 +529,7 @@ class ProductRepositoryImpl
       // and there's no "stock cannot exceed max" constraint
       await _ref.doc(productId).update({
         'inventory.$size': FieldValue.increment(quantity),
-        'totalStock':      FieldValue.increment(quantity),
+        'totalStock': FieldValue.increment(quantity),
         'soldCount': FieldValue.increment(-quantity),
         'updatedAt': FieldValue.serverTimestamp(),
       });
@@ -551,11 +547,8 @@ class ProductRepositoryImpl
   ) {
     return safeFirestoreCall(() async {
       await firestore.runTransaction((txn) async {
-
         // ── PHASE 1: READ ALL ─────────────────────
-        final refs = items
-            .map((item) => _ref.doc(item.productId))
-            .toList();
+        final refs = items.map((item) => _ref.doc(item.productId)).toList();
 
         final snapshots = await Future.wait(
           refs.map((ref) => txn.get(ref)),
@@ -587,10 +580,10 @@ class ProductRepositoryImpl
           if (stock < item.quantity) {
             throw StockException(
               stock == 0
-                ? '${item.productName} (Size ${item.size})'
-                  ' is out of stock'
-                : '${item.productName}: Only $stock left'
-                  ' in size ${item.size}',
+                  ? '${item.productName} (Size ${item.size})'
+                      ' is out of stock'
+                  : '${item.productName}: Only $stock left'
+                      ' in size ${item.size}',
             );
           }
         }
@@ -602,18 +595,15 @@ class ProductRepositoryImpl
           final inv = Map<String, dynamic>.from(
             data['inventory'] as Map? ?? {},
           );
-          final current = 
-              (inv[item.size] as num?)?.toInt() ?? 0;
-          final total = 
-              (data['totalStock'] as num?)?.toInt() ?? 0;
-          final sold = 
-              (data['soldCount'] as num?)?.toInt() ?? 0;
+          final current = (inv[item.size] as num?)?.toInt() ?? 0;
+          final total = (data['totalStock'] as num?)?.toInt() ?? 0;
+          final sold = (data['soldCount'] as num?)?.toInt() ?? 0;
 
           txn.update(refs[i], {
             'inventory.${item.size}': current - item.quantity,
             'totalStock': total - item.quantity,
-            'soldCount':  sold + item.quantity,
-            'updatedAt':  FieldValue.serverTimestamp(),
+            'soldCount': sold + item.quantity,
+            'updatedAt': FieldValue.serverTimestamp(),
           });
         }
       });
@@ -629,11 +619,10 @@ class ProductRepositoryImpl
       final batch = firestore.batch();
       for (final item in items) {
         batch.update(_ref.doc(item.productId), {
-          'inventory.${item.size}': 
-              FieldValue.increment(item.quantity),
+          'inventory.${item.size}': FieldValue.increment(item.quantity),
           'totalStock': FieldValue.increment(item.quantity),
-          'soldCount':  FieldValue.increment(-item.quantity),
-          'updatedAt':  FieldValue.serverTimestamp(),
+          'soldCount': FieldValue.increment(-item.quantity),
+          'updatedAt': FieldValue.serverTimestamp(),
         });
       }
       await batch.commit();

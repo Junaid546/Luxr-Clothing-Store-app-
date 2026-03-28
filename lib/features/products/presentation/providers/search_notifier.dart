@@ -5,8 +5,8 @@ import 'dart:async';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/data/providers/product_data_providers.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 part 'search_notifier.freezed.dart';
 part 'search_notifier.g.dart';
@@ -25,7 +25,6 @@ class SearchState with _$SearchState {
 
 @riverpod
 class SearchNotifier extends _$SearchNotifier {
-
   Timer? _debounceTimer;
 
   @override
@@ -54,9 +53,7 @@ class SearchNotifier extends _$SearchNotifier {
   Future<void> _performSearch(String query) async {
     state = state.copyWith(isSearching: true, hasError: false);
 
-    final result = await ref
-        .read(searchProductsUseCaseProvider)
-        .call(query);
+    final result = await ref.read(searchProductsUseCaseProvider).call(query);
 
     result.fold(
       (failure) => state = state.copyWith(
@@ -99,7 +96,9 @@ class SearchNotifier extends _$SearchNotifier {
 
   void clearQuery() {
     state = state.copyWith(
-      query: '', results: [], isSearching: false,
+      query: '',
+      results: [],
+      isSearching: false,
     );
   }
 }

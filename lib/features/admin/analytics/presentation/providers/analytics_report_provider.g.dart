@@ -29,14 +29,14 @@ String _$analyticsReportHash() => r'8a17f792bd323340c5a4945a727c5229389f2739';
 @ProviderFor(analyticsReport)
 final analyticsReportProvider =
     AutoDisposeFutureProvider<AnalyticsReport>.internal(
-      analyticsReport,
-      name: r'analyticsReportProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$analyticsReportHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  analyticsReport,
+  name: r'analyticsReportProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$analyticsReportHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -47,19 +47,19 @@ String _$comparisonMetricsHash() => r'272515b34ed2de2970d9c58ecc0f56acc0e6b2a1';
 @ProviderFor(comparisonMetrics)
 final comparisonMetricsProvider =
     AutoDisposeFutureProvider<List<ComparisonMetric>>.internal(
-      comparisonMetrics,
-      name: r'comparisonMetricsProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$comparisonMetricsHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  comparisonMetrics,
+  name: r'comparisonMetricsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$comparisonMetricsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef ComparisonMetricsRef =
-    AutoDisposeFutureProviderRef<List<ComparisonMetric>>;
+typedef ComparisonMetricsRef
+    = AutoDisposeFutureProviderRef<List<ComparisonMetric>>;
 String _$analyticsPeriodStateHash() =>
     r'ceae2e6f9c90347dfdd9dec106ed0e6bd1d4a47c';
 
@@ -67,14 +67,14 @@ String _$analyticsPeriodStateHash() =>
 @ProviderFor(AnalyticsPeriodState)
 final analyticsPeriodStateProvider =
     AutoDisposeNotifierProvider<AnalyticsPeriodState, String>.internal(
-      AnalyticsPeriodState.new,
-      name: r'analyticsPeriodStateProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$analyticsPeriodStateHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  AnalyticsPeriodState.new,
+  name: r'analyticsPeriodStateProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$analyticsPeriodStateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AnalyticsPeriodState = AutoDisposeNotifier<String>;
 String _$customDateRangeHash() => r'4814ccaed218aa3409d69ffbc35a17e6785b9d77';
@@ -83,14 +83,14 @@ String _$customDateRangeHash() => r'4814ccaed218aa3409d69ffbc35a17e6785b9d77';
 @ProviderFor(CustomDateRange)
 final customDateRangeProvider =
     AutoDisposeNotifierProvider<CustomDateRange, DateRange?>.internal(
-      CustomDateRange.new,
-      name: r'customDateRangeProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$customDateRangeHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  CustomDateRange.new,
+  name: r'customDateRangeProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$customDateRangeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$CustomDateRange = AutoDisposeNotifier<DateRange?>;
 // ignore_for_file: type=lint

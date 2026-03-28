@@ -12,14 +12,14 @@ String _$checkoutNotifierHash() => r'928cce642deed573d2b4d4b01dcecbc60ba58b9f';
 @ProviderFor(CheckoutNotifier)
 final checkoutNotifierProvider =
     AutoDisposeNotifierProvider<CheckoutNotifier, CheckoutState>.internal(
-      CheckoutNotifier.new,
-      name: r'checkoutNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$checkoutNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  CheckoutNotifier.new,
+  name: r'checkoutNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$checkoutNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$CheckoutNotifier = AutoDisposeNotifier<CheckoutState>;
 // ignore_for_file: type=lint

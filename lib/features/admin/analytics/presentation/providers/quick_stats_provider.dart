@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
 
 part 'quick_stats_provider.g.dart';
 
@@ -27,12 +27,12 @@ Stream<Map<String, dynamic>> todayQuickStats(
     for (final doc in snap.docs) {
       final data = doc.data();
       final status = data['status'] as String? ?? '';
-      
+
       // Calculate revenue from delivered orders
       if (status == 'delivered') {
         revenue += (data['total'] as num?)?.toDouble() ?? 0.0;
       }
-      
+
       // Total orders count (excluding cancelled if preferred, but usually count all pending/success)
       if (status != 'cancelled') {
         orderCount++;

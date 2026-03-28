@@ -13,14 +13,14 @@ String _$analyticsRepositoryHash() =>
 @ProviderFor(analyticsRepository)
 final analyticsRepositoryProvider =
     AutoDisposeProvider<AnalyticsRepository>.internal(
-      analyticsRepository,
-      name: r'analyticsRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$analyticsRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  analyticsRepository,
+  name: r'analyticsRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$analyticsRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -48,14 +48,14 @@ String _$analyticsPeriodHash() => r'1662da5e83a89056b5982e984cb2bffc9eef348e';
 @ProviderFor(AnalyticsPeriod)
 final analyticsPeriodProvider =
     AutoDisposeNotifierProvider<AnalyticsPeriod, String>.internal(
-      AnalyticsPeriod.new,
-      name: r'analyticsPeriodProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$analyticsPeriodHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  AnalyticsPeriod.new,
+  name: r'analyticsPeriodProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$analyticsPeriodHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AnalyticsPeriod = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint

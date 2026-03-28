@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/presentation/providers/order_notifier.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/presentation/providers/order_notifier.dart';
 
 class OrderTrackingScreen extends ConsumerWidget {
   final String orderId;
@@ -30,7 +30,8 @@ class OrderTrackingScreen extends ConsumerWidget {
   }
 
   Widget _buildLoading() {
-    return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+    return const Center(
+        child: CircularProgressIndicator(color: AppColors.primary));
   }
 
   Widget _buildError(String error, WidgetRef ref) {
@@ -42,8 +43,10 @@ class OrderTrackingScreen extends ConsumerWidget {
           const SizedBox(height: 16),
           Text(error, style: const TextStyle(color: Colors.white70)),
           TextButton(
-            onPressed: () => ref.refresh(orderTrackingNotifierProvider(orderId)),
-            child: const Text('Retry', style: TextStyle(color: AppColors.primary)),
+            onPressed: () =>
+                ref.refresh(orderTrackingNotifierProvider(orderId)),
+            child:
+                const Text('Retry', style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),
@@ -86,7 +89,9 @@ class _TrackingAppBar extends StatelessWidget {
               child: Text(
                 'Order Tracking',
                 style: TextStyle(
-                    fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -123,7 +128,8 @@ class _OrderHeader extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: _statusColor(order.status).withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
@@ -168,11 +174,31 @@ class _StatusTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final steps = [
-      (status: OrderStatus.pending, label: 'Order Placed', icon: Icons.shopping_bag_outlined),
-      (status: OrderStatus.packed, label: 'Packed', icon: Icons.inventory_2_outlined),
-      (status: OrderStatus.shipped, label: 'Shipped', icon: Icons.local_shipping_outlined),
-      (status: OrderStatus.outForDelivery, label: 'Out for Delivery', icon: Icons.delivery_dining_outlined),
-      (status: OrderStatus.delivered, label: 'Delivered', icon: Icons.check_circle_outline),
+      (
+        status: OrderStatus.pending,
+        label: 'Order Placed',
+        icon: Icons.shopping_bag_outlined
+      ),
+      (
+        status: OrderStatus.packed,
+        label: 'Packed',
+        icon: Icons.inventory_2_outlined
+      ),
+      (
+        status: OrderStatus.shipped,
+        label: 'Shipped',
+        icon: Icons.local_shipping_outlined
+      ),
+      (
+        status: OrderStatus.outForDelivery,
+        label: 'Out for Delivery',
+        icon: Icons.delivery_dining_outlined
+      ),
+      (
+        status: OrderStatus.delivered,
+        label: 'Delivered',
+        icon: Icons.check_circle_outline
+      ),
     ];
 
     return Padding(
@@ -187,15 +213,18 @@ class _StatusTimeline extends StatelessWidget {
               .where((h) =>
                   h.status == step.status ||
                   (step.status == OrderStatus.packed &&
-                      (h.status == OrderStatus.processing || h.status == OrderStatus.packed)))
+                      (h.status == OrderStatus.processing ||
+                          h.status == OrderStatus.packed)))
               .lastOrNull;
 
           final stepIndex = index;
           final isCompleted = order.statusIndex > stepIndex ||
-              (order.status == step.status && step.status == OrderStatus.delivered);
+              (order.status == step.status &&
+                  step.status == OrderStatus.delivered);
 
           final isCurrent = order.statusIndex == stepIndex &&
-              (order.status != OrderStatus.delivered || step.status == OrderStatus.delivered);
+              (order.status != OrderStatus.delivered ||
+                  step.status == OrderStatus.delivered);
 
           final isFuture = !isCompleted && !isCurrent;
 
@@ -213,7 +242,9 @@ class _StatusTimeline extends StatelessWidget {
                     Container(
                       width: 2,
                       height: 50,
-                      color: isCompleted ? AppColors.primary : AppColors.borderDefault,
+                      color: isCompleted
+                          ? AppColors.primary
+                          : AppColors.borderDefault,
                     ),
                 ],
               ),
@@ -232,15 +263,18 @@ class _StatusTimeline extends StatelessWidget {
                             : isCompleted || isCurrent
                                 ? AppColors.primary
                                 : Colors.white,
-                        fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
+                        fontWeight:
+                            isCurrent ? FontWeight.bold : FontWeight.normal,
                       ),
                     ),
                     if (historyEntry != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
-                          DateFormat('MMM dd, hh:mm a').format(historyEntry.timestamp),
-                          style: const TextStyle(color: Colors.white54, fontSize: 12),
+                          DateFormat('MMM dd, hh:mm a')
+                              .format(historyEntry.timestamp),
+                          style: const TextStyle(
+                              color: Colors.white54, fontSize: 12),
                         ),
                       ),
                     if (isCurrent && step.status == OrderStatus.outForDelivery)
@@ -258,7 +292,9 @@ class _StatusTimeline extends StatelessWidget {
                     if (isFuture)
                       const Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: Text('Pending', style: TextStyle(color: Colors.white24, fontSize: 12)),
+                        child: Text('Pending',
+                            style:
+                                TextStyle(color: Colors.white24, fontSize: 12)),
                       ),
                     const SizedBox(height: 12),
                   ],
@@ -295,7 +331,8 @@ class _TimelineIcon extends StatelessWidget {
             : isCurrent
                 ? Colors.transparent
                 : AppColors.backgroundElevated,
-        border: isCurrent ? Border.all(color: AppColors.primary, width: 2) : null,
+        border:
+            isCurrent ? Border.all(color: AppColors.primary, width: 2) : null,
       ),
       child: isCompleted
           ? const Icon(Icons.check, color: Colors.white, size: 18)
@@ -313,7 +350,8 @@ class _PulsingDot extends StatefulWidget {
   State<_PulsingDot> createState() => _PulsingDotState();
 }
 
-class _PulsingDotState extends State<_PulsingDot> with SingleTickerProviderStateMixin {
+class _PulsingDotState extends State<_PulsingDot>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -368,7 +406,8 @@ class _CourierCard extends StatelessWidget {
         children: [
           const Text(
             'COURIER INFORMATION',
-            style: TextStyle(color: Colors.white54, fontSize: 10, letterSpacing: 1.5),
+            style: TextStyle(
+                color: Colors.white54, fontSize: 10, letterSpacing: 1.5),
           ),
           const SizedBox(height: 12),
           Row(
@@ -380,7 +419,8 @@ class _CourierCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: AppColors.backgroundElevated,
                 ),
-                child: const Icon(Icons.person, color: Colors.white38, size: 28),
+                child:
+                    const Icon(Icons.person, color: Colors.white38, size: 28),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -390,14 +430,17 @@ class _CourierCard extends StatelessWidget {
                     Text(
                       courier.name ?? 'Assigned Courier',
                       style: const TextStyle(
-                          color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                     ),
                     const Row(
                       children: [
                         Icon(Icons.star, color: AppColors.gold, size: 14),
                         SizedBox(width: 4),
                         Text('4.9 (1.2k reviews)',
-                            style: TextStyle(color: Colors.white54, fontSize: 12)),
+                            style:
+                                TextStyle(color: Colors.white54, fontSize: 12)),
                       ],
                     ),
                   ],
@@ -416,7 +459,8 @@ class _CourierCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                const Text('Tracking: ', style: TextStyle(color: Colors.white54, fontSize: 12)),
+                const Text('Tracking: ',
+                    style: TextStyle(color: Colors.white54, fontSize: 12)),
                 Text(
                   courier.trackingNumber!,
                   style: const TextStyle(
@@ -482,7 +526,8 @@ class _MapPlaceholder extends StatelessWidget {
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.delivery_dining, color: Colors.white, size: 24),
+              child: const Icon(Icons.delivery_dining,
+                  color: Colors.white, size: 24),
             ),
           ),
           Positioned(
@@ -501,7 +546,8 @@ class _MapPlaceholder extends StatelessWidget {
                   SizedBox(width: 6),
                   Text(
                     'LIVE LOCATION',
-                    style: TextStyle(color: Colors.white, fontSize: 10, letterSpacing: 1),
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 10, letterSpacing: 1),
                   ),
                 ],
               ),
@@ -558,7 +604,10 @@ class _OrderItemsList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text('Items Ordered',
-              style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
           ...order.items.map(
             (item) => Container(
@@ -588,14 +637,17 @@ class _OrderItemsList extends StatelessWidget {
                         Text(
                           item.productName,
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'Size: ${item.size}  |  Color: ${item.color}  |  Qty: ${item.quantity}',
-                          style: const TextStyle(color: Colors.white54, fontSize: 11),
+                          style: const TextStyle(
+                              color: Colors.white54, fontSize: 11),
                         ),
                       ],
                     ),
@@ -603,7 +655,9 @@ class _OrderItemsList extends StatelessWidget {
                   Text(
                     item.lineTotal.toCurrencyString,
                     style: const TextStyle(
-                        color: AppColors.gold, fontSize: 14, fontWeight: FontWeight.bold),
+                        color: AppColors.gold,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -635,7 +689,9 @@ class _PriceSummaryCard extends StatelessWidget {
           const SizedBox(height: 8),
           _summaryRow(
             'Shipping',
-            order.shippingCost == 0 ? 'FREE' : order.shippingCost.toCurrencyString,
+            order.shippingCost == 0
+                ? 'FREE'
+                : order.shippingCost.toCurrencyString,
             valueColor: order.shippingCost == 0 ? AppColors.success : null,
           ),
           if (order.discountAmount > 0) ...[
@@ -651,7 +707,10 @@ class _PriceSummaryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Total',
-                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
               Text(
                 order.total.toCurrencyString,
                 style: const TextStyle(
@@ -667,13 +726,17 @@ class _PriceSummaryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                order.paymentMethod == 'cod' ? Icons.payments_outlined : Icons.credit_card_outlined,
+                order.paymentMethod == 'cod'
+                    ? Icons.payments_outlined
+                    : Icons.credit_card_outlined,
                 color: Colors.white38,
                 size: 16,
               ),
               const SizedBox(width: 6),
               Text(
-                order.paymentMethod == 'cod' ? 'Cash on Delivery' : 'Online Payment',
+                order.paymentMethod == 'cod'
+                    ? 'Cash on Delivery'
+                    : 'Online Payment',
                 style: const TextStyle(color: Colors.white38, fontSize: 12),
               ),
               const SizedBox(width: 12),
@@ -688,7 +751,9 @@ class _PriceSummaryCard extends StatelessWidget {
                 child: Text(
                   order.paymentStatus.toUpperCase(),
                   style: TextStyle(
-                    color: order.paymentStatus == 'paid' ? AppColors.success : AppColors.warning,
+                    color: order.paymentStatus == 'paid'
+                        ? AppColors.success
+                        : AppColors.warning,
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),
@@ -705,7 +770,8 @@ class _PriceSummaryCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(color: Colors.white54, fontSize: 14)),
+        Text(label,
+            style: const TextStyle(color: Colors.white54, fontSize: 14)),
         Text(
           value,
           style: TextStyle(

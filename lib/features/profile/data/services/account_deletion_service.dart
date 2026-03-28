@@ -3,10 +3,10 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/core/storage/secure_storage_service.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/core/storage/secure_storage_service.dart';
 
 part 'account_deletion_service.g.dart';
 
@@ -64,7 +64,10 @@ class AccountDeletionService {
       await _deleteStorageFiles(userId);
 
       // Step 5: Delete Firestore user doc
-      await _firestore.collection(FirestoreConstants.users).doc(userId).delete();
+      await _firestore
+          .collection(FirestoreConstants.users)
+          .doc(userId)
+          .delete();
 
       // Step 6: Delete Firebase Auth account (LAST)
       await _auth.currentUser!.delete();
@@ -172,7 +175,8 @@ class AccountDeletionService {
 }
 
 @riverpod
-AccountDeletionService accountDeletionService(AccountDeletionServiceRef ref) => AccountDeletionService(
+AccountDeletionService accountDeletionService(AccountDeletionServiceRef ref) =>
+    AccountDeletionService(
       firestore: ref.watch(firestoreProvider),
       auth: ref.watch(firebaseAuthProvider),
       storage: ref.watch(firebaseStorageProvider),

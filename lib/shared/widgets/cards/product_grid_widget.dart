@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
-import 'package:style_cart/shared/utils/wishlist_helper.dart';
-import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/wishlist/presentation/providers/wishlist_notifier.dart';
+import 'package:stylecart/shared/utils/wishlist_helper.dart';
+import 'package:stylecart/shared/widgets/cards/product_card_widget.dart';
 
 class ProductGridWidget extends ConsumerStatefulWidget {
   final List<ProductEntity> products;
@@ -83,13 +83,15 @@ class _ProductGridWidgetState extends ConsumerState<ProductGridWidget> {
         final product = widget.products[index];
         return Consumer(
           builder: (context, ref, child) {
-            final isWishlisted = ref.watch(isProductWishlistedProvider(product.productId));
+            final isWishlisted =
+                ref.watch(isProductWishlistedProvider(product.productId));
             return ProductCardWidget(
               product: product,
               isWishlisted: isWishlisted,
               onWishlistTap: () => toggleWishlist(ref, context, product),
               onTap: () => context.push(
-                RouteNames.productDetail.replaceAll(':productId', product.productId),
+                RouteNames.productDetail
+                    .replaceAll(':productId', product.productId),
               ),
             );
           },
@@ -134,15 +136,17 @@ class _ProductGridWidgetState extends ConsumerState<ProductGridWidget> {
             Text(
               'No products found',
               style: AppTextStyles.titleMedium?.copyWith(
-                color: AppColors.textSecondary,
-              ) ?? const TextStyle(color: AppColors.textSecondary, fontSize: 16),
+                    color: AppColors.textSecondary,
+                  ) ??
+                  const TextStyle(color: AppColors.textSecondary, fontSize: 16),
             ),
             const SizedBox(height: 8),
             Text(
               'Try adjusting your filters',
               style: AppTextStyles.bodyMedium?.copyWith(
-                color: AppColors.textMuted,
-              ) ?? const TextStyle(color: AppColors.textMuted, fontSize: 14),
+                    color: AppColors.textMuted,
+                  ) ??
+                  const TextStyle(color: AppColors.textMuted, fontSize: 14),
             ),
           ],
         ),

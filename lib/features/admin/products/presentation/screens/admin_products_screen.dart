@@ -2,19 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
-import 'package:style_cart/features/admin/products/presentation/providers/admin_product_notifier.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/admin/core/providers/admin_guard_provider.dart';
+import 'package:stylecart/features/admin/products/presentation/providers/admin_product_notifier.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 class AdminProductsScreen extends ConsumerStatefulWidget {
   const AdminProductsScreen({super.key});
 
   @override
-  ConsumerState<AdminProductsScreen> createState() => _AdminProductsScreenState();
+  ConsumerState<AdminProductsScreen> createState() =>
+      _AdminProductsScreenState();
 }
 
 class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
@@ -35,7 +36,7 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     if (guardState.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (guardState.hasError) {
       return Center(child: Text('Error: ${guardState.error}'));
     }
@@ -103,7 +104,9 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
               setState(() => _showSearch = !_showSearch);
               if (!_showSearch) {
                 _searchController.clear();
-                ref.read(adminProductNotifierProvider.notifier).setSearchQuery('');
+                ref
+                    .read(adminProductNotifierProvider.notifier)
+                    .setSearchQuery('');
               }
             },
           ),
@@ -201,7 +204,8 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     );
   }
 
-  Widget _buildProductsList(List<ProductEntity> products, AdminProductNotifier notifier) {
+  Widget _buildProductsList(
+      List<ProductEntity> products, AdminProductNotifier notifier) {
     return RefreshIndicator(
       onRefresh: notifier.refresh,
       color: AppColors.primary,
@@ -223,7 +227,8 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.inventory_2_outlined, size: 64, color: AppColors.textMuted.withOpacity(0.5)),
+          Icon(Icons.inventory_2_outlined,
+              size: 64, color: AppColors.textMuted.withOpacity(0.5)),
           const SizedBox(height: 16),
           const Text(
             'No products found',
@@ -238,7 +243,8 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     // TODO: Implement category filter sheet
   }
 
-  void _showOptions(BuildContext context, ProductEntity product, AdminProductNotifier notifier) {
+  void _showOptions(BuildContext context, ProductEntity product,
+      AdminProductNotifier notifier) {
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.backgroundCard,
@@ -251,7 +257,9 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
           children: [
             ListTile(
               leading: Icon(
-                product.isActive ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                product.isActive
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
                 color: Colors.white,
               ),
               title: Text(
@@ -264,8 +272,10 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.edit_road_outlined, color: Colors.white),
-              title: const Text('Update Stock', style: TextStyle(color: Colors.white)),
+              leading:
+                  const Icon(Icons.edit_road_outlined, color: Colors.white),
+              title: const Text('Update Stock',
+                  style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Show quick stock update dialog
@@ -274,7 +284,8 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
             const Divider(color: AppColors.borderDefault),
             ListTile(
               leading: const Icon(Icons.delete_outline, color: AppColors.error),
-              title: const Text('Delete Product', style: TextStyle(color: AppColors.error)),
+              title: const Text('Delete Product',
+                  style: TextStyle(color: AppColors.error)),
               onTap: () {
                 Navigator.pop(context);
                 _confirmDelete(context, product, notifier);
@@ -286,12 +297,14 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     );
   }
 
-  void _confirmDelete(BuildContext context, ProductEntity product, AdminProductNotifier notifier) {
+  void _confirmDelete(BuildContext context, ProductEntity product,
+      AdminProductNotifier notifier) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: AppColors.backgroundCard,
-        title: const Text('Delete Product?', style: TextStyle(color: Colors.white)),
+        title: const Text('Delete Product?',
+            style: TextStyle(color: Colors.white)),
         content: Text(
           'Are you sure you want to delete "${product.name}"? This action cannot be undone.',
           style: const TextStyle(color: AppColors.textSecondary),
@@ -393,7 +406,8 @@ class _AdminProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLowStock = product.totalStock <= product.lowStockThreshold && product.totalStock > 0;
+    final bool isLowStock = product.totalStock <= product.lowStockThreshold &&
+        product.totalStock > 0;
     final bool isOutOfStock = product.totalStock == 0;
 
     return GestureDetector(
@@ -423,8 +437,10 @@ class _AdminProductTile extends StatelessWidget {
                     width: 60,
                     height: 68,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(color: AppColors.backgroundElevated),
-                    errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),
+                    placeholder: (context, url) =>
+                        Container(color: AppColors.backgroundElevated),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.image_not_supported),
                   ),
                 ),
                 if (!product.isActive)
@@ -458,13 +474,15 @@ class _AdminProductTile extends StatelessWidget {
                       Expanded(
                         child: Text(
                           product.name,
-                          style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                          style: AppTextStyles.titleMedium
+                              .copyWith(color: Colors.white),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
                           color: AppColors.gold.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(20),
@@ -527,7 +545,8 @@ class _AdminProductTile extends StatelessWidget {
             const SizedBox(width: 8),
             GestureDetector(
               onTap: () => context.push(
-                RouteNames.adminEditProduct.replaceAll(':productId', product.productId),
+                RouteNames.adminEditProduct
+                    .replaceAll(':productId', product.productId),
               ),
               child: Container(
                 padding: const EdgeInsets.all(10),

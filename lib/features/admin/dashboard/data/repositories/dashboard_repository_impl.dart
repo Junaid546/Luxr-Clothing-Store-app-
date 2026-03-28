@@ -4,15 +4,15 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/data/firestore_base_repository.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/admin/dashboard/data/repositories/dashboard_repository.dart';
-import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
-import 'package:style_cart/features/products/data/models/product_model.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/data/firestore_base_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/features/admin/dashboard/data/repositories/dashboard_repository.dart';
+import 'package:stylecart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
+import 'package:stylecart/features/products/data/models/product_model.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 part 'dashboard_repository_impl.g.dart';
 
@@ -43,8 +43,10 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
         // 1. Current period revenue
         final currentOrdersSnap = await _ordersRef
             .where('status', isEqualTo: OrderStatus.delivered)
-            .where('placedAt', isGreaterThanOrEqualTo: Timestamp.fromDate(periodStart))
-            .where('placedAt', isLessThanOrEqualTo: Timestamp.fromDate(periodEnd))
+            .where('placedAt',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(periodStart))
+            .where('placedAt',
+                isLessThanOrEqualTo: Timestamp.fromDate(periodEnd))
             .get();
 
         double currentRevenue = 0;
@@ -56,7 +58,8 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
         // 2. Previous period revenue for % change
         final prevOrdersSnap = await _ordersRef
             .where('status', isEqualTo: OrderStatus.delivered)
-            .where('placedAt', isGreaterThanOrEqualTo: Timestamp.fromDate(prevStart))
+            .where('placedAt',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(prevStart))
             .where('placedAt', isLessThanOrEqualTo: Timestamp.fromDate(prevEnd))
             .get();
 
@@ -69,8 +72,10 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
         // 3. New clients
         final newClientsSnap = await _usersRef
             .where('role', isEqualTo: 'customer')
-            .where('createdAt', isGreaterThanOrEqualTo: Timestamp.fromDate(periodStart))
-            .where('createdAt', isLessThanOrEqualTo: Timestamp.fromDate(periodEnd))
+            .where('createdAt',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(periodStart))
+            .where('createdAt',
+                isLessThanOrEqualTo: Timestamp.fromDate(periodEnd))
             .count()
             .get();
 
@@ -78,8 +83,10 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
 
         final prevClientsSnap = await _usersRef
             .where('role', isEqualTo: 'customer')
-            .where('createdAt', isGreaterThanOrEqualTo: Timestamp.fromDate(prevStart))
-            .where('createdAt', isLessThanOrEqualTo: Timestamp.fromDate(prevEnd))
+            .where('createdAt',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(prevStart))
+            .where('createdAt',
+                isLessThanOrEqualTo: Timestamp.fromDate(prevEnd))
             .count()
             .get();
 
@@ -89,14 +96,15 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
         final allTimeRevenueSnap = await _ordersRef
             .where('status', isEqualTo: OrderStatus.delivered)
             .get();
-        
+
         double allTimeRevenue = 0;
         for (final doc in allTimeRevenueSnap.docs) {
           allTimeRevenue += (doc.data()['total'] as num?)?.toDouble() ?? 0.0;
         }
 
         final allOrdersCount = await _ordersRef.count().get();
-        final allClientsCount = await _usersRef.where('role', isEqualTo: 'customer').count().get();
+        final allClientsCount =
+            await _usersRef.where('role', isEqualTo: 'customer').count().get();
 
         double _pctChange(double current, double prev) {
           if (prev == 0) return current > 0 ? 100.0 : 0.0;
@@ -109,16 +117,22 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
           newClients: newClients,
           totalClients: allClientsCount.count ?? 0,
           conversionRate: currentOrderCount > 0
-              ? (currentOrderCount / (newClients > 0 ? newClients : 1) * 100).clamp(0.0, 100.0)
+              ? (currentOrderCount / (newClients > 0 ? newClients : 1) * 100)
+                  .clamp(0.0, 100.0)
               : 0.0,
           revenueChange: _pctChange(currentRevenue, prevRevenue),
-          ordersChange: _pctChange(currentOrderCount.toDouble(), prevOrderCount.toDouble()),
-          clientsChange: _pctChange(newClients.toDouble(), prevClients.toDouble()),
+          ordersChange: _pctChange(
+              currentOrderCount.toDouble(), prevOrderCount.toDouble()),
+          clientsChange:
+              _pctChange(newClients.toDouble(), prevClients.toDouble()),
           conversionChange: 0.0,
         );
       } catch (e) {
-        if (kDebugMode && e is FirebaseException && e.code == 'permission-denied') {
-          debugPrint('[DashboardRepository] Permission denied in getStats. Returning empty stats.');
+        if (kDebugMode &&
+            e is FirebaseException &&
+            e.code == 'permission-denied') {
+          debugPrint(
+              '[DashboardRepository] Permission denied in getStats. Returning empty stats.');
           return DashboardStats.empty;
         }
         rethrow;
@@ -134,7 +148,8 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
         final weekStart = DateTime(now.year, now.month, now.day - 6);
 
         final snap = await _ordersRef
-            .where('placedAt', isGreaterThanOrEqualTo: Timestamp.fromDate(weekStart))
+            .where('placedAt',
+                isGreaterThanOrEqualTo: Timestamp.fromDate(weekStart))
             .where('status', isEqualTo: OrderStatus.delivered)
             .orderBy('placedAt', descending: false)
             .get();
@@ -165,8 +180,11 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
 
         return WeeklyRevenueData(days: dailyMap.values.toList());
       } catch (e) {
-        if (kDebugMode && e is FirebaseException && e.code == 'permission-denied') {
-          debugPrint('[DashboardRepository] Permission denied in getWeeklyRevenue. Returning empty data.');
+        if (kDebugMode &&
+            e is FirebaseException &&
+            e.code == 'permission-denied') {
+          debugPrint(
+              '[DashboardRepository] Permission denied in getWeeklyRevenue. Returning empty data.');
           return const WeeklyRevenueData(days: []);
         }
         rethrow;
@@ -175,19 +193,23 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
   }
 
   @override
-  Future<Either<Failure, List<ProductEntity>>> getTopSellingProducts({int limit = 5}) {
+  Future<Either<Failure, List<ProductEntity>>> getTopSellingProducts(
+      {int limit = 5}) {
     return safeFirestoreCall(() async {
       final snap = await _productsRef
           .where('isActive', isEqualTo: true)
           .orderBy('soldCount', descending: true)
           .limit(limit)
           .get();
-      return snap.docs.map((doc) => ProductModel.fromFirestore(doc).toEntity()).toList();
+      return snap.docs
+          .map((doc) => ProductModel.fromFirestore(doc).toEntity())
+          .toList();
     });
   }
 
   @override
-  Stream<Either<Failure, List<ActivityItem>>> watchRecentActivity({int limit = 10}) {
+  Stream<Either<Failure, List<ActivityItem>>> watchRecentActivity(
+      {int limit = 10}) {
     return safeFirestoreStream(() => _ordersRef
         .orderBy('placedAt', descending: true)
         .limit(limit)
@@ -199,7 +221,8 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
                 title: 'New order #${doc.id}',
                 subtitle: data['userName'] as String? ?? 'Unknown Customer',
                 amount: (data['total'] as num?)?.toDouble(),
-                timestamp: (data['placedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+                timestamp: (data['placedAt'] as Timestamp?)?.toDate() ??
+                    DateTime.now(),
                 orderId: doc.id,
                 userId: data['userId'] as String?,
               );
@@ -210,7 +233,8 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
   Future<Either<Failure, int>> getLowStockCount() {
     return safeFirestoreCall(() async {
       try {
-        final threshold = int.tryParse(dotenv.env['LOW_STOCK_THRESHOLD'] ?? '5') ?? 5;
+        final threshold =
+            int.tryParse(dotenv.env['LOW_STOCK_THRESHOLD'] ?? '5') ?? 5;
         final snap = await _productsRef
             .where('isActive', isEqualTo: true)
             .where('totalStock', isLessThanOrEqualTo: threshold)
@@ -218,8 +242,11 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
             .get();
         return snap.count ?? 0;
       } catch (e) {
-        if (kDebugMode && e is FirebaseException && e.code == 'permission-denied') {
-          debugPrint('[DashboardRepository] Permission denied in getLowStockCount. Returning 0.');
+        if (kDebugMode &&
+            e is FirebaseException &&
+            e.code == 'permission-denied') {
+          debugPrint(
+              '[DashboardRepository] Permission denied in getLowStockCount. Returning 0.');
           return 0;
         }
         rethrow;

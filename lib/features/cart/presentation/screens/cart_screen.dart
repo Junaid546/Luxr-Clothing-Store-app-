@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
-import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
-import 'package:style_cart/features/cart/presentation/providers/cart_notifier.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/cart/data/models/cart_item_model.dart';
+import 'package:stylecart/features/cart/domain/entities/cart_entity.dart';
+import 'package:stylecart/features/cart/presentation/providers/cart_notifier.dart';
 
 class CartScreen extends ConsumerWidget {
   const CartScreen({super.key});
@@ -36,7 +36,8 @@ class CartScreen extends ConsumerWidget {
                     children: [
                       // Cart items list
                       ...items.map(
-                        (item) => _CartItemCard(item: item, isUpdating: isUpdating),
+                        (item) =>
+                            _CartItemCard(item: item, isUpdating: isUpdating),
                       ),
                       const SizedBox(height: 12),
                       // Order summary card
@@ -50,8 +51,11 @@ class CartScreen extends ConsumerWidget {
               ],
             );
           },
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.gold)),
-          error: (e, _) => Center(child: Text('Error: $e', style: const TextStyle(color: Colors.red))),
+          loading: () => const Center(
+              child: CircularProgressIndicator(color: AppColors.gold)),
+          error: (e, _) => Center(
+              child:
+                  Text('Error: $e', style: const TextStyle(color: Colors.red))),
         ),
       ),
     );
@@ -76,7 +80,9 @@ class _CartAppBar extends ConsumerWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('My Cart', style: AppTextStyles.headlineMedium.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+              Text('My Cart',
+                  style: AppTextStyles.headlineMedium.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold)),
               Text(
                 '${summary.subtotal > 0 ? (summary.total / 10).toInt() : 0} ITEMS', // Estimation or replace with actual totalItems if added to summary
                 style: AppTextStyles.labelSmall.copyWith(
@@ -172,7 +178,8 @@ class _CartItemContent extends ConsumerWidget {
                 // Name
                 Text(
                   item.productName,
-                  style: AppTextStyles.titleMedium.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.titleMedium.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -180,7 +187,8 @@ class _CartItemContent extends ConsumerWidget {
                 // Size + Color
                 Text(
                   'Size: ${item.size} | Color: ${item.color}',
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textMuted),
+                  style: AppTextStyles.bodySmall
+                      .copyWith(color: AppColors.textMuted),
                 ),
                 const SizedBox(height: 8),
                 // Price + Quantity row
@@ -193,7 +201,9 @@ class _CartItemContent extends ConsumerWidget {
                       children: [
                         Text(
                           item.finalPrice.toCurrencyString,
-                          style: AppTextStyles.titleMedium.copyWith(color: AppColors.gold, fontWeight: FontWeight.bold),
+                          style: AppTextStyles.titleMedium.copyWith(
+                              color: AppColors.gold,
+                              fontWeight: FontWeight.bold),
                         ),
                         if (item.discountPct > 0)
                           Text(
@@ -226,7 +236,8 @@ class _CartItemContent extends ConsumerWidget {
           // Remove button (top right)
           GestureDetector(
             onTap: () async {
-              final confirmed = await _showRemoveDialog(context, item.productName);
+              final confirmed =
+                  await _showRemoveDialog(context, item.productName);
               if (confirmed == true) {
                 cartNotifier.removeFromCart(item.cartItemId);
               }
@@ -287,7 +298,9 @@ class _QuantityStepper extends StatelessWidget {
                       color: AppColors.primary,
                     ),
                   )
-                : Text('$quantity', style: AppTextStyles.titleMedium.copyWith(color: Colors.white)),
+                : Text('$quantity',
+                    style: AppTextStyles.titleMedium
+                        .copyWith(color: Colors.white)),
           ),
           _StepButton(
             icon: Icons.add,
@@ -345,8 +358,11 @@ class _OrderSummaryCard extends StatelessWidget {
           const SizedBox(height: 8),
           _SummaryRow(
             label: 'Shipping',
-            value: summary.shippingCost == 0.0 ? 'FREE' : summary.shippingCost.toCurrencyString,
-            valueColor: summary.shippingCost == 0.0 ? AppColors.success : Colors.white,
+            value: summary.shippingCost == 0.0
+                ? 'FREE'
+                : summary.shippingCost.toCurrencyString,
+            valueColor:
+                summary.shippingCost == 0.0 ? AppColors.success : Colors.white,
           ),
           if (summary.discountAmount > 0) ...[
             const SizedBox(height: 8),
@@ -374,7 +390,9 @@ class _OrderSummaryCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Total', style: AppTextStyles.titleLarge.copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+              Text('Total',
+                  style: AppTextStyles.titleLarge.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold)),
               Text(
                 summary.total.toCurrencyString,
                 style: const TextStyle(
@@ -414,7 +432,9 @@ class _SummaryRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary)),
+        Text(label,
+            style: AppTextStyles.bodyMedium
+                .copyWith(color: AppColors.textSecondary)),
         Text(value,
             style: AppTextStyles.bodyMedium.copyWith(
               color: valueColor ?? Colors.white,
@@ -470,7 +490,8 @@ class _CheckoutBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
+      padding: EdgeInsets.fromLTRB(
+          16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
       decoration: const BoxDecoration(
         color: AppColors.backgroundDark,
         border: Border(
@@ -478,7 +499,8 @@ class _CheckoutBar extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: isEmpty ? null : () => context.pushNamed(RouteNames.checkout),
+        onPressed:
+            isEmpty ? null : () => context.pushNamed(RouteNames.checkout),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           minimumSize: const Size(double.infinity, 56),
@@ -491,7 +513,10 @@ class _CheckoutBar extends StatelessWidget {
           children: [
             Text(
               'Proceed to Checkout',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
             ),
             SizedBox(width: 8),
             Icon(Icons.arrow_forward, color: Colors.white, size: 20),
@@ -511,11 +536,16 @@ class _EmptyCartView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.shopping_bag_outlined, size: 80, color: AppColors.textMuted),
+          const Icon(Icons.shopping_bag_outlined,
+              size: 80, color: AppColors.textMuted),
           const SizedBox(height: 20),
-          Text('Your cart is empty', style: AppTextStyles.titleLarge.copyWith(color: AppColors.textSecondary)),
+          Text('Your cart is empty',
+              style: AppTextStyles.titleLarge
+                  .copyWith(color: AppColors.textSecondary)),
           const SizedBox(height: 8),
-          Text('Add items to get started', style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textMuted)),
+          Text('Add items to get started',
+              style: AppTextStyles.bodyMedium
+                  .copyWith(color: AppColors.textMuted)),
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () => context.go(RouteNames.shop),
@@ -523,7 +553,8 @@ class _EmptyCartView extends StatelessWidget {
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24)),
             ),
             child: const Text('Start Shopping'),
           ),
@@ -539,11 +570,13 @@ Future<bool?> _showRemoveDialog(BuildContext context, String productName) {
     builder: (context) => AlertDialog(
       backgroundColor: AppColors.backgroundElevated,
       title: const Text('Remove Item?', style: TextStyle(color: Colors.white)),
-      content: Text('Remove $productName from your cart?', style: const TextStyle(color: AppColors.textSecondary)),
+      content: Text('Remove $productName from your cart?',
+          style: const TextStyle(color: AppColors.textSecondary)),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context, false),
-          child: const Text('CANCEL', style: TextStyle(color: AppColors.textMuted)),
+          child: const Text('CANCEL',
+              style: TextStyle(color: AppColors.textMuted)),
         ),
         TextButton(
           onPressed: () => Navigator.pop(context, true),
@@ -560,18 +593,22 @@ void _showClearCartDialog(BuildContext context, WidgetRef ref) {
     builder: (context) => AlertDialog(
       backgroundColor: AppColors.backgroundElevated,
       title: const Text('Clear Cart?', style: TextStyle(color: Colors.white)),
-      content: const Text('Are you sure you want to remove all items from your cart?', style: TextStyle(color: AppColors.textSecondary)),
+      content: const Text(
+          'Are you sure you want to remove all items from your cart?',
+          style: TextStyle(color: AppColors.textSecondary)),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('CANCEL', style: TextStyle(color: AppColors.textMuted)),
+          child: const Text('CANCEL',
+              style: TextStyle(color: AppColors.textMuted)),
         ),
         TextButton(
           onPressed: () {
             ref.read(cartNotifierProvider.notifier).clearCart();
             Navigator.pop(context);
           },
-          child: const Text('CLEAR ALL', style: TextStyle(color: AppColors.error)),
+          child:
+              const Text('CLEAR ALL', style: TextStyle(color: AppColors.error)),
         ),
       ],
     ),

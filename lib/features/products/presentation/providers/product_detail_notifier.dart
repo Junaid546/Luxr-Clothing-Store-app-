@@ -4,8 +4,8 @@ import 'dart:async';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/data/providers/product_data_providers.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 part 'product_detail_notifier.freezed.dart';
 part 'product_detail_notifier.g.dart';
@@ -27,7 +27,6 @@ class ProductDetailState with _$ProductDetailState {
 
 @riverpod
 class ProductDetailNotifier extends _$ProductDetailNotifier {
-
   StreamSubscription<dynamic>? _productSubscription;
 
   @override
@@ -47,10 +46,8 @@ class ProductDetailNotifier extends _$ProductDetailNotifier {
 
   void _watchProduct(String productId) {
     _productSubscription?.cancel();
-    _productSubscription = ref
-        .read(productRepositoryProvider)
-        .watchProduct(productId)
-        .listen(
+    _productSubscription =
+        ref.read(productRepositoryProvider).watchProduct(productId).listen(
       (result) {
         result.fold(
           (failure) {
@@ -68,9 +65,8 @@ class ProductDetailNotifier extends _$ProductDetailNotifier {
                 .firstOrNull;
 
             // Auto-select first color
-            final firstColor = product.colors.isNotEmpty
-                ? product.colors.first.name
-                : null;
+            final firstColor =
+                product.colors.isNotEmpty ? product.colors.first.name : null;
 
             state = state.copyWith(
               isLoading: false,
@@ -102,8 +98,9 @@ class ProductDetailNotifier extends _$ProductDetailNotifier {
 
   void incrementQuantity() {
     final maxStock = state.product?.stockForSize(
-      state.selectedSize ?? '',
-    ) ?? 0;
+          state.selectedSize ?? '',
+        ) ??
+        0;
     if (state.quantity < maxStock && state.quantity < 10) {
       state = state.copyWith(quantity: state.quantity + 1);
     }
@@ -118,8 +115,7 @@ class ProductDetailNotifier extends _$ProductDetailNotifier {
   void setImageIndex(int index) =>
       state = state.copyWith(currentImageIndex: index);
 
-  void setWishlisted(bool value) =>
-      state = state.copyWith(isWishlisted: value);
+  void setWishlisted(bool value) => state = state.copyWith(isWishlisted: value);
 
   // Validation before add to cart
   String? validateSelection() {

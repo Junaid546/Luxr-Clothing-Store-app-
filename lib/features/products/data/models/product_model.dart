@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 part 'product_model.freezed.dart';
 
@@ -24,7 +24,7 @@ class ProductModel with _$ProductModel {
     required double finalPrice,
     required List<String> imageUrls,
     required String thumbnailUrl,
-    required Map<String, int> inventory,  // size â†’ qty
+    required Map<String, int> inventory, // size â†’ qty
     required int totalStock,
     required int lowStockThreshold,
     required List<ProductColor> colors,
@@ -48,11 +48,9 @@ class ProductModel with _$ProductModel {
     return StockStatus.inStock;
   }
 
-  bool isSizeAvailable(String size) =>
-      (inventory[size] ?? 0) > 0;
+  bool isSizeAvailable(String size) => (inventory[size] ?? 0) > 0;
 
-  double get discountedPrice =>
-      price * (1 - discountPct / 100);
+  double get discountedPrice => price * (1 - discountPct / 100);
 
   double get discountAmount => price - discountedPrice;
 
@@ -63,8 +61,7 @@ class ProductModel with _$ProductModel {
     final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
 
     // Parse inventory map safely
-    final rawInventory = 
-        d['inventory'] as Map<String, dynamic>? ?? {};
+    final rawInventory = d['inventory'] as Map<String, dynamic>? ?? {};
     final inventory = rawInventory.map(
       (k, v) => MapEntry(k, (v as num).toInt()),
     );
@@ -72,54 +69,38 @@ class ProductModel with _$ProductModel {
     // Parse colors array
     final rawColors = d['colors'] as List<dynamic>? ?? [];
     final colors = rawColors
-        .map((c) => ProductColor.fromMap(
-              c as Map<String, dynamic>))
+        .map((c) => ProductColor.fromMap(c as Map<String, dynamic>))
         .toList();
 
     return ProductModel(
-      productId:          doc.id,
-      name:               d['name'] as String? ?? '',
-      brand:              d['brand'] as String? ?? '',
-      description:        d['description'] as String? ?? '',
-      category:           d['category'] as String? ?? '',
-      subcategory:        d['subcategory'] as String?,
-      tags:               List<String>.from(
-                            d['tags'] as List? ?? []),
-      searchIndex:        List<String>.from(
-                            d['searchIndex'] as List? ?? []),
-      price:              (d['price'] as num?)?.toDouble() 
-                            ?? 0.0,
-      discountPct:        (d['discountPct'] as num?)?.toInt() 
-                            ?? 0,
-      finalPrice:         (d['finalPrice'] as num?)?.toDouble() 
-                            ?? 0.0,
-      imageUrls:          List<String>.from(
-                            d['imageUrls'] as List? ?? []),
-      thumbnailUrl:       d['thumbnailUrl'] as String? ?? '',
-      inventory:          inventory,
-      totalStock:         (d['totalStock'] as num?)?.toInt() 
-                            ?? 0,
-      lowStockThreshold:  (d['lowStockThreshold'] as num?)
-                            ?.toInt() ?? 5,
-      colors:             colors,
-      isActive:           d['isActive'] as bool? ?? true,
-      isFeatured:         d['isFeatured'] as bool? ?? false,
-      isNewArrival:       d['isNewArrival'] as bool? ?? false,
-      isLimitedEdition:   d['isLimitedEdition'] as bool? 
-                            ?? false,
-      avgRating:          (d['avgRating'] as num?)?.toDouble() 
-                            ?? 0.0,
-      reviewCount:        (d['reviewCount'] as num?)?.toInt() 
-                            ?? 0,
-      soldCount:          (d['soldCount'] as num?)?.toInt() 
-                            ?? 0,
-      viewCount:          (d['viewCount'] as num?)?.toInt() 
-                            ?? 0,
-      createdAt:          (d['createdAt'] as Timestamp?)
-                            ?.toDate() ?? DateTime.now(),
-      updatedAt:          (d['updatedAt'] as Timestamp?)
-                            ?.toDate() ?? DateTime.now(),
-      createdBy:          d['createdBy'] as String? ?? '',
+      productId: doc.id,
+      name: d['name'] as String? ?? '',
+      brand: d['brand'] as String? ?? '',
+      description: d['description'] as String? ?? '',
+      category: d['category'] as String? ?? '',
+      subcategory: d['subcategory'] as String?,
+      tags: List<String>.from(d['tags'] as List? ?? []),
+      searchIndex: List<String>.from(d['searchIndex'] as List? ?? []),
+      price: (d['price'] as num?)?.toDouble() ?? 0.0,
+      discountPct: (d['discountPct'] as num?)?.toInt() ?? 0,
+      finalPrice: (d['finalPrice'] as num?)?.toDouble() ?? 0.0,
+      imageUrls: List<String>.from(d['imageUrls'] as List? ?? []),
+      thumbnailUrl: d['thumbnailUrl'] as String? ?? '',
+      inventory: inventory,
+      totalStock: (d['totalStock'] as num?)?.toInt() ?? 0,
+      lowStockThreshold: (d['lowStockThreshold'] as num?)?.toInt() ?? 5,
+      colors: colors,
+      isActive: d['isActive'] as bool? ?? true,
+      isFeatured: d['isFeatured'] as bool? ?? false,
+      isNewArrival: d['isNewArrival'] as bool? ?? false,
+      isLimitedEdition: d['isLimitedEdition'] as bool? ?? false,
+      avgRating: (d['avgRating'] as num?)?.toDouble() ?? 0.0,
+      reviewCount: (d['reviewCount'] as num?)?.toInt() ?? 0,
+      soldCount: (d['soldCount'] as num?)?.toInt() ?? 0,
+      viewCount: (d['viewCount'] as num?)?.toInt() ?? 0,
+      createdAt: (d['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      updatedAt: (d['updatedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      createdBy: d['createdBy'] as String? ?? '',
     );
   }
 
@@ -132,36 +113,33 @@ class ProductModel with _$ProductModel {
     }
 
     return {
-      'productId':         productId,
-      'name':              name,
-      'brand':             brand,
-      'description':       description,
-      'category':          category,
-      'subcategory':       subcategory,
-      'tags':              tags,
-      'searchIndex':       searchTerms.toList(),
-      'price':             price,
-      'discountPct':       discountPct,
-      'finalPrice':        price * (1 - discountPct / 100),
-      'imageUrls':         imageUrls,
-      'thumbnailUrl':      imageUrls.isNotEmpty 
-                             ? imageUrls.first : '',
-      'inventory':         inventory,
-      'totalStock':        inventory.values.fold(
-                             0, (a, b) => a + b),
+      'productId': productId,
+      'name': name,
+      'brand': brand,
+      'description': description,
+      'category': category,
+      'subcategory': subcategory,
+      'tags': tags,
+      'searchIndex': searchTerms.toList(),
+      'price': price,
+      'discountPct': discountPct,
+      'finalPrice': price * (1 - discountPct / 100),
+      'imageUrls': imageUrls,
+      'thumbnailUrl': imageUrls.isNotEmpty ? imageUrls.first : '',
+      'inventory': inventory,
+      'totalStock': inventory.values.fold(0, (a, b) => a + b),
       'lowStockThreshold': lowStockThreshold,
-      'colors':            colors.map((c) => c.toMap())
-                             .toList(),
-      'isActive':          isActive,
-      'isFeatured':        isFeatured,
-      'isNewArrival':      isNewArrival,
-      'isLimitedEdition':  isLimitedEdition,
-      'avgRating':         avgRating,
-      'reviewCount':       reviewCount,
-      'soldCount':         soldCount,
-      'viewCount':         viewCount,
-      'updatedAt':         FieldValue.serverTimestamp(),
-      'createdBy':         createdBy,
+      'colors': colors.map((c) => c.toMap()).toList(),
+      'isActive': isActive,
+      'isFeatured': isFeatured,
+      'isNewArrival': isNewArrival,
+      'isLimitedEdition': isLimitedEdition,
+      'avgRating': avgRating,
+      'reviewCount': reviewCount,
+      'soldCount': soldCount,
+      'viewCount': viewCount,
+      'updatedAt': FieldValue.serverTimestamp(),
+      'createdBy': createdBy,
       // createdAt is set with serverTimestamp on CREATE only
     };
   }
@@ -233,6 +211,3 @@ extension ProductModelMapper on ProductModel {
     );
   }
 }
-
-
-

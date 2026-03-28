@@ -13,14 +13,14 @@ String _$firestoreBatchReaderHash() =>
 @ProviderFor(firestoreBatchReader)
 final firestoreBatchReaderProvider =
     AutoDisposeProvider<FirestoreBatchReader>.internal(
-      firestoreBatchReader,
-      name: r'firestoreBatchReaderProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$firestoreBatchReaderHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  firestoreBatchReader,
+  name: r'firestoreBatchReaderProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$firestoreBatchReaderHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

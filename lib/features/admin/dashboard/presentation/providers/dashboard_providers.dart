@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/features/admin/dashboard/data/repositories/dashboard_repository_impl.dart';
-import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/admin/dashboard/data/repositories/dashboard_repository_impl.dart';
+import 'package:stylecart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 part 'dashboard_providers.g.dart';
 
@@ -10,7 +10,7 @@ part 'dashboard_providers.g.dart';
 Future<DashboardStats> dashboardStats(DashboardStatsRef ref) async {
   final period = ref.watch(dashboardPeriodProvider);
   final now = DateTime.now();
-  
+
   DateTime periodStart;
   switch (period) {
     case '30D':
@@ -32,7 +32,7 @@ Future<DashboardStats> dashboardStats(DashboardStatsRef ref) async {
         periodStart: periodStart,
         periodEnd: now,
       );
-  
+
   return result.fold(
     (l) => throw Exception(l.message),
     (r) => r,
@@ -49,8 +49,11 @@ Future<WeeklyRevenueData> weeklyRevenue(WeeklyRevenueRef ref) async {
 }
 
 @riverpod
-Future<List<ProductEntity>> topSellingProducts(TopSellingProductsRef ref) async {
-  final result = await ref.read(dashboardRepositoryProvider).getTopSellingProducts(limit: 5);
+Future<List<ProductEntity>> topSellingProducts(
+    TopSellingProductsRef ref) async {
+  final result = await ref
+      .read(dashboardRepositoryProvider)
+      .getTopSellingProducts(limit: 5);
   return result.getOrElse(() => []);
 }
 

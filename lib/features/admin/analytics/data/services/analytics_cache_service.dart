@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/admin/analytics/data/services/analytics_computation_service.dart';
-import 'package:style_cart/features/admin/analytics/domain/models/analytics_models.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/features/admin/analytics/data/services/analytics_computation_service.dart';
+import 'package:stylecart/features/admin/analytics/domain/models/analytics_models.dart';
 
 part 'analytics_cache_service.g.dart';
 
@@ -41,10 +41,7 @@ class AnalyticsCacheService {
 
     final dateKey = DateFormat('yyyy-MM-dd').format(date);
 
-    await _firestore
-        .collection(FirestoreConstants.analytics)
-        .doc(dateKey)
-        .set(
+    await _firestore.collection(FirestoreConstants.analytics).doc(dateKey).set(
       {
         'date': dateKey,
         'revenue': report.revenue.totalRevenue,

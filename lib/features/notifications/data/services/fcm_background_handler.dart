@@ -4,8 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/features/notifications/data/models/notification_model.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/features/notifications/data/models/notification_model.dart';
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -21,11 +21,11 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       await dotenv.load();
       await Firebase.initializeApp(
         options: FirebaseOptions(
-          apiKey:            dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
-          projectId:         dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
-          storageBucket:     dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
+          apiKey: dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
+          projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+          storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
           messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
-          appId:             dotenv.env['FIREBASE_APP_ID'] ?? '',
+          appId: dotenv.env['FIREBASE_APP_ID'] ?? '',
         ),
       );
     } catch (e2) {
@@ -50,7 +50,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
         .collection(FirestoreConstants.notifications)
         .doc(notification.notificationId)
         .set(notification.toFirestore());
-
   } catch (e) {
     debugPrint('Background FCM save error: $e');
   }

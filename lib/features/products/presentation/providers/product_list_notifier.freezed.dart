@@ -12,8 +12,7 @@ part of 'product_list_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ProductListState {
@@ -36,20 +35,18 @@ mixin _$ProductListState {
 /// @nodoc
 abstract class $ProductListStateCopyWith<$Res> {
   factory $ProductListStateCopyWith(
-    ProductListState value,
-    $Res Function(ProductListState) then,
-  ) = _$ProductListStateCopyWithImpl<$Res, ProductListState>;
+          ProductListState value, $Res Function(ProductListState) then) =
+      _$ProductListStateCopyWithImpl<$Res, ProductListState>;
   @useResult
-  $Res call({
-    List<ProductEntity> products,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasMore,
-    bool hasError,
-    String errorMessage,
-    ProductFilter filter,
-    Object? lastDocument,
-  });
+  $Res call(
+      {List<ProductEntity> products,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasMore,
+      bool hasError,
+      String errorMessage,
+      ProductFilter filter,
+      Object? lastDocument});
 }
 
 /// @nodoc
@@ -76,74 +73,67 @@ class _$ProductListStateCopyWithImpl<$Res, $Val extends ProductListState>
     Object? filter = null,
     Object? lastDocument = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            products: null == products
-                ? _value.products
-                : products // ignore: cast_nullable_to_non_nullable
-                      as List<ProductEntity>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isLoadingMore: null == isLoadingMore
-                ? _value.isLoadingMore
-                : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasMore: null == hasMore
-                ? _value.hasMore
-                : hasMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasError: null == hasError
-                ? _value.hasError
-                : hasError // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: null == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String,
-            filter: null == filter
-                ? _value.filter
-                : filter // ignore: cast_nullable_to_non_nullable
-                      as ProductFilter,
-            lastDocument: freezed == lastDocument
-                ? _value.lastDocument
-                : lastDocument,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      products: null == products
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      filter: null == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as ProductFilter,
+      lastDocument:
+          freezed == lastDocument ? _value.lastDocument : lastDocument,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$ProductListStateImplCopyWith<$Res>
     implements $ProductListStateCopyWith<$Res> {
-  factory _$$ProductListStateImplCopyWith(
-    _$ProductListStateImpl value,
-    $Res Function(_$ProductListStateImpl) then,
-  ) = __$$ProductListStateImplCopyWithImpl<$Res>;
+  factory _$$ProductListStateImplCopyWith(_$ProductListStateImpl value,
+          $Res Function(_$ProductListStateImpl) then) =
+      __$$ProductListStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<ProductEntity> products,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasMore,
-    bool hasError,
-    String errorMessage,
-    ProductFilter filter,
-    Object? lastDocument,
-  });
+  $Res call(
+      {List<ProductEntity> products,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasMore,
+      bool hasError,
+      String errorMessage,
+      ProductFilter filter,
+      Object? lastDocument});
 }
 
 /// @nodoc
 class __$$ProductListStateImplCopyWithImpl<$Res>
     extends _$ProductListStateCopyWithImpl<$Res, _$ProductListStateImpl>
     implements _$$ProductListStateImplCopyWith<$Res> {
-  __$$ProductListStateImplCopyWithImpl(
-    _$ProductListStateImpl _value,
-    $Res Function(_$ProductListStateImpl) _then,
-  ) : super(_value, _then);
+  __$$ProductListStateImplCopyWithImpl(_$ProductListStateImpl _value,
+      $Res Function(_$ProductListStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ProductListState
   /// with the given fields replaced by the non-null parameter values.
@@ -159,57 +149,54 @@ class __$$ProductListStateImplCopyWithImpl<$Res>
     Object? filter = null,
     Object? lastDocument = freezed,
   }) {
-    return _then(
-      _$ProductListStateImpl(
-        products: null == products
-            ? _value._products
-            : products // ignore: cast_nullable_to_non_nullable
-                  as List<ProductEntity>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isLoadingMore: null == isLoadingMore
-            ? _value.isLoadingMore
-            : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasMore: null == hasMore
-            ? _value.hasMore
-            : hasMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasError: null == hasError
-            ? _value.hasError
-            : hasError // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: null == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String,
-        filter: null == filter
-            ? _value.filter
-            : filter // ignore: cast_nullable_to_non_nullable
-                  as ProductFilter,
-        lastDocument: freezed == lastDocument
-            ? _value.lastDocument
-            : lastDocument,
-      ),
-    );
+    return _then(_$ProductListStateImpl(
+      products: null == products
+          ? _value._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductEntity>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      filter: null == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as ProductFilter,
+      lastDocument:
+          freezed == lastDocument ? _value.lastDocument : lastDocument,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$ProductListStateImpl implements _ProductListState {
-  const _$ProductListStateImpl({
-    final List<ProductEntity> products = const [],
-    this.isLoading = false,
-    this.isLoadingMore = false,
-    this.hasMore = false,
-    this.hasError = false,
-    this.errorMessage = '',
-    this.filter = const ProductFilter(),
-    this.lastDocument,
-  }) : _products = products;
+  const _$ProductListStateImpl(
+      {final List<ProductEntity> products = const [],
+      this.isLoading = false,
+      this.isLoadingMore = false,
+      this.hasMore = false,
+      this.hasError = false,
+      this.errorMessage = '',
+      this.filter = const ProductFilter(),
+      this.lastDocument})
+      : _products = products;
 
   final List<ProductEntity> _products;
   @override
@@ -262,24 +249,21 @@ class _$ProductListStateImpl implements _ProductListState {
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.filter, filter) || other.filter == filter) &&
-            const DeepCollectionEquality().equals(
-              other.lastDocument,
-              lastDocument,
-            ));
+            const DeepCollectionEquality()
+                .equals(other.lastDocument, lastDocument));
   }
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_products),
-    isLoading,
-    isLoadingMore,
-    hasMore,
-    hasError,
-    errorMessage,
-    filter,
-    const DeepCollectionEquality().hash(lastDocument),
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_products),
+      isLoading,
+      isLoadingMore,
+      hasMore,
+      hasError,
+      errorMessage,
+      filter,
+      const DeepCollectionEquality().hash(lastDocument));
 
   /// Create a copy of ProductListState
   /// with the given fields replaced by the non-null parameter values.
@@ -288,22 +272,19 @@ class _$ProductListStateImpl implements _ProductListState {
   @pragma('vm:prefer-inline')
   _$$ProductListStateImplCopyWith<_$ProductListStateImpl> get copyWith =>
       __$$ProductListStateImplCopyWithImpl<_$ProductListStateImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _ProductListState implements ProductListState {
-  const factory _ProductListState({
-    final List<ProductEntity> products,
-    final bool isLoading,
-    final bool isLoadingMore,
-    final bool hasMore,
-    final bool hasError,
-    final String errorMessage,
-    final ProductFilter filter,
-    final Object? lastDocument,
-  }) = _$ProductListStateImpl;
+  const factory _ProductListState(
+      {final List<ProductEntity> products,
+      final bool isLoading,
+      final bool isLoadingMore,
+      final bool hasMore,
+      final bool hasError,
+      final String errorMessage,
+      final ProductFilter filter,
+      final Object? lastDocument}) = _$ProductListStateImpl;
 
   @override
   List<ProductEntity> get products;

@@ -12,14 +12,14 @@ String _$myOrdersNotifierHash() => r'fe45c9a22328ec494792d40afbc9c793e4da8632';
 @ProviderFor(MyOrdersNotifier)
 final myOrdersNotifierProvider =
     AutoDisposeNotifierProvider<MyOrdersNotifier, MyOrdersState>.internal(
-      MyOrdersNotifier.new,
-      name: r'myOrdersNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$myOrdersNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  MyOrdersNotifier.new,
+  name: r'myOrdersNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$myOrdersNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$MyOrdersNotifier = AutoDisposeNotifier<MyOrdersState>;
 String _$orderTrackingNotifierHash() =>
@@ -50,7 +50,9 @@ abstract class _$OrderTrackingNotifier
     extends BuildlessAutoDisposeNotifier<AsyncValue<OrderEntity>> {
   late final String orderId;
 
-  AsyncValue<OrderEntity> build(String orderId);
+  AsyncValue<OrderEntity> build(
+    String orderId,
+  );
 }
 
 /// See also [OrderTrackingNotifier].
@@ -63,15 +65,21 @@ class OrderTrackingNotifierFamily extends Family<AsyncValue<OrderEntity>> {
   const OrderTrackingNotifierFamily();
 
   /// See also [OrderTrackingNotifier].
-  OrderTrackingNotifierProvider call(String orderId) {
-    return OrderTrackingNotifierProvider(orderId);
+  OrderTrackingNotifierProvider call(
+    String orderId,
+  ) {
+    return OrderTrackingNotifierProvider(
+      orderId,
+    );
   }
 
   @override
   OrderTrackingNotifierProvider getProviderOverride(
     covariant OrderTrackingNotifierProvider provider,
   ) {
-    return call(provider.orderId);
+    return call(
+      provider.orderId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -90,26 +98,24 @@ class OrderTrackingNotifierFamily extends Family<AsyncValue<OrderEntity>> {
 }
 
 /// See also [OrderTrackingNotifier].
-class OrderTrackingNotifierProvider
-    extends
-        AutoDisposeNotifierProviderImpl<
-          OrderTrackingNotifier,
-          AsyncValue<OrderEntity>
-        > {
+class OrderTrackingNotifierProvider extends AutoDisposeNotifierProviderImpl<
+    OrderTrackingNotifier, AsyncValue<OrderEntity>> {
   /// See also [OrderTrackingNotifier].
-  OrderTrackingNotifierProvider(String orderId)
-    : this._internal(
-        () => OrderTrackingNotifier()..orderId = orderId,
-        from: orderTrackingNotifierProvider,
-        name: r'orderTrackingNotifierProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$orderTrackingNotifierHash,
-        dependencies: OrderTrackingNotifierFamily._dependencies,
-        allTransitiveDependencies:
-            OrderTrackingNotifierFamily._allTransitiveDependencies,
-        orderId: orderId,
-      );
+  OrderTrackingNotifierProvider(
+    String orderId,
+  ) : this._internal(
+          () => OrderTrackingNotifier()..orderId = orderId,
+          from: orderTrackingNotifierProvider,
+          name: r'orderTrackingNotifierProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$orderTrackingNotifierHash,
+          dependencies: OrderTrackingNotifierFamily._dependencies,
+          allTransitiveDependencies:
+              OrderTrackingNotifierFamily._allTransitiveDependencies,
+          orderId: orderId,
+        );
 
   OrderTrackingNotifierProvider._internal(
     super._createNotifier, {
@@ -127,7 +133,9 @@ class OrderTrackingNotifierProvider
   AsyncValue<OrderEntity> runNotifierBuild(
     covariant OrderTrackingNotifier notifier,
   ) {
-    return notifier.build(orderId);
+    return notifier.build(
+      orderId,
+    );
   }
 
   @override
@@ -147,11 +155,8 @@ class OrderTrackingNotifierProvider
   }
 
   @override
-  AutoDisposeNotifierProviderElement<
-    OrderTrackingNotifier,
-    AsyncValue<OrderEntity>
-  >
-  createElement() {
+  AutoDisposeNotifierProviderElement<OrderTrackingNotifier,
+      AsyncValue<OrderEntity>> createElement() {
     return _OrderTrackingNotifierProviderElement(this);
   }
 
@@ -178,17 +183,12 @@ mixin OrderTrackingNotifierRef
 }
 
 class _OrderTrackingNotifierProviderElement
-    extends
-        AutoDisposeNotifierProviderElement<
-          OrderTrackingNotifier,
-          AsyncValue<OrderEntity>
-        >
-    with OrderTrackingNotifierRef {
+    extends AutoDisposeNotifierProviderElement<OrderTrackingNotifier,
+        AsyncValue<OrderEntity>> with OrderTrackingNotifierRef {
   _OrderTrackingNotifierProviderElement(super.provider);
 
   @override
   String get orderId => (origin as OrderTrackingNotifierProvider).orderId;
 }
-
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

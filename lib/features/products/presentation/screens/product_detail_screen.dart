@@ -1,29 +1,29 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/router/app_router.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
-import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
-import 'package:style_cart/core/providers/repository_providers.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/products/presentation/providers/product_detail_notifier.dart';
-import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/shared/utils/wishlist_helper.dart';
+import 'package:stylecart/app/router/app_router.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/features/auth/domain/entities/user_entity.dart';
+import 'package:stylecart/features/cart/data/models/cart_item_model.dart';
+import 'package:stylecart/core/providers/repository_providers.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/presentation/providers/product_detail_notifier.dart';
+import 'package:stylecart/features/wishlist/presentation/providers/wishlist_notifier.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/shared/utils/wishlist_helper.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   final String productId;
   const ProductDetailScreen({required this.productId, super.key});
 
   @override
-  ConsumerState<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  ConsumerState<ProductDetailScreen> createState() =>
+      _ProductDetailScreenState();
 }
 
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
@@ -40,12 +40,15 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   Future<void> _addToCart(BuildContext context, WidgetRef ref) async {
-    final ProductDetailState state = ref.read(productDetailNotifierProvider(widget.productId));
+    final ProductDetailState state =
+        ref.read(productDetailNotifierProvider(widget.productId));
     final ProductEntity? product = state.product;
 
     if (product == null) return;
 
-    final error = ref.read(productDetailNotifierProvider(widget.productId).notifier).validateSelection();
+    final error = ref
+        .read(productDetailNotifierProvider(widget.productId).notifier)
+        .validateSelection();
     if (error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -58,7 +61,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     }
 
     final authState = ref.read(authNotifierProvider);
-    final UserEntity? user = authState is AuthAuthenticated ? authState.user : null;
+    final UserEntity? user =
+        authState is AuthAuthenticated ? authState.user : null;
     if (user == null) {
       context.push(RouteNames.login);
       return;
@@ -76,10 +80,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
       imageUrl: product.thumbnailUrl,
       size: state.selectedSize!,
       color: state.selectedColor ?? '',
-      colorHex: product.colors.firstWhere(
-        (c) => c.name == state.selectedColor,
-        orElse: () => const ProductColorEntity(name: '', hexCode: '#000000'),
-      ).hexCode,
+      colorHex: product.colors
+          .firstWhere(
+            (c) => c.name == state.selectedColor,
+            orElse: () =>
+                const ProductColorEntity(name: '', hexCode: '#000000'),
+          )
+          .hexCode,
       quantity: state.quantity,
       unitPrice: product.price,
       discountPct: product.discountPct,
@@ -88,7 +95,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
       updatedAt: DateTime.now(),
     );
 
-    final result = await ref.read(cartRepositoryProvider).addToCart(userId: user.uid, item: cartItem);
+    final result = await ref
+        .read(cartRepositoryProvider)
+        .addToCart(userId: user.uid, item: cartItem);
 
     result.fold(
       (failure) => ScaffoldMessenger.of(context).showSnackBar(
@@ -112,7 +121,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               textColor: Colors.white,
               onPressed: () {
                 if (AppRouter.navigatorKey.currentContext?.mounted ?? false) {
-                  AppRouter.navigatorKey.currentContext?.pushNamed(RouteNames.cart);
+                  AppRouter.navigatorKey.currentContext
+                      ?.pushNamed(RouteNames.cart);
                 }
               },
             ),
@@ -129,9 +139,12 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ProductDetailState state = ref.watch(productDetailNotifierProvider(widget.productId));
-    final isWishlisted = ref.watch(isProductWishlistedProvider(widget.productId));
-    final detailNotifier = ref.read(productDetailNotifierProvider(widget.productId).notifier);
+    final ProductDetailState state =
+        ref.watch(productDetailNotifierProvider(widget.productId));
+    final isWishlisted =
+        ref.watch(isProductWishlistedProvider(widget.productId));
+    final detailNotifier =
+        ref.read(productDetailNotifierProvider(widget.productId).notifier);
 
     if (state.isLoading) {
       return const Scaffold(
@@ -157,7 +170,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, color: AppColors.error, size: 64),
+                const Icon(Icons.error_outline,
+                    color: AppColors.error, size: 64),
                 const SizedBox(height: 16),
                 Text(
                   state.errorMessage.isNotEmpty
@@ -213,9 +227,17 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 ),
               ),
               SliverToBoxAdapter(child: _ProductInfoSection(product: product)),
-              SliverToBoxAdapter(child: _SizeSelector(product: product, state: state, detailNotifier: detailNotifier)),
+              SliverToBoxAdapter(
+                  child: _SizeSelector(
+                      product: product,
+                      state: state,
+                      detailNotifier: detailNotifier)),
               if (product.colors.isNotEmpty)
-                SliverToBoxAdapter(child: _ColorSelector(product: product, state: state, detailNotifier: detailNotifier)),
+                SliverToBoxAdapter(
+                    child: _ColorSelector(
+                        product: product,
+                        state: state,
+                        detailNotifier: detailNotifier)),
               SliverToBoxAdapter(child: _TabSection(product: product)),
               SliverToBoxAdapter(child: _ReviewsSection(product: product)),
               const SliverToBoxAdapter(
@@ -310,7 +332,9 @@ class _ImageSection extends StatelessWidget {
                   width: state.currentImageIndex == i ? 20 : 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: state.currentImageIndex == i ? Colors.white : Colors.white38,
+                    color: state.currentImageIndex == i
+                        ? Colors.white
+                        : Colors.white38,
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ),
@@ -449,7 +473,8 @@ class _ProductInfoSection extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(4),
@@ -482,7 +507,9 @@ class _ProductInfoSection extends StatelessWidget {
                   ...List.generate(
                     5,
                     (i) => Icon(
-                      i < product.avgRating.floor() ? Icons.star : Icons.star_border,
+                      i < product.avgRating.floor()
+                          ? Icons.star
+                          : Icons.star_border,
                       color: AppColors.gold,
                       size: 16,
                     ),
@@ -490,7 +517,8 @@ class _ProductInfoSection extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     '${product.avgRating.toStringAsFixed(1)} (${product.reviewCount} reviews)',
-                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                    style: AppTextStyles.bodySmall
+                        .copyWith(color: AppColors.textSecondary),
                   ),
                 ],
               ),
@@ -536,7 +564,10 @@ class _SizeSelector extends StatelessWidget {
   final ProductDetailState state;
   final ProductDetailNotifier detailNotifier;
 
-  const _SizeSelector({required this.product, required this.state, required this.detailNotifier});
+  const _SizeSelector(
+      {required this.product,
+      required this.state,
+      required this.detailNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -547,7 +578,8 @@ class _SizeSelector extends StatelessWidget {
         children: [
           Text(
             'SELECT SIZE',
-            style: AppTextStyles.labelSmall.copyWith(letterSpacing: 1, color: Colors.white),
+            style: AppTextStyles.labelSmall
+                .copyWith(letterSpacing: 1, color: Colors.white),
           ),
           const SizedBox(height: 12),
           SingleChildScrollView(
@@ -558,13 +590,17 @@ class _SizeSelector extends StatelessWidget {
                 final isSelected = state.selectedSize == size;
 
                 return GestureDetector(
-                  onTap: isAvailable ? () => detailNotifier.selectSize(size) : null,
+                  onTap: isAvailable
+                      ? () => detailNotifier.selectSize(size)
+                      : null,
                   child: Container(
                     margin: const EdgeInsets.only(right: 10),
                     width: 52,
                     height: 52,
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.transparent : AppColors.backgroundCard,
+                      color: isSelected
+                          ? Colors.transparent
+                          : AppColors.backgroundCard,
                       border: Border.all(
                         color: isSelected
                             ? AppColors.gold
@@ -586,7 +622,9 @@ class _SizeSelector extends StatelessWidget {
                                 : isAvailable
                                     ? Colors.white
                                     : AppColors.textMuted,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                         if (!isAvailable)
@@ -606,7 +644,8 @@ class _SizeSelector extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               '${product.stockForSize(state.selectedSize!)} units available',
-              style: AppTextStyles.bodySmall.copyWith(color: AppColors.textMuted),
+              style:
+                  AppTextStyles.bodySmall.copyWith(color: AppColors.textMuted),
             ),
           ],
         ],
@@ -637,7 +676,10 @@ class _ColorSelector extends StatelessWidget {
   final ProductDetailState state;
   final ProductDetailNotifier detailNotifier;
 
-  const _ColorSelector({required this.product, required this.state, required this.detailNotifier});
+  const _ColorSelector(
+      {required this.product,
+      required this.state,
+      required this.detailNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -648,7 +690,8 @@ class _ColorSelector extends StatelessWidget {
         children: [
           Text(
             'COLOR',
-            style: AppTextStyles.labelSmall.copyWith(letterSpacing: 1, color: Colors.white),
+            style: AppTextStyles.labelSmall
+                .copyWith(letterSpacing: 1, color: Colors.white),
           ),
           const SizedBox(height: 12),
           SingleChildScrollView(
@@ -663,7 +706,9 @@ class _ColorSelector extends StatelessWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: Color(int.parse(color.hexCode.replaceFirst('#', 'FF'), radix: 16)),
+                      color: Color(int.parse(
+                          color.hexCode.replaceFirst('#', 'FF'),
+                          radix: 16)),
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isSelected ? Colors.white : Colors.transparent,
@@ -688,7 +733,8 @@ class _ColorSelector extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8),
               child: Text(
                 state.selectedColor!,
-                style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodySmall
+                    .copyWith(color: AppColors.textSecondary),
               ),
             ),
         ],
@@ -719,7 +765,8 @@ class _TabSection extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 200, // Fixed height for simple tab content without tricky scroll physics
+            height:
+                200, // Fixed height for simple tab content without tricky scroll physics
             child: TabBarView(
               children: [
                 SingleChildScrollView(
@@ -733,7 +780,8 @@ class _TabSection extends StatelessWidget {
                   ),
                 ),
                 const Center(
-                  child: Text('No reviews yet', style: TextStyle(color: AppColors.textMuted)),
+                  child: Text('No reviews yet',
+                      style: TextStyle(color: AppColors.textMuted)),
                 ),
               ],
             ),
@@ -783,7 +831,8 @@ class _BottomActionBar extends StatelessWidget {
           top: BorderSide(color: AppColors.borderDefault, width: 1),
         ),
       ),
-      padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
+      padding: EdgeInsets.fromLTRB(
+          16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
       child: Row(
         children: [
           if (state.selectedSize != null) ...[
@@ -807,7 +856,8 @@ class _BottomActionBar extends StatelessWidget {
               ),
               child: Text(
                 product.isOutOfStock ? 'OUT OF STOCK' : 'ADD TO CART',
-                style: AppTextStyles.labelLarge.copyWith(color: Colors.white, letterSpacing: 1),
+                style: AppTextStyles.labelLarge
+                    .copyWith(color: Colors.white, letterSpacing: 1),
               ),
             ),
           ),
@@ -824,7 +874,9 @@ class _BottomActionBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(28),
               ),
             ),
-            child: Text('BUY NOW', style: AppTextStyles.labelLarge.copyWith(color: AppColors.gold)),
+            child: Text('BUY NOW',
+                style:
+                    AppTextStyles.labelLarge.copyWith(color: AppColors.gold)),
           ),
         ],
       ),
@@ -849,7 +901,8 @@ class _QuantitySelector extends StatelessWidget {
       children: [
         _QtyButton(icon: Icons.remove, onTap: onDecrement),
         const SizedBox(width: 16),
-        Text('$quantity', style: AppTextStyles.titleMedium.copyWith(color: Colors.white)),
+        Text('$quantity',
+            style: AppTextStyles.titleMedium.copyWith(color: Colors.white)),
         const SizedBox(width: 16),
         _QtyButton(icon: Icons.add, onTap: onIncrement),
       ],

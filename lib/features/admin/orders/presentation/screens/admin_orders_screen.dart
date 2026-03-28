@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
-import 'package:style_cart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:style_cart/features/admin/orders/presentation/providers/admin_order_notifier.dart';
-import 'package:style_cart/features/admin/orders/presentation/widgets/admin_order_card.dart';
-import 'package:style_cart/features/admin/orders/presentation/widgets/status_update_dialog.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/features/admin/core/providers/admin_guard_provider.dart';
+import 'package:stylecart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:stylecart/features/admin/orders/presentation/providers/admin_order_notifier.dart';
+import 'package:stylecart/features/admin/orders/presentation/widgets/admin_order_card.dart';
+import 'package:stylecart/features/admin/orders/presentation/widgets/status_update_dialog.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
 
 class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
   const AdminOrdersScreen({super.key});
@@ -62,7 +62,8 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
                 decoration: InputDecoration(
                   hintText: 'Search by Order ID or Email',
                   hintStyle: const TextStyle(color: AppColors.textSecondary),
-                  prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
+                  prefixIcon:
+                      const Icon(Icons.search, color: AppColors.textSecondary),
                   filled: true,
                   fillColor: AppColors.backgroundCard,
                   border: OutlineInputBorder(
@@ -90,7 +91,8 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
     );
   }
 
-  Widget _buildOrderList(BuildContext context, WidgetRef ref, AdminOrderNotifier notifier) {
+  Widget _buildOrderList(
+      BuildContext context, WidgetRef ref, AdminOrderNotifier notifier) {
     final orders = notifier.filteredOrders;
 
     if (orders.isEmpty) {
@@ -124,14 +126,16 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
                 SnackBar(content: Text('Viewing order #${order.orderId}')),
               );
             },
-            onUpdateStatus: (nextStatus) => _onUpdateStatus(context, order, nextStatus, notifier),
+            onUpdateStatus: (nextStatus) =>
+                _onUpdateStatus(context, order, nextStatus, notifier),
           );
         },
       ),
     );
   }
 
-  void _onUpdateStatus(BuildContext context, OrderEntity order, String nextStatus, AdminOrderNotifier notifier) {
+  void _onUpdateStatus(BuildContext context, OrderEntity order,
+      String nextStatus, AdminOrderNotifier notifier) {
     showDialog<void>(
       context: context,
       builder: (context) => StatusUpdateDialog(
@@ -151,7 +155,8 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
               SnackBar(content: Text('Error: ${l.message}')),
             ),
             (r) => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Order Status Updated Successfully')),
+              const SnackBar(
+                  content: Text('Order Status Updated Successfully')),
             ),
           );
         },
@@ -209,7 +214,8 @@ class _LowStockBanner extends ConsumerWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.inventory_2_outlined, color: AppColors.error, size: 20),
+                  const Icon(Icons.inventory_2_outlined,
+                      color: AppColors.error, size: 20),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
@@ -220,7 +226,8 @@ class _LowStockBanner extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const Icon(Icons.chevron_right, color: AppColors.error, size: 18),
+                  const Icon(Icons.chevron_right,
+                      color: AppColors.error, size: 18),
                 ],
               ),
             )

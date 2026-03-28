@@ -1,11 +1,11 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
-import 'package:style_cart/features/cart/domain/usecases/validate_cart_use_case.dart';
-import 'package:style_cart/features/cart/presentation/providers/cart_notifier.dart';
-import 'package:style_cart/features/orders/data/models/order_model.dart';
-import 'package:style_cart/features/orders/data/services/order_placement_service.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/features/cart/domain/entities/cart_entity.dart';
+import 'package:stylecart/features/cart/domain/usecases/validate_cart_use_case.dart';
+import 'package:stylecart/features/cart/presentation/providers/cart_notifier.dart';
+import 'package:stylecart/features/orders/data/models/order_model.dart';
+import 'package:stylecart/features/orders/data/services/order_placement_service.dart';
 
 part 'checkout_notifier.g.dart';
 
@@ -63,14 +63,19 @@ class CheckoutNotifier extends _$CheckoutNotifier {
   }
 
   // ── Step Navigation ──────────────────────────────
-  void nextStep() => state = state.copyWith(step: CheckoutStep.values[state.step.index + 1]);
-  void prevStep() => state = state.copyWith(step: CheckoutStep.values[state.step.index - 1]);
+  void nextStep() =>
+      state = state.copyWith(step: CheckoutStep.values[state.step.index + 1]);
+  void prevStep() =>
+      state = state.copyWith(step: CheckoutStep.values[state.step.index - 1]);
   void setStep(CheckoutStep step) => state = state.copyWith(step: step);
 
   // ── Selections ───────────────────────────────────
-  void setAddress(ShippingAddressModel address) => state = state.copyWith(selectedAddress: address);
-  void setShippingMethod(String method) => state = state.copyWith(shippingMethod: method);
-  void setPaymentMethod(String method) => state = state.copyWith(paymentMethod: method);
+  void setAddress(ShippingAddressModel address) =>
+      state = state.copyWith(selectedAddress: address);
+  void setShippingMethod(String method) =>
+      state = state.copyWith(shippingMethod: method);
+  void setPaymentMethod(String method) =>
+      state = state.copyWith(paymentMethod: method);
 
   // ── VALIDATE ALL ────────────────────────────────
   Future<bool> validateCheckout() async {
@@ -78,16 +83,17 @@ class CheckoutNotifier extends _$CheckoutNotifier {
 
     final cartItems = ref.read(cartItemsProvider).value ?? [];
     final authState = ref.read(authNotifierProvider);
-    
+
     if (authState is! AuthAuthenticated) {
-      state = state.copyWith(isProcessing: false, error: 'User not authenticated');
+      state =
+          state.copyWith(isProcessing: false, error: 'User not authenticated');
       return false;
     }
     final user = authState.user;
 
     final result = await ref.read(validateCartUseCaseProvider.notifier).call(
-      ValidateCartParams(userId: user.uid, cartItems: cartItems),
-    );
+          ValidateCartParams(userId: user.uid, cartItems: cartItems),
+        );
 
     return result.fold(
       (failure) {
@@ -114,23 +120,26 @@ class CheckoutNotifier extends _$CheckoutNotifier {
 
     final authState = ref.read(authNotifierProvider);
     if (authState is! AuthAuthenticated) {
-      state = state.copyWith(isProcessing: false, error: 'User not authenticated');
+      state =
+          state.copyWith(isProcessing: false, error: 'User not authenticated');
       return;
     }
     final user = authState.user;
 
     final result = await ref.read(orderPlacementServiceProvider).placeOrder(
-      validatedCart: state.validatedCart!,
-      user: user,
-      shippingAddress: state.selectedAddress!,
-      shippingMethod: state.shippingMethod,
-      paymentMethod: state.paymentMethod,
-      discountAmount: 0.0, // Future: Add coupon support
-    );
+          validatedCart: state.validatedCart!,
+          user: user,
+          shippingAddress: state.selectedAddress!,
+          shippingMethod: state.shippingMethod,
+          paymentMethod: state.paymentMethod,
+          discountAmount: 0.0, // Future: Add coupon support
+        );
 
     result.fold(
-      (failure) => state = state.copyWith(isProcessing: false, error: failure.message),
-      (orderId) => state = state.copyWith(isProcessing: false, successOrderId: orderId),
+      (failure) =>
+          state = state.copyWith(isProcessing: false, error: failure.message),
+      (orderId) =>
+          state = state.copyWith(isProcessing: false, successOrderId: orderId),
     );
   }
 }

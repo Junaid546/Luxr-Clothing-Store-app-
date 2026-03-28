@@ -2,10 +2,10 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
-import 'package:style_cart/features/products/domain/usecases/get_products_usecase.dart';
+import 'package:stylecart/features/products/data/providers/product_data_providers.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/domain/entities/product_filter_entity.dart';
+import 'package:stylecart/features/products/domain/usecases/get_products_usecase.dart';
 
 part 'product_list_notifier.freezed.dart';
 part 'product_list_notifier.g.dart';
@@ -13,7 +13,7 @@ part 'product_list_notifier.g.dart';
 @freezed
 class ProductListState with _$ProductListState {
   const factory ProductListState({
-    @Default([])  List<ProductEntity> products,
+    @Default([]) List<ProductEntity> products,
     @Default(false) bool isLoading,
     @Default(false) bool isLoadingMore,
     @Default(false) bool hasMore,
@@ -26,14 +26,13 @@ class ProductListState with _$ProductListState {
 
 @riverpod
 class ProductListNotifier extends _$ProductListNotifier {
-
   static const int _pageSize = 20;
 
   @override
   ProductListState build() => const ProductListState(
-    hasMore: true,
-    filter: ProductFilter(pageSize: _pageSize),
-  );
+        hasMore: true,
+        filter: ProductFilter(pageSize: _pageSize),
+      );
 
   // ── Initial load / refresh ────────────────────────
   Future<void> loadProducts({ProductFilter? filter}) async {
@@ -48,11 +47,10 @@ class ProductListNotifier extends _$ProductListNotifier {
       filter: activeFilter,
     );
 
-    final result = await ref
-        .read(getProductsUseCaseProvider)
-        .call(GetProductsParams(
-          filter: activeFilter,
-        ));
+    final result =
+        await ref.read(getProductsUseCaseProvider).call(GetProductsParams(
+              filter: activeFilter,
+            ));
 
     result.fold(
       (failure) => state = state.copyWith(
@@ -78,12 +76,11 @@ class ProductListNotifier extends _$ProductListNotifier {
 
     state = state.copyWith(isLoadingMore: true);
 
-    final result = await ref
-        .read(getProductsUseCaseProvider)
-        .call(GetProductsParams(
-          filter: state.filter,
-          lastDocumentSnapshot: state.lastDocument,
-        ));
+    final result =
+        await ref.read(getProductsUseCaseProvider).call(GetProductsParams(
+              filter: state.filter,
+              lastDocumentSnapshot: state.lastDocument,
+            ));
 
     result.fold(
       (failure) => state = state.copyWith(
@@ -95,9 +92,8 @@ class ProductListNotifier extends _$ProductListNotifier {
         isLoadingMore: false,
         products: [...state.products, ...newProducts],
         hasMore: newProducts.length >= _pageSize,
-        lastDocument: newProducts.isNotEmpty
-            ? newProducts.last
-            : state.lastDocument,
+        lastDocument:
+            newProducts.isNotEmpty ? newProducts.last : state.lastDocument,
       ),
     );
   }
@@ -107,18 +103,17 @@ class ProductListNotifier extends _$ProductListNotifier {
       loadProducts(filter: filter);
 
   // ── Update sort ───────────────────────────────────
-  Future<void> sortBy(String sortKey) =>
-      loadProducts(filter: state.filter.copyWith(
+  Future<void> sortBy(String sortKey) => loadProducts(
+          filter: state.filter.copyWith(
         sortBy: sortKey,
       ));
 
   // ── Clear filters ─────────────────────────────────
-  Future<void> clearFilters() =>
-      loadProducts(filter: const ProductFilter());
+  Future<void> clearFilters() => loadProducts(filter: const ProductFilter());
 
   // ── Toggle category ───────────────────────────────
-  Future<void> filterByCategory(String? category) =>
-      loadProducts(filter: state.filter.copyWith(
+  Future<void> filterByCategory(String? category) => loadProducts(
+          filter: state.filter.copyWith(
         category: category,
       ));
 

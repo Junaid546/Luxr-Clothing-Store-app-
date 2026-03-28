@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/usecases/usecase.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/usecases/usecase.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/domain/repositories/order_repository.dart';
 
 class GetUserOrdersParams extends Equatable {
   final String userId;
@@ -30,10 +30,11 @@ class GetUserOrdersUseCase
   @override
   Future<Either<Failure, List<OrderEntity>>> call(
     GetUserOrdersParams params,
-  ) => _repo.getUserOrders(
-        userId:       params.userId,
+  ) =>
+      _repo.getUserOrders(
+        userId: params.userId,
         statusFilter: params.statusFilter,
-        limit:        params.limit,
+        limit: params.limit,
         lastDocument: params.lastDocument,
       );
 }

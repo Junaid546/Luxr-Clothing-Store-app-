@@ -13,9 +13,8 @@ String _$adminGuardHash() => r'256de94ce44a1867cb5da099bca3b1a4a3955350';
 final adminGuardProvider = AutoDisposeProvider<AsyncValue<bool>>.internal(
   adminGuard,
   name: r'adminGuardProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$adminGuardHash,
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$adminGuardHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

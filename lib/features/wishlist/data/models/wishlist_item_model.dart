@@ -24,32 +24,29 @@ class WishlistItemModel with _$WishlistItemModel {
   factory WishlistItemModel.fromFirestore(DocumentSnapshot doc) {
     final d = doc.data() as Map<String, dynamic>? ?? const <String, dynamic>{};
     return WishlistItemModel(
-      productId:   doc.id,
+      productId: doc.id,
       productName: d['productName'] as String? ?? '',
-      brand:       d['brand']       as String? ?? '',
-      imageUrl:    d['imageUrl']    as String? ?? '',
-      price:       (d['price']      as num?)?.toDouble() ?? 0.0,
+      brand: d['brand'] as String? ?? '',
+      imageUrl: d['imageUrl'] as String? ?? '',
+      price: (d['price'] as num?)?.toDouble() ?? 0.0,
       discountPct: (d['discountPct'] as num?)?.toInt() ?? 0,
-      finalPrice:  (d['finalPrice']  as num?)?.toDouble() ?? 0.0,
-      category:    d['category']    as String? ?? '',
+      finalPrice: (d['finalPrice'] as num?)?.toDouble() ?? 0.0,
+      category: d['category'] as String? ?? '',
       isLimitedEdition: d['isLimitedEdition'] as bool? ?? false,
-      addedAt:     (d['addedAt']    as Timestamp?)?.toDate() ?? DateTime.now(),
+      addedAt: (d['addedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 
   Map<String, dynamic> toFirestore() => {
-    'productId':   productId,
-    'productName': productName,
-    'brand':       brand,
-    'imageUrl':    imageUrl,
-    'price':       price,
-    'discountPct': discountPct,
-    'finalPrice':  finalPrice,
-    'category':    category,
-    'isLimitedEdition': isLimitedEdition,
-    'addedAt':     FieldValue.serverTimestamp(),
-  };
+        'productId': productId,
+        'productName': productName,
+        'brand': brand,
+        'imageUrl': imageUrl,
+        'price': price,
+        'discountPct': discountPct,
+        'finalPrice': finalPrice,
+        'category': category,
+        'isLimitedEdition': isLimitedEdition,
+        'addedAt': FieldValue.serverTimestamp(),
+      };
 }
-
-
-

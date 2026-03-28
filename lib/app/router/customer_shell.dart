@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/core/providers/shared_providers.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/core/providers/shared_providers.dart';
 
 class NavTab {
   final IconData icon;
@@ -164,7 +164,8 @@ class _NavBarItem extends ConsumerWidget {
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isActive ? AppColors.gold.withOpacity(0.1) : Colors.transparent,
+          color:
+              isActive ? AppColors.gold.withOpacity(0.1) : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(

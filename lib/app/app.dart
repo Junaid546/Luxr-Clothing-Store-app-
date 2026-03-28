@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:style_cart/app/router/app_router.dart';
-import 'package:style_cart/app/theme/app_theme.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
-import 'package:style_cart/features/notifications/presentation/widgets/in_app_notification_banner.dart';
+import 'package:stylecart/app/router/app_router.dart';
+import 'package:stylecart/app/theme/app_theme.dart';
+import 'package:stylecart/features/notifications/data/providers/notification_providers.dart';
+import 'package:stylecart/features/notifications/presentation/widgets/in_app_notification_banner.dart';
 
 class StyleCartApp extends ConsumerWidget {
   const StyleCartApp({super.key});

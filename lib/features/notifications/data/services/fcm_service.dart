@@ -7,10 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/features/notifications/data/models/notification_model.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/features/notifications/data/models/notification_model.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
 
 class FCMService {
   final FirebaseMessaging _messaging;
@@ -22,8 +22,8 @@ class FCMService {
   FCMService._({
     required FirebaseMessaging messaging,
     required FirebaseFirestore firestore,
-  }) : _messaging = messaging,
-       _firestore = firestore;
+  })  : _messaging = messaging,
+        _firestore = firestore;
 
   factory FCMService({
     required FirebaseMessaging messaging,
@@ -43,7 +43,8 @@ class FCMService {
   Future<void> initialize(String? userId) async {
     await requestPermission();
 
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
@@ -106,12 +107,15 @@ class FCMService {
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
+    const DarwinInitializationSettings iosSettings =
+        DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
@@ -141,10 +145,7 @@ class FCMService {
 
   Future<void> _saveTokenToFirestore(String userId, String token) async {
     try {
-      await _firestore
-          .collection(FirestoreConstants.users)
-          .doc(userId)
-          .update({
+      await _firestore.collection(FirestoreConstants.users).doc(userId).update({
         'fcmToken': token,
         'updatedAt': FieldValue.serverTimestamp(),
       });
@@ -265,15 +266,16 @@ class FCMService {
           .collection(FirestoreConstants.notifications)
           .doc(notification.notificationId)
           .set(notification.toFirestore());
-
     } catch (e) {
       debugPrint('Save notification error: $e');
     }
   }
 
-  final _notificationStreamController = StreamController<RemoteMessage>.broadcast();
+  final _notificationStreamController =
+      StreamController<RemoteMessage>.broadcast();
 
-  Stream<RemoteMessage> get notificationStream => _notificationStreamController.stream;
+  Stream<RemoteMessage> get notificationStream =>
+      _notificationStreamController.stream;
 
   void dispose() {
     _notificationStreamController.close();

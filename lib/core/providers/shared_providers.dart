@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
-import 'package:style_cart/core/providers/repository_providers.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/features/auth/domain/entities/user_entity.dart';
+import 'package:stylecart/core/providers/repository_providers.dart';
 
 part 'shared_providers.g.dart';
 

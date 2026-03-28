@@ -5,8 +5,8 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/products/domain/repositories/image_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/products/domain/repositories/image_repository.dart';
 
 class ImageRepositoryImpl implements ImageRepository {
   final FirebaseStorage _storage;
@@ -121,7 +121,8 @@ class ImageRepositoryImpl implements ImageRepository {
 
       // If we got a failure, stop and return it
       if (result.isLeft()) {
-        return Left<Failure, List<String>>(result.fold((f) => f, (_) => const ServerFailure()));
+        return Left<Failure, List<String>>(
+            result.fold((f) => f, (_) => const ServerFailure()));
       }
     }
 

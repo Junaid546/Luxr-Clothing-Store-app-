@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_dimensions.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_dimensions.dart';
 
 class PasswordStrengthIndicator extends StatelessWidget {
   // 0-4

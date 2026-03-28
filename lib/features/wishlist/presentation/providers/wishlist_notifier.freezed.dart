@@ -12,8 +12,7 @@ part of 'wishlist_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$WishlistState {
@@ -32,16 +31,14 @@ mixin _$WishlistState {
 /// @nodoc
 abstract class $WishlistStateCopyWith<$Res> {
   factory $WishlistStateCopyWith(
-    WishlistState value,
-    $Res Function(WishlistState) then,
-  ) = _$WishlistStateCopyWithImpl<$Res, WishlistState>;
+          WishlistState value, $Res Function(WishlistState) then) =
+      _$WishlistStateCopyWithImpl<$Res, WishlistState>;
   @useResult
-  $Res call({
-    List<WishlistItemModel> items,
-    bool isLoading,
-    bool hasError,
-    String errorMessage,
-  });
+  $Res call(
+      {List<WishlistItemModel> items,
+      bool isLoading,
+      bool hasError,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -64,27 +61,24 @@ class _$WishlistStateCopyWithImpl<$Res, $Val extends WishlistState>
     Object? hasError = null,
     Object? errorMessage = null,
   }) {
-    return _then(
-      _value.copyWith(
-            items: null == items
-                ? _value.items
-                : items // ignore: cast_nullable_to_non_nullable
-                      as List<WishlistItemModel>,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasError: null == hasError
-                ? _value.hasError
-                : hasError // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: null == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<WishlistItemModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
   }
 }
 
@@ -92,17 +86,15 @@ class _$WishlistStateCopyWithImpl<$Res, $Val extends WishlistState>
 abstract class _$$WishlistStateImplCopyWith<$Res>
     implements $WishlistStateCopyWith<$Res> {
   factory _$$WishlistStateImplCopyWith(
-    _$WishlistStateImpl value,
-    $Res Function(_$WishlistStateImpl) then,
-  ) = __$$WishlistStateImplCopyWithImpl<$Res>;
+          _$WishlistStateImpl value, $Res Function(_$WishlistStateImpl) then) =
+      __$$WishlistStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<WishlistItemModel> items,
-    bool isLoading,
-    bool hasError,
-    String errorMessage,
-  });
+  $Res call(
+      {List<WishlistItemModel> items,
+      bool isLoading,
+      bool hasError,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -110,9 +102,8 @@ class __$$WishlistStateImplCopyWithImpl<$Res>
     extends _$WishlistStateCopyWithImpl<$Res, _$WishlistStateImpl>
     implements _$$WishlistStateImplCopyWith<$Res> {
   __$$WishlistStateImplCopyWithImpl(
-    _$WishlistStateImpl _value,
-    $Res Function(_$WishlistStateImpl) _then,
-  ) : super(_value, _then);
+      _$WishlistStateImpl _value, $Res Function(_$WishlistStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of WishlistState
   /// with the given fields replaced by the non-null parameter values.
@@ -124,38 +115,36 @@ class __$$WishlistStateImplCopyWithImpl<$Res>
     Object? hasError = null,
     Object? errorMessage = null,
   }) {
-    return _then(
-      _$WishlistStateImpl(
-        items: null == items
-            ? _value._items
-            : items // ignore: cast_nullable_to_non_nullable
-                  as List<WishlistItemModel>,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasError: null == hasError
-            ? _value.hasError
-            : hasError // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: null == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
+    return _then(_$WishlistStateImpl(
+      items: null == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<WishlistItemModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$WishlistStateImpl implements _WishlistState {
-  const _$WishlistStateImpl({
-    final List<WishlistItemModel> items = const [],
-    this.isLoading = false,
-    this.hasError = false,
-    this.errorMessage = '',
-  }) : _items = items;
+  const _$WishlistStateImpl(
+      {final List<WishlistItemModel> items = const [],
+      this.isLoading = false,
+      this.hasError = false,
+      this.errorMessage = ''})
+      : _items = items;
 
   final List<WishlistItemModel> _items;
   @override
@@ -197,12 +186,11 @@ class _$WishlistStateImpl implements _WishlistState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_items),
-    isLoading,
-    hasError,
-    errorMessage,
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_items),
+      isLoading,
+      hasError,
+      errorMessage);
 
   /// Create a copy of WishlistState
   /// with the given fields replaced by the non-null parameter values.
@@ -214,12 +202,11 @@ class _$WishlistStateImpl implements _WishlistState {
 }
 
 abstract class _WishlistState implements WishlistState {
-  const factory _WishlistState({
-    final List<WishlistItemModel> items,
-    final bool isLoading,
-    final bool hasError,
-    final String errorMessage,
-  }) = _$WishlistStateImpl;
+  const factory _WishlistState(
+      {final List<WishlistItemModel> items,
+      final bool isLoading,
+      final bool hasError,
+      final String errorMessage}) = _$WishlistStateImpl;
 
   @override
   List<WishlistItemModel> get items;

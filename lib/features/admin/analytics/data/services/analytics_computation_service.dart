@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/admin/analytics/domain/models/analytics_models.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/features/admin/analytics/domain/models/analytics_models.dart';
 
 part 'analytics_computation_service.g.dart';
 
@@ -52,13 +52,16 @@ class AnalyticsComputationService {
       ]);
     } catch (e) {
       debugPrint('[AnalyticsComputation] ERROR fetching raw data: $e');
-      
+
       // Fallback for testing/debugging when Firestore rules deny access
-      if (kDebugMode && e is FirebaseException && e.code == 'permission-denied') {
-        debugPrint('[AnalyticsComputation] Permission denied in debug mode. Returning empty report for testing.');
+      if (kDebugMode &&
+          e is FirebaseException &&
+          e.code == 'permission-denied') {
+        debugPrint(
+            '[AnalyticsComputation] Permission denied in debug mode. Returning empty report for testing.');
         return AnalyticsReport.empty(period);
       }
-      
+
       rethrow;
     }
 
@@ -69,14 +72,17 @@ class AnalyticsComputationService {
     final prevCustomerStats = results[4] as _CustomerStatsRaw;
 
     // Compute all metrics with individual try-catches for extreme robustness
-    final revenueMetrics = _safeComputeRevenue(currentOrders, previousOrders, range);
+    final revenueMetrics =
+        _safeComputeRevenue(currentOrders, previousOrders, range);
     final orderMetrics = _safeComputeOrders(currentOrders, previousOrders);
-    final customerMetrics = _safeComputeCustomers(customerStats, prevCustomerStats, range);
+    final customerMetrics =
+        _safeComputeCustomers(customerStats, prevCustomerStats, range);
     final productMetrics = _safeComputeProducts(products, currentOrders);
-    
+
     final revenueSeries = _buildTimeSeries(currentOrders, range, 'revenue');
     final orderSeries = _buildTimeSeries(currentOrders, range, 'count');
-    final categoryBreakdown = _computeCategoryBreakdown(currentOrders, products);
+    final categoryBreakdown =
+        _computeCategoryBreakdown(currentOrders, products);
     final topProductsList = _computeTopProducts(currentOrders, products);
     final topCustomersList = _computeTopCustomersForPeriod(currentOrders);
 
@@ -97,25 +103,45 @@ class AnalyticsComputationService {
   }
 
   // ── Robust Computation Wrappers ──────────────────────
-  
-  RevenueMetrics _safeComputeRevenue(List<Map<String, dynamic>> curr, List<Map<String, dynamic>> prev, DateRange range) {
-    try { return _computeRevenueMetrics(curr, prev, range); } 
-    catch (e) { debugPrint('Error computing revenue: $e'); return RevenueMetrics.zero; }
+
+  RevenueMetrics _safeComputeRevenue(List<Map<String, dynamic>> curr,
+      List<Map<String, dynamic>> prev, DateRange range) {
+    try {
+      return _computeRevenueMetrics(curr, prev, range);
+    } catch (e) {
+      debugPrint('Error computing revenue: $e');
+      return RevenueMetrics.zero;
+    }
   }
 
-  OrderMetrics _safeComputeOrders(List<Map<String, dynamic>> curr, List<Map<String, dynamic>> prev) {
-    try { return _computeOrderMetrics(curr, prev); } 
-    catch (e) { debugPrint('Error computing orders: $e'); return OrderMetrics.zero; }
+  OrderMetrics _safeComputeOrders(
+      List<Map<String, dynamic>> curr, List<Map<String, dynamic>> prev) {
+    try {
+      return _computeOrderMetrics(curr, prev);
+    } catch (e) {
+      debugPrint('Error computing orders: $e');
+      return OrderMetrics.zero;
+    }
   }
 
-  CustomerMetrics _safeComputeCustomers(_CustomerStatsRaw curr, _CustomerStatsRaw prev, DateRange range) {
-    try { return _computeCustomerMetrics(curr, prev, range); } 
-    catch (e) { debugPrint('Error computing customers: $e'); return CustomerMetrics.zero; }
+  CustomerMetrics _safeComputeCustomers(
+      _CustomerStatsRaw curr, _CustomerStatsRaw prev, DateRange range) {
+    try {
+      return _computeCustomerMetrics(curr, prev, range);
+    } catch (e) {
+      debugPrint('Error computing customers: $e');
+      return CustomerMetrics.zero;
+    }
   }
 
-  ProductMetrics _safeComputeProducts(List<Map<String, dynamic>> products, List<Map<String, dynamic>> orders) {
-    try { return _computeProductMetrics(products, orders); } 
-    catch (e) { debugPrint('Error computing products: $e'); return ProductMetrics.zero; }
+  ProductMetrics _safeComputeProducts(
+      List<Map<String, dynamic>> products, List<Map<String, dynamic>> orders) {
+    try {
+      return _computeProductMetrics(products, orders);
+    } catch (e) {
+      debugPrint('Error computing products: $e');
+      return ProductMetrics.zero;
+    }
   }
 
   // ══════════════════════════════════════════════════
@@ -126,7 +152,8 @@ class AnalyticsComputationService {
     DateRange range,
   ) async {
     final snap = await _ordersRef
-        .where('placedAt', isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
+        .where('placedAt',
+            isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
         .where('placedAt', isLessThanOrEqualTo: Timestamp.fromDate(range.end))
         .orderBy('placedAt', descending: false)
         .get();
@@ -154,13 +181,17 @@ class AnalyticsComputationService {
     DateRange range,
   ) {
     // Filter to only DELIVERED orders for revenue
-    final delivered = current.where(
-      (o) => o['status'] == OrderStatus.delivered,
-    ).toList();
+    final delivered = current
+        .where(
+          (o) => o['status'] == OrderStatus.delivered,
+        )
+        .toList();
 
-    final prevDelivered = previous.where(
-      (o) => o['status'] == OrderStatus.delivered,
-    ).toList();
+    final prevDelivered = previous
+        .where(
+          (o) => o['status'] == OrderStatus.delivered,
+        )
+        .toList();
 
     // Compute current period metrics
     double totalRevenue = 0;
@@ -186,7 +217,8 @@ class AnalyticsComputationService {
     }
 
     final prevOrderCount = prevDelivered.length;
-    final prevAvgOrderValue = prevOrderCount > 0 ? prevRevenue / prevOrderCount : 0.0;
+    final prevAvgOrderValue =
+        prevOrderCount > 0 ? prevRevenue / prevOrderCount : 0.0;
 
     final growthPct = prevRevenue > 0
         ? ((totalRevenue - prevRevenue) / prevRevenue * 100)
@@ -205,7 +237,10 @@ class AnalyticsComputationService {
       projectedMonthly = dailyRate * daysInMonth;
     } else {
       // For yearly, maybe project to end of year?
-      final dayOfYear = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays + 1;
+      final dayOfYear = DateTime.now()
+              .difference(DateTime(DateTime.now().year, 1, 1))
+              .inDays +
+          1;
       projectedMonthly = (totalRevenue / dayOfYear) * 30.44; // Average month
     }
 
@@ -275,11 +310,15 @@ class AnalyticsComputationService {
     final total = current.length;
     final safe = total > 0 ? total.toDouble() : 1.0;
 
-    final avgDeliveryDays = deliveredWithDates > 0 ? (totalDeliveryDays / deliveredWithDates).round() : 0;
+    final avgDeliveryDays = deliveredWithDates > 0
+        ? (totalDeliveryDays / deliveredWithDates).round()
+        : 0;
 
     // Growth vs previous
     final prevTotal = previous.length;
-    final growth = prevTotal > 0 ? ((total - prevTotal) / prevTotal * 100).round() : (total > 0 ? 100 : 0);
+    final growth = prevTotal > 0
+        ? ((total - prevTotal) / prevTotal * 100).round()
+        : (total > 0 ? 100 : 0);
 
     // Previous cancellation rate
     int prevCancelled = 0;
@@ -376,7 +415,9 @@ class AnalyticsComputationService {
     // Sell-through = sold / (sold + stock) × 100
     // Using PERIOD units for better accuracy across different ranges
     final totalUnitsAtStart = totalPeriodSold + totalStock;
-    final sellThrough = totalUnitsAtStart > 0 ? (totalPeriodSold / totalUnitsAtStart * 100) : 0.0;
+    final sellThrough = totalUnitsAtStart > 0
+        ? (totalPeriodSold / totalUnitsAtStart * 100)
+        : 0.0;
 
     final avgRating = ratedProducts > 0 ? ratingSum / ratedProducts : 0.0;
 
@@ -432,7 +473,8 @@ class AnalyticsComputationService {
 
       days[key] = TimeSeriesPoint(
         date: existing.date,
-        value: metric == 'revenue' ? existing.value + revenue : existing.value + 1,
+        value:
+            metric == 'revenue' ? existing.value + revenue : existing.value + 1,
         label: existing.label,
         count: existing.count + 1,
       );
@@ -482,7 +524,8 @@ class AnalyticsComputationService {
         final lineTotal = (map['lineTotal'] as num?)?.toDouble() ?? 0;
         final qty = (map['quantity'] as num?)?.toInt() ?? 0;
 
-        categoryRevenue[category] = (categoryRevenue[category] ?? 0) + lineTotal;
+        categoryRevenue[category] =
+            (categoryRevenue[category] ?? 0) + lineTotal;
         categoryUnitsSold[category] = (categoryUnitsSold[category] ?? 0) + qty;
       }
     }
@@ -544,7 +587,8 @@ class AnalyticsComputationService {
     final totalRevenue = productRevenue.values.fold(0.0, (a, b) => a + b);
 
     final sorted = productRevenue.entries.toList()
-      ..sort((a, b) => (productUnits[b.key] ?? 0).compareTo(productUnits[a.key] ?? 0));
+      ..sort((a, b) =>
+          (productUnits[b.key] ?? 0).compareTo(productUnits[a.key] ?? 0));
 
     return sorted.take(10).map((entry) {
       final p = productMap[entry.key];
@@ -580,25 +624,28 @@ class AnalyticsComputationService {
       final uid = order['userId'] as String? ?? '';
       if (uid.isEmpty) continue;
 
-      customerSpent[uid] = (customerSpent[uid] ?? 0) + ((order['total'] as num?)?.toDouble() ?? 0);
+      customerSpent[uid] = (customerSpent[uid] ?? 0) +
+          ((order['total'] as num?)?.toDouble() ?? 0);
       customerOrders[uid] = (customerOrders[uid] ?? 0) + 1;
       customerNames[uid] = order['userName'] as String? ?? 'Unknown';
       customerEmails[uid] = order['userEmail'] as String? ?? '';
     }
 
     final sortedUids = customerSpent.keys.toList()
-      ..sort((a, b) => (customerSpent[b] ?? 0).compareTo(customerSpent[a] ?? 0));
+      ..sort(
+          (a, b) => (customerSpent[b] ?? 0).compareTo(customerSpent[a] ?? 0));
 
     return sortedUids.take(10).map((uid) {
       return TopCustomer(
         userId: uid,
         displayName: customerNames[uid]!,
         email: customerEmails[uid]!,
-        photoUrl: null, // order doesn't store this, but that's okay for the list
+        photoUrl:
+            null, // order doesn't store this, but that's okay for the list
         totalOrders: customerOrders[uid]!,
         totalSpent: customerSpent[uid]!,
         eliteStatus: 'N/A', // computed only on whole user object
-        lastOrderDate: DateTime.now(), 
+        lastOrderDate: DateTime.now(),
       );
     }).toList();
   }
@@ -610,16 +657,19 @@ class AnalyticsComputationService {
     // New customers in period
     final newSnap = await _usersRef
         .where('role', isEqualTo: 'customer')
-        .where('createdAt', isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
+        .where('createdAt',
+            isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
         .where('createdAt', isLessThanOrEqualTo: Timestamp.fromDate(range.end))
         .count()
         .get();
 
     // Total customers
-    final totalSnap = await _usersRef.where('role', isEqualTo: 'customer').count().get();
+    final totalSnap =
+        await _usersRef.where('role', isEqualTo: 'customer').count().get();
 
     // Elite status counts
-    final eliteSnap = await _usersRef.where('role', isEqualTo: 'customer').get();
+    final eliteSnap =
+        await _usersRef.where('role', isEqualTo: 'customer').get();
 
     int bronze = 0, silver = 0, gold = 0, platinum = 0;
     double totalSpent = 0;
@@ -666,7 +716,8 @@ class AnalyticsComputationService {
     // New customers in PREVIOUS period
     final newSnap = await _usersRef
         .where('role', isEqualTo: 'customer')
-        .where('createdAt', isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
+        .where('createdAt',
+            isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
         .where('createdAt', isLessThanOrEqualTo: Timestamp.fromDate(range.end))
         .count()
         .get();
@@ -690,13 +741,17 @@ class AnalyticsComputationService {
   ) {
     // Repeat Purchase Rate: users who have placed more than 1 order EVER (all-time returning status)
     // but purchased in this period.
-    final repeatRate = current.totalCount > 0 
-        ? (current.returningCount / current.totalCount * 100) 
+    final repeatRate = current.totalCount > 0
+        ? (current.returningCount / current.totalCount * 100)
         : 0.0;
 
-    final avgLTV = current.totalCount > 0 ? current.totalSpent / current.totalCount : 0.0;
+    final avgLTV =
+        current.totalCount > 0 ? current.totalSpent / current.totalCount : 0.0;
 
-    final growth = previous.newCount > 0 ? ((current.newCount - previous.newCount) / previous.newCount * 100).round() : (current.newCount > 0 ? 100 : 0);
+    final growth = previous.newCount > 0
+        ? ((current.newCount - previous.newCount) / previous.newCount * 100)
+            .round()
+        : (current.newCount > 0 ? 100 : 0);
 
     return CustomerMetrics(
       totalCustomers: current.totalCount,

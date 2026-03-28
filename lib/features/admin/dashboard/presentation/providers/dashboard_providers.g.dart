@@ -12,14 +12,14 @@ String _$dashboardStatsHash() => r'681cea79d03eba00b64cec50a8a7c7c712902f43';
 @ProviderFor(dashboardStats)
 final dashboardStatsProvider =
     AutoDisposeFutureProvider<DashboardStats>.internal(
-      dashboardStats,
-      name: r'dashboardStatsProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$dashboardStatsHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  dashboardStats,
+  name: r'dashboardStatsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dashboardStatsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -30,14 +30,14 @@ String _$weeklyRevenueHash() => r'21891bdf9d7489837578a357af11a5b2343154ad';
 @ProviderFor(weeklyRevenue)
 final weeklyRevenueProvider =
     AutoDisposeFutureProvider<WeeklyRevenueData>.internal(
-      weeklyRevenue,
-      name: r'weeklyRevenueProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$weeklyRevenueHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  weeklyRevenue,
+  name: r'weeklyRevenueProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$weeklyRevenueHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -49,33 +49,33 @@ String _$topSellingProductsHash() =>
 @ProviderFor(topSellingProducts)
 final topSellingProductsProvider =
     AutoDisposeFutureProvider<List<ProductEntity>>.internal(
-      topSellingProducts,
-      name: r'topSellingProductsProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$topSellingProductsHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  topSellingProducts,
+  name: r'topSellingProductsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$topSellingProductsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef TopSellingProductsRef =
-    AutoDisposeFutureProviderRef<List<ProductEntity>>;
+typedef TopSellingProductsRef
+    = AutoDisposeFutureProviderRef<List<ProductEntity>>;
 String _$recentActivityHash() => r'd074fd5a652ac95d550c74ab4c7eb25543a2b82b';
 
 /// See also [recentActivity].
 @ProviderFor(recentActivity)
 final recentActivityProvider =
     AutoDisposeStreamProvider<List<ActivityItem>>.internal(
-      recentActivity,
-      name: r'recentActivityProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$recentActivityHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  recentActivity,
+  name: r'recentActivityProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$recentActivityHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
@@ -104,14 +104,14 @@ String _$dashboardPeriodHash() => r'4b93b6c9b9d7f976a65fe953621ae3dd656b8c7a';
 @ProviderFor(DashboardPeriod)
 final dashboardPeriodProvider =
     AutoDisposeNotifierProvider<DashboardPeriod, String>.internal(
-      DashboardPeriod.new,
-      name: r'dashboardPeriodProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$dashboardPeriodHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  DashboardPeriod.new,
+  name: r'dashboardPeriodProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dashboardPeriodHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$DashboardPeriod = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint

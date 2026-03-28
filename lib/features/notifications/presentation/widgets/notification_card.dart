@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
 
 class NotificationCard extends ConsumerWidget {
   final NotificationEntity notification;

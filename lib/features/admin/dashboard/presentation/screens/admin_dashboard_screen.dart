@@ -2,16 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
-import 'package:style_cart/features/admin/analytics/presentation/providers/quick_stats_provider.dart';
-import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
-import 'package:style_cart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
-import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/admin/core/providers/admin_guard_provider.dart';
+import 'package:stylecart/features/admin/analytics/presentation/providers/quick_stats_provider.dart';
+import 'package:stylecart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
+import 'package:stylecart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:stylecart/features/auth/data/providers/auth_providers.dart';
+import 'package:stylecart/features/notifications/data/providers/notification_providers.dart';
 
 class AdminDashboardScreen extends ConsumerWidget with AdminGuardMixin {
   const AdminDashboardScreen({super.key});
@@ -23,16 +23,16 @@ class AdminDashboardScreen extends ConsumerWidget with AdminGuardMixin {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-          const SliverToBoxAdapter(child: _DashboardAppBar()),
-          const SliverToBoxAdapter(child: _KPICardsGrid()),
-          const SliverToBoxAdapter(child: _WeeklyPerformanceChart()),
-          const SliverToBoxAdapter(child: _TopSellingProducts()),
-          const SliverToBoxAdapter(child: _RecentActivityFeed()),
-          const SliverToBoxAdapter(child: _LowStockAlert()),
-          const SliverToBoxAdapter(child: SizedBox(height: 32)),
-        ],
+            const SliverToBoxAdapter(child: _DashboardAppBar()),
+            const SliverToBoxAdapter(child: _KPICardsGrid()),
+            const SliverToBoxAdapter(child: _WeeklyPerformanceChart()),
+            const SliverToBoxAdapter(child: _TopSellingProducts()),
+            const SliverToBoxAdapter(child: _RecentActivityFeed()),
+            const SliverToBoxAdapter(child: _LowStockAlert()),
+            const SliverToBoxAdapter(child: SizedBox(height: 32)),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
@@ -65,8 +65,8 @@ class _DashboardAppBar extends ConsumerWidget {
                         )),
                     const SizedBox(width: 8),
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
                         color: AppColors.gold.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(6),
@@ -87,7 +87,8 @@ class _DashboardAppBar extends ConsumerWidget {
                 const SizedBox(height: 2),
                 Text(
                   'Welcome back, ${user.displayName}',
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodySmall
+                      .copyWith(color: AppColors.textSecondary),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -115,36 +116,37 @@ class _DashboardAppBar extends ConsumerWidget {
                   size: 20,
                 ),
               ),
-          Consumer(
-            builder: (context, ref, child) {
-              final unreadCountAsync = ref.watch(unreadNotificationCountProvider);
-              final count = unreadCountAsync.valueOrNull ?? 0;
-              
-              if (count == 0) return const SizedBox.shrink();
-              
-              return Positioned(
-                right: -2,
-                top: -2,
-                child: Container(
-                  width: 14,
-                  height: 14,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    count > 9 ? '9+' : count.toString(),
-                    style: const TextStyle(
-                      fontSize: 8,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              Consumer(
+                builder: (context, ref, child) {
+                  final unreadCountAsync =
+                      ref.watch(unreadNotificationCountProvider);
+                  final count = unreadCountAsync.valueOrNull ?? 0;
+
+                  if (count == 0) return const SizedBox.shrink();
+
+                  return Positioned(
+                    right: -2,
+                    top: -2,
+                    child: Container(
+                      width: 14,
+                      height: 14,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        count > 9 ? '9+' : count.toString(),
+                        style: const TextStyle(
+                          fontSize: 8,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              );
-            },
-          ),
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(width: 10),
@@ -211,7 +213,8 @@ class _KPICardsGrid extends ConsumerWidget {
               TextButton.icon(
                 onPressed: () => context.push(RouteNames.adminAnalytics),
                 icon: const Icon(Icons.analytics_outlined, size: 14),
-                label: const Text('Full Reports', style: TextStyle(fontSize: 12)),
+                label:
+                    const Text('Full Reports', style: TextStyle(fontSize: 12)),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.gold,
                   padding: EdgeInsets.zero,
@@ -223,51 +226,52 @@ class _KPICardsGrid extends ConsumerWidget {
         ),
         statsAsync.when(
           data: (stats) => GridView.count(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.22, // Increased from 1.4 to prevent bottom overflow
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        children: [
-          _KPICard(
-            icon: Icons.account_balance_wallet_outlined,
-            label: 'TOTAL REVENUE',
-            value: stats.totalRevenue.toCurrencyString,
-            change: stats.revenueChange,
-            isUp: stats.isRevenueUp,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio:
+                1.22, // Increased from 1.4 to prevent bottom overflow
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            children: [
+              _KPICard(
+                icon: Icons.account_balance_wallet_outlined,
+                label: 'TOTAL REVENUE',
+                value: stats.totalRevenue.toCurrencyString,
+                change: stats.revenueChange,
+                isUp: stats.isRevenueUp,
+              ),
+              _KPICard(
+                icon: Icons.shopping_bag_outlined,
+                label: 'TOTAL ORDERS',
+                value: stats.totalOrders.toString(),
+                change: stats.ordersChange,
+                isUp: stats.isOrdersUp,
+              ),
+              _KPICard(
+                icon: Icons.people_outline,
+                label: 'NEW CLIENTS',
+                value: stats.newClients.toString(),
+                change: stats.clientsChange,
+                isUp: stats.isClientsUp,
+                subtitle: 'Total: ${stats.totalClients}',
+              ),
+              _KPICard(
+                icon: Icons.trending_up,
+                label: 'CONVERSION',
+                value: '${stats.conversionRate.toStringAsFixed(1)}%',
+                change: stats.conversionChange,
+                isUp: stats.isConversionUp,
+              ),
+            ],
           ),
-          _KPICard(
-            icon: Icons.shopping_bag_outlined,
-            label: 'TOTAL ORDERS',
-            value: stats.totalOrders.toString(),
-            change: stats.ordersChange,
-            isUp: stats.isOrdersUp,
+          loading: () => const _KPIShimmerGrid(),
+          error: (err, _) => _DashboardErrorCard(
+            title: 'KPI Data Unavailable',
+            message: err.toString(),
           ),
-          _KPICard(
-            icon: Icons.people_outline,
-            label: 'NEW CLIENTS',
-            value: stats.newClients.toString(),
-            change: stats.clientsChange,
-            isUp: stats.isClientsUp,
-            subtitle: 'Total: ${stats.totalClients}',
-          ),
-          _KPICard(
-            icon: Icons.trending_up,
-            label: 'CONVERSION',
-            value: '${stats.conversionRate.toStringAsFixed(1)}%',
-            change: stats.conversionChange,
-            isUp: stats.isConversionUp,
-          ),
-        ],
-      ),
-      loading: () => const _KPIShimmerGrid(),
-      error: (err, _) => _DashboardErrorCard(
-        title: 'KPI Data Unavailable',
-        message: err.toString(),
-      ),
-    ),
+        ),
       ],
     );
   }
@@ -429,13 +433,16 @@ class _WeeklyPerformanceChart extends ConsumerWidget {
                 ),
                 Row(
                   children: ['7D', '30D'].map((period) {
-                    final isActive = ref.watch(dashboardPeriodProvider) == period;
+                    final isActive =
+                        ref.watch(dashboardPeriodProvider) == period;
                     return GestureDetector(
-                      onTap: () =>
-                          ref.read(dashboardPeriodProvider.notifier).setPeriod(period),
+                      onTap: () => ref
+                          .read(dashboardPeriodProvider.notifier)
+                          .setPeriod(period),
                       child: Container(
                         margin: const EdgeInsets.only(left: 6),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
                           color: isActive
                               ? AppColors.gold
@@ -447,7 +454,8 @@ class _WeeklyPerformanceChart extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: isActive ? Colors.black : AppColors.textMuted,
+                            color:
+                                isActive ? Colors.black : AppColors.textMuted,
                           ),
                         ),
                       ),
@@ -535,7 +543,8 @@ class _LineChartPainter extends CustomPainter {
     for (int i = 0; i < days.length; i++) {
       final x = i * stepX;
       final normalizedY = maxRev > 0 ? days[i].revenue / maxRev : 0.0;
-      final y = size.height - (normalizedY * size.height * 0.85) - size.height * 0.05;
+      final y =
+          size.height - (normalizedY * size.height * 0.85) - size.height * 0.05;
       points.add(Offset(x, y));
     }
 
@@ -621,7 +630,9 @@ class _TopSellingProducts extends ConsumerWidget {
                           color: AppColors.backgroundCard,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: isFirst ? AppColors.gold : AppColors.borderDefault,
+                            color: isFirst
+                                ? AppColors.gold
+                                : AppColors.borderDefault,
                             width: isFirst ? 1.5 : 1,
                           ),
                         ),
@@ -643,18 +654,21 @@ class _TopSellingProducts extends ConsumerWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         product.name,
-                                        style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
+                                        style: AppTextStyles.bodyMedium
+                                            .copyWith(color: Colors.white),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
                                         product.finalPrice.toCurrencyString,
-                                        style: AppTextStyles.titleMedium.copyWith(
+                                        style:
+                                            AppTextStyles.titleMedium.copyWith(
                                           color: AppColors.gold,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -673,7 +687,8 @@ class _TopSellingProducts extends ConsumerWidget {
                                 decoration: BoxDecoration(
                                   color: isFirst
                                       ? AppColors.gold
-                                      : AppColors.backgroundCard.withOpacity(0.9),
+                                      : AppColors.backgroundCard
+                                          .withOpacity(0.9),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
@@ -681,7 +696,8 @@ class _TopSellingProducts extends ConsumerWidget {
                                   style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
-                                    color: isFirst ? Colors.black : Colors.white,
+                                    color:
+                                        isFirst ? Colors.black : Colors.white,
                                   ),
                                 ),
                               ),
@@ -742,9 +758,8 @@ class _RecentActivityFeed extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  ...activities
-                      .take(5)
-                      .map((activity) => _ActivityItemWidget(activity: activity)),
+                  ...activities.take(5).map(
+                      (activity) => _ActivityItemWidget(activity: activity)),
                 ],
               ),
             ),
@@ -777,7 +792,9 @@ class _ActivityItemWidget extends StatelessWidget {
               activity.type == 'order'
                   ? Icons.shopping_bag_outlined
                   : Icons.person_add_outlined,
-              color: activity.type == 'order' ? AppColors.primary : AppColors.success,
+              color: activity.type == 'order'
+                  ? AppColors.primary
+                  : AppColors.success,
               size: 18,
             ),
           ),
@@ -787,9 +804,11 @@ class _ActivityItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(activity.title,
-                    style: AppTextStyles.bodyMedium.copyWith(color: Colors.white)),
+                    style:
+                        AppTextStyles.bodyMedium.copyWith(color: Colors.white)),
                 Text(activity.timeAgo,
-                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary)),
+                    style: AppTextStyles.bodySmall
+                        .copyWith(color: AppColors.textSecondary)),
               ],
             ),
           ),
@@ -802,7 +821,8 @@ class _ActivityItemWidget extends StatelessWidget {
               ),
             ),
           if (activity.amount == null)
-            const Icon(Icons.chevron_right, color: AppColors.textMuted, size: 18),
+            const Icon(Icons.chevron_right,
+                color: AppColors.textMuted, size: 18),
         ],
       ),
     );
@@ -821,7 +841,8 @@ class _LowStockAlert extends ConsumerWidget {
           ? GestureDetector(
               onTap: () => context.go(RouteNames.adminProducts),
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: AppColors.warning.withOpacity(0.08),
@@ -848,12 +869,14 @@ class _LowStockAlert extends ConsumerWidget {
                           ),
                           const Text(
                             'Tap to review inventory',
-                            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                            style: TextStyle(
+                                fontSize: 12, color: AppColors.textSecondary),
                           ),
                         ],
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: AppColors.warning, size: 20),
+                    const Icon(Icons.chevron_right,
+                        color: AppColors.warning, size: 20),
                   ],
                 ),
               ),
@@ -878,12 +901,14 @@ class _KPIShimmerGrid extends StatelessWidget {
       mainAxisSpacing: 12,
       childAspectRatio: 1.4,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      children: List.generate(4, (index) => Container(
-        decoration: BoxDecoration(
-          color: AppColors.backgroundCard,
-          borderRadius: BorderRadius.circular(16),
-        ),
-      )),
+      children: List.generate(
+          4,
+          (index) => Container(
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundCard,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              )),
     );
   }
 }
@@ -912,12 +937,13 @@ class _DashboardErrorCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             title,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           const SizedBox(height: 4),
           Text(
-            message.contains('index') 
-                ? 'Firestore index required. Check console for link.' 
+            message.contains('index')
+                ? 'Firestore index required. Check console for link.'
                 : message,
             textAlign: TextAlign.center,
             maxLines: 2,

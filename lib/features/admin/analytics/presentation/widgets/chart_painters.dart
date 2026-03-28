@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/features/admin/analytics/domain/models/analytics_models.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/features/admin/analytics/domain/models/analytics_models.dart';
 
 // ══════════════════════════════════════════════════════
 // LINE CHART PAINTER
@@ -43,13 +43,15 @@ class LineChartPainter extends CustomPainter {
 
     // Compute pixel positions for each point
     Offset toPixel(TimeSeriesPoint p) {
-      final x = chartArea.left + (points.indexOf(p) / (points.length - 1)) * chartArea.width;
+      final x = chartArea.left +
+          (points.indexOf(p) / (points.length - 1)) * chartArea.width;
       final y = chartArea.bottom - (p.value / chartMax) * chartArea.height;
       return Offset(x, y);
     }
 
     // Animate by limiting visible points
-    final visibleCount = (points.length * animationValue).ceil().clamp(1, points.length);
+    final visibleCount =
+        (points.length * animationValue).ceil().clamp(1, points.length);
     final visiblePoints = points.sublist(0, visibleCount);
 
     final pixelPoints = visiblePoints.map(toPixel).toList();
@@ -99,7 +101,8 @@ class LineChartPainter extends CustomPainter {
 
     // ── Draw smooth bezier line ───────────────────────
     if (pixelPoints.length > 1) {
-      final linePath = Path()..moveTo(pixelPoints.first.dx, pixelPoints.first.dy);
+      final linePath = Path()
+        ..moveTo(pixelPoints.first.dx, pixelPoints.first.dy);
 
       for (int i = 0; i < pixelPoints.length - 1; i++) {
         final cp1 = Offset(
@@ -158,7 +161,8 @@ class LineChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(LineChartPainter old) => old.animationValue != animationValue || old.points != points;
+  bool shouldRepaint(LineChartPainter old) =>
+      old.animationValue != animationValue || old.points != points;
 }
 
 // ══════════════════════════════════════════════════════
@@ -185,7 +189,8 @@ class BarChartPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (points.isEmpty) return;
 
-    final maxValue = points.map((p) => p.value).fold(0.0, (a, b) => b > a ? b : a);
+    final maxValue =
+        points.map((p) => p.value).fold(0.0, (a, b) => b > a ? b : a);
     if (maxValue == 0) return;
 
     final barCount = points.length;
@@ -195,7 +200,8 @@ class BarChartPainter extends CustomPainter {
 
     for (int i = 0; i < barCount; i++) {
       final pt = points[i];
-      final normalizedHeight = (pt.value / maxValue) * size.height * animationValue * 0.85;
+      final normalizedHeight =
+          (pt.value / maxValue) * size.height * animationValue * 0.85;
 
       final x = i * (barWidth + spacing);
       final y = size.height - normalizedHeight;
@@ -213,7 +219,9 @@ class BarChartPainter extends CustomPainter {
 
       // Value label on top of bar (only for tall enough bars)
       if (normalizedHeight > 30 && pt.value > 0) {
-        final label = pt.value >= 1000 ? '\$${(pt.value / 1000).toStringAsFixed(1)}k' : '\$${pt.value.toStringAsFixed(0)}';
+        final label = pt.value >= 1000
+            ? '\$${(pt.value / 1000).toStringAsFixed(1)}k'
+            : '\$${pt.value.toStringAsFixed(0)}';
 
         final textPainter = TextPainter(
           text: TextSpan(
@@ -241,7 +249,8 @@ class BarChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(BarChartPainter old) => old.animationValue != animationValue || old.points != points;
+  bool shouldRepaint(BarChartPainter old) =>
+      old.animationValue != animationValue || old.points != points;
 }
 
 // ══════════════════════════════════════════════════════
@@ -280,7 +289,8 @@ class DonutChartPainter extends CustomPainter {
     data.entries.toList().asMap().forEach((idx, entry) {
       final fraction = entry.value / total;
       // Animate: progressively draw each segment
-      final visibleFraction = (animationValue * data.length - idx).clamp(0.0, fraction.clamp(0.0, 1.0));
+      final visibleFraction = (animationValue * data.length - idx)
+          .clamp(0.0, fraction.clamp(0.0, 1.0));
       final sweepAngle = visibleFraction * 2 * pi - 0.05;
 
       if (sweepAngle <= 0) {
@@ -300,7 +310,8 @@ class DonutChartPainter extends CustomPainter {
         sweepAngle,
         false,
         Paint()
-          ..color = colors[idx % colors.length].withOpacity(isSelected ? 1.0 : 0.8)
+          ..color =
+              colors[idx % colors.length].withOpacity(isSelected ? 1.0 : 0.8)
           ..strokeWidth = isSelected ? strokeWidth + 4 : strokeWidth
           ..style = PaintingStyle.stroke
           ..strokeCap = StrokeCap.butt,
@@ -344,7 +355,10 @@ class DonutChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(DonutChartPainter old) => old.animationValue != animationValue || old.selectedIndex != selectedIndex || old.data != data;
+  bool shouldRepaint(DonutChartPainter old) =>
+      old.animationValue != animationValue ||
+      old.selectedIndex != selectedIndex ||
+      old.data != data;
 }
 
 // ══════════════════════════════════════════════════════
@@ -386,7 +400,8 @@ class GaugeChartPainter extends CustomPainter {
     );
 
     // Value arc
-    final sweepAngle = (value / 100 * totalAngle * animationValue).clamp(0.0, totalAngle);
+    final sweepAngle =
+        (value / 100 * totalAngle * animationValue).clamp(0.0, totalAngle);
 
     if (sweepAngle > 0) {
       canvas.drawArc(
@@ -459,7 +474,8 @@ class GaugeChartPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(GaugeChartPainter old) => old.animationValue != animationValue || old.value != value;
+  bool shouldRepaint(GaugeChartPainter old) =>
+      old.animationValue != animationValue || old.value != value;
 }
 
 // ══════════════════════════════════════════════════════
@@ -485,7 +501,8 @@ class AnimatedChart extends StatefulWidget {
   State<AnimatedChart> createState() => _AnimatedChartState();
 }
 
-class _AnimatedChartState extends State<AnimatedChart> with SingleTickerProviderStateMixin {
+class _AnimatedChartState extends State<AnimatedChart>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 

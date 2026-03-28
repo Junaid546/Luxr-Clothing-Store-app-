@@ -3,12 +3,12 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/data/firestore_base_repository.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/constants/firestore_schema.dart';
+import 'package:stylecart/core/data/firestore_base_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/providers/firebase_providers.dart';
+import 'package:stylecart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
 
 part 'analytics_repository_impl.g.dart';
 
@@ -32,7 +32,8 @@ class AnalyticsData extends Equatable {
   });
 
   @override
-  List<Object> get props => [totalRevenue, selectedPeriod, revenueTrend, bestSellers];
+  List<Object> get props =>
+      [totalRevenue, selectedPeriod, revenueTrend, bestSellers];
 }
 
 class BestSellerItem extends Equatable {
@@ -71,7 +72,8 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
       final ordersSnap = await firestore
           .collection(FirestoreConstants.orders)
           .where('status', isEqualTo: OrderStatus.delivered)
-          .where('placedAt', isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
+          .where('placedAt',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(range.start))
           .where('placedAt', isLessThanOrEqualTo: Timestamp.fromDate(range.end))
           .get();
 
@@ -135,7 +137,8 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
       final sortedProducts = productSales.values.toList()
         ..sort((a, b) => b.unitsSold.compareTo(a.unitsSold));
 
-      final topCount = sortedProducts.isNotEmpty ? sortedProducts.first.unitsSold : 1;
+      final topCount =
+          sortedProducts.isNotEmpty ? sortedProducts.first.unitsSold : 1;
 
       final bestSellers = sortedProducts
           .take(5)
@@ -153,8 +156,10 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
       final prevSnap = await firestore
           .collection(FirestoreConstants.orders)
           .where('status', isEqualTo: OrderStatus.delivered)
-          .where('placedAt', isGreaterThanOrEqualTo: Timestamp.fromDate(prevRange.start))
-          .where('placedAt', isLessThanOrEqualTo: Timestamp.fromDate(prevRange.end))
+          .where('placedAt',
+              isGreaterThanOrEqualTo: Timestamp.fromDate(prevRange.start))
+          .where('placedAt',
+              isLessThanOrEqualTo: Timestamp.fromDate(prevRange.end))
           .get();
 
       double prevRevenue = 0;
@@ -162,7 +167,9 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
         prevRevenue += (doc.data()['total'] as num?)?.toDouble() ?? 0;
       }
 
-      final growthPct = prevRevenue > 0 ? ((totalRevenue - prevRevenue) / prevRevenue) * 100 : 0.0;
+      final growthPct = prevRevenue > 0
+          ? ((totalRevenue - prevRevenue) / prevRevenue) * 100
+          : 0.0;
 
       return AnalyticsData(
         totalRevenue: totalRevenue,
@@ -170,7 +177,8 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
         revenueTrend: trend,
         revenueByCategory: categoryRevenue,
         bestSellers: bestSellers,
-        totalItemsSold: productSales.values.fold(0, (sum, p) => sum + p.unitsSold),
+        totalItemsSold:
+            productSales.values.fold(0, (sum, p) => sum + p.unitsSold),
         selectedPeriod: period,
       );
     });
@@ -191,7 +199,8 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
           start: DateTime(now.year, now.month, 1),
           end: now,
         ),
-      _ => ( // yearly
+      _ => (
+          // yearly
           start: DateTime(now.year, 1, 1),
           end: now,
         ),
@@ -275,7 +284,8 @@ class AnalyticsPeriod extends _$AnalyticsPeriod {
 @riverpod
 Future<AnalyticsData> analyticsData(AnalyticsDataRef ref) async {
   final period = ref.watch(analyticsPeriodProvider);
-  final result = await ref.read(analyticsRepositoryProvider).getAnalytics(period);
+  final result =
+      await ref.read(analyticsRepositoryProvider).getAnalytics(period);
   return result.getOrElse(
     () => AnalyticsData(
       totalRevenue: 0,

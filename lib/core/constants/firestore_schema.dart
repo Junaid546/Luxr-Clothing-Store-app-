@@ -60,7 +60,7 @@
 /// CONSTRAINTS:
 ///   - addresses array NEVER exceeds 5 items
 ///   - Only 1 address can have isDefault: true
-///   - role NEVER changed by client — admin only via 
+///   - role NEVER changed by client — admin only via
 ///     Firebase Console or Cloud Function
 ///   - fcmToken is nullable (user may deny permissions)
 ///
@@ -124,7 +124,7 @@
 ///   "isFeatured":    bool,     // shows on home Featured section
 ///   "isNewArrival":  bool,     // shows on New Arrivals section
 ///   "isLimitedEdition": bool,
-///   
+///
 ///   // ── Analytics ─────────────────────────────────────
 ///   "avgRating":     double,   // 0.0 - 5.0
 ///   "reviewCount":   int,      // total reviews
@@ -138,7 +138,7 @@
 /// }
 ///
 /// VALID CATEGORIES:
-///   'Apparel' | 'Footwear' | 'Accessories' | 'Bags' | 
+///   'Apparel' | 'Footwear' | 'Accessories' | 'Bags' |
 ///   'Watches' | 'Jewelry' | 'Beauty' | 'Winter Wear'
 ///
 /// INVENTORY RULES:
@@ -209,7 +209,7 @@
 ///   "paymentMethod": String,   // 'cod' | 'online'
 ///   "paymentStatus": String,   // 'pending'|'paid'|'refunded'
 ///   "transactionId": String?,  // from payment gateway
-///   
+///
 ///   // ── Status & Timeline ─────────────────────────────
 ///   "status":        String,
 ///   // ENUM: 'pending'|'confirmed'|'processing'|
@@ -253,7 +253,7 @@
 ///   - Items array is a SNAPSHOT (never references products)
 ///   - Prices in items NEVER change after order placed
 ///   - statusHistory is APPEND-ONLY (never delete entries)
-///   - Stock deduction happens in SAME transaction as 
+///   - Stock deduction happens in SAME transaction as
 ///     order document creation
 ///
 /// ══════════════════════════════════════════════════════════
@@ -284,7 +284,7 @@
 ///
 /// CART RULES:
 ///   - Max 20 items in cart
-///   - If same productId+size+color added again: 
+///   - If same productId+size+color added again:
 ///     INCREMENT quantity, don't add new doc
 ///   - Cart is NOT a reservation — stock is NOT held
 ///   - On checkout: re-validate prices from /products
@@ -340,7 +340,7 @@
 /// REVIEW RULES:
 ///   - 1 review per user per product (enforced by security rules)
 ///   - Must have orderId from a DELIVERED order
-///   - On new review: update products/{id}.avgRating 
+///   - On new review: update products/{id}.avgRating
 ///     and reviewCount via Cloud Function (or transaction)
 ///   - avgRating = sum(all ratings) / reviewCount
 ///
@@ -395,7 +395,7 @@
 ///   "userId":         String,  // target user uid
 ///   "title":          String,
 ///   "body":           String,
-///   "type":           String,  
+///   "type":           String,
 ///   // ENUM: 'order_update'|'promotion'|'new_arrival'|'system'
 ///   "data": {                  // extra payload for deep link
 ///     "orderId":      String?,
@@ -485,7 +485,7 @@
 
 class UserFields {
   static const String emailVerified = 'emailVerified';
-  
+
   // Addresses embedded array fields
   static const String addressId = 'addressId';
   static const String label = 'label';
@@ -553,12 +553,12 @@ class OrderFields {
   static const String courierName = 'name';
   static const String trackingNumber = 'trackingNumber';
   static const String estimatedTime = 'estimatedTime';
-  
+
   // Status History subfields
   static const String timestamp = 'timestamp';
   static const String note = 'note';
   static const String updatedBy = 'updatedBy';
-  
+
   // Estimated Delivery subfields
   static const String from = 'from';
   static const String to = 'to';
@@ -660,7 +660,7 @@ class AnalyticsFields {
   static const String avgOrderValue = 'avgOrderValue';
   static const String conversionRate = 'conversionRate';
   static const String updatedAt = 'updatedAt';
-  
+
   // Top Products subfields
   static const String productId = 'productId';
   static const String name = 'name';
@@ -669,75 +669,83 @@ class AnalyticsFields {
 }
 
 class OrderStatus {
-  static const String pending          = 'pending';
-  static const String confirmed        = 'confirmed';
-  static const String processing       = 'processing';
-  static const String packed           = 'packed';
-  static const String shipped          = 'shipped';
-  static const String outForDelivery   = 'out_for_delivery';
-  static const String delivered        = 'delivered';
-  static const String cancelled        = 'cancelled';
-  static const String returnRequested  = 'return_requested';
-  static const String returned         = 'returned';
+  static const String pending = 'pending';
+  static const String confirmed = 'confirmed';
+  static const String processing = 'processing';
+  static const String packed = 'packed';
+  static const String shipped = 'shipped';
+  static const String outForDelivery = 'out_for_delivery';
+  static const String delivered = 'delivered';
+  static const String cancelled = 'cancelled';
+  static const String returnRequested = 'return_requested';
+  static const String returned = 'returned';
 }
 
 class PaymentMethod {
-  static const String cod    = 'cod';
+  static const String cod = 'cod';
   static const String online = 'online';
 }
 
 class PaymentStatus {
-  static const String pending  = 'pending';
-  static const String paid     = 'paid';
+  static const String pending = 'pending';
+  static const String paid = 'paid';
   static const String refunded = 'refunded';
 }
 
 class ShippingMethod {
   static const String standard = 'standard';
-  static const String express  = 'express';
+  static const String express = 'express';
 }
 
 class NotificationType {
   static const String orderUpdate = 'order_update';
-  static const String promotion   = 'promotion';
-  static const String newArrival  = 'new_arrival';
-  static const String system      = 'system';
+  static const String promotion = 'promotion';
+  static const String newArrival = 'new_arrival';
+  static const String system = 'system';
 }
 
 class EliteStatus {
-  static const String bronze   = 'BRONZE';
-  static const String silver   = 'SILVER';
-  static const String gold     = 'GOLD';
+  static const String bronze = 'BRONZE';
+  static const String silver = 'SILVER';
+  static const String gold = 'GOLD';
   static const String platinum = 'PLATINUM';
 }
 
 class ProductCategory {
-  static const String apparel    = 'Apparel';
-  static const String footwear   = 'Footwear';
-  static const String accessories= 'Accessories';
-  static const String bags       = 'Bags';
-  static const String watches    = 'Watches';
-  static const String jewelry    = 'Jewelry';
-  static const String beauty     = 'Beauty';
+  static const String apparel = 'Apparel';
+  static const String footwear = 'Footwear';
+  static const String accessories = 'Accessories';
+  static const String bags = 'Bags';
+  static const String watches = 'Watches';
+  static const String jewelry = 'Jewelry';
+  static const String beauty = 'Beauty';
   static const String winterWear = 'Winter Wear';
-  static const String outerwear  = 'Outerwear';
-  static const String shirts     = 'Shirts';
-  static const String hoodies    = 'Hoodies';
+  static const String outerwear = 'Outerwear';
+  static const String shirts = 'Shirts';
+  static const String hoodies = 'Hoodies';
 
   static const List<String> all = [
-    apparel, footwear, accessories, bags,
-    watches, jewelry, beauty, winterWear,
-    outerwear, shirts, hoodies,
+    apparel,
+    footwear,
+    accessories,
+    bags,
+    watches,
+    jewelry,
+    beauty,
+    winterWear,
+    outerwear,
+    shirts,
+    hoodies,
   ];
 }
 
 class ProductSize {
-  static const String xs      = 'XS';
-  static const String s       = 'S';
-  static const String m       = 'M';
-  static const String l       = 'L';
-  static const String xl      = 'XL';
-  static const String xxl     = 'XXL';
+  static const String xs = 'XS';
+  static const String s = 'S';
+  static const String m = 'M';
+  static const String l = 'L';
+  static const String xl = 'XL';
+  static const String xxl = 'XXL';
   static const String oneSize = 'ONE_SIZE';
 
   static const List<String> all = [xs, s, m, l, xl, xxl, oneSize];

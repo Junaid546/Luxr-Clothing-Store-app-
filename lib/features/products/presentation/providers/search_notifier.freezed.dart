@@ -12,8 +12,7 @@ part of 'search_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SearchState {
@@ -34,18 +33,16 @@ mixin _$SearchState {
 /// @nodoc
 abstract class $SearchStateCopyWith<$Res> {
   factory $SearchStateCopyWith(
-    SearchState value,
-    $Res Function(SearchState) then,
-  ) = _$SearchStateCopyWithImpl<$Res, SearchState>;
+          SearchState value, $Res Function(SearchState) then) =
+      _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
-  $Res call({
-    String query,
-    List<ProductEntity> results,
-    List<String> recentSearches,
-    bool isSearching,
-    bool hasError,
-    String errorMessage,
-  });
+  $Res call(
+      {String query,
+      List<ProductEntity> results,
+      List<String> recentSearches,
+      bool isSearching,
+      bool hasError,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -70,35 +67,32 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? hasError = null,
     Object? errorMessage = null,
   }) {
-    return _then(
-      _value.copyWith(
-            query: null == query
-                ? _value.query
-                : query // ignore: cast_nullable_to_non_nullable
-                      as String,
-            results: null == results
-                ? _value.results
-                : results // ignore: cast_nullable_to_non_nullable
-                      as List<ProductEntity>,
-            recentSearches: null == recentSearches
-                ? _value.recentSearches
-                : recentSearches // ignore: cast_nullable_to_non_nullable
-                      as List<String>,
-            isSearching: null == isSearching
-                ? _value.isSearching
-                : isSearching // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasError: null == hasError
-                ? _value.hasError
-                : hasError // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: null == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+      results: null == results
+          ? _value.results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<ProductEntity>,
+      recentSearches: null == recentSearches
+          ? _value.recentSearches
+          : recentSearches // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isSearching: null == isSearching
+          ? _value.isSearching
+          : isSearching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
   }
 }
 
@@ -106,19 +100,17 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
 abstract class _$$SearchStateImplCopyWith<$Res>
     implements $SearchStateCopyWith<$Res> {
   factory _$$SearchStateImplCopyWith(
-    _$SearchStateImpl value,
-    $Res Function(_$SearchStateImpl) then,
-  ) = __$$SearchStateImplCopyWithImpl<$Res>;
+          _$SearchStateImpl value, $Res Function(_$SearchStateImpl) then) =
+      __$$SearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String query,
-    List<ProductEntity> results,
-    List<String> recentSearches,
-    bool isSearching,
-    bool hasError,
-    String errorMessage,
-  });
+  $Res call(
+      {String query,
+      List<ProductEntity> results,
+      List<String> recentSearches,
+      bool isSearching,
+      bool hasError,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -126,9 +118,8 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     extends _$SearchStateCopyWithImpl<$Res, _$SearchStateImpl>
     implements _$$SearchStateImplCopyWith<$Res> {
   __$$SearchStateImplCopyWithImpl(
-    _$SearchStateImpl _value,
-    $Res Function(_$SearchStateImpl) _then,
-  ) : super(_value, _then);
+      _$SearchStateImpl _value, $Res Function(_$SearchStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -142,49 +133,47 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? hasError = null,
     Object? errorMessage = null,
   }) {
-    return _then(
-      _$SearchStateImpl(
-        query: null == query
-            ? _value.query
-            : query // ignore: cast_nullable_to_non_nullable
-                  as String,
-        results: null == results
-            ? _value._results
-            : results // ignore: cast_nullable_to_non_nullable
-                  as List<ProductEntity>,
-        recentSearches: null == recentSearches
-            ? _value._recentSearches
-            : recentSearches // ignore: cast_nullable_to_non_nullable
-                  as List<String>,
-        isSearching: null == isSearching
-            ? _value.isSearching
-            : isSearching // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasError: null == hasError
-            ? _value.hasError
-            : hasError // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: null == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
+    return _then(_$SearchStateImpl(
+      query: null == query
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
+      results: null == results
+          ? _value._results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<ProductEntity>,
+      recentSearches: null == recentSearches
+          ? _value._recentSearches
+          : recentSearches // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isSearching: null == isSearching
+          ? _value.isSearching
+          : isSearching // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$SearchStateImpl implements _SearchState {
-  const _$SearchStateImpl({
-    this.query = '',
-    final List<ProductEntity> results = const [],
-    final List<String> recentSearches = const [],
-    this.isSearching = false,
-    this.hasError = false,
-    this.errorMessage = '',
-  }) : _results = results,
-       _recentSearches = recentSearches;
+  const _$SearchStateImpl(
+      {this.query = '',
+      final List<ProductEntity> results = const [],
+      final List<String> recentSearches = const [],
+      this.isSearching = false,
+      this.hasError = false,
+      this.errorMessage = ''})
+      : _results = results,
+        _recentSearches = recentSearches;
 
   @override
   @JsonKey()
@@ -229,10 +218,8 @@ class _$SearchStateImpl implements _SearchState {
             other is _$SearchStateImpl &&
             (identical(other.query, query) || other.query == query) &&
             const DeepCollectionEquality().equals(other._results, _results) &&
-            const DeepCollectionEquality().equals(
-              other._recentSearches,
-              _recentSearches,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._recentSearches, _recentSearches) &&
             (identical(other.isSearching, isSearching) ||
                 other.isSearching == isSearching) &&
             (identical(other.hasError, hasError) ||
@@ -243,14 +230,13 @@ class _$SearchStateImpl implements _SearchState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    query,
-    const DeepCollectionEquality().hash(_results),
-    const DeepCollectionEquality().hash(_recentSearches),
-    isSearching,
-    hasError,
-    errorMessage,
-  );
+      runtimeType,
+      query,
+      const DeepCollectionEquality().hash(_results),
+      const DeepCollectionEquality().hash(_recentSearches),
+      isSearching,
+      hasError,
+      errorMessage);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -262,14 +248,13 @@ class _$SearchStateImpl implements _SearchState {
 }
 
 abstract class _SearchState implements SearchState {
-  const factory _SearchState({
-    final String query,
-    final List<ProductEntity> results,
-    final List<String> recentSearches,
-    final bool isSearching,
-    final bool hasError,
-    final String errorMessage,
-  }) = _$SearchStateImpl;
+  const factory _SearchState(
+      {final String query,
+      final List<ProductEntity> results,
+      final List<String> recentSearches,
+      final bool isSearching,
+      final bool hasError,
+      final String errorMessage}) = _$SearchStateImpl;
 
   @override
   String get query;

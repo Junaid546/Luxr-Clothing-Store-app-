@@ -13,14 +13,14 @@ String _$productListNotifierHash() =>
 @ProviderFor(ProductListNotifier)
 final productListNotifierProvider =
     AutoDisposeNotifierProvider<ProductListNotifier, ProductListState>.internal(
-      ProductListNotifier.new,
-      name: r'productListNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$productListNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  ProductListNotifier.new,
+  name: r'productListNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$productListNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$ProductListNotifier = AutoDisposeNotifier<ProductListState>;
 // ignore_for_file: type=lint

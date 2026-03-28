@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/features/admin/dashboard/domain/models/dashboard_stats_model.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
 
 abstract interface class DashboardRepository {
   Future<Either<Failure, DashboardStats>> getStats({

@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
-import 'package:style_cart/features/notifications/presentation/providers/notification_notifier.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:stylecart/features/notifications/presentation/providers/notification_notifier.dart';
 
 class InAppNotificationBanner extends ConsumerStatefulWidget {
   final Widget child;
@@ -23,7 +23,6 @@ class InAppNotificationBanner extends ConsumerStatefulWidget {
 class _InAppNotificationBannerState
     extends ConsumerState<InAppNotificationBanner>
     with TickerProviderStateMixin {
-
   // Currently displayed notification
   NotificationEntity? _currentNotification;
 
@@ -52,21 +51,21 @@ class _InAppNotificationBannerState
 
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, -1.5), // off screen top
-      end:   Offset.zero,
+      end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _slideController,
       curve: Curves.easeOutCubic,
     ));
 
     _fadeAnimation = Tween<double>(
-      begin: 0.0, end: 1.0,
+      begin: 0.0,
+      end: 1.0,
     ).animate(_fadeController);
 
     // Listen to notification list for new messages
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.listenManual(
-        notificationNotifierProvider
-            .select((s) => s.notifications),
+        notificationNotifierProvider.select((s) => s.notifications),
         (prev, next) {
           if (next.isEmpty) return;
 
@@ -131,7 +130,9 @@ class _InAppNotificationBannerState
         // Overlay banner (shown on top)
         if (_currentNotification != null)
           Positioned(
-            top: 0, left: 0, right: 0,
+            top: 0,
+            left: 0,
+            right: 0,
             child: SafeArea(
               bottom: false,
               child: SlideTransition(
@@ -158,16 +159,15 @@ class _InAppNotificationBannerState
 
   void _handleBannerTap(NotificationEntity notification) {
     // Mark as read
-    ref.read(notificationNotifierProvider.notifier)
+    ref
+        .read(notificationNotifierProvider.notifier)
         .markAsRead(notification.notificationId);
 
     // Navigate to relevant screen
     if (notification.hasRoute) {
       context.go(notification.data.route!);
-    } else if (
-      notification.type == NotificationType.orderUpdate &&
-      notification.data.orderId != null
-    ) {
+    } else if (notification.type == NotificationType.orderUpdate &&
+        notification.data.orderId != null) {
       context.goNamed(
         RouteNames.orderTrackingName,
         pathParameters: {'orderId': notification.data.orderId!},
@@ -220,7 +220,8 @@ class _BannerContent extends StatelessWidget {
           children: [
             // Notification type icon
             Container(
-              width: 44, height: 44,
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
                 color: notification.type.color.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(12),

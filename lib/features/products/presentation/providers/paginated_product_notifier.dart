@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/providers/repository_providers.dart';
-import 'package:style_cart/features/products/data/models/product_model.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
-import 'package:style_cart/features/products/domain/entities/product_entity.dart';
-import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/core/constants/firestore_constants.dart';
+import 'package:stylecart/core/providers/repository_providers.dart';
+import 'package:stylecart/features/products/data/models/product_model.dart';
+import 'package:stylecart/features/products/data/providers/product_data_providers.dart';
+import 'package:stylecart/features/products/domain/entities/product_entity.dart';
+import 'package:stylecart/features/products/domain/entities/product_filter_entity.dart';
 
 part 'paginated_product_notifier.freezed.dart';
 part 'paginated_product_notifier.g.dart';
@@ -91,7 +91,8 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
       // Apply filters
       if (filter.category != null) {
         query = query.where(
-          'category', isEqualTo: filter.category,
+          'category',
+          isEqualTo: filter.category,
         );
       }
       if (filter.isFeatured == true) {
@@ -99,21 +100,18 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
       }
       if (filter.isNewArrival == true) {
         query = query.where(
-          'isNewArrival', isEqualTo: true,
+          'isNewArrival',
+          isEqualTo: true,
         );
       }
 
       // Apply sort (MUST match Firestore index)
       query = switch (filter.sortBy) {
-        'price_asc'  => query.orderBy('finalPrice'),
-        'price_desc' => query.orderBy(
-                          'finalPrice', descending: true),
-        'rating'     => query.orderBy(
-                          'avgRating', descending: true),
-        'popular'    => query.orderBy(
-                          'soldCount', descending: true),
-        _            => query.orderBy(
-                          'createdAt', descending: true),
+        'price_asc' => query.orderBy('finalPrice'),
+        'price_desc' => query.orderBy('finalPrice', descending: true),
+        'rating' => query.orderBy('avgRating', descending: true),
+        'popular' => query.orderBy('soldCount', descending: true),
+        _ => query.orderBy('createdAt', descending: true),
       };
 
       // Apply cursor
@@ -135,14 +133,18 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
 
       // Client-side price range filter
       if (filter.minPrice != null) {
-        newProducts = newProducts.where(
-          (p) => p.finalPrice >= filter.minPrice!,
-        ).toList();
+        newProducts = newProducts
+            .where(
+              (p) => p.finalPrice >= filter.minPrice!,
+            )
+            .toList();
       }
       if (filter.maxPrice != null) {
-        newProducts = newProducts.where(
-          (p) => p.finalPrice <= filter.maxPrice!,
-        ).toList();
+        newProducts = newProducts
+            .where(
+              (p) => p.finalPrice <= filter.maxPrice!,
+            )
+            .toList();
       }
 
       // Update memory cache
@@ -151,20 +153,17 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
       }
 
       // Get cursor for next page
-      final newLastSnapshot = snapshot.docs.isNotEmpty
-          ? snapshot.docs.last
-          : null;
+      final newLastSnapshot =
+          snapshot.docs.isNotEmpty ? snapshot.docs.last : null;
 
       state = state.copyWith(
         isLoading: false,
         isLoadingMore: false,
-        products: isFirstPage
-            ? newProducts
-            : [...state.products, ...newProducts],
+        products:
+            isFirstPage ? newProducts : [...state.products, ...newProducts],
         hasMore: snapshot.docs.length >= _pageSize,
         lastSnapshot: newLastSnapshot,
-        totalLoaded:
-            (isFirstPage ? 0 : state.totalLoaded) + newProducts.length,
+        totalLoaded: (isFirstPage ? 0 : state.totalLoaded) + newProducts.length,
       );
     } catch (e) {
       state = state.copyWith(
@@ -176,7 +175,8 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
     }
   }
 
-  Future<void> applyFilter(ProductFilter filter) => loadProducts(filter: filter);
+  Future<void> applyFilter(ProductFilter filter) =>
+      loadProducts(filter: filter);
 
   Future<void> sortBy(String sortKey) =>
       loadProducts(filter: state.filter.copyWith(sortBy: sortKey));

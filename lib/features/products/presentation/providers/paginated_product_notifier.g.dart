@@ -11,19 +11,16 @@ String _$paginatedProductNotifierHash() =>
 
 /// See also [PaginatedProductNotifier].
 @ProviderFor(PaginatedProductNotifier)
-final paginatedProductNotifierProvider =
-    AutoDisposeNotifierProvider<
-      PaginatedProductNotifier,
-      ProductPageState
-    >.internal(
-      PaginatedProductNotifier.new,
-      name: r'paginatedProductNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$paginatedProductNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final paginatedProductNotifierProvider = AutoDisposeNotifierProvider<
+    PaginatedProductNotifier, ProductPageState>.internal(
+  PaginatedProductNotifier.new,
+  name: r'paginatedProductNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$paginatedProductNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$PaginatedProductNotifier = AutoDisposeNotifier<ProductPageState>;
 // ignore_for_file: type=lint

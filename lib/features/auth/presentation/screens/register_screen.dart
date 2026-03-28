@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/auth/presentation/widgets/password_strength_indicator.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:stylecart/features/auth/presentation/widgets/password_strength_indicator.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -60,9 +60,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       return;
     }
 
-    await ref
-        .read(authNotifierProvider.notifier)
-        .registerWithEmail(
+    await ref.read(authNotifierProvider.notifier).registerWithEmail(
           email: _emailController.text.trim(),
           password: _passwordController.text,
           confirmPassword: _confirmPasswordController.text,

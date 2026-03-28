@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
+import 'package:stylecart/app/router/route_names.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
 
 class OrderConfirmationScreen extends ConsumerWidget {
   final String orderId;
@@ -79,11 +79,13 @@ class OrderConfirmationScreen extends ConsumerWidget {
                   children: [
                     Text(
                       'Order ID: ',
-                      style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+                      style: AppTextStyles.bodyMedium
+                          .copyWith(color: AppColors.textSecondary),
                     ),
                     Text(
                       orderId,
-                      style: AppTextStyles.titleMedium.copyWith(color: AppColors.primary),
+                      style: AppTextStyles.titleMedium
+                          .copyWith(color: AppColors.primary),
                     ),
                   ],
                 ),

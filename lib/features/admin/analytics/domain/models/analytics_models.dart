@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
 
 // ── Core Analytics Report ─────────────────────────────
 class AnalyticsReport extends Equatable {
@@ -150,8 +150,7 @@ class RevenueMetrics extends Equatable {
 
   bool get isGrowthPositive => revenueGrowthPct >= 0;
 
-  String get formattedGrowth =>
-      '${isGrowthPositive ? '+' : ''}'
+  String get formattedGrowth => '${isGrowthPositive ? '+' : ''}'
       '${revenueGrowthPct.toStringAsFixed(1)}%';
 
   @override
@@ -406,7 +405,8 @@ class ComparisonMetric extends Equatable {
   final double previousValue;
   final double changeAmount;
   final double changePct;
-  final bool isPositiveGood; // for coloring (revenue: true, cancellation: false)
+  final bool
+      isPositiveGood; // for coloring (revenue: true, cancellation: false)
 
   const ComparisonMetric({
     required this.label,
@@ -420,9 +420,11 @@ class ComparisonMetric extends Equatable {
 
   bool get isImprovement => isPositiveGood ? changePct >= 0 : changePct <= 0;
 
-  Color get indicatorColor => isImprovement ? AppColors.success : AppColors.error;
+  Color get indicatorColor =>
+      isImprovement ? AppColors.success : AppColors.error;
 
-  String get formattedChange => '${changePct >= 0 ? '+' : ''}${changePct.toStringAsFixed(1)}%';
+  String get formattedChange =>
+      '${changePct >= 0 ? '+' : ''}${changePct.toStringAsFixed(1)}%';
 
   @override
   List<Object> get props => [label, currentValue];

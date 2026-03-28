@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/utils/extensions.dart';
-import 'package:style_cart/features/admin/analytics/data/services/analytics_cache_service.dart';
-import 'package:style_cart/features/admin/analytics/data/services/report_export_service.dart';
-import 'package:style_cart/features/admin/analytics/domain/models/analytics_models.dart';
+import 'package:stylecart/app/theme/app_colors.dart';
+import 'package:stylecart/app/theme/app_text_styles.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/utils/extensions.dart';
+import 'package:stylecart/features/admin/analytics/data/services/analytics_cache_service.dart';
+import 'package:stylecart/features/admin/analytics/data/services/report_export_service.dart';
+import 'package:stylecart/features/admin/analytics/domain/models/analytics_models.dart';
 
 // ══════════════════════════════════════════════════════
 // EXPORT BOTTOM SHEET
@@ -21,8 +21,7 @@ class ExportBottomSheet extends ConsumerStatefulWidget {
   const ExportBottomSheet({required this.report, super.key});
 
   @override
-  ConsumerState<ExportBottomSheet> createState() =>
-      _ExportBottomSheetState();
+  ConsumerState<ExportBottomSheet> createState() => _ExportBottomSheetState();
 }
 
 class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
@@ -33,9 +32,8 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
   // ── Export CSV ─────────────────────────────────────
   Future<void> _exportCSV() async {
     setState(() => _isExportingCSV = true);
-    final result = await ref
-        .read(reportExportServiceProvider)
-        .exportToCSV(widget.report);
+    final result =
+        await ref.read(reportExportServiceProvider).exportToCSV(widget.report);
 
     if (!mounted) return;
 
@@ -57,9 +55,8 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
   // ── Export PDF ─────────────────────────────────────
   Future<void> _exportPDF() async {
     setState(() => _isExportingPDF = true);
-    final result = await ref
-        .read(reportExportServiceProvider)
-        .exportToPDF(widget.report);
+    final result =
+        await ref.read(reportExportServiceProvider).exportToPDF(widget.report);
 
     if (!mounted) return;
 
@@ -162,7 +159,8 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
             child: Column(
               children: [
                 _SummaryRow('Period', report.period.toUpperCase()),
-                _SummaryRow('Revenue', report.revenue.totalRevenue.toCurrencyString),
+                _SummaryRow(
+                    'Revenue', report.revenue.totalRevenue.toCurrencyString),
                 _SummaryRow('Orders', '${report.orders.totalOrders}'),
                 _SummaryRow(
                   'Generated',
@@ -220,7 +218,8 @@ class _SummaryRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: AppTextStyles.bodySmall),
-          Text(value, style: AppTextStyles.bodyMedium.copyWith(color: Colors.white)),
+          Text(value,
+              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white)),
         ],
       ),
     );
@@ -288,12 +287,14 @@ class _ExportOption extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title,
-                        style: AppTextStyles.titleMedium.copyWith(color: Colors.white)),
+                        style: AppTextStyles.titleMedium
+                            .copyWith(color: Colors.white)),
                     Text(subtitle, style: AppTextStyles.bodySmall),
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: AppColors.textMuted, size: 20),
+              const Icon(Icons.chevron_right,
+                  color: AppColors.textMuted, size: 20),
             ],
           ),
         ),

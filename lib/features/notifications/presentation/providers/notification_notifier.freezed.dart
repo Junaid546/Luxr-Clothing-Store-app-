@@ -12,8 +12,7 @@ part of 'notification_notifier.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$NotificationState {
@@ -39,21 +38,19 @@ mixin _$NotificationState {
 /// @nodoc
 abstract class $NotificationStateCopyWith<$Res> {
   factory $NotificationStateCopyWith(
-    NotificationState value,
-    $Res Function(NotificationState) then,
-  ) = _$NotificationStateCopyWithImpl<$Res, NotificationState>;
+          NotificationState value, $Res Function(NotificationState) then) =
+      _$NotificationStateCopyWithImpl<$Res, NotificationState>;
   @useResult
-  $Res call({
-    List<NotificationEntity> notifications,
-    int unreadCount,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasMore,
-    bool hasError,
-    String errorMessage,
-    String activeFilter,
-    Object? lastDocument,
-  });
+  $Res call(
+      {List<NotificationEntity> notifications,
+      int unreadCount,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasMore,
+      bool hasError,
+      String errorMessage,
+      String activeFilter,
+      Object? lastDocument});
 }
 
 /// @nodoc
@@ -81,79 +78,72 @@ class _$NotificationStateCopyWithImpl<$Res, $Val extends NotificationState>
     Object? activeFilter = null,
     Object? lastDocument = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            notifications: null == notifications
-                ? _value.notifications
-                : notifications // ignore: cast_nullable_to_non_nullable
-                      as List<NotificationEntity>,
-            unreadCount: null == unreadCount
-                ? _value.unreadCount
-                : unreadCount // ignore: cast_nullable_to_non_nullable
-                      as int,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isLoadingMore: null == isLoadingMore
-                ? _value.isLoadingMore
-                : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasMore: null == hasMore
-                ? _value.hasMore
-                : hasMore // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            hasError: null == hasError
-                ? _value.hasError
-                : hasError // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            errorMessage: null == errorMessage
-                ? _value.errorMessage
-                : errorMessage // ignore: cast_nullable_to_non_nullable
-                      as String,
-            activeFilter: null == activeFilter
-                ? _value.activeFilter
-                : activeFilter // ignore: cast_nullable_to_non_nullable
-                      as String,
-            lastDocument: freezed == lastDocument
-                ? _value.lastDocument
-                : lastDocument,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      notifications: null == notifications
+          ? _value.notifications
+          : notifications // ignore: cast_nullable_to_non_nullable
+              as List<NotificationEntity>,
+      unreadCount: null == unreadCount
+          ? _value.unreadCount
+          : unreadCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      activeFilter: null == activeFilter
+          ? _value.activeFilter
+          : activeFilter // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastDocument:
+          freezed == lastDocument ? _value.lastDocument : lastDocument,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$NotificationStateImplCopyWith<$Res>
     implements $NotificationStateCopyWith<$Res> {
-  factory _$$NotificationStateImplCopyWith(
-    _$NotificationStateImpl value,
-    $Res Function(_$NotificationStateImpl) then,
-  ) = __$$NotificationStateImplCopyWithImpl<$Res>;
+  factory _$$NotificationStateImplCopyWith(_$NotificationStateImpl value,
+          $Res Function(_$NotificationStateImpl) then) =
+      __$$NotificationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<NotificationEntity> notifications,
-    int unreadCount,
-    bool isLoading,
-    bool isLoadingMore,
-    bool hasMore,
-    bool hasError,
-    String errorMessage,
-    String activeFilter,
-    Object? lastDocument,
-  });
+  $Res call(
+      {List<NotificationEntity> notifications,
+      int unreadCount,
+      bool isLoading,
+      bool isLoadingMore,
+      bool hasMore,
+      bool hasError,
+      String errorMessage,
+      String activeFilter,
+      Object? lastDocument});
 }
 
 /// @nodoc
 class __$$NotificationStateImplCopyWithImpl<$Res>
     extends _$NotificationStateCopyWithImpl<$Res, _$NotificationStateImpl>
     implements _$$NotificationStateImplCopyWith<$Res> {
-  __$$NotificationStateImplCopyWithImpl(
-    _$NotificationStateImpl _value,
-    $Res Function(_$NotificationStateImpl) _then,
-  ) : super(_value, _then);
+  __$$NotificationStateImplCopyWithImpl(_$NotificationStateImpl _value,
+      $Res Function(_$NotificationStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of NotificationState
   /// with the given fields replaced by the non-null parameter values.
@@ -170,62 +160,59 @@ class __$$NotificationStateImplCopyWithImpl<$Res>
     Object? activeFilter = null,
     Object? lastDocument = freezed,
   }) {
-    return _then(
-      _$NotificationStateImpl(
-        notifications: null == notifications
-            ? _value._notifications
-            : notifications // ignore: cast_nullable_to_non_nullable
-                  as List<NotificationEntity>,
-        unreadCount: null == unreadCount
-            ? _value.unreadCount
-            : unreadCount // ignore: cast_nullable_to_non_nullable
-                  as int,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        isLoadingMore: null == isLoadingMore
-            ? _value.isLoadingMore
-            : isLoadingMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasMore: null == hasMore
-            ? _value.hasMore
-            : hasMore // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        hasError: null == hasError
-            ? _value.hasError
-            : hasError // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        errorMessage: null == errorMessage
-            ? _value.errorMessage
-            : errorMessage // ignore: cast_nullable_to_non_nullable
-                  as String,
-        activeFilter: null == activeFilter
-            ? _value.activeFilter
-            : activeFilter // ignore: cast_nullable_to_non_nullable
-                  as String,
-        lastDocument: freezed == lastDocument
-            ? _value.lastDocument
-            : lastDocument,
-      ),
-    );
+    return _then(_$NotificationStateImpl(
+      notifications: null == notifications
+          ? _value._notifications
+          : notifications // ignore: cast_nullable_to_non_nullable
+              as List<NotificationEntity>,
+      unreadCount: null == unreadCount
+          ? _value.unreadCount
+          : unreadCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasError: null == hasError
+          ? _value.hasError
+          : hasError // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      activeFilter: null == activeFilter
+          ? _value.activeFilter
+          : activeFilter // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastDocument:
+          freezed == lastDocument ? _value.lastDocument : lastDocument,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$NotificationStateImpl implements _NotificationState {
-  const _$NotificationStateImpl({
-    final List<NotificationEntity> notifications = const [],
-    this.unreadCount = 0,
-    this.isLoading = false,
-    this.isLoadingMore = false,
-    this.hasMore = false,
-    this.hasError = false,
-    this.errorMessage = '',
-    this.activeFilter = 'all',
-    this.lastDocument,
-  }) : _notifications = notifications;
+  const _$NotificationStateImpl(
+      {final List<NotificationEntity> notifications = const [],
+      this.unreadCount = 0,
+      this.isLoading = false,
+      this.isLoadingMore = false,
+      this.hasMore = false,
+      this.hasError = false,
+      this.errorMessage = '',
+      this.activeFilter = 'all',
+      this.lastDocument})
+      : _notifications = notifications;
 
   final List<NotificationEntity> _notifications;
   @override
@@ -257,7 +244,7 @@ class _$NotificationStateImpl implements _NotificationState {
   @override
   @JsonKey()
   final String activeFilter;
-  // 'all' | notification type values
+// 'all' | notification type values
   @override
   final Object? lastDocument;
 
@@ -271,10 +258,8 @@ class _$NotificationStateImpl implements _NotificationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotificationStateImpl &&
-            const DeepCollectionEquality().equals(
-              other._notifications,
-              _notifications,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._notifications, _notifications) &&
             (identical(other.unreadCount, unreadCount) ||
                 other.unreadCount == unreadCount) &&
             (identical(other.isLoading, isLoading) ||
@@ -288,25 +273,22 @@ class _$NotificationStateImpl implements _NotificationState {
                 other.errorMessage == errorMessage) &&
             (identical(other.activeFilter, activeFilter) ||
                 other.activeFilter == activeFilter) &&
-            const DeepCollectionEquality().equals(
-              other.lastDocument,
-              lastDocument,
-            ));
+            const DeepCollectionEquality()
+                .equals(other.lastDocument, lastDocument));
   }
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_notifications),
-    unreadCount,
-    isLoading,
-    isLoadingMore,
-    hasMore,
-    hasError,
-    errorMessage,
-    activeFilter,
-    const DeepCollectionEquality().hash(lastDocument),
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_notifications),
+      unreadCount,
+      isLoading,
+      isLoadingMore,
+      hasMore,
+      hasError,
+      errorMessage,
+      activeFilter,
+      const DeepCollectionEquality().hash(lastDocument));
 
   /// Create a copy of NotificationState
   /// with the given fields replaced by the non-null parameter values.
@@ -315,23 +297,20 @@ class _$NotificationStateImpl implements _NotificationState {
   @pragma('vm:prefer-inline')
   _$$NotificationStateImplCopyWith<_$NotificationStateImpl> get copyWith =>
       __$$NotificationStateImplCopyWithImpl<_$NotificationStateImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _NotificationState implements NotificationState {
-  const factory _NotificationState({
-    final List<NotificationEntity> notifications,
-    final int unreadCount,
-    final bool isLoading,
-    final bool isLoadingMore,
-    final bool hasMore,
-    final bool hasError,
-    final String errorMessage,
-    final String activeFilter,
-    final Object? lastDocument,
-  }) = _$NotificationStateImpl;
+  const factory _NotificationState(
+      {final List<NotificationEntity> notifications,
+      final int unreadCount,
+      final bool isLoading,
+      final bool isLoadingMore,
+      final bool hasMore,
+      final bool hasError,
+      final String errorMessage,
+      final String activeFilter,
+      final Object? lastDocument}) = _$NotificationStateImpl;
 
   @override
   List<NotificationEntity> get notifications;

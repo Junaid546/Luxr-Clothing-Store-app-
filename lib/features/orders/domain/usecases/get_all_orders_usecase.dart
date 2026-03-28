@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:style_cart/core/errors/failures.dart';
-import 'package:style_cart/core/usecases/usecase.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
+import 'package:stylecart/core/errors/failures.dart';
+import 'package:stylecart/core/usecases/usecase.dart';
+import 'package:stylecart/features/orders/domain/entities/order_entity.dart';
+import 'package:stylecart/features/orders/domain/repositories/order_repository.dart';
 
 class GetAllOrdersParams extends Equatable {
   final String? statusFilter;
@@ -32,11 +32,12 @@ class GetAllOrdersUseCase
   @override
   Future<Either<Failure, List<OrderEntity>>> call(
     GetAllOrdersParams params,
-  ) => _repo.getAllOrders(
+  ) =>
+      _repo.getAllOrders(
         statusFilter: params.statusFilter,
-        fromDate:     params.fromDate,
-        toDate:       params.toDate,
-        limit:        params.limit,
+        fromDate: params.fromDate,
+        toDate: params.toDate,
+        limit: params.limit,
         lastDocument: params.lastDocument,
       );
 }

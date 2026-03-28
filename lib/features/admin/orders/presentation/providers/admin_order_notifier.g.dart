@@ -13,14 +13,14 @@ String _$adminOrderNotifierHash() =>
 @ProviderFor(AdminOrderNotifier)
 final adminOrderNotifierProvider =
     AutoDisposeNotifierProvider<AdminOrderNotifier, AdminOrderState>.internal(
-      AdminOrderNotifier.new,
-      name: r'adminOrderNotifierProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$adminOrderNotifierHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  AdminOrderNotifier.new,
+  name: r'adminOrderNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$adminOrderNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AdminOrderNotifier = AutoDisposeNotifier<AdminOrderState>;
 // ignore_for_file: type=lint

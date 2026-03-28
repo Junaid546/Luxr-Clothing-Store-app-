@@ -1,184 +1,126 @@
-# StyleCart - AI-Powered Clothing eCommerce
+# Luxr — AI Powered Clothing Store
 
-A production-level Flutter eCommerce application built with Clean Architecture, Riverpod for state management, and Firebase backend services.
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-blue)](https://flutter.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-Enabled-orange)](https://firebase.google.com)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-## Project Overview
-
-**App Name:** StyleCart  
-**Type:** AI-Powered Clothing eCommerce  
-**Architecture:** Clean Architecture (Domain / Data / Presentation)  
-**State Management:** Riverpod (flutter_riverpod + riverpod_annotation)  
-**Navigation:** GoRouter  
-**DI:** Riverpod providers  
-**Platform:** Android + iOS
+A production-level luxury fashion eCommerce mobile app
+built with Flutter and Firebase.
 
 ## Features
 
-- User Authentication (Firebase Auth)
-- Product Catalog with Categories
-- Shopping Cart
-- Wishlist
-- Order Management
-- Checkout Flow
-- User Profile
-- Admin Dashboard (Dashboard, Products, Orders, Analytics)
-- Push Notifications (Firebase Messaging)
-- Analytics (Firebase Analytics)
+### Customer App
+- 🛍️ Browse luxury clothing with advanced filtering
+- 🔍 Real-time search with instant results
+- ❤️ Wishlist with category filtering
+- 🛒 Smart cart with price re-validation
+- 💳 Multi-step checkout (address, shipping, payment)
+- 📦 Real-time order tracking with timeline
+- 👤 Profile with elite status system
+- 🔔 Push notifications (FCM)
 
-## Setup Instructions
+### Admin Panel
+- 📊 Revenue dashboard with live charts
+- 📦 Full product CRUD with image upload
+- 🗃️ Inventory management per size
+- 📋 Order management with status updates
+- 📈 Analytics with export (CSV + PDF)
+- 🔔 Broadcast notifications
+
+## Tech Stack
+
+| Layer          | Technology               |
+|---------------|--------------------------|
+| Frontend       | Flutter 3.x + Riverpod   |
+| Authentication | Firebase Auth            |
+| Database       | Cloud Firestore          |
+| Storage        | Firebase Storage         |
+| Notifications  | Firebase Cloud Messaging |
+| Analytics      | Firebase Analytics       |
+| Crash Reports  | Firebase Crashlytics     |
+
+## Architecture
+
+Clean Architecture with Feature-First organization:
+lib/
+├── app/          # Router, theme, app.dart
+├── core/         # Shared utilities, errors, providers
+├── features/     # Feature modules (auth, products, etc.)
+└── shared/       # Reusable widgets
+
+## Getting Started
 
 ### Prerequisites
+- Flutter 3.x
+- Dart 3.x
+- Firebase account
+- Android Studio / Xcode
 
-- Flutter SDK 3.x
-- Dart SDK 3.x
-- Firebase Project (Web, Android, iOS)
-- Node.js (for Firebase CLI - optional)
+### Setup
 
-### Step 1: Clone the Repository
-
+1. **Clone the repository**
 ```bash
-git clone <repository-url>
-cd luxr_clothing
+git clone https://github.com/Junaid546/Luxr-Clothing-Store-app-.git
+cd Luxr-Clothing-Store-app-
 ```
 
-### Step 2: Install Dependencies
-
+2. **Install dependencies**
 ```bash
 flutter pub get
 ```
 
-### Step 3: Configure Environment Variables
-
-1. Copy the `.env` file template
-2. Replace placeholder values with your Firebase configuration:
-
-```env
-FIREBASE_WEB_API_KEY=your_web_api_key
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_STORAGE_BUCKET=your_storage_bucket
-FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-FIREBASE_APP_ID=your_app_id
-LOW_STOCK_THRESHOLD=5
-FREE_SHIPPING_THRESHOLD=100
-EXPRESS_SHIPPING_COST=25
+3. **Configure environment**
+```bash
+cp .env.example .env
+# Edit .env with your Firebase credentials
 ```
 
-### Step 4: Firebase Configuration
+4. **Add Firebase config files**
+   - Download `google-services.json` from Firebase Console
+   - Place in `android/app/google-services.json`
+   - Download `GoogleService-Info.plist`
+   - Place in `ios/Runner/GoogleService-Info.plist`
 
-#### Android
-1. Download `google-services.json` from Firebase Console
-2. Place it in `android/app/`
+5. **Generate code**
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
 
-#### iOS
-1. Download `GoogleService-Info.plist` from Firebase Console
-2. Place it in `ios/Runner/`
-
-### Step 5: Run the App
-
+6. **Run the app**
 ```bash
 flutter run
 ```
 
-## Architecture Diagram
+### Admin Access
+To create an admin account:
+1. Register normally in the app
+2. Go to Firebase Console → Firestore
+3. Find your user document in `/users/{uid}`
+4. Change `role` field from `customer` to `admin`
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        PRESENTATION LAYER                       │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────────┐│
-│  │  Screens │ │  Widgets │ │ Providers│ │   GoRouter (Nav)     ││
-│  └──────────┘ └──────────┘ └──────────┘ └──────────────────────┘│
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                          DOMAIN LAYER                           │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────────┐│
-│  │ Entities │ │UseCases  │ │Repos(Ab)│ │   Failure (dartz)    ││
-│  └──────────┘ └──────────┘ └──────────┘ └──────────────────────┘│
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                           DATA LAYER                            │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────────┐│
-│  │  Models  │ │Repos(Impl)│ │DataSources│ │  Firebase Services  ││
-│  └──────────┘ └──────────┘ └──────────┘ └──────────────────────┘│
-└─────────────────────────────────────────────────────────────────┘
+## Building for Release
+
+### Android
+```bash
+./scripts/build_release.sh
 ```
 
-## Folder Structure
-
-```
-lib/
-├── main.dart                          # App entry point
-├── app/                               # App-level configurations
-│   ├── app.dart                      # MaterialApp.router root
-│   ├── router/                        # GoRouter configuration
-│   │   ├── app_router.dart           # Route definitions
-│   │   └── route_names.dart           # Named routes constants
-│   └── theme/                        # Theme configuration
-│       ├── app_theme.dart            # Light/Dark themes
-│       ├── app_colors.dart           # Color tokens
-│       ├── app_text_styles.dart      # Typography
-│       └── app_dimensions.dart       # Spacing/Radius
-│
-├── core/                              # Shared utilities
-│   ├── constants/                    # App constants
-│   │   ├── app_constants.dart
-│   │   ├── firestore_constants.dart
-│   │   └── storage_constants.dart
-│   ├── errors/                       # Error handling
-│   │   ├── failures.dart             # Failure sealed class
-│   │   └── exceptions.dart           # Custom exceptions
-│   ├── usecases/                     # UseCase base class
-│   ├── utils/                        # Utilities
-│   │   ├── validators.dart
-│   │   ├── formatters.dart
-│   │   └── extensions.dart
-│   └── providers/                    # Firebase providers
-│
-├── features/                         # Feature modules
-│   ├── auth/                        # Authentication
-│   ├── home/                       # Home screen
-│   ├── products/                   # Product catalog
-│   ├── cart/                      # Shopping cart
-│   ├── orders/                    # Order management
-│   ├── wishlist/                  # Wishlist
-│   ├── profile/                   # User profile
-│   ├── checkout/                  # Checkout flow
-│   └── admin/                     # Admin features
-│       ├── dashboard/
-│       ├── products/
-│       ├── orders/
-│       └── analytics/
-│
-└── shared/                         # Shared widgets/models
-    ├── widgets/
-    │   ├── buttons/
-    │   ├── cards/
-    │   ├── inputs/
-    │   └── loaders/
-    └── models/
+### iOS
+```bash
+flutter build ios --release --no-codesign
 ```
 
-## Tech Stack
+## Environment Variables
 
-### Dependencies
-- **State Management:** flutter_riverpod, riverpod_annotation
-- **Navigation:** go_router
-- **Firebase:** firebase_core, firebase_auth, cloud_firestore, firebase_storage, firebase_messaging, firebase_analytics
-- **Utilities:** flutter_dotenv, equatable, dartz, freezed_annotation, json_annotation, uuid, intl
-- **Storage:** shared_preferences, flutter_secure_storage
-- **UI:** cached_network_image, flutter_svg, shimmer, gap, image_picker
+See `.env.example` for all required variables.
 
-### Dev Dependencies
-- build_runner
-- riverpod_generator
-- freezed
-- json_serializable
-- flutter_lints
-- very_good_analysis
+## Security
+
+See `SECURITY_CHECKLIST.md` for complete security audit.
+Firestore security rules in `firestore.rules`.
 
 ## License
+MIT License — see LICENSE file.
 
-This project is licensed under the MIT License.
+---
+Built by [Junaid Tahir](https://junaidtahirdev.space)

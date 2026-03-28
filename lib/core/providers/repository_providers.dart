@@ -2,15 +2,15 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/features/cart/domain/repositories/cart_repository.dart';
-import 'package:style_cart/features/cart/data/repositories/cart_repository_impl.dart';
-import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
-import 'package:style_cart/features/orders/data/repositories/order_repository_impl.dart';
-import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
-import 'package:style_cart/features/products/data/repositories/product_repository_impl.dart';
-import 'package:style_cart/features/wishlist/domain/repositories/wishlist_repository.dart';
-import 'package:style_cart/features/wishlist/data/repositories/wishlist_repository_impl.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
+import 'package:stylecart/features/cart/domain/repositories/cart_repository.dart';
+import 'package:stylecart/features/cart/data/repositories/cart_repository_impl.dart';
+import 'package:stylecart/features/orders/domain/repositories/order_repository.dart';
+import 'package:stylecart/features/orders/data/repositories/order_repository_impl.dart';
+import 'package:stylecart/features/products/domain/repositories/product_repository.dart';
+import 'package:stylecart/features/products/data/repositories/product_repository_impl.dart';
+import 'package:stylecart/features/wishlist/domain/repositories/wishlist_repository.dart';
+import 'package:stylecart/features/wishlist/data/repositories/wishlist_repository_impl.dart';
+import 'package:stylecart/features/products/data/providers/product_data_providers.dart';
 
 part 'repository_providers.g.dart';
 
@@ -22,7 +22,8 @@ FirebaseFirestore firestore(FirestoreRef ref) {
 @riverpod
 ProductRepository productRepository(
   ProductRepositoryRef ref,
-) => ProductRepositoryImpl(
+) =>
+    ProductRepositoryImpl(
       ref.watch(firestoreProvider),
       ref.watch(imageRepositoryProvider),
     );

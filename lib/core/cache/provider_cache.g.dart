@@ -7,7 +7,7 @@ part of 'provider_cache.dart';
 // **************************************************************************
 
 String _$watchProductCachedHash() =>
-    r'2faf4069a82b2610409b45549b1be9b5ab9b4efa';
+    r'c86388f9efff81e1120d9d3f71b71f1e7d8f0154';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -40,15 +40,21 @@ class WatchProductCachedFamily extends Family<AsyncValue<ProductEntity>> {
   const WatchProductCachedFamily();
 
   /// See also [watchProductCached].
-  WatchProductCachedProvider call(String productId) {
-    return WatchProductCachedProvider(productId);
+  WatchProductCachedProvider call(
+    String productId,
+  ) {
+    return WatchProductCachedProvider(
+      productId,
+    );
   }
 
   @override
   WatchProductCachedProvider getProviderOverride(
     covariant WatchProductCachedProvider provider,
   ) {
-    return call(provider.productId);
+    return call(
+      provider.productId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -70,19 +76,24 @@ class WatchProductCachedFamily extends Family<AsyncValue<ProductEntity>> {
 class WatchProductCachedProvider
     extends AutoDisposeStreamProvider<ProductEntity> {
   /// See also [watchProductCached].
-  WatchProductCachedProvider(String productId)
-    : this._internal(
-        (ref) => watchProductCached(ref as WatchProductCachedRef, productId),
-        from: watchProductCachedProvider,
-        name: r'watchProductCachedProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$watchProductCachedHash,
-        dependencies: WatchProductCachedFamily._dependencies,
-        allTransitiveDependencies:
-            WatchProductCachedFamily._allTransitiveDependencies,
-        productId: productId,
-      );
+  WatchProductCachedProvider(
+    String productId,
+  ) : this._internal(
+          (ref) => watchProductCached(
+            ref as WatchProductCachedRef,
+            productId,
+          ),
+          from: watchProductCachedProvider,
+          name: r'watchProductCachedProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$watchProductCachedHash,
+          dependencies: WatchProductCachedFamily._dependencies,
+          allTransitiveDependencies:
+              WatchProductCachedFamily._allTransitiveDependencies,
+          productId: productId,
+        );
 
   WatchProductCachedProvider._internal(
     super._createNotifier, {
@@ -149,42 +160,42 @@ class _WatchProductCachedProviderElement
   String get productId => (origin as WatchProductCachedProvider).productId;
 }
 
-String _$cachedCategoriesHash() => r'18dfd64ada56ca828f613f75dba03733fd277a8e';
+String _$cachedCategoriesHash() => r'b0fbd73abac99c526cb3b4aca37d8db5866df2c4';
 
 /// See also [cachedCategories].
 @ProviderFor(cachedCategories)
 final cachedCategoriesProvider =
     AutoDisposeFutureProvider<List<String>>.internal(
-      cachedCategories,
-      name: r'cachedCategoriesProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$cachedCategoriesHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  cachedCategories,
+  name: r'cachedCategoriesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$cachedCategoriesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef CachedCategoriesRef = AutoDisposeFutureProviderRef<List<String>>;
-String _$cachedBannersHash() => r'61ad5d0741b4224dd4938a7f19bc9029be488e44';
+String _$cachedBannersHash() => r'fb06efcc2a8abd55db658c4511b6fe03ab21a612';
 
 /// See also [cachedBanners].
 @ProviderFor(cachedBanners)
 final cachedBannersProvider =
-    AutoDisposeFutureProvider<List<BannerModel>>.internal(
-      cachedBanners,
-      name: r'cachedBannersProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$cachedBannersHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+    AutoDisposeFutureProvider<List<ProductModel>>.internal(
+  cachedBanners,
+  name: r'cachedBannersProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$cachedBannersHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CachedBannersRef = AutoDisposeFutureProviderRef<List<BannerModel>>;
+typedef CachedBannersRef = AutoDisposeFutureProviderRef<List<ProductModel>>;
 String _$cachedFeaturedProductsHash() =>
     r'246870cc33cd212579379a32f893d1705b4ec5ce';
 
@@ -192,19 +203,19 @@ String _$cachedFeaturedProductsHash() =>
 @ProviderFor(cachedFeaturedProducts)
 final cachedFeaturedProductsProvider =
     AutoDisposeFutureProvider<List<ProductEntity>>.internal(
-      cachedFeaturedProducts,
-      name: r'cachedFeaturedProductsProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$cachedFeaturedProductsHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  cachedFeaturedProducts,
+  name: r'cachedFeaturedProductsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$cachedFeaturedProductsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef CachedFeaturedProductsRef =
-    AutoDisposeFutureProviderRef<List<ProductEntity>>;
+typedef CachedFeaturedProductsRef
+    = AutoDisposeFutureProviderRef<List<ProductEntity>>;
 String _$productMemoryCacheHash() =>
     r'8ed51e16406c8b908811ad32f5dbbcdc6ac67e10';
 
@@ -212,14 +223,14 @@ String _$productMemoryCacheHash() =>
 @ProviderFor(productMemoryCache)
 final productMemoryCacheProvider =
     AutoDisposeProvider<ProductMemoryCache>.internal(
-      productMemoryCache,
-      name: r'productMemoryCacheProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$productMemoryCacheHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  productMemoryCache,
+  name: r'productMemoryCacheProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$productMemoryCacheHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element

@@ -1,5 +1,5 @@
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
-import 'package:style_cart/features/auth/domain/repositories/auth_repository.dart';
+import 'package:stylecart/features/auth/domain/entities/user_entity.dart';
+import 'package:stylecart/features/auth/domain/repositories/auth_repository.dart';
 
 /// Use case for getting auth state stream
 /// Note: This is NOT a standard UseCase because it returns a Stream
