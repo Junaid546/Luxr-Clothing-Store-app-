@@ -5,56 +5,21 @@ import 'package:style_cart/core/providers/repository_providers.dart';
 
 part 'batch_reader.g.dart';
 
-// ── Optimized Firestore Batch Reader ──────────────────
-// Reads multiple Firestore documents in a single
-// batched network call using whereIn queries.
-// MUCH faster than N individual document reads.
-// Firestore whereIn limit = 30 per query.
-
 class FirestoreBatchReader {
   final FirebaseFirestore _firestore;
 
   const FirestoreBatchReader(this._firestore);
 
   // ── Batch read products by ID ──────────────────────
-  Future<Map<String, Map<String, dynamic>>> readProducts(List<String> productIds) async {
-    if (productIds.isEmpty) return {};
-
-    final results = <String, Map<String, dynamic>>{};
-    // Split into chunks of 30 (Firestore whereIn limit)
-    final chunks = _chunk(productIds, 30);
-
-    await Future.wait(chunks.map((chunk) async {
-      final snap = await _firestore
-          .collection(FirestoreConstants.products)
-          .where(FieldPath.documentId, whereIn: chunk)
-          .get(const GetOptions(source: Source.serverAndCache));
-      for (final doc in snap.docs) {
-        results[doc.id] = doc.data();
-      }
-    }));
-
-    return results;
+  Future<Map<String, Map<String, dynamic>>> readProducts(
+      List<String> productIds) async {
+    return batchRead(FirestoreConstants.products, productIds);
   }
 
   // ── Batch read orders by ID ────────────────────────
-  Future<Map<String, Map<String, dynamic>>> readOrders(List<String> orderIds) async {
-    if (orderIds.isEmpty) return {};
-
-    final results = <String, Map<String, dynamic>>{};
-    final chunks = _chunk(orderIds, 30);
-
-    await Future.wait(chunks.map((chunk) async {
-      final snap = await _firestore
-          .collection(FirestoreConstants.orders)
-          .where(FieldPath.documentId, whereIn: chunk)
-          .get();
-      for (final doc in snap.docs) {
-        results[doc.id] = doc.data();
-      }
-    }));
-
-    return results;
+  Future<Map<String, Map<String, dynamic>>> readOrders(
+      List<String> orderIds) async {
+    return batchRead(FirestoreConstants.orders, orderIds);
   }
 
   // ── Generic batch read ─────────────────────────────

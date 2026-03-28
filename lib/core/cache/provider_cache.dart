@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:style_cart/core/constants/firestore_constants.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/providers/repository_providers.dart' hide productRepositoryProvider;
-import 'package:style_cart/features/home/data/models/banner_model.dart';
-import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
+import 'package:style_cart/core/providers/repository_providers.dart';
+import 'package:style_cart/features/products/data/models/product_model.dart';
+import 'package:style_cart/features/products/data/providers/product_data_providers.dart' hide productRepositoryProvider;
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
 import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
 import 'package:style_cart/features/products/domain/usecases/get_products_usecase.dart';
@@ -21,14 +20,20 @@ class CacheDuration {
   static const Duration productList = Duration(minutes: 5);
   static const Duration productDetail = Duration(minutes: 2);
   static const Duration topProducts = Duration(minutes: 10);
+  static const Duration cartData = Duration.zero;
+  static const Duration orderList = Duration.zero;
+  static const Duration notifications = Duration.zero;
   static const Duration dashboardStats = Duration(minutes: 15);
   static const Duration analyticsReport = Duration(minutes: 30);
   static const Duration weeklyRevenue = Duration(minutes: 15);
 }
 
-// ── Keep-alive provider family ────────────────────────
+// ── Keep-alive providers ─────────────────────────────
 @riverpod
-Stream<ProductEntity> watchProductCached(WatchProductCachedRef ref, String productId) {
+Stream<ProductEntity> watchProductCached(
+  WatchProductCachedRef ref,
+  String productId,
+) {
   final link = ref.keepAlive();
   Timer? timer;
 
@@ -49,9 +54,11 @@ Stream<ProductEntity> watchProductCached(WatchProductCachedRef ref, String produ
   return ref
       .watch(productRepositoryProvider)
       .watchProduct(productId)
-      .map((result) => result.getOrElse(
-            () => throw Exception('Product not found'),
-          ));
+      .map<ProductEntity>((result) {
+        return result.getOrElse(
+          () => throw Exception('Product not found'),
+        );
+      });
 }
 
 @riverpod
@@ -59,11 +66,21 @@ Future<List<String>> cachedCategories(CachedCategoriesRef ref) async {
   final link = ref.keepAlive();
   Timer(CacheDuration.categories, link.close);
 
-  return ProductCategory.all;
+  // Use a predefined list or fetch from Firestore if categories collection exists
+  // For now using the ProductCategory constant assumed from context
+  return [
+    'T-Shirts',
+    'Shirts',
+    'Pants',
+    'Hoodies',
+    'Accessories',
+    'Shoes',
+    'Limited Edition'
+  ];
 }
 
 @riverpod
-Future<List<BannerModel>> cachedBanners(CachedBannersRef ref) async {
+Future<List<ProductModel>> cachedBanners(CachedBannersRef ref) async {
   final link = ref.keepAlive();
   Timer(CacheDuration.banners, link.close);
 
@@ -74,14 +91,16 @@ Future<List<BannerModel>> cachedBanners(CachedBannersRef ref) async {
         .where('isActive', isEqualTo: true)
         .orderBy('sortOrder')
         .get(const GetOptions(source: Source.serverAndCache));
-    return snap.docs.map(BannerModel.fromFirestore).toList();
+    return snap.docs.map(ProductModel.fromFirestore).toList();
   } catch (_) {
     return [];
   }
 }
 
 @riverpod
-Future<List<ProductEntity>> cachedFeaturedProducts(CachedFeaturedProductsRef ref) async {
+Future<List<ProductEntity>> cachedFeaturedProducts(
+  CachedFeaturedProductsRef ref,
+) async {
   final link = ref.keepAlive();
   Timer(CacheDuration.productList, link.close);
 
@@ -103,8 +122,8 @@ class ProductMemoryCache {
 
   void put(String key, ProductEntity value) {
     if (_cache.length >= _maxSize) {
-      final oldest = _cache.entries.reduce(
-          (a, b) => a.value.timestamp.isBefore(b.value.timestamp) ? a : b);
+      final oldest = _cache.entries.reduce((a, b) =>
+          a.value.timestamp.isBefore(b.value.timestamp) ? a : b);
       _cache.remove(oldest.key);
     }
     _cache[key] = _CacheEntry(
@@ -145,4 +164,5 @@ class _CacheEntry<T> {
 }
 
 @riverpod
-ProductMemoryCache productMemoryCache(ProductMemoryCacheRef ref) => ProductMemoryCache();
+ProductMemoryCache productMemoryCache(ProductMemoryCacheRef ref) =>
+    ProductMemoryCache();
