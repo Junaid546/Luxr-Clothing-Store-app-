@@ -119,6 +119,8 @@ class RevenueMetrics extends Equatable {
   final double avgOrderValue; // totalRevenue / orderCount
   final double revenueGrowthPct; // vs previous period
   final double projectedMonthly; // extrapolated
+  final double previousTotalRevenue;
+  final double previousAvgOrderValue;
 
   const RevenueMetrics({
     required this.totalRevenue,
@@ -129,6 +131,8 @@ class RevenueMetrics extends Equatable {
     required this.avgOrderValue,
     required this.revenueGrowthPct,
     required this.projectedMonthly,
+    required this.previousTotalRevenue,
+    required this.previousAvgOrderValue,
   });
 
   static const RevenueMetrics zero = RevenueMetrics(
@@ -140,6 +144,8 @@ class RevenueMetrics extends Equatable {
     avgOrderValue: 0,
     revenueGrowthPct: 0,
     projectedMonthly: 0,
+    previousTotalRevenue: 0,
+    previousAvgOrderValue: 0,
   );
 
   bool get isGrowthPositive => revenueGrowthPct >= 0;
@@ -169,6 +175,8 @@ class OrderMetrics extends Equatable {
   final double fulfillmentRate; // delivered / total × 100
   final int avgDeliveryDays; // avg days to deliver
   final int ordersGrowthPct;
+  final int previousTotalOrders;
+  final double previousCancellationRate;
 
   const OrderMetrics({
     required this.totalOrders,
@@ -182,6 +190,8 @@ class OrderMetrics extends Equatable {
     required this.fulfillmentRate,
     required this.avgDeliveryDays,
     required this.ordersGrowthPct,
+    required this.previousTotalOrders,
+    required this.previousCancellationRate,
   });
 
   static const OrderMetrics zero = OrderMetrics(
@@ -196,6 +206,8 @@ class OrderMetrics extends Equatable {
     fulfillmentRate: 0,
     avgDeliveryDays: 0,
     ordersGrowthPct: 0,
+    previousTotalOrders: 0,
+    previousCancellationRate: 0,
   );
 
   @override
@@ -214,6 +226,7 @@ class CustomerMetrics extends Equatable {
   final int platinumCount;
   final double avgLifetimeValue; // totalSpent / customer
   final int customersGrowthPct;
+  final int previousNewCustomers;
 
   const CustomerMetrics({
     required this.totalCustomers,
@@ -226,6 +239,7 @@ class CustomerMetrics extends Equatable {
     required this.platinumCount,
     required this.avgLifetimeValue,
     required this.customersGrowthPct,
+    required this.previousNewCustomers,
   });
 
   static const CustomerMetrics zero = CustomerMetrics(
@@ -239,6 +253,7 @@ class CustomerMetrics extends Equatable {
     platinumCount: 0,
     avgLifetimeValue: 0,
     customersGrowthPct: 0,
+    previousNewCustomers: 0,
   );
 
   @override

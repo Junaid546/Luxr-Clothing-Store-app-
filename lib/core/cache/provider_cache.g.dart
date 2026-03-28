@@ -7,7 +7,7 @@ part of 'provider_cache.dart';
 // **************************************************************************
 
 String _$watchProductCachedHash() =>
-    r'2faf4069a82b2610409b45549b1be9b5ab9b4efa';
+    r'c86388f9efff81e1120d9d3f71b71f1e7d8f0154';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -186,7 +186,7 @@ final cachedBannersProvider =
 // ignore: unused_element
 typedef CachedBannersRef = AutoDisposeFutureProviderRef<List<ProductModel>>;
 String _$cachedFeaturedProductsHash() =>
-    r'894a53f7718e548341f0157fb6e0b319d598e93b';
+    r'246870cc33cd212579379a32f893d1705b4ec5ce';
 
 /// See also [cachedFeaturedProducts].
 @ProviderFor(cachedFeaturedProducts)

@@ -6,7 +6,24 @@ part of 'analytics_report_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$analyticsReportHash() => r'1be10aafe68d7744a47c886ed35e26d5f922f86d';
+String _$latestOrderDateHash() => r'a6af811432eae8b1f0e881096041054b6396491c';
+
+/// See also [latestOrderDate].
+@ProviderFor(latestOrderDate)
+final latestOrderDateProvider = AutoDisposeStreamProvider<DateTime?>.internal(
+  latestOrderDate,
+  name: r'latestOrderDateProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$latestOrderDateHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef LatestOrderDateRef = AutoDisposeStreamProviderRef<DateTime?>;
+String _$analyticsReportHash() => r'8a17f792bd323340c5a4945a727c5229389f2739';
 
 /// See also [analyticsReport].
 @ProviderFor(analyticsReport)
@@ -24,7 +41,7 @@ final analyticsReportProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AnalyticsReportRef = AutoDisposeFutureProviderRef<AnalyticsReport>;
-String _$comparisonMetricsHash() => r'6d8b9a42cd06a684d5c9ce6fec5c7bf6a54557cc';
+String _$comparisonMetricsHash() => r'272515b34ed2de2970d9c58ecc0f56acc0e6b2a1';
 
 /// See also [comparisonMetrics].
 @ProviderFor(comparisonMetrics)

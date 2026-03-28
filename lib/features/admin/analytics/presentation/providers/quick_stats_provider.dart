@@ -3,49 +3,55 @@ import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:style_cart/core/constants/firestore_constants.dart';
 import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/admin/analytics/data/services/analytics_computation_service.dart';
 
 part 'quick_stats_provider.g.dart';
 
-// ══════════════════════════════════════════════════════
-// TODAY QUICK STATS PROVIDER
-// Lightweight stats for the Admin Dashboard.
-// Strategy: reads /analytics/{today} cache first;
-// falls back to live AnalyticsComputationService if
-// no snapshot is found for today.
-// ══════════════════════════════════════════════════════
-
 @riverpod
-Future<Map<String, dynamic>> todayQuickStats(
+Stream<Map<String, dynamic>> todayQuickStats(
   TodayQuickStatsRef ref,
-) async {
-  final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+) {
+  final now = DateTime.now();
+  final todayStart = DateTime(now.year, now.month, now.day);
   final firestore = ref.watch(firestoreProvider);
 
-  // 1. Try Firestore cache first
-  try {
-    final cached = await firestore
-        .collection(FirestoreConstants.analytics)
-        .doc(today)
-        .get();
+  // Listen to orders placed today
+  return firestore
+      .collection(FirestoreConstants.orders)
+      .where('placedAt', isGreaterThanOrEqualTo: Timestamp.fromDate(todayStart))
+      .snapshots()
+      .map((snap) {
+    double revenue = 0;
+    int orderCount = 0;
+    final customerIds = <String>{};
 
-    if (cached.exists && cached.data() != null) {
-      return cached.data()!;
+    for (final doc in snap.docs) {
+      final data = doc.data();
+      final status = data['status'] as String? ?? '';
+      
+      // Calculate revenue from delivered orders
+      if (status == 'delivered') {
+        revenue += (data['total'] as num?)?.toDouble() ?? 0.0;
+      }
+      
+      // Total orders count (excluding cancelled if preferred, but usually count all pending/success)
+      if (status != 'cancelled') {
+        orderCount++;
+      }
+
+      final uid = data['userId'] as String? ?? '';
+      if (uid.isNotEmpty) {
+        customerIds.add(uid);
+      }
     }
-  } catch (_) {
-    // Cache miss or Firestore error — fall through to live
-  }
 
-  // 2. Fall back to live computation
-  final report = await ref
-      .read(analyticsComputationServiceProvider)
-      .generateReport('today');
-
-  return {
-    'revenue': report.revenue.totalRevenue,
-    'orderCount': report.orders.totalOrders,
-    'newCustomers': report.customers.newCustomers,
-    'avgOrderValue': report.revenue.avgOrderValue,
-    'date': today,
-  };
+    final todayStr = DateFormat('yyyy-MM-dd').format(now);
+    return {
+      'revenue': revenue,
+      'orderCount': orderCount,
+      'newCustomers': customerIds.length, // approximation for real-time
+      'avgOrderValue': orderCount > 0 ? revenue / orderCount : 0.0,
+      'date': todayStr,
+      'isRealtime': true,
+    };
+  });
 }

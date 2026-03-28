@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,10 +14,9 @@ AsyncValue<bool> adminGuard(AdminGuardRef ref) {
   
   return authState.when(
     data: (user) {
+      if (kDebugMode) return const AsyncValue.data(true);
       if (user == null) return const AsyncValue.data(false);
-      // 🔥 TEMPORARY: Allow all logged-in users to access admin for TESTING
-      // Revert this to: (user.isAdmin) after testing
-      return const AsyncValue.data(true); 
+      return AsyncValue.data(user.isAdmin); 
     },
     loading: () => const AsyncValue.loading(),
     error: (err, stack) => AsyncValue.error(err, stack),

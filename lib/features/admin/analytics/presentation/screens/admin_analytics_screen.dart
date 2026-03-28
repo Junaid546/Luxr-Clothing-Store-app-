@@ -155,14 +155,21 @@ class _AnalyticsAppBar extends ConsumerWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('ANALYTICS & REPORTS',
+                const FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'ANALYTICS & REPORTS',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       letterSpacing: 1.2,
-                    )),
+                    ),
+                  ),
+                ),
                 Text(
                   'Performance Overview',
                   style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
@@ -170,7 +177,6 @@ class _AnalyticsAppBar extends ConsumerWidget {
               ],
             ),
           ),
-          const Spacer(),
           // Export button (active only when report is loaded)
           if (currentReport != null)
             IconButton(
