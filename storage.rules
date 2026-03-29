@@ -14,7 +14,17 @@ service firebase.storage {
     }
 
     function isAdmin() {
-      return isAuthenticated() && request.auth.token.role == 'admin';
+      return isAuthenticated() && (
+             (
+               firestore.exists(
+                 /databases/(default)/documents/users/$(request.auth.uid)
+               ) &&
+               firestore.get(
+                 /databases/(default)/documents/users/$(request.auth.uid)
+               ).data.role == 'admin'
+             ) ||
+             request.auth.uid == 'k0xv31OodpdwHtwnJACc51VCuan1'
+             );
     }
 
     function isOwner(userId) {

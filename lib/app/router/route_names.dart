@@ -12,6 +12,12 @@ abstract final class RouteNames {
   static const String cart = '/cart';
   static const String wishlist = '/wishlist';
   static const String profile = '/profile';
+  static const String profileAddresses = '/profile/addresses';
+  static const String profileEditAddress = '/profile/addresses/edit';
+  static const String profilePaymentMethods = '/profile/payment-methods';
+  static const String profileEditPaymentMethod =
+      '/profile/payment-methods/edit';
+  static const String profileHelpSupport = '/profile/help-support';
   static const String notifications = '/notifications';
   static const String notificationPreferences = '/notification-preferences';
 

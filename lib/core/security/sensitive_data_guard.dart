@@ -58,26 +58,27 @@ class SensitiveDataGuard {
   // ── Validate no sensitive data in exceptions ───────
   // Call before logging any exception message
   static String sanitizeErrorMessage(String message) {
+    var sanitized = message;
     // Remove potential email addresses
-    message = message.replaceAll(
+    sanitized = sanitized.replaceAll(
       RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),
       '[EMAIL]',
     );
     // Remove potential phone numbers
-    message = message.replaceAll(
+    sanitized = sanitized.replaceAll(
       RegExp(r'\b[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}\b'),
       '[PHONE]',
     );
     // Remove potential credit card numbers
-    message = message.replaceAll(
+    sanitized = sanitized.replaceAll(
       RegExp(r'\b[0-9]{4}[\s-]?[0-9]{4}[\s-]?[0-9]{4}[\s-]?[0-9]{4}\b'),
       '[CARD]',
     );
     // Remove Firebase project IDs from messages
-    message = message.replaceAll(
+    sanitized = sanitized.replaceAll(
       RegExp(r'projects/[a-z0-9\-]+/'),
       'projects/[PROJECT]/',
     );
-    return message;
+    return sanitized;
   }
 }

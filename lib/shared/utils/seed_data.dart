@@ -34,7 +34,7 @@ Future<void> seedFirebaseData() async {
     },
   ];
 
-  for (var b in banners) {
+  for (final b in banners) {
     await firestore.collection('banners').add(b);
   }
 
@@ -172,7 +172,7 @@ Future<void> seedFirebaseData() async {
     }
   ];
 
-  for (var p in products) {
+  for (final p in products) {
     await firestore.collection('products').add(p);
   }
 }

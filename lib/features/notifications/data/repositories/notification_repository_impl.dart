@@ -7,9 +7,9 @@ import 'package:style_cart/features/notifications/domain/entities/notification_e
 import 'package:style_cart/features/notifications/domain/repositories/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
-  final FirebaseFirestore _firestore;
 
   NotificationRepositoryImpl(this._firestore);
+  final FirebaseFirestore _firestore;
 
   CollectionReference get _notifications =>
       _firestore.collection(FirestoreConstants.notifications);
@@ -22,7 +22,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs
-          .map((doc) => NotificationModel.fromFirestore(doc))
+          .map(NotificationModel.fromFirestore)
           .toList();
     });
   }
@@ -46,7 +46,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
           .where('isRead', isEqualTo: false)
           .get();
 
-      for (var doc in snapshots.docs) {
+      for (final doc in snapshots.docs) {
         batch.update(doc.reference, {'isRead': true});
       }
 
@@ -84,7 +84,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
           .where('userId', isEqualTo: userId)
           .get();
 
-      for (var doc in snapshots.docs) {
+      for (final doc in snapshots.docs) {
         batch.delete(doc.reference);
       }
 

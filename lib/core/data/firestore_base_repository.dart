@@ -6,8 +6,8 @@ import 'package:style_cart/core/errors/exceptions.dart';
 import 'package:style_cart/core/errors/failures.dart';
 
 abstract class FirestoreBaseRepository {
-  final FirebaseFirestore firestore;
   const FirestoreBaseRepository(this.firestore);
+  final FirebaseFirestore firestore;
 
   // â”€â”€ Safe Firestore call wrapper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Wraps every Firestore call in try/catch
@@ -42,7 +42,7 @@ abstract class FirestoreBaseRepository {
       (Object error) => Left<Failure, T>(
         ServerFailure(error.toString()),
       ),
-    ).map((data) => Right<Failure, T>(data));
+    ).map(Right<Failure, T>.new);
   }
 }
 

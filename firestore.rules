@@ -82,6 +82,7 @@ service cloud.firestore {
         onlyModifies([
           'displayName', 'photoUrl', 'fcmToken',
           'notificationPrefs', 'addresses',
+          'paymentMethods',
           'updatedAt', 'lastLoginAt', 'emailVerified',
           'wishlistCount',
         ])

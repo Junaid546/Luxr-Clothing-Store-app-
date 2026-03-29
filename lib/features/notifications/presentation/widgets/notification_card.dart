@@ -5,16 +5,13 @@ import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
 
 class NotificationCard extends ConsumerWidget {
+
+  const NotificationCard({
+    required this.notification, required this.onTap, required this.onDelete, super.key,
+  });
   final NotificationEntity notification;
   final VoidCallback onTap;
   final VoidCallback onDelete;
-
-  const NotificationCard({
-    super.key,
-    required this.notification,
-    required this.onTap,
-    required this.onDelete,
-  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,7 +83,7 @@ class NotificationCard extends ConsumerWidget {
                     const Gap(4),
                     Text(
                       notification.body,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: AppColors.textSecondary,
                         height: 1.4,

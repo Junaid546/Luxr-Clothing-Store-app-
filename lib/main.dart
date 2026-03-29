@@ -11,12 +11,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Environment Variables
-  await dotenv.load(fileName: ".env");
+  await dotenv.load();
 
   // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
+  } on FirebaseException catch (e) {
+    if (e.code != 'duplicate-app') rethrow;
+  }
 
   // ── Initialize Global Error Handling ────────
   await GlobalErrorHandler.initialize();

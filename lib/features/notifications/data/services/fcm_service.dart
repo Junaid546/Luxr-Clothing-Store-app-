@@ -3,27 +3,14 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/core/constants/firestore_constants.dart';
 import 'package:style_cart/features/notifications/data/models/notification_model.dart';
-import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
 
 class FCMService {
-  final FirebaseMessaging _messaging;
-  final FirebaseFirestore _firestore;
-  GoRouter? _router;
-
-  static FCMService? _instance;
-
-  FCMService._({
-    required FirebaseMessaging messaging,
-    required FirebaseFirestore firestore,
-  }) : _messaging = messaging,
-       _firestore = firestore;
 
   factory FCMService({
     required FirebaseMessaging messaging,
@@ -35,6 +22,17 @@ class FCMService {
     );
     return _instance!;
   }
+
+  FCMService._({
+    required FirebaseMessaging messaging,
+    required FirebaseFirestore firestore,
+  }) : _messaging = messaging,
+       _firestore = firestore;
+  final FirebaseMessaging _messaging;
+  final FirebaseFirestore _firestore;
+  GoRouter? _router;
+
+  static FCMService? _instance;
 
   void setRouter(GoRouter router) {
     _router = router;
@@ -62,13 +60,9 @@ class FCMService {
       }
     });
 
-    FirebaseMessaging.onMessage.listen((message) {
-      _handleForegroundMessage(message);
-    });
+    FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
 
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      _handleNotificationTap(message);
-    });
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleNotificationTap);
 
     final initialMessage = await _messaging.getInitialMessage();
     if (initialMessage != null) {
@@ -79,13 +73,7 @@ class FCMService {
 
   Future<NotificationSettings> requestPermission() async {
     final settings = await _messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
+      
     );
 
     debugPrint('FCM permission: ${settings.authorizationStatus}');
@@ -93,14 +81,11 @@ class FCMService {
   }
 
   Future<void> _setupAndroidChannel() async {
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    const channel = AndroidNotificationChannel(
       'stylecart_high_importance',
       'StyleCart Notifications',
       description: 'Order updates, promotions, and alerts',
       importance: Importance.high,
-      playSound: true,
-      enableVibration: true,
-      showBadge: true,
     );
 
     final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -109,9 +94,9 @@ class FCMService {
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
+    const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
@@ -185,9 +170,6 @@ class FCMService {
       channelDescription: 'Order updates and alerts',
       importance: Importance.high,
       priority: Priority.high,
-      showWhen: true,
-      enableVibration: true,
-      playSound: true,
       icon: '@mipmap/ic_launcher',
       color: Color(0xFFE8614A),
       styleInformation: BigTextStyleInformation(''),

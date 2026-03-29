@@ -3,16 +3,15 @@ import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 
 class SectionHeaderWidget extends StatelessWidget {
-  final String title;
-  final String? actionLabel;
-  final VoidCallback? onActionTap;
-
   const SectionHeaderWidget({
     required this.title,
     this.actionLabel,
     this.onActionTap,
     super.key,
   });
+  final String title;
+  final String? actionLabel;
+  final VoidCallback? onActionTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +31,7 @@ class SectionHeaderWidget extends StatelessWidget {
               onTap: onActionTap,
               child: Text(
                 actionLabel!,
-                style: AppTextStyles.labelLarge.copyWith(
-                  color: AppColors.gold,
-                ),
+                style: AppTextStyles.labelLarge.copyWith(color: AppColors.gold),
               ),
             ),
         ],

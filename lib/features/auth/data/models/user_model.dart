@@ -89,6 +89,7 @@ class UserModel extends UserEntity {
       FirestoreConstants.eliteStatus: 'BRONZE',
       'wishlistCount': 0,
       'addresses': <Map<String, dynamic>>[],
+      'paymentMethods': <Map<String, dynamic>>[],
       'notificationPrefs': {
         'orderUpdates': true,
         'promotions': true,

@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
@@ -16,9 +16,9 @@ part 'analytics_computation_service.g.dart';
 // NO business logic in the repository — only here.
 
 class AnalyticsComputationService {
-  final FirebaseFirestore _firestore;
 
   const AnalyticsComputationService(this._firestore);
+  final FirebaseFirestore _firestore;
 
   CollectionReference<Map<String, dynamic>> get _ordersRef =>
       _firestore.collection(FirestoreConstants.orders);
@@ -205,7 +205,7 @@ class AnalyticsComputationService {
       projectedMonthly = dailyRate * daysInMonth;
     } else {
       // For yearly, maybe project to end of year?
-      final dayOfYear = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays + 1;
+      final dayOfYear = DateTime.now().difference(DateTime(DateTime.now().year)).inDays + 1;
       projectedMonthly = (totalRevenue / dayOfYear) * 30.44; // Average month
     }
 
@@ -230,13 +230,13 @@ class AnalyticsComputationService {
     List<Map<String, dynamic>> current,
     List<Map<String, dynamic>> previous,
   ) {
-    int delivered = 0;
-    int cancelled = 0;
-    int returned = 0;
-    int pending = 0;
-    int processing = 0;
-    int totalDeliveryDays = 0;
-    int deliveredWithDates = 0;
+    var delivered = 0;
+    var cancelled = 0;
+    var returned = 0;
+    var pending = 0;
+    var processing = 0;
+    var totalDeliveryDays = 0;
+    var deliveredWithDates = 0;
 
     for (final order in current) {
       final status = order['status'] as String? ?? '';
@@ -253,22 +253,17 @@ class AnalyticsComputationService {
               deliveredWithDates++;
             }
           }
-          break;
         case OrderStatus.cancelled:
           cancelled++;
-          break;
         case OrderStatus.returned:
           returned++;
-          break;
         case OrderStatus.pending:
           pending++;
-          break;
         case OrderStatus.processing:
         case OrderStatus.packed:
         case OrderStatus.shipped:
         case OrderStatus.outForDelivery:
           processing++;
-          break;
       }
     }
 
@@ -282,7 +277,7 @@ class AnalyticsComputationService {
     final growth = prevTotal > 0 ? ((total - prevTotal) / prevTotal * 100).round() : (total > 0 ? 100 : 0);
 
     // Previous cancellation rate
-    int prevCancelled = 0;
+    var prevCancelled = 0;
     for (final order in previous) {
       if (order['status'] == OrderStatus.cancelled) prevCancelled++;
     }
@@ -332,14 +327,14 @@ class AnalyticsComputationService {
       dotenv.env['LOW_STOCK_THRESHOLD'] ?? '5',
     );
 
-    int activeCount = 0;
-    int outOfStock = 0;
-    int lowStock = 0;
+    var activeCount = 0;
+    var outOfStock = 0;
+    var lowStock = 0;
     double inventoryValue = 0;
-    int totalStock = 0;
+    var totalStock = 0;
     double ratingSum = 0;
-    int ratedProducts = 0;
-    int noSales = 0;
+    var ratedProducts = 0;
+    var noSales = 0;
 
     for (final product in products) {
       final isActive = product['isActive'] as bool? ?? false;
@@ -405,7 +400,7 @@ class AnalyticsComputationService {
     final days = <String, TimeSeriesPoint>{};
     final daysCount = range.daysCount.clamp(1, 365);
 
-    for (int i = 0; i < daysCount; i++) {
+    for (var i = 0; i < daysCount; i++) {
       final date = range.start.add(Duration(days: i));
       final key = DateFormat('yyyy-MM-dd').format(date);
       final label = _dayLabel(date, daysCount);
@@ -594,7 +589,6 @@ class AnalyticsComputationService {
         userId: uid,
         displayName: customerNames[uid]!,
         email: customerEmails[uid]!,
-        photoUrl: null, // order doesn't store this, but that's okay for the list
         totalOrders: customerOrders[uid]!,
         totalSpent: customerSpent[uid]!,
         eliteStatus: 'N/A', // computed only on whole user object
@@ -621,9 +615,12 @@ class AnalyticsComputationService {
     // Elite status counts
     final eliteSnap = await _usersRef.where('role', isEqualTo: 'customer').get();
 
-    int bronze = 0, silver = 0, gold = 0, platinum = 0;
+    var bronze = 0;
+    var silver = 0;
+    var gold = 0;
+    var platinum = 0;
     double totalSpent = 0;
-    int returningCount = 0;
+    var returningCount = 0;
 
     for (final doc in eliteSnap.docs) {
       final d = doc.data();
@@ -635,16 +632,12 @@ class AnalyticsComputationService {
       switch (status) {
         case 'BRONZE':
           bronze++;
-          break;
         case 'SILVER':
           silver++;
-          break;
         case 'GOLD':
           gold++;
-          break;
         case 'PLATINUM':
           platinum++;
-          break;
       }
     }
 
@@ -716,11 +709,6 @@ class AnalyticsComputationService {
 
 // Internal raw stats holder (not exposed to UI)
 class _CustomerStatsRaw {
-  final int newCount;
-  final int totalCount;
-  final int bronze, silver, gold, platinum;
-  final double totalSpent;
-  final int returningCount;
 
   const _CustomerStatsRaw({
     required this.newCount,
@@ -732,6 +720,14 @@ class _CustomerStatsRaw {
     required this.totalSpent,
     required this.returningCount,
   });
+  final int newCount;
+  final int totalCount;
+  final int bronze;
+  final int silver;
+  final int gold;
+  final int platinum;
+  final double totalSpent;
+  final int returningCount;
 }
 
 @riverpod

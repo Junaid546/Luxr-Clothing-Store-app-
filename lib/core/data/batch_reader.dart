@@ -12,9 +12,9 @@ part 'batch_reader.g.dart';
 // Firestore whereIn limit = 30 per query.
 
 class FirestoreBatchReader {
-  final FirebaseFirestore _firestore;
 
   const FirestoreBatchReader(this._firestore);
+  final FirebaseFirestore _firestore;
 
   // ── Batch read products by ID ──────────────────────
   Future<Map<String, Map<String, dynamic>>> readProducts(List<String> productIds) async {
@@ -28,7 +28,7 @@ class FirestoreBatchReader {
       final snap = await _firestore
           .collection(FirestoreConstants.products)
           .where(FieldPath.documentId, whereIn: chunk)
-          .get(const GetOptions(source: Source.serverAndCache));
+          .get(const GetOptions());
       for (final doc in snap.docs) {
         results[doc.id] = doc.data();
       }
@@ -71,7 +71,7 @@ class FirestoreBatchReader {
       final snap = await _firestore
           .collection(collection)
           .where(FieldPath.documentId, whereIn: chunk)
-          .get(const GetOptions(source: Source.serverAndCache));
+          .get(const GetOptions());
       for (final doc in snap.docs) {
         results[doc.id] = doc.data();
       }
@@ -83,7 +83,7 @@ class FirestoreBatchReader {
   // ── Chunk list into sub-lists of size n ───────────
   List<List<T>> _chunk<T>(List<T> list, int size) {
     final chunks = <List<T>>[];
-    for (int i = 0; i < list.length; i += size) {
+    for (var i = 0; i < list.length; i += size) {
       chunks.add(list.sublist(
         i,
         (i + size < list.length) ? i + size : list.length,

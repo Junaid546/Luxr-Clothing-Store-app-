@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -98,7 +98,7 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
         final allOrdersCount = await _ordersRef.count().get();
         final allClientsCount = await _usersRef.where('role', isEqualTo: 'customer').count().get();
 
-        double _pctChange(double current, double prev) {
+        double pctChange(double current, double prev) {
           if (prev == 0) return current > 0 ? 100.0 : 0.0;
           return ((current - prev) / prev) * 100;
         }
@@ -111,10 +111,10 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
           conversionRate: currentOrderCount > 0
               ? (currentOrderCount / (newClients > 0 ? newClients : 1) * 100).clamp(0.0, 100.0)
               : 0.0,
-          revenueChange: _pctChange(currentRevenue, prevRevenue),
-          ordersChange: _pctChange(currentOrderCount.toDouble(), prevOrderCount.toDouble()),
-          clientsChange: _pctChange(newClients.toDouble(), prevClients.toDouble()),
-          conversionChange: 0.0,
+          revenueChange: pctChange(currentRevenue, prevRevenue),
+          ordersChange: pctChange(currentOrderCount.toDouble(), prevOrderCount.toDouble()),
+          clientsChange: pctChange(newClients.toDouble(), prevClients.toDouble()),
+          conversionChange: 0,
         );
       } catch (e) {
         if (kDebugMode && e is FirebaseException && e.code == 'permission-denied') {
@@ -140,10 +140,10 @@ class DashboardRepositoryImpl extends FirestoreBaseRepository
             .get();
 
         final dailyMap = <String, DailyRevenue>{};
-        for (int i = 6; i >= 0; i--) {
+        for (var i = 6; i >= 0; i--) {
           final date = now.subtract(Duration(days: i));
           final key = DateFormat('yyyy-MM-dd').format(date);
-          dailyMap[key] = DailyRevenue(date: date, revenue: 0.0, orderCount: 0);
+          dailyMap[key] = DailyRevenue(date: date, revenue: 0, orderCount: 0);
         }
 
         for (final doc in snap.docs) {

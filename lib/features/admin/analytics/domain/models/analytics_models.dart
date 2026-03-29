@@ -5,18 +5,6 @@ import 'package:style_cart/app/theme/app_colors.dart';
 
 // ── Core Analytics Report ─────────────────────────────
 class AnalyticsReport extends Equatable {
-  final String period; // 'today'|'weekly'|...
-  final DateRange dateRange;
-  final RevenueMetrics revenue;
-  final OrderMetrics orders;
-  final CustomerMetrics customers;
-  final ProductMetrics products;
-  final List<TimeSeriesPoint> revenueSeries;
-  final List<TimeSeriesPoint> orderSeries;
-  final Map<String, CategoryMetric> categoryBreakdown;
-  final List<TopProduct> topProducts;
-  final List<TopCustomer> topCustomers;
-  final DateTime generatedAt;
 
   const AnalyticsReport({
     required this.period,
@@ -32,6 +20,18 @@ class AnalyticsReport extends Equatable {
     required this.topCustomers,
     required this.generatedAt,
   });
+  final String period; // 'today'|'weekly'|...
+  final DateRange dateRange;
+  final RevenueMetrics revenue;
+  final OrderMetrics orders;
+  final CustomerMetrics customers;
+  final ProductMetrics products;
+  final List<TimeSeriesPoint> revenueSeries;
+  final List<TimeSeriesPoint> orderSeries;
+  final Map<String, CategoryMetric> categoryBreakdown;
+  final List<TopProduct> topProducts;
+  final List<TopCustomer> topCustomers;
+  final DateTime generatedAt;
 
   static AnalyticsReport empty(String period) => AnalyticsReport(
         period: period,
@@ -54,8 +54,6 @@ class AnalyticsReport extends Equatable {
 
 // ── Date Range ────────────────────────────────────────
 class DateRange extends Equatable {
-  final DateTime start;
-  final DateTime end;
 
   const DateRange({required this.start, required this.end});
 
@@ -78,16 +76,18 @@ class DateRange extends Equatable {
           end: now,
         ),
       'monthly' => DateRange(
-          start: DateTime(now.year, now.month, 1),
+          start: DateTime(now.year, now.month),
           end: now,
         ),
       'yearly' => DateRange(
-          start: DateTime(now.year, 1, 1),
+          start: DateTime(now.year),
           end: now,
         ),
       _ => DateRange(start: todayStart, end: now),
     };
   }
+  final DateTime start;
+  final DateTime end;
 
   // Previous period (same duration, before start)
   DateRange get previousPeriod {
@@ -111,16 +111,6 @@ class DateRange extends Equatable {
 
 // ── Revenue Metrics ───────────────────────────────────
 class RevenueMetrics extends Equatable {
-  final double totalRevenue; // delivered orders total
-  final double grossRevenue; // sum of subtotals
-  final double netRevenue; // gross - discounts
-  final double discountGiven; // sum of discountAmount
-  final double shippingRevenue; // sum of shippingCost
-  final double avgOrderValue; // totalRevenue / orderCount
-  final double revenueGrowthPct; // vs previous period
-  final double projectedMonthly; // extrapolated
-  final double previousTotalRevenue;
-  final double previousAvgOrderValue;
 
   const RevenueMetrics({
     required this.totalRevenue,
@@ -134,6 +124,16 @@ class RevenueMetrics extends Equatable {
     required this.previousTotalRevenue,
     required this.previousAvgOrderValue,
   });
+  final double totalRevenue; // delivered orders total
+  final double grossRevenue; // sum of subtotals
+  final double netRevenue; // gross - discounts
+  final double discountGiven; // sum of discountAmount
+  final double shippingRevenue; // sum of shippingCost
+  final double avgOrderValue; // totalRevenue / orderCount
+  final double revenueGrowthPct; // vs previous period
+  final double projectedMonthly; // extrapolated
+  final double previousTotalRevenue;
+  final double previousAvgOrderValue;
 
   static const RevenueMetrics zero = RevenueMetrics(
     totalRevenue: 0,
@@ -164,19 +164,6 @@ class RevenueMetrics extends Equatable {
 
 // ── Order Metrics ─────────────────────────────────────
 class OrderMetrics extends Equatable {
-  final int totalOrders;
-  final int deliveredOrders;
-  final int cancelledOrders;
-  final int returnedOrders;
-  final int pendingOrders;
-  final int processingOrders;
-  final double cancellationRate; // cancelled / total × 100
-  final double refundRate; // returned / total × 100
-  final double fulfillmentRate; // delivered / total × 100
-  final int avgDeliveryDays; // avg days to deliver
-  final int ordersGrowthPct;
-  final int previousTotalOrders;
-  final double previousCancellationRate;
 
   const OrderMetrics({
     required this.totalOrders,
@@ -193,6 +180,19 @@ class OrderMetrics extends Equatable {
     required this.previousTotalOrders,
     required this.previousCancellationRate,
   });
+  final int totalOrders;
+  final int deliveredOrders;
+  final int cancelledOrders;
+  final int returnedOrders;
+  final int pendingOrders;
+  final int processingOrders;
+  final double cancellationRate; // cancelled / total × 100
+  final double refundRate; // returned / total × 100
+  final double fulfillmentRate; // delivered / total × 100
+  final int avgDeliveryDays; // avg days to deliver
+  final int ordersGrowthPct;
+  final int previousTotalOrders;
+  final double previousCancellationRate;
 
   static const OrderMetrics zero = OrderMetrics(
     totalOrders: 0,
@@ -216,17 +216,6 @@ class OrderMetrics extends Equatable {
 
 // ── Customer Metrics ──────────────────────────────────
 class CustomerMetrics extends Equatable {
-  final int totalCustomers;
-  final int newCustomers; // in period
-  final int returningCustomers; // placed >1 order
-  final double repeatPurchaseRate;
-  final int bronzeCount;
-  final int silverCount;
-  final int goldCount;
-  final int platinumCount;
-  final double avgLifetimeValue; // totalSpent / customer
-  final int customersGrowthPct;
-  final int previousNewCustomers;
 
   const CustomerMetrics({
     required this.totalCustomers,
@@ -241,6 +230,17 @@ class CustomerMetrics extends Equatable {
     required this.customersGrowthPct,
     required this.previousNewCustomers,
   });
+  final int totalCustomers;
+  final int newCustomers; // in period
+  final int returningCustomers; // placed >1 order
+  final double repeatPurchaseRate;
+  final int bronzeCount;
+  final int silverCount;
+  final int goldCount;
+  final int platinumCount;
+  final double avgLifetimeValue; // totalSpent / customer
+  final int customersGrowthPct;
+  final int previousNewCustomers;
 
   static const CustomerMetrics zero = CustomerMetrics(
     totalCustomers: 0,
@@ -264,15 +264,7 @@ class CustomerMetrics extends Equatable {
 }
 
 // ── Product Metrics ───────────────────────────────────
-class ProductMetrics extends Equatable {
-  final int totalActiveProducts;
-  final int totalOutOfStock;
-  final int totalLowStock;
-  final double inventoryValue; // price × totalStock SUM
-  final double sellThroughRate; // sold/(sold+stock) × 100
-  final int totalUnitsSold; // in period
-  final double avgProductRating; // across all products
-  final int productsWithNoSales; // soldCount == 0
+class ProductMetrics extends Equatable { // soldCount == 0
 
   const ProductMetrics({
     required this.totalActiveProducts,
@@ -284,6 +276,14 @@ class ProductMetrics extends Equatable {
     required this.avgProductRating,
     required this.productsWithNoSales,
   });
+  final int totalActiveProducts;
+  final int totalOutOfStock;
+  final int totalLowStock;
+  final double inventoryValue; // price × totalStock SUM
+  final double sellThroughRate; // sold/(sold+stock) × 100
+  final int totalUnitsSold; // in period
+  final double avgProductRating; // across all products
+  final int productsWithNoSales;
 
   static const ProductMetrics zero = ProductMetrics(
     totalActiveProducts: 0,
@@ -304,11 +304,7 @@ class ProductMetrics extends Equatable {
 }
 
 // ── Time Series Point (for charts) ───────────────────
-class TimeSeriesPoint extends Equatable {
-  final DateTime date;
-  final double value;
-  final String label; // 'Mon', 'Jan', '01', etc.
-  final int count; // secondary metric (order count)
+class TimeSeriesPoint extends Equatable { // secondary metric (order count)
 
   const TimeSeriesPoint({
     required this.date,
@@ -316,6 +312,10 @@ class TimeSeriesPoint extends Equatable {
     required this.label,
     required this.count,
   });
+  final DateTime date;
+  final double value;
+  final String label; // 'Mon', 'Jan', '01', etc.
+  final int count;
 
   @override
   List<Object> get props => [date, value];
@@ -323,12 +323,6 @@ class TimeSeriesPoint extends Equatable {
 
 // ── Category Metric ───────────────────────────────────
 class CategoryMetric extends Equatable {
-  final String category;
-  final double revenue;
-  final int unitsSold;
-  final int productCount;
-  final double revenueShare; // percentage of total
-  final double growthPct;
 
   const CategoryMetric({
     required this.category,
@@ -338,23 +332,19 @@ class CategoryMetric extends Equatable {
     required this.revenueShare,
     required this.growthPct,
   });
+  final String category;
+  final double revenue;
+  final int unitsSold;
+  final int productCount;
+  final double revenueShare; // percentage of total
+  final double growthPct;
 
   @override
   List<Object> get props => [category, revenue];
 }
 
 // ── Top Product ───────────────────────────────────────
-class TopProduct extends Equatable {
-  final String productId;
-  final String productName;
-  final String brand;
-  final String imageUrl;
-  final String category;
-  final int unitsSold;
-  final double revenue;
-  final double avgRating;
-  final int currentStock;
-  final double revenueShare; // % of total revenue
+class TopProduct extends Equatable { // % of total revenue
 
   const TopProduct({
     required this.productId,
@@ -368,6 +358,16 @@ class TopProduct extends Equatable {
     required this.currentStock,
     required this.revenueShare,
   });
+  final String productId;
+  final String productName;
+  final String brand;
+  final String imageUrl;
+  final String category;
+  final int unitsSold;
+  final double revenue;
+  final double avgRating;
+  final int currentStock;
+  final double revenueShare;
 
   @override
   List<Object> get props => [productId, unitsSold];
@@ -375,6 +375,13 @@ class TopProduct extends Equatable {
 
 // ── Top Customer ──────────────────────────────────────
 class TopCustomer extends Equatable {
+
+  const TopCustomer({
+    required this.userId,
+    required this.displayName,
+    required this.email,
+    required this.totalOrders, required this.totalSpent, required this.eliteStatus, required this.lastOrderDate, this.photoUrl,
+  });
   final String userId;
   final String displayName;
   final String email;
@@ -384,29 +391,12 @@ class TopCustomer extends Equatable {
   final String eliteStatus;
   final DateTime lastOrderDate;
 
-  const TopCustomer({
-    required this.userId,
-    required this.displayName,
-    required this.email,
-    this.photoUrl,
-    required this.totalOrders,
-    required this.totalSpent,
-    required this.eliteStatus,
-    required this.lastOrderDate,
-  });
-
   @override
   List<Object> get props => [userId, totalSpent];
 }
 
 // ── Comparison Metric (period-over-period) ────────────
-class ComparisonMetric extends Equatable {
-  final String label;
-  final double currentValue;
-  final double previousValue;
-  final double changeAmount;
-  final double changePct;
-  final bool isPositiveGood; // for coloring (revenue: true, cancellation: false)
+class ComparisonMetric extends Equatable { // for coloring (revenue: true, cancellation: false)
 
   const ComparisonMetric({
     required this.label,
@@ -417,6 +407,12 @@ class ComparisonMetric extends Equatable {
         changePct = previousValue == 0
             ? (currentValue > 0 ? 100.0 : 0.0)
             : ((currentValue - previousValue) / previousValue * 100);
+  final String label;
+  final double currentValue;
+  final double previousValue;
+  final double changeAmount;
+  final double changePct;
+  final bool isPositiveGood;
 
   bool get isImprovement => isPositiveGood ? changePct >= 0 : changePct <= 0;
 

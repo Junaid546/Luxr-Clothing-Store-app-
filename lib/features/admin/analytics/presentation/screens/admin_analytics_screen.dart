@@ -12,12 +12,14 @@ import 'package:style_cart/features/admin/analytics/presentation/providers/analy
 import 'package:style_cart/features/admin/analytics/presentation/widgets/chart_painters.dart';
 import 'package:style_cart/features/admin/analytics/presentation/widgets/export_bottom_sheet.dart';
 import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
+import 'package:style_cart/shared/widgets/images/safe_remote_image.dart';
 
 class AdminAnalyticsScreen extends ConsumerStatefulWidget {
   const AdminAnalyticsScreen({super.key});
 
   @override
-  ConsumerState<AdminAnalyticsScreen> createState() => _AdminAnalyticsScreenState();
+  ConsumerState<AdminAnalyticsScreen> createState() =>
+      _AdminAnalyticsScreenState();
 }
 
 class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen> {
@@ -41,13 +43,9 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen> {
       },
       loading: () => const Scaffold(
         backgroundColor: Colors.black,
-        body: Center(
-          child: CircularProgressIndicator(color: Colors.amber),
-        ),
+        body: Center(child: CircularProgressIndicator(color: Colors.amber)),
       ),
-      error: (err, stack) => Scaffold(
-        body: Center(child: Text('Error: $err')),
-      ),
+      error: (err, stack) => Scaffold(body: Center(child: Text('Error: $err'))),
     );
   }
 
@@ -60,73 +58,88 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen> {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-            child: _AnalyticsAppBar(
-              currentReport: reportAsync.valueOrNull,
+              child: _AnalyticsAppBar(currentReport: reportAsync.valueOrNull),
             ),
-          ),
-          const SliverToBoxAdapter(child: _PeriodSelectorRow()),
-          reportAsync.when(
-            data: (report) => SliverList(
-              delegate: SliverChildListDelegate([
-                _RevenueHeroCard(report: report),
-                _KPISummaryGrid(report: report),
-                _RevenueChartSection(report: report),
-                _OrdersChartSection(report: report),
-                _CategoryDonutSection(report: report),
-                _CustomerInsightsSection(report: report),
-                _ProductPerformanceSection(report: report),
-                _TopProductsSection(report: report),
-                _TopCustomersSection(report: report),
-                const _ComparisonTableSection(),
-                const SizedBox(height: 32),
-              ]),
-            ),
-            loading: () => const SliverFillRemaining(
-              child: Center(child: CircularProgressIndicator(color: AppColors.gold)),
-            ),
-            error: (err, stack) => SliverFillRemaining(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(32.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.analytics_outlined, color: AppColors.gold, size: 64),
-                      const SizedBox(height: 24),
-                      const Text(
-                        'Unable to Load Analytics',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        err.toString().contains('index')
-                            ? 'Your database requires composite indexes to run these reports. Please check the log/link below to create them.'
-                            : 'An unexpected error occurred while computing metrics.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
-                      ),
-                      const SizedBox(height: 24),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(8),
+            const SliverToBoxAdapter(child: _PeriodSelectorRow()),
+            reportAsync.when(
+              data: (report) => SliverList(
+                delegate: SliverChildListDelegate([
+                  _RevenueHeroCard(report: report),
+                  _KPISummaryGrid(report: report),
+                  _RevenueChartSection(report: report),
+                  _OrdersChartSection(report: report),
+                  _CategoryDonutSection(report: report),
+                  _CustomerInsightsSection(report: report),
+                  _ProductPerformanceSection(report: report),
+                  _TopProductsSection(report: report),
+                  _TopCustomersSection(report: report),
+                  const _ComparisonTableSection(),
+                  const SizedBox(height: 32),
+                ]),
+              ),
+              loading: () => const SliverFillRemaining(
+                child: Center(
+                  child: CircularProgressIndicator(color: AppColors.gold),
+                ),
+              ),
+              error: (err, stack) => SliverFillRemaining(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.analytics_outlined,
+                          color: AppColors.gold,
+                          size: 64,
                         ),
-                        child: Text(
-                          err.toString(),
-                          style: const TextStyle(color: AppColors.error, fontSize: 11, fontFamily: 'monospace'),
+                        const SizedBox(height: 24),
+                        const Text(
+                          'Unable to Load Analytics',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 12),
+                        Text(
+                          err.toString().contains('index')
+                              ? 'Your database requires composite indexes to run these reports. Please check the log/link below to create them.'
+                              : 'An unexpected error occurred while computing metrics.',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 14,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            err.toString(),
+                            style: const TextStyle(
+                              color: AppColors.error,
+                              fontSize: 11,
+                              fontFamily: 'monospace',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
     );
   }
 }
@@ -135,9 +148,10 @@ class _AdminAnalyticsScreenState extends ConsumerState<AdminAnalyticsScreen> {
 // APP BAR
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _AnalyticsAppBar extends ConsumerWidget {
+  const _AnalyticsAppBar({this.currentReport});
+
   /// If non-null, the export button becomes active
   final AnalyticsReport? currentReport;
-  const _AnalyticsAppBar({this.currentReport});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -172,7 +186,9 @@ class _AnalyticsAppBar extends ConsumerWidget {
                 ),
                 Text(
                   'Performance Overview',
-                  style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),
@@ -228,28 +244,42 @@ class _PeriodSelectorRow extends ConsumerWidget {
               child: Row(
                 children: [
                   ...periods.map((p) {
-                    final isActive = activePeriod == p.$1 && customRange == null;
+                    final isActive =
+                        activePeriod == p.$1 && customRange == null;
                     return GestureDetector(
                       onTap: () {
                         ref.read(customDateRangeProvider.notifier).clear();
-                        ref.read(analyticsPeriodStateProvider.notifier).setPeriod(p.$1);
+                        ref
+                            .read(analyticsPeriodStateProvider.notifier)
+                            .setPeriod(p.$1);
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         margin: const EdgeInsets.only(right: 8),
-                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 9,
+                        ),
                         decoration: BoxDecoration(
-                          color: isActive ? AppColors.primary : AppColors.backgroundCard,
+                          color: isActive
+                              ? AppColors.primary
+                              : AppColors.backgroundCard,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: isActive ? AppColors.primary : AppColors.borderDefault,
+                            color: isActive
+                                ? AppColors.primary
+                                : AppColors.borderDefault,
                           ),
                         ),
                         child: Text(
                           p.$2,
                           style: AppTextStyles.labelMedium.copyWith(
-                            color: isActive ? Colors.white : AppColors.textMuted,
-                            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                            color: isActive
+                                ? Colors.white
+                                : AppColors.textMuted,
+                            fontWeight: isActive
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                       ),
@@ -258,7 +288,10 @@ class _PeriodSelectorRow extends ConsumerWidget {
                   if (customRange != null) ...[
                     const SizedBox(width: 4),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 9,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.circular(20),
@@ -267,12 +300,22 @@ class _PeriodSelectorRow extends ConsumerWidget {
                         children: [
                           Text(
                             customRange.displayLabel,
-                            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(width: 6),
                           GestureDetector(
-                            onTap: () => ref.read(customDateRangeProvider.notifier).clear(),
-                            child: const Icon(Icons.close, color: Colors.white, size: 14),
+                            onTap: () => ref
+                                .read(customDateRangeProvider.notifier)
+                                .clear(),
+                            child: const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 14,
+                            ),
                           ),
                         ],
                       ),
@@ -285,7 +328,9 @@ class _PeriodSelectorRow extends ConsumerWidget {
           IconButton(
             icon: Icon(
               Icons.date_range_outlined,
-              color: customRange != null ? AppColors.gold : AppColors.textSecondary,
+              color: customRange != null
+                  ? AppColors.gold
+                  : AppColors.textSecondary,
             ),
             onPressed: () => _showDateRangePicker(context, ref),
           ),
@@ -311,10 +356,9 @@ class _PeriodSelectorRow extends ConsumerWidget {
     );
 
     if (range != null) {
-      ref.read(customDateRangeProvider.notifier).setRange(DateRange(
-            start: range.start,
-            end: range.end,
-          ));
+      ref
+          .read(customDateRangeProvider.notifier)
+          .setRange(DateRange(start: range.start, end: range.end));
     }
   }
 }
@@ -323,8 +367,8 @@ class _PeriodSelectorRow extends ConsumerWidget {
 // REVENUE HERO CARD
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _RevenueHeroCard extends StatelessWidget {
-  final AnalyticsReport report;
   const _RevenueHeroCard({required this.report});
+  final AnalyticsReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -341,9 +385,7 @@ class _RevenueHeroCard extends StatelessWidget {
           ],
         ),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: AppColors.gold.withOpacity(0.3),
-        ),
+        border: Border.all(color: AppColors.gold.withOpacity(0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -358,24 +400,35 @@ class _RevenueHeroCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   _AnimatedCounter(
                     value: report.revenue.totalRevenue,
-                    prefix: '\$',
+                    prefix: r'$',
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
-                  color: report.revenue.isGrowthPositive ? AppColors.success.withOpacity(0.15) : AppColors.error.withOpacity(0.15),
+                  color: report.revenue.isGrowthPositive
+                      ? AppColors.success.withOpacity(0.15)
+                      : AppColors.error.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: report.revenue.isGrowthPositive ? AppColors.success.withOpacity(0.4) : AppColors.error.withOpacity(0.4),
+                    color: report.revenue.isGrowthPositive
+                        ? AppColors.success.withOpacity(0.4)
+                        : AppColors.error.withOpacity(0.4),
                   ),
                 ),
                 child: Row(
                   children: [
                     Icon(
-                      report.revenue.isGrowthPositive ? Icons.trending_up : Icons.trending_down,
-                      color: report.revenue.isGrowthPositive ? AppColors.success : AppColors.error,
+                      report.revenue.isGrowthPositive
+                          ? Icons.trending_up
+                          : Icons.trending_down,
+                      color: report.revenue.isGrowthPositive
+                          ? AppColors.success
+                          : AppColors.error,
                       size: 18,
                     ),
                     const SizedBox(width: 6),
@@ -384,7 +437,9 @@ class _RevenueHeroCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: report.revenue.isGrowthPositive ? AppColors.success : AppColors.error,
+                        color: report.revenue.isGrowthPositive
+                            ? AppColors.success
+                            : AppColors.error,
                       ),
                     ),
                   ],
@@ -395,7 +450,9 @@ class _RevenueHeroCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'Projected this month: ${report.revenue.projectedMonthly.toCurrencyString}',
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: 20),
           SizedBox(
@@ -405,9 +462,7 @@ class _RevenueHeroCard extends StatelessWidget {
               height: 80,
               painterBuilder: (anim) => LineChartPainter(
                 points: report.revenueSeries,
-                lineColor: AppColors.gold,
                 showDots: false,
-                showGradient: true,
                 animationValue: anim,
               ),
             ),
@@ -415,7 +470,9 @@ class _RevenueHeroCard extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             report.dateRange.displayLabel,
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary,
+            ),
           ),
         ],
       ),
@@ -427,8 +484,8 @@ class _RevenueHeroCard extends StatelessWidget {
 // KPI GRID
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _KPISummaryGrid extends StatelessWidget {
-  final AnalyticsReport report;
   const _KPISummaryGrid({required this.report});
+  final AnalyticsReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -483,17 +540,16 @@ class _KPISummaryGrid extends StatelessWidget {
 }
 
 class _MiniKPICard extends StatelessWidget {
-  final String label;
-  final String value;
-  final String change;
-  final bool isUp;
-
   const _MiniKPICard({
     required this.label,
     required this.value,
     required this.change,
     required this.isUp,
   });
+  final String label;
+  final String value;
+  final String change;
+  final bool isUp;
 
   @override
   Widget build(BuildContext context) {
@@ -509,7 +565,14 @@ class _MiniKPICard extends StatelessWidget {
         children: [
           Text(label, style: AppTextStyles.labelSmall),
           const SizedBox(height: 6),
-          Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
           const Spacer(),
           Row(
             children: [
@@ -521,7 +584,11 @@ class _MiniKPICard extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 change,
-                style: TextStyle(fontSize: 10, color: isUp ? AppColors.success : AppColors.error, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 10,
+                  color: isUp ? AppColors.success : AppColors.error,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -535,8 +602,8 @@ class _MiniKPICard extends StatelessWidget {
 // REVENUE CHART SECTION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _RevenueChartSection extends StatefulWidget {
-  final AnalyticsReport report;
   const _RevenueChartSection({required this.report});
+  final AnalyticsReport report;
 
   @override
   State<_RevenueChartSection> createState() => _RevenueChartSectionState();
@@ -598,8 +665,8 @@ class _RevenueChartSectionState extends State<_RevenueChartSection> {
 // ORDERS CHART SECTION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _OrdersChartSection extends StatelessWidget {
-  final AnalyticsReport report;
   const _OrdersChartSection({required this.report});
+  final AnalyticsReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -624,8 +691,8 @@ class _OrdersChartSection extends StatelessWidget {
 // CATEGORY DONUT SECTION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _CategoryDonutSection extends StatefulWidget {
-  final AnalyticsReport report;
   const _CategoryDonutSection({required this.report});
+  final AnalyticsReport report;
 
   @override
   State<_CategoryDonutSection> createState() => _CategoryDonutSectionState();
@@ -637,8 +704,8 @@ class _CategoryDonutSectionState extends State<_CategoryDonutSection> {
   @override
   Widget build(BuildContext context) {
     final categories = widget.report.categoryBreakdown.values.toList();
-    final dataMap = {for (var c in categories) c.category: c.revenue};
-    final List<Color> colors = [
+    final dataMap = {for (final c in categories) c.category: c.revenue};
+    final colors = <Color>[
       AppColors.gold,
       AppColors.primary,
       AppColors.success,
@@ -674,7 +741,8 @@ class _CategoryDonutSectionState extends State<_CategoryDonutSection> {
                       selectedIndex: _selectedIndex,
                       animationValue: anim,
                       centerLabel: 'TOTAL UNITS',
-                      centerValue: widget.report.products.totalUnitsSold.toString(),
+                      centerValue: widget.report.products.totalUnitsSold
+                          .toString(),
                     ),
                   ),
                 ),
@@ -687,7 +755,9 @@ class _CategoryDonutSectionState extends State<_CategoryDonutSection> {
                     final cat = categories[i];
                     final isSelected = _selectedIndex == i;
                     return GestureDetector(
-                      onTap: () => setState(() => _selectedIndex = isSelected ? null : i),
+                      onTap: () => setState(
+                        () => _selectedIndex = isSelected ? null : i,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: Row(
@@ -705,16 +775,22 @@ class _CategoryDonutSectionState extends State<_CategoryDonutSection> {
                               child: Text(
                                 cat.category,
                                 style: TextStyle(
-                                  color: isSelected ? Colors.white : AppColors.textSecondary,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : AppColors.textSecondary,
                                   fontSize: 12,
-                                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                  fontWeight: isSelected
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
                                 ),
                               ),
                             ),
                             Text(
                               '${cat.revenueShare.toStringAsFixed(1)}%',
                               style: TextStyle(
-                                color: isSelected ? AppColors.gold : AppColors.textMuted,
+                                color: isSelected
+                                    ? AppColors.gold
+                                    : AppColors.textMuted,
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -739,8 +815,8 @@ class _CategoryDonutSectionState extends State<_CategoryDonutSection> {
 }
 
 class _CategoryDetailCard extends StatelessWidget {
-  final CategoryMetric category;
   const _CategoryDetailCard({required this.category});
+  final CategoryMetric category;
 
   @override
   Widget build(BuildContext context) {
@@ -753,9 +829,18 @@ class _CategoryDetailCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _DetailItem(label: 'Revenue', value: category.revenue.toCurrencyString),
-          _DetailItem(label: 'Units Sold', value: category.unitsSold.toString()),
-          _DetailItem(label: 'Products', value: category.productCount.toString()),
+          _DetailItem(
+            label: 'Revenue',
+            value: category.revenue.toCurrencyString,
+          ),
+          _DetailItem(
+            label: 'Units Sold',
+            value: category.unitsSold.toString(),
+          ),
+          _DetailItem(
+            label: 'Products',
+            value: category.productCount.toString(),
+          ),
         ],
       ),
     );
@@ -766,8 +851,8 @@ class _CategoryDetailCard extends StatelessWidget {
 // CUSTOMER INSIGHTS
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _CustomerInsightsSection extends StatelessWidget {
-  final AnalyticsReport report;
   const _CustomerInsightsSection({required this.report});
+  final AnalyticsReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -787,10 +872,30 @@ class _CustomerInsightsSection extends StatelessWidget {
         children: [
           const Text('CUSTOMER INSIGHTS', style: AppTextStyles.labelSmall),
           const SizedBox(height: 20),
-          _StatusRow(label: 'Bronze', count: c.bronzeCount, total: total, color: AppColors.primary),
-          _StatusRow(label: 'Silver', count: c.silverCount, total: total, color: Colors.grey),
-          _StatusRow(label: 'Gold', count: c.goldCount, total: total, color: AppColors.gold),
-          _StatusRow(label: 'Platinum', count: c.platinumCount, total: total, color: Colors.lightBlue),
+          _StatusRow(
+            label: 'Bronze',
+            count: c.bronzeCount,
+            total: total,
+            color: AppColors.primary,
+          ),
+          _StatusRow(
+            label: 'Silver',
+            count: c.silverCount,
+            total: total,
+            color: Colors.grey,
+          ),
+          _StatusRow(
+            label: 'Gold',
+            count: c.goldCount,
+            total: total,
+            color: AppColors.gold,
+          ),
+          _StatusRow(
+            label: 'Platinum',
+            count: c.platinumCount,
+            total: total,
+            color: Colors.lightBlue,
+          ),
           const SizedBox(height: 24),
           Row(
             children: [
@@ -815,17 +920,16 @@ class _CustomerInsightsSection extends StatelessWidget {
 }
 
 class _StatusRow extends StatelessWidget {
-  final String label;
-  final int count;
-  final double total;
-  final Color color;
-
   const _StatusRow({
     required this.label,
     required this.count,
     required this.total,
     required this.color,
   });
+  final String label;
+  final int count;
+  final double total;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -837,7 +941,10 @@ class _StatusRow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(label, style: const TextStyle(color: Colors.white, fontSize: 13)),
+              Text(
+                label,
+                style: const TextStyle(color: Colors.white, fontSize: 13),
+              ),
               Text('$count customers', style: AppTextStyles.bodySmall),
             ],
           ),
@@ -861,8 +968,8 @@ class _StatusRow extends StatelessWidget {
 // PRODUCT PERFORMANCE (Gauge + Star)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _ProductPerformanceSection extends StatelessWidget {
-  final AnalyticsReport report;
   const _ProductPerformanceSection({required this.report});
+  final AnalyticsReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -881,7 +988,10 @@ class _ProductPerformanceSection extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Text('SELL-THROUGH RATE', style: AppTextStyles.labelSmall),
+                  const Text(
+                    'SELL-THROUGH RATE',
+                    style: AppTextStyles.labelSmall,
+                  ),
                   const SizedBox(height: 16),
                   AnimatedChart(
                     width: 140,
@@ -903,7 +1013,9 @@ class _ProductPerformanceSection extends StatelessWidget {
                 _SummaryMetricTile(
                   label: 'OUT OF STOCK',
                   value: report.products.totalOutOfStock.toString(),
-                  color: report.products.totalOutOfStock > 0 ? AppColors.error : AppColors.success,
+                  color: report.products.totalOutOfStock > 0
+                      ? AppColors.error
+                      : AppColors.success,
                 ),
                 const SizedBox(height: 12),
                 _SummaryMetricTile(
@@ -925,8 +1037,8 @@ class _ProductPerformanceSection extends StatelessWidget {
 // TOP PRODUCTS SECTION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _TopProductsSection extends StatelessWidget {
-  final AnalyticsReport report;
   const _TopProductsSection({required this.report});
+  final AnalyticsReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -935,7 +1047,10 @@ class _TopProductsSection extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.fromLTRB(16, 24, 16, 12),
-          child: Text('TOP PERFORMANCE PRODUCTS', style: AppTextStyles.labelSmall),
+          child: Text(
+            'TOP PERFORMANCE PRODUCTS',
+            style: AppTextStyles.labelSmall,
+          ),
         ),
         ...List.generate(report.topProducts.length, (i) {
           final product = report.topProducts[i];
@@ -943,10 +1058,14 @@ class _TopProductsSection extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: i == 0 ? AppColors.gold.withOpacity(0.05) : AppColors.backgroundCard,
+              color: i == 0
+                  ? AppColors.gold.withOpacity(0.05)
+                  : AppColors.backgroundCard,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: i == 0 ? AppColors.gold.withOpacity(0.3) : AppColors.borderDefault,
+                color: i == 0
+                    ? AppColors.gold.withOpacity(0.3)
+                    : AppColors.borderDefault,
               ),
             ),
             child: Column(
@@ -957,27 +1076,33 @@ class _TopProductsSection extends StatelessWidget {
                       width: 28,
                       height: 28,
                       decoration: BoxDecoration(
-                        color: i == 0 ? AppColors.gold : AppColors.backgroundElevated,
+                        color: i == 0
+                            ? AppColors.gold
+                            : AppColors.backgroundElevated,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
-                        child: Text('#${i + 1}',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              color: i == 0 ? Colors.black : AppColors.textMuted,
-                            )),
+                        child: Text(
+                          '#${i + 1}',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: i == 0 ? Colors.black : AppColors.textMuted,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: CachedNetworkImage(
+                      child: SafeRemoteImage(
                         imageUrl: product.imageUrl,
                         width: 48,
                         height: 52,
                         fit: BoxFit.cover,
-                        errorWidget: (_, __, ___) => Container(color: AppColors.backgroundElevated),
+                        errorWidget: Container(
+                          color: AppColors.backgroundElevated,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -985,10 +1110,19 @@ class _TopProductsSection extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(product.productName,
-                              style: AppTextStyles.bodyMedium.copyWith(color: Colors.white), maxLines: 1, overflow: TextOverflow.ellipsis),
+                          Text(
+                            product.productName,
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              color: Colors.white,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                           const SizedBox(height: 2),
-                          Text(product.category, style: AppTextStyles.labelSmall),
+                          Text(
+                            product.category,
+                            style: AppTextStyles.labelSmall,
+                          ),
                         ],
                       ),
                     ),
@@ -996,8 +1130,17 @@ class _TopProductsSection extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(product.revenue.toCurrencyString, style: AppTextStyles.titleMedium.copyWith(color: AppColors.gold, fontWeight: FontWeight.bold)),
-                        Text('${product.unitsSold} units', style: AppTextStyles.bodySmall),
+                        Text(
+                          product.revenue.toCurrencyString,
+                          style: AppTextStyles.titleMedium.copyWith(
+                            color: AppColors.gold,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '${product.unitsSold} units',
+                          style: AppTextStyles.bodySmall,
+                        ),
                       ],
                     ),
                   ],
@@ -1008,7 +1151,9 @@ class _TopProductsSection extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: (product.revenueShare / 100).clamp(0.0, 1.0),
                     backgroundColor: AppColors.backgroundElevated,
-                    valueColor: AlwaysStoppedAnimation(i == 0 ? AppColors.gold : AppColors.gold.withOpacity(0.5)),
+                    valueColor: AlwaysStoppedAnimation(
+                      i == 0 ? AppColors.gold : AppColors.gold.withOpacity(0.5),
+                    ),
                     minHeight: 5,
                   ),
                 ),
@@ -1016,13 +1161,29 @@ class _TopProductsSection extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${product.revenueShare.toStringAsFixed(1)}% of revenue', style: const TextStyle(fontSize: 10, color: AppColors.textMuted)),
+                    Text(
+                      '${product.revenueShare.toStringAsFixed(1)}% of revenue',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: AppColors.textMuted,
+                      ),
+                    ),
                     if (product.currentStock < 10)
                       Row(
                         children: [
-                          const Icon(Icons.warning_amber, size: 12, color: AppColors.warning),
+                          const Icon(
+                            Icons.warning_amber,
+                            size: 12,
+                            color: AppColors.warning,
+                          ),
                           const SizedBox(width: 3),
-                          Text('${product.currentStock} left', style: const TextStyle(fontSize: 10, color: AppColors.warning)),
+                          Text(
+                            '${product.currentStock} left',
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: AppColors.warning,
+                            ),
+                          ),
                         ],
                       ),
                   ],
@@ -1040,8 +1201,8 @@ class _TopProductsSection extends StatelessWidget {
 // TOP CUSTOMERS SECTION
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 class _TopCustomersSection extends StatelessWidget {
-  final AnalyticsReport report;
   const _TopCustomersSection({required this.report});
+  final AnalyticsReport report;
 
   @override
   Widget build(BuildContext context) {
@@ -1050,7 +1211,10 @@ class _TopCustomersSection extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.fromLTRB(16, 24, 16, 12),
-          child: Text('MOST VALUABLE CUSTOMERS', style: AppTextStyles.labelSmall),
+          child: Text(
+            'MOST VALUABLE CUSTOMERS',
+            style: AppTextStyles.labelSmall,
+          ),
         ),
         SizedBox(
           height: 145,
@@ -1068,7 +1232,9 @@ class _TopCustomersSection extends StatelessWidget {
                   color: AppColors.backgroundCard,
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: i == 0 ? AppColors.gold.withOpacity(0.4) : AppColors.borderDefault,
+                    color: i == 0
+                        ? AppColors.gold.withOpacity(0.4)
+                        : AppColors.borderDefault,
                   ),
                 ),
                 child: Column(
@@ -1076,24 +1242,62 @@ class _TopCustomersSection extends StatelessWidget {
                   children: [
                     ClipOval(
                       child: customer.photoUrl != null
-                          ? CachedNetworkImage(imageUrl: customer.photoUrl!, width: 40, height: 40, fit: BoxFit.cover)
-                          : Container(width: 40, height: 40, color: AppColors.backgroundElevated, child: const Icon(Icons.person, color: AppColors.textMuted)),
+                          ? CachedNetworkImage(
+                              imageUrl: customer.photoUrl!,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(
+                              width: 40,
+                              height: 40,
+                              color: AppColors.backgroundElevated,
+                              child: const Icon(
+                                Icons.person,
+                                color: AppColors.textMuted,
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 8),
-                    Text(customer.displayName.split(' ').first,
-                        style: AppTextStyles.bodySmall.copyWith(color: Colors.white, fontWeight: FontWeight.bold), maxLines: 1, overflow: TextOverflow.ellipsis),
-                    const SizedBox(height: 6),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: _eliteColor(customer.eliteStatus).withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(6),
+                    Text(
+                      customer.displayName.split(' ').first,
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
-                      child: Text(customer.eliteStatus,
-                          style: TextStyle(fontSize: 8, color: _eliteColor(customer.eliteStatus), fontWeight: FontWeight.bold)),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 6),
-                    Text(customer.totalSpent.toCurrencyString, style: const TextStyle(fontSize: 12, color: AppColors.gold, fontWeight: FontWeight.bold)),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _eliteColor(
+                          customer.eliteStatus,
+                        ).withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        customer.eliteStatus,
+                        style: TextStyle(
+                          fontSize: 8,
+                          color: _eliteColor(customer.eliteStatus),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      customer.totalSpent.toCurrencyString,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.gold,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               );
@@ -1105,11 +1309,11 @@ class _TopCustomersSection extends StatelessWidget {
   }
 
   Color _eliteColor(String status) => switch (status.toUpperCase()) {
-        'PLATINUM' => Colors.lightBlue,
-        'GOLD' => AppColors.gold,
-        'SILVER' => Colors.grey,
-        _ => AppColors.primary,
-      };
+    'PLATINUM' => Colors.lightBlue,
+    'GOLD' => AppColors.gold,
+    'SILVER' => Colors.grey,
+    _ => AppColors.primary,
+  };
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1139,14 +1343,16 @@ class _ComparisonTableSection extends ConsumerWidget {
               change: 'CHANGE',
               isHeader: true,
             ),
-            ...metrics.map((m) => _ComparisonTableRow(
-                  label: m.label,
-                  current: _formatMetricValue(m.label, m.currentValue),
-                  previous: _formatMetricValue(m.label, m.previousValue),
-                  change: m.formattedChange,
-                  changeColor: m.indicatorColor,
-                  isImprovement: m.isImprovement,
-                )),
+            ...metrics.map(
+              (m) => _ComparisonTableRow(
+                label: m.label,
+                current: _formatMetricValue(m.label, m.currentValue),
+                previous: _formatMetricValue(m.label, m.previousValue),
+                change: m.formattedChange,
+                changeColor: m.indicatorColor,
+                isImprovement: m.isImprovement,
+              ),
+            ),
           ],
         ),
       ),
@@ -1167,14 +1373,6 @@ class _ComparisonTableSection extends ConsumerWidget {
 }
 
 class _ComparisonTableRow extends StatelessWidget {
-  final String label;
-  final String current;
-  final String previous;
-  final String change;
-  final Color? changeColor;
-  final bool isImprovement;
-  final bool isHeader;
-
   const _ComparisonTableRow({
     required this.label,
     required this.current,
@@ -1184,6 +1382,13 @@ class _ComparisonTableRow extends StatelessWidget {
     this.isImprovement = false,
     this.isHeader = false,
   });
+  final String label;
+  final String current;
+  final String previous;
+  final String change;
+  final Color? changeColor;
+  final bool isImprovement;
+  final bool isHeader;
 
   @override
   Widget build(BuildContext context) {
@@ -1201,13 +1406,30 @@ class _ComparisonTableRow extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: Text(label, style: isHeader ? AppTextStyles.labelSmall : AppTextStyles.bodyMedium.copyWith(color: Colors.white)),
+            child: Text(
+              label,
+              style: isHeader
+                  ? AppTextStyles.labelSmall
+                  : AppTextStyles.bodyMedium.copyWith(color: Colors.white),
+            ),
           ),
           Expanded(
-            child: Text(current, textAlign: TextAlign.right, style: isHeader ? AppTextStyles.labelSmall : AppTextStyles.bodyMedium.copyWith(color: Colors.white)),
+            child: Text(
+              current,
+              textAlign: TextAlign.right,
+              style: isHeader
+                  ? AppTextStyles.labelSmall
+                  : AppTextStyles.bodyMedium.copyWith(color: Colors.white),
+            ),
           ),
           Expanded(
-            child: Text(previous, textAlign: TextAlign.right, style: isHeader ? AppTextStyles.labelSmall : AppTextStyles.bodySmall),
+            child: Text(
+              previous,
+              textAlign: TextAlign.right,
+              style: isHeader
+                  ? AppTextStyles.labelSmall
+                  : AppTextStyles.bodySmall,
+            ),
           ),
           const SizedBox(width: 8),
           Container(
@@ -1242,18 +1464,16 @@ class _ComparisonTableRow extends StatelessWidget {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 class _AnimatedCounter extends StatefulWidget {
+  const _AnimatedCounter({required this.value, this.prefix = ''});
   final double value;
   final String prefix;
-  const _AnimatedCounter({
-    required this.value,
-    this.prefix = '',
-  });
 
   @override
   State<_AnimatedCounter> createState() => _AnimatedCounterState();
 }
 
-class _AnimatedCounterState extends State<_AnimatedCounter> with SingleTickerProviderStateMixin {
+class _AnimatedCounterState extends State<_AnimatedCounter>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   double _oldValue = 0;
@@ -1289,20 +1509,21 @@ class _AnimatedCounterState extends State<_AnimatedCounter> with SingleTickerPro
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-        animation: _animation,
-        builder: (_, __) {
-          final current = _oldValue + (_animation.value * (widget.value - _oldValue));
-          return Text(
-            '${widget.prefix}${_formatLargeNumber(current)}',
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              letterSpacing: -1,
-            ),
-          );
-        },
+    animation: _animation,
+    builder: (_, __) {
+      final current =
+          _oldValue + (_animation.value * (widget.value - _oldValue));
+      return Text(
+        '${widget.prefix}${_formatLargeNumber(current)}',
+        style: const TextStyle(
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          letterSpacing: -1,
+        ),
       );
+    },
+  );
 
   String _formatLargeNumber(double v) {
     if (v >= 1000000) {
@@ -1316,9 +1537,9 @@ class _AnimatedCounterState extends State<_AnimatedCounter> with SingleTickerPro
 }
 
 class _MetricTile extends StatelessWidget {
+  const _MetricTile({required this.label, required this.value});
   final String label;
   final String value;
-  const _MetricTile({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -1326,24 +1547,30 @@ class _MetricTile extends StatelessWidget {
       children: [
         Text(label, style: AppTextStyles.labelSmall),
         const SizedBox(height: 4),
-        Text(value, style: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }
 }
 
 class _SummaryMetricTile extends StatelessWidget {
+  const _SummaryMetricTile({
+    required this.label,
+    required this.value,
+    required this.color,
+    this.icon,
+  });
   final String label;
   final String value;
   final IconData? icon;
   final Color color;
-
-  const _SummaryMetricTile({
-    required this.label,
-    required this.value,
-    this.icon,
-    required this.color,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -1366,7 +1593,14 @@ class _SummaryMetricTile extends StatelessWidget {
                 Icon(icon, size: 16, color: color),
                 const SizedBox(width: 4),
               ],
-              Text(value, style: TextStyle(fontSize: 22, color: color, fontWeight: FontWeight.bold)),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 22,
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ],
@@ -1376,19 +1610,18 @@ class _SummaryMetricTile extends StatelessWidget {
 }
 
 class _ChartCard extends StatelessWidget {
+  const _ChartCard({
+    required this.title,
+    required this.subtitle,
+    required this.chart,
+    required this.xLabels,
+    this.actions,
+  });
   final String title;
   final String subtitle;
   final List<Widget>? actions;
   final Widget chart;
   final List<String> xLabels;
-
-  const _ChartCard({
-    required this.title,
-    required this.subtitle,
-    this.actions,
-    required this.chart,
-    required this.xLabels,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -1431,33 +1664,46 @@ class _ChartCard extends StatelessWidget {
 
   List<Widget> _buildXLabels() {
     if (xLabels.isEmpty) return [];
-    
+
     // Limits the number of labels to avoid overcrowding
     const maxLabels = 7;
     if (xLabels.length <= maxLabels) {
-      return xLabels.map((l) => Text(l, style: const TextStyle(fontSize: 10, color: AppColors.textMuted))).toList();
+      return xLabels
+          .map(
+            (l) => Text(
+              l,
+              style: const TextStyle(fontSize: 10, color: AppColors.textMuted),
+            ),
+          )
+          .toList();
     }
-    
+
     final result = <Widget>[];
-    for (int i = 0; i < xLabels.length; i++) {
-        if (i == 0 || i == xLabels.length - 1 || i % (xLabels.length ~/ (maxLabels - 1)) == 0) {
-            result.add(Text(xLabels[i], style: const TextStyle(fontSize: 10, color: AppColors.textMuted)));
-        }
+    for (var i = 0; i < xLabels.length; i++) {
+      if (i == 0 ||
+          i == xLabels.length - 1 ||
+          i % (xLabels.length ~/ (maxLabels - 1)) == 0) {
+        result.add(
+          Text(
+            xLabels[i],
+            style: const TextStyle(fontSize: 10, color: AppColors.textMuted),
+          ),
+        );
+      }
     }
     return result;
   }
 }
 
 class _ChartTypeButton extends StatelessWidget {
-  final IconData icon;
-  final bool isActive;
-  final VoidCallback onTap;
-
   const _ChartTypeButton({
     required this.icon,
     required this.isActive,
     required this.onTap,
   });
+  final IconData icon;
+  final bool isActive;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -1469,16 +1715,20 @@ class _ChartTypeButton extends StatelessWidget {
           color: isActive ? AppColors.gold : AppColors.backgroundElevated,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(icon, size: 16, color: isActive ? Colors.black : AppColors.textMuted),
+        child: Icon(
+          icon,
+          size: 16,
+          color: isActive ? Colors.black : AppColors.textMuted,
+        ),
       ),
     );
   }
 }
 
 class _DetailItem extends StatelessWidget {
+  const _DetailItem({required this.label, required this.value});
   final String label;
   final String value;
-  const _DetailItem({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -1486,7 +1736,14 @@ class _DetailItem extends StatelessWidget {
       children: [
         Text(label, style: AppTextStyles.labelSmall),
         const SizedBox(height: 4),
-        Text(value, style: const TextStyle(fontSize: 13, color: Colors.white, fontWeight: FontWeight.bold)),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 13,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }

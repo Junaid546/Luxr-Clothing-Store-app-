@@ -11,13 +11,6 @@ import 'package:style_cart/shared/utils/wishlist_helper.dart';
 import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
 
 class ProductGridWidget extends ConsumerStatefulWidget {
-  final List<ProductEntity> products;
-  final bool isLoading;
-  final bool isLoadingMore;
-  final bool hasError;
-  final String errorMessage;
-  final VoidCallback? onLoadMore;
-  final VoidCallback? onRetry;
 
   const ProductGridWidget({
     required this.products,
@@ -29,6 +22,13 @@ class ProductGridWidget extends ConsumerStatefulWidget {
     this.onRetry,
     super.key,
   });
+  final List<ProductEntity> products;
+  final bool isLoading;
+  final bool isLoadingMore;
+  final bool hasError;
+  final String errorMessage;
+  final VoidCallback? onLoadMore;
+  final VoidCallback? onRetry;
 
   @override
   ConsumerState<ProductGridWidget> createState() => _ProductGridWidgetState();
@@ -133,14 +133,14 @@ class _ProductGridWidgetState extends ConsumerState<ProductGridWidget> {
             const SizedBox(height: 16),
             Text(
               'No products found',
-              style: AppTextStyles.titleMedium?.copyWith(
+              style: AppTextStyles.titleMedium.copyWith(
                 color: AppColors.textSecondary,
               ) ?? const TextStyle(color: AppColors.textSecondary, fontSize: 16),
             ),
             const SizedBox(height: 8),
             Text(
               'Try adjusting your filters',
-              style: AppTextStyles.bodyMedium?.copyWith(
+              style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.textMuted,
               ) ?? const TextStyle(color: AppColors.textMuted, fontSize: 14),
             ),

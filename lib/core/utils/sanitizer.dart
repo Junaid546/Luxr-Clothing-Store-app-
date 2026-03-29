@@ -14,7 +14,7 @@ class Sanitizer {
     int maxLength = 500,
     bool allowNewlines = false,
   }) {
-    String result = input
+    var result = input
         // Trim leading/trailing whitespace
         .trim()
         // Remove null bytes
@@ -22,7 +22,7 @@ class Sanitizer {
         // Remove control characters
         .replaceAll(RegExp(r'[\x00-\x08\x0B\x0C\x0E-\x1F]'), '')
         // Collapse multiple spaces to single
-        .replaceAll(RegExp(r'  +'), ' ');
+        .replaceAll(RegExp('  +'), ' ');
 
     if (!allowNewlines) {
       result = result.replaceAll(RegExp(r'[\r\n]'), ' ');

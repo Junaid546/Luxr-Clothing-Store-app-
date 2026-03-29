@@ -482,6 +482,7 @@
 /// ANALYTICS collection:
 ///   1. date DESC
 ///      (most recent analytics first)
+library;
 
 class UserFields {
   static const String emailVerified = 'emailVerified';

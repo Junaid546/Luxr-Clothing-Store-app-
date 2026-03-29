@@ -4,19 +4,18 @@ import 'package:style_cart/core/errors/failures.dart';
 import 'package:style_cart/core/providers/repository_providers.dart';
 import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
 import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
-import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
 
 part 'validate_cart_use_case.g.dart';
 
 class ValidateCartParams {
-  final String userId;
-  final List<CartItemModel> cartItems;
 
   const ValidateCartParams({
     required this.userId,
     required this.cartItems,
   });
+  final String userId;
+  final List<CartItemModel> cartItems;
 }
 
 @riverpod
@@ -29,16 +28,16 @@ class ValidateCartUseCase extends _$ValidateCartUseCase {
     
     // 1. Get live products for all IDs in cart
     final productIds = params.cartItems.map((i) => i.productId).toSet().toList();
-    final Either<Failure, List<ProductEntity>> productsResult = await productRepo.getProductsByIds(productIds);
+    final productsResult = await productRepo.getProductsByIds(productIds);
 
     return productsResult.fold(
-      (Failure failure) => Left<Failure, CartValidationResult>(failure),
+      Left<Failure, CartValidationResult>.new,
       (List<ProductEntity> products) {
         final validatedItems = <CartItemModel>[];
         final stockIssues = <StockIssue>[];
         final priceChanges = <PriceChange>[];
 
-        final productMap = {for (var p in products) p.productId: p};
+        final productMap = {for (final p in products) p.productId: p};
 
         for (final cartItem in params.cartItems) {
           final product = productMap[cartItem.productId];

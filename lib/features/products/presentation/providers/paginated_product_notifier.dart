@@ -79,7 +79,7 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
   }) async {
     try {
       final firestore = ref.read(firestoreProvider);
-      Query<Map<String, dynamic>> query = firestore
+      var query = firestore
           .collection(FirestoreConstants.products)
           .where('isActive', isEqualTo: true);
 
@@ -87,10 +87,10 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
       if (filter.category != null) {
         query = query.where('category', isEqualTo: filter.category);
       }
-      if (filter.isFeatured == true) {
+      if (filter.isFeatured ?? false) {
         query = query.where('isFeatured', isEqualTo: true);
       }
-      if (filter.isNewArrival == true) {
+      if (filter.isNewArrival ?? false) {
         query = query.where('isNewArrival', isEqualTo: true);
       }
 
@@ -110,7 +110,7 @@ class PaginatedProductNotifier extends _$PaginatedProductNotifier {
 
       // Fetch page
       final snapshot = await query.limit(_pageSize).get(
-            const GetOptions(source: Source.serverAndCache),
+            const GetOptions(),
           );
 
       // Parse products

@@ -12,14 +12,6 @@ part 'checkout_notifier.g.dart';
 enum CheckoutStep { address, shipping, payment }
 
 class CheckoutState {
-  final CheckoutStep step;
-  final ShippingAddressModel? selectedAddress;
-  final String shippingMethod;
-  final String paymentMethod;
-  final CartValidationResult? validatedCart;
-  final bool isProcessing;
-  final String? error;
-  final String? successOrderId;
 
   const CheckoutState({
     this.step = CheckoutStep.address,
@@ -31,6 +23,14 @@ class CheckoutState {
     this.error,
     this.successOrderId,
   });
+  final CheckoutStep step;
+  final ShippingAddressModel? selectedAddress;
+  final String shippingMethod;
+  final String paymentMethod;
+  final CartValidationResult? validatedCart;
+  final bool isProcessing;
+  final String? error;
+  final String? successOrderId;
 
   CheckoutState copyWith({
     CheckoutStep? step,
@@ -74,7 +74,7 @@ class CheckoutNotifier extends _$CheckoutNotifier {
 
   // ── VALIDATE ALL ────────────────────────────────
   Future<bool> validateCheckout() async {
-    state = state.copyWith(isProcessing: true, error: null);
+    state = state.copyWith(isProcessing: true);
 
     final cartItems = ref.read(cartItemsProvider).value ?? [];
     final authState = ref.read(authNotifierProvider);
@@ -110,7 +110,7 @@ class CheckoutNotifier extends _$CheckoutNotifier {
   Future<void> placeOrder() async {
     if (state.selectedAddress == null || state.validatedCart == null) return;
 
-    state = state.copyWith(isProcessing: true, error: null);
+    state = state.copyWith(isProcessing: true);
 
     final authState = ref.read(authNotifierProvider);
     if (authState is! AuthAuthenticated) {
@@ -125,7 +125,7 @@ class CheckoutNotifier extends _$CheckoutNotifier {
       shippingAddress: state.selectedAddress!,
       shippingMethod: state.shippingMethod,
       paymentMethod: state.paymentMethod,
-      discountAmount: 0.0, // Future: Add coupon support
+      discountAmount: 0, // Future: Add coupon support
     );
 
     result.fold(

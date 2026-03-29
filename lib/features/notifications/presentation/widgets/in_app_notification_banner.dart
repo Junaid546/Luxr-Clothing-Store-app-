@@ -8,12 +8,12 @@ import 'package:style_cart/features/notifications/domain/entities/notification_e
 import 'package:style_cart/features/notifications/presentation/providers/notification_notifier.dart';
 
 class InAppNotificationBanner extends ConsumerStatefulWidget {
-  final Widget child;
 
   const InAppNotificationBanner({
     required this.child,
     super.key,
   });
+  final Widget child;
 
   @override
   ConsumerState<InAppNotificationBanner> createState() =>
@@ -59,7 +59,7 @@ class _InAppNotificationBannerState
     ));
 
     _fadeAnimation = Tween<double>(
-      begin: 0.0, end: 1.0,
+      begin: 0, end: 1,
     ).animate(_fadeController);
 
     // Listen to notification list for new messages
@@ -178,15 +178,15 @@ class _InAppNotificationBannerState
 
 // Banner content widget
 class _BannerContent extends StatelessWidget {
-  final NotificationEntity notification;
-  final VoidCallback onDismiss;
-  final VoidCallback onTap;
 
   const _BannerContent({
     required this.notification,
     required this.onDismiss,
     required this.onTap,
   });
+  final NotificationEntity notification;
+  final VoidCallback onDismiss;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +205,6 @@ class _BannerContent extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: notification.type.color.withOpacity(0.3),
-            width: 1,
           ),
           boxShadow: [
             BoxShadow(
@@ -242,10 +241,10 @@ class _BannerContent extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   // App name + time
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'StyleCart',
                         style: TextStyle(
                           fontSize: 11,

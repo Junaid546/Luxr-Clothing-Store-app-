@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,10 +7,11 @@ import 'package:style_cart/core/constants/firestore_schema.dart';
 import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 import 'package:style_cart/features/orders/presentation/providers/order_notifier.dart';
+import 'package:style_cart/shared/widgets/images/safe_remote_image.dart';
 
 class OrderTrackingScreen extends ConsumerWidget {
+  const OrderTrackingScreen({required this.orderId, super.key});
   final String orderId;
-  const OrderTrackingScreen({super.key, required this.orderId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +21,7 @@ class OrderTrackingScreen extends ConsumerWidget {
       backgroundColor: AppColors.backgroundDark,
       body: SafeArea(
         child: asyncOrder.when(
-          loading: () => _buildLoading(),
+          loading: _buildLoading,
           error: (e, _) => _buildError(e.toString(), ref),
           data: (order) => _buildTrackingContent(context, order),
         ),
@@ -30,7 +30,9 @@ class OrderTrackingScreen extends ConsumerWidget {
   }
 
   Widget _buildLoading() {
-    return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+    return const Center(
+      child: CircularProgressIndicator(color: AppColors.primary),
+    );
   }
 
   Widget _buildError(String error, WidgetRef ref) {
@@ -42,8 +44,12 @@ class OrderTrackingScreen extends ConsumerWidget {
           const SizedBox(height: 16),
           Text(error, style: const TextStyle(color: Colors.white70)),
           TextButton(
-            onPressed: () => ref.refresh(orderTrackingNotifierProvider(orderId)),
-            child: const Text('Retry', style: TextStyle(color: AppColors.primary)),
+            onPressed: () =>
+                ref.refresh(orderTrackingNotifierProvider(orderId)),
+            child: const Text(
+              'Retry',
+              style: TextStyle(color: AppColors.primary),
+            ),
           ),
         ],
       ),
@@ -68,8 +74,8 @@ class OrderTrackingScreen extends ConsumerWidget {
 }
 
 class _TrackingAppBar extends StatelessWidget {
-  final OrderEntity order;
   const _TrackingAppBar({required this.order});
+  final OrderEntity order;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +92,10 @@ class _TrackingAppBar extends StatelessWidget {
               child: Text(
                 'Order Tracking',
                 style: TextStyle(
-                    fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -101,8 +110,8 @@ class _TrackingAppBar extends StatelessWidget {
 }
 
 class _OrderHeader extends StatelessWidget {
-  final OrderEntity order;
   const _OrderHeader({required this.order});
+  final OrderEntity order;
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +132,10 @@ class _OrderHeader extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: _statusColor(order.status).withOpacity(0.15),
                   borderRadius: BorderRadius.circular(20),
@@ -152,27 +164,47 @@ class _OrderHeader extends StatelessWidget {
   }
 
   Color _statusColor(String status) => switch (status) {
-        OrderStatus.delivered => AppColors.success,
-        OrderStatus.cancelled => AppColors.error,
-        OrderStatus.returned => AppColors.error,
-        OrderStatus.shipped || OrderStatus.outForDelivery => AppColors.primary,
-        OrderStatus.returnRequested => AppColors.warning,
-        _ => AppColors.gold,
-      };
+    OrderStatus.delivered => AppColors.success,
+    OrderStatus.cancelled => AppColors.error,
+    OrderStatus.returned => AppColors.error,
+    OrderStatus.shipped || OrderStatus.outForDelivery => AppColors.primary,
+    OrderStatus.returnRequested => AppColors.warning,
+    _ => AppColors.gold,
+  };
 }
 
 class _StatusTimeline extends StatelessWidget {
-  final OrderEntity order;
   const _StatusTimeline({required this.order});
+  final OrderEntity order;
 
   @override
   Widget build(BuildContext context) {
     final steps = [
-      (status: OrderStatus.pending, label: 'Order Placed', icon: Icons.shopping_bag_outlined),
-      (status: OrderStatus.packed, label: 'Packed', icon: Icons.inventory_2_outlined),
-      (status: OrderStatus.shipped, label: 'Shipped', icon: Icons.local_shipping_outlined),
-      (status: OrderStatus.outForDelivery, label: 'Out for Delivery', icon: Icons.delivery_dining_outlined),
-      (status: OrderStatus.delivered, label: 'Delivered', icon: Icons.check_circle_outline),
+      (
+        status: OrderStatus.pending,
+        label: 'Order Placed',
+        icon: Icons.shopping_bag_outlined,
+      ),
+      (
+        status: OrderStatus.packed,
+        label: 'Packed',
+        icon: Icons.inventory_2_outlined,
+      ),
+      (
+        status: OrderStatus.shipped,
+        label: 'Shipped',
+        icon: Icons.local_shipping_outlined,
+      ),
+      (
+        status: OrderStatus.outForDelivery,
+        label: 'Out for Delivery',
+        icon: Icons.delivery_dining_outlined,
+      ),
+      (
+        status: OrderStatus.delivered,
+        label: 'Delivered',
+        icon: Icons.check_circle_outline,
+      ),
     ];
 
     return Padding(
@@ -184,18 +216,25 @@ class _StatusTimeline extends StatelessWidget {
 
           // Check history
           final historyEntry = order.statusHistory
-              .where((h) =>
-                  h.status == step.status ||
-                  (step.status == OrderStatus.packed &&
-                      (h.status == OrderStatus.processing || h.status == OrderStatus.packed)))
+              .where(
+                (h) =>
+                    h.status == step.status ||
+                    (step.status == OrderStatus.packed &&
+                        (h.status == OrderStatus.processing ||
+                            h.status == OrderStatus.packed)),
+              )
               .lastOrNull;
 
           final stepIndex = index;
-          final isCompleted = order.statusIndex > stepIndex ||
-              (order.status == step.status && step.status == OrderStatus.delivered);
+          final isCompleted =
+              order.statusIndex > stepIndex ||
+              (order.status == step.status &&
+                  step.status == OrderStatus.delivered);
 
-          final isCurrent = order.statusIndex == stepIndex &&
-              (order.status != OrderStatus.delivered || step.status == OrderStatus.delivered);
+          final isCurrent =
+              order.statusIndex == stepIndex &&
+              (order.status != OrderStatus.delivered ||
+                  step.status == OrderStatus.delivered);
 
           final isFuture = !isCompleted && !isCurrent;
 
@@ -213,7 +252,9 @@ class _StatusTimeline extends StatelessWidget {
                     Container(
                       width: 2,
                       height: 50,
-                      color: isCompleted ? AppColors.primary : AppColors.borderDefault,
+                      color: isCompleted
+                          ? AppColors.primary
+                          : AppColors.borderDefault,
                     ),
                 ],
               ),
@@ -230,17 +271,24 @@ class _StatusTimeline extends StatelessWidget {
                         color: isFuture
                             ? Colors.white38
                             : isCompleted || isCurrent
-                                ? AppColors.primary
-                                : Colors.white,
-                        fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
+                            ? AppColors.primary
+                            : Colors.white,
+                        fontWeight: isCurrent
+                            ? FontWeight.bold
+                            : FontWeight.normal,
                       ),
                     ),
                     if (historyEntry != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
-                          DateFormat('MMM dd, hh:mm a').format(historyEntry.timestamp),
-                          style: const TextStyle(color: Colors.white54, fontSize: 12),
+                          DateFormat(
+                            'MMM dd, hh:mm a',
+                          ).format(historyEntry.timestamp),
+                          style: const TextStyle(
+                            color: Colors.white54,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     if (isCurrent && step.status == OrderStatus.outForDelivery)
@@ -258,7 +306,10 @@ class _StatusTimeline extends StatelessWidget {
                     if (isFuture)
                       const Padding(
                         padding: EdgeInsets.only(top: 4),
-                        child: Text('Pending', style: TextStyle(color: Colors.white24, fontSize: 12)),
+                        child: Text(
+                          'Pending',
+                          style: TextStyle(color: Colors.white24, fontSize: 12),
+                        ),
                       ),
                     const SizedBox(height: 12),
                   ],
@@ -273,15 +324,14 @@ class _StatusTimeline extends StatelessWidget {
 }
 
 class _TimelineIcon extends StatelessWidget {
-  final bool isCompleted;
-  final bool isCurrent;
-  final IconData icon;
-
   const _TimelineIcon({
     required this.isCompleted,
     required this.isCurrent,
     required this.icon,
   });
+  final bool isCompleted;
+  final bool isCurrent;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -293,15 +343,17 @@ class _TimelineIcon extends StatelessWidget {
         color: isCompleted
             ? AppColors.primary
             : isCurrent
-                ? Colors.transparent
-                : AppColors.backgroundElevated,
-        border: isCurrent ? Border.all(color: AppColors.primary, width: 2) : null,
+            ? Colors.transparent
+            : AppColors.backgroundElevated,
+        border: isCurrent
+            ? Border.all(color: AppColors.primary, width: 2)
+            : null,
       ),
       child: isCompleted
           ? const Icon(Icons.check, color: Colors.white, size: 18)
           : isCurrent
-              ? const _PulsingDot()
-              : Icon(icon, color: Colors.white38, size: 18),
+          ? const _PulsingDot()
+          : Icon(icon, color: Colors.white38, size: 18),
     );
   }
 }
@@ -313,7 +365,8 @@ class _PulsingDot extends StatefulWidget {
   State<_PulsingDot> createState() => _PulsingDotState();
 }
 
-class _PulsingDotState extends State<_PulsingDot> with SingleTickerProviderStateMixin {
+class _PulsingDotState extends State<_PulsingDot>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -324,7 +377,7 @@ class _PulsingDotState extends State<_PulsingDot> with SingleTickerProviderState
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     )..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0.4, end: 1.0).animate(_controller);
+    _animation = Tween<double>(begin: 0.4, end: 1).animate(_controller);
   }
 
   @override
@@ -335,23 +388,23 @@ class _PulsingDotState extends State<_PulsingDot> with SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) => FadeTransition(
-        opacity: _animation,
-        child: Center(
-          child: Container(
-            width: 12,
-            height: 12,
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
-              shape: BoxShape.circle,
-            ),
-          ),
+    opacity: _animation,
+    child: Center(
+      child: Container(
+        width: 12,
+        height: 12,
+        decoration: const BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _CourierCard extends StatelessWidget {
-  final CourierEntity courier;
   const _CourierCard({required this.courier});
+  final CourierEntity courier;
 
   @override
   Widget build(BuildContext context) {
@@ -368,7 +421,11 @@ class _CourierCard extends StatelessWidget {
         children: [
           const Text(
             'COURIER INFORMATION',
-            style: TextStyle(color: Colors.white54, fontSize: 10, letterSpacing: 1.5),
+            style: TextStyle(
+              color: Colors.white54,
+              fontSize: 10,
+              letterSpacing: 1.5,
+            ),
           ),
           const SizedBox(height: 12),
           Row(
@@ -380,7 +437,11 @@ class _CourierCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: AppColors.backgroundElevated,
                 ),
-                child: const Icon(Icons.person, color: Colors.white38, size: 28),
+                child: const Icon(
+                  Icons.person,
+                  color: Colors.white38,
+                  size: 28,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -390,14 +451,19 @@ class _CourierCard extends StatelessWidget {
                     Text(
                       courier.name ?? 'Assigned Courier',
                       style: const TextStyle(
-                          color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const Row(
                       children: [
                         Icon(Icons.star, color: AppColors.gold, size: 14),
                         SizedBox(width: 4),
-                        Text('4.9 (1.2k reviews)',
-                            style: TextStyle(color: Colors.white54, fontSize: 12)),
+                        Text(
+                          '4.9 (1.2k reviews)',
+                          style: TextStyle(color: Colors.white54, fontSize: 12),
+                        ),
                       ],
                     ),
                   ],
@@ -416,7 +482,10 @@ class _CourierCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                const Text('Tracking: ', style: TextStyle(color: Colors.white54, fontSize: 12)),
+                const Text(
+                  'Tracking: ',
+                  style: TextStyle(color: Colors.white54, fontSize: 12),
+                ),
                 Text(
                   courier.trackingNumber!,
                   style: const TextStyle(
@@ -435,9 +504,9 @@ class _CourierCard extends StatelessWidget {
 }
 
 class _CourierActionButton extends StatelessWidget {
+  const _CourierActionButton({required this.icon, required this.onTap});
   final IconData icon;
   final VoidCallback onTap;
-  const _CourierActionButton({required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -470,10 +539,7 @@ class _MapPlaceholder extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: CustomPaint(
-              size: Size.infinite,
-              painter: _MapGridPainter(),
-            ),
+            child: CustomPaint(size: Size.infinite, painter: _MapGridPainter()),
           ),
           Center(
             child: Container(
@@ -482,7 +548,11 @@ class _MapPlaceholder extends StatelessWidget {
                 color: AppColors.primary,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.delivery_dining, color: Colors.white, size: 24),
+              child: const Icon(
+                Icons.delivery_dining,
+                color: Colors.white,
+                size: 24,
+              ),
             ),
           ),
           Positioned(
@@ -501,7 +571,11 @@ class _MapPlaceholder extends StatelessWidget {
                   SizedBox(width: 6),
                   Text(
                     'LIVE LOCATION',
-                    style: TextStyle(color: Colors.white, fontSize: 10, letterSpacing: 1),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      letterSpacing: 1,
+                    ),
                   ),
                 ],
               ),
@@ -547,8 +621,8 @@ class _MapGridPainter extends CustomPainter {
 }
 
 class _OrderItemsList extends StatelessWidget {
-  final OrderEntity order;
   const _OrderItemsList({required this.order});
+  final OrderEntity order;
 
   @override
   Widget build(BuildContext context) {
@@ -557,8 +631,14 @@ class _OrderItemsList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Items Ordered',
-              style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+          const Text(
+            'Items Ordered',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 12),
           ...order.items.map(
             (item) => Container(
@@ -573,7 +653,7 @@ class _OrderItemsList extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
+                    child: SafeRemoteImage(
                       imageUrl: item.imageUrl,
                       width: 56,
                       height: 64,
@@ -588,14 +668,20 @@ class _OrderItemsList extends StatelessWidget {
                         Text(
                           item.productName,
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'Size: ${item.size}  |  Color: ${item.color}  |  Qty: ${item.quantity}',
-                          style: const TextStyle(color: Colors.white54, fontSize: 11),
+                          style: const TextStyle(
+                            color: Colors.white54,
+                            fontSize: 11,
+                          ),
                         ),
                       ],
                     ),
@@ -603,7 +689,10 @@ class _OrderItemsList extends StatelessWidget {
                   Text(
                     item.lineTotal.toCurrencyString,
                     style: const TextStyle(
-                        color: AppColors.gold, fontSize: 14, fontWeight: FontWeight.bold),
+                      color: AppColors.gold,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -616,8 +705,8 @@ class _OrderItemsList extends StatelessWidget {
 }
 
 class _PriceSummaryCard extends StatelessWidget {
-  final OrderEntity order;
   const _PriceSummaryCard({required this.order});
+  final OrderEntity order;
 
   @override
   Widget build(BuildContext context) {
@@ -635,7 +724,9 @@ class _PriceSummaryCard extends StatelessWidget {
           const SizedBox(height: 8),
           _summaryRow(
             'Shipping',
-            order.shippingCost == 0 ? 'FREE' : order.shippingCost.toCurrencyString,
+            order.shippingCost == 0
+                ? 'FREE'
+                : order.shippingCost.toCurrencyString,
             valueColor: order.shippingCost == 0 ? AppColors.success : null,
           ),
           if (order.discountAmount > 0) ...[
@@ -650,8 +741,14 @@ class _PriceSummaryCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Total',
-                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+              const Text(
+                'Total',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Text(
                 order.total.toCurrencyString,
                 style: const TextStyle(
@@ -667,13 +764,17 @@ class _PriceSummaryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                order.paymentMethod == 'cod' ? Icons.payments_outlined : Icons.credit_card_outlined,
+                order.paymentMethod == 'cod'
+                    ? Icons.payments_outlined
+                    : Icons.credit_card_outlined,
                 color: Colors.white38,
                 size: 16,
               ),
               const SizedBox(width: 6),
               Text(
-                order.paymentMethod == 'cod' ? 'Cash on Delivery' : 'Online Payment',
+                order.paymentMethod == 'cod'
+                    ? 'Cash on Delivery'
+                    : 'Online Payment',
                 style: const TextStyle(color: Colors.white38, fontSize: 12),
               ),
               const SizedBox(width: 12),
@@ -688,7 +789,9 @@ class _PriceSummaryCard extends StatelessWidget {
                 child: Text(
                   order.paymentStatus.toUpperCase(),
                   style: TextStyle(
-                    color: order.paymentStatus == 'paid' ? AppColors.success : AppColors.warning,
+                    color: order.paymentStatus == 'paid'
+                        ? AppColors.success
+                        : AppColors.warning,
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),
@@ -705,7 +808,10 @@ class _PriceSummaryCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: const TextStyle(color: Colors.white54, fontSize: 14)),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white54, fontSize: 14),
+        ),
         Text(
           value,
           style: TextStyle(

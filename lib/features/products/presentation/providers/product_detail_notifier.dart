@@ -92,7 +92,7 @@ class ProductDetailNotifier extends _$ProductDetailNotifier {
   }
 
   void selectSize(String size) {
-    if (state.product?.isSizeAvailable(size) == true) {
+    if (state.product?.isSizeAvailable(size) ?? false) {
       state = state.copyWith(selectedSize: size);
     }
   }

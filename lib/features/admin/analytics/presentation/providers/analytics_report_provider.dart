@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:style_cart/core/constants/firestore_constants.dart';
 import 'package:style_cart/core/providers/firebase_providers.dart';
@@ -58,7 +57,7 @@ Future<AnalyticsReport> analyticsReport(
   // Add slight debounce to prevent rapid re-fetches
   await Future<void>.delayed(const Duration(milliseconds: 100));
 
-  return await ref
+  return ref
       .read(analyticsComputationServiceProvider)
       .generateReport(
         period,

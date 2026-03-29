@@ -32,7 +32,6 @@ class ProductListNotifier extends _$ProductListNotifier {
   @override
   ProductListState build() => const ProductListState(
     hasMore: true,
-    filter: ProductFilter(pageSize: _pageSize),
   );
 
   // ── Initial load / refresh ────────────────────────

@@ -6,7 +6,7 @@ import 'package:style_cart/app/theme/app_dimensions.dart';
 class PasswordStrengthIndicator extends StatelessWidget {
   // 0-4
 
-  const PasswordStrengthIndicator({super.key, required this.strengthLevel});
+  const PasswordStrengthIndicator({required this.strengthLevel, super.key});
   final int strengthLevel;
 
   @override

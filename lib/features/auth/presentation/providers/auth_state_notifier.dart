@@ -1,17 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:style_cart/core/errors/global_error_handler.dart';
+import 'package:style_cart/core/security/rate_limiter.dart';
+import 'package:style_cart/core/storage/secure_storage_service.dart';
 import 'package:style_cart/core/usecases/usecase.dart';
+import 'package:style_cart/core/utils/sanitizer.dart';
+import 'package:style_cart/core/utils/validators.dart';
 import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
 import 'package:style_cart/features/auth/domain/usecases/register_with_email_usecase.dart';
 import 'package:style_cart/features/auth/domain/usecases/send_password_reset_usecase.dart';
 import 'package:style_cart/features/auth/domain/usecases/sign_in_with_email_usecase.dart';
-import 'package:style_cart/core/utils/validators.dart';
-import 'package:style_cart/core/utils/sanitizer.dart';
-import 'package:style_cart/core/security/rate_limiter.dart';
-import 'package:style_cart/core/errors/global_error_handler.dart';
-import 'package:style_cart/core/storage/secure_storage_service.dart';
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 
 // ── Auth State ────────────────────────────────────────────────
 sealed class AuthState {
@@ -86,10 +85,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = const AuthLoading();
     final result = await _ref
         .read(signInWithEmailUseCaseProvider)
-        .call(SignInWithEmailParams(
-          email: sanitizedEmail,
-          password: password,
-        ));
+        .call(SignInWithEmailParams(email: sanitizedEmail, password: password));
 
     result.fold(
       (failure) => state = AuthError(failure.message),
@@ -106,9 +102,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }) async {
     // ── Rate limit check ─────────────────────────────
     if (!RateLimiter.canAttemptRegistration()) {
-      state = const AuthError(
-        'Too many registration attempts. Please wait.',
-      );
+      state = const AuthError('Too many registration attempts. Please wait.');
       return;
     }
 
@@ -173,19 +167,18 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<void> signOut() async {
     state = const AuthLoading();
     final result = await _ref.read(signOutUseCaseProvider).call(NoParams());
-    result.fold(
-      (failure) => state = AuthError(failure.message),
-      (_) async {
-        final user = currentUser;
-        if (user != null) {
-          await _ref.read(fcmServiceProvider).clearToken(user.uid);
-        }
-        await GlobalErrorHandler.clearUserContext();
-        final secureStorage = await _ref.read(secureStorageServiceProvider.future);
-        await secureStorage.clearAllSecure();
-        state = const AuthUnauthenticated();
-      },
-    );
+    result.fold((failure) => state = AuthError(failure.message), (_) async {
+      final user = currentUser;
+      if (user != null) {
+        await _ref.read(fcmServiceProvider).clearToken(user.uid);
+      }
+      await GlobalErrorHandler.clearUserContext();
+      final secureStorage = await _ref.read(
+        secureStorageServiceProvider.future,
+      );
+      await secureStorage.clearAllSecure();
+      state = const AuthUnauthenticated();
+    });
   }
 
   // ── Password Reset ───────────────────────────────────────
@@ -215,6 +208,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   // ── Helper: get current user ─────────────────────────────
+  Future<void> refreshCurrentUser() async {
+    final currentState = state;
+    if (currentState is! AuthAuthenticated) {
+      return;
+    }
+
+    final result = await _ref.read(authRepositoryProvider).refreshUserProfile();
+    result.fold((_) {}, (user) => state = AuthAuthenticated(user));
+  }
+
   UserEntity? get currentUser {
     return switch (state) {
       AuthAuthenticated(:final user) => user,

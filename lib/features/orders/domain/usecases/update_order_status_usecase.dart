@@ -6,12 +6,6 @@ import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 import 'package:style_cart/features/orders/domain/repositories/order_repository.dart';
 
 class UpdateOrderStatusParams extends Equatable {
-  final String orderId;
-  final String newStatus;
-  final String updatedBy;
-  final String? note;
-  final CourierEntity? courier;
-
   const UpdateOrderStatusParams({
     required this.orderId,
     required this.newStatus,
@@ -19,6 +13,11 @@ class UpdateOrderStatusParams extends Equatable {
     this.note,
     this.courier,
   });
+  final String orderId;
+  final String newStatus;
+  final String updatedBy;
+  final String? note;
+  final CourierEntity? courier;
 
   @override
   List<Object?> get props => [orderId, newStatus, updatedBy];
@@ -26,17 +25,16 @@ class UpdateOrderStatusParams extends Equatable {
 
 class UpdateOrderStatusUseCase
     implements UseCase<void, UpdateOrderStatusParams> {
-  final OrderRepository _repo;
   const UpdateOrderStatusUseCase(this._repo);
+  final OrderRepository _repo;
 
   @override
-  Future<Either<Failure, void>> call(
-    UpdateOrderStatusParams params,
-  ) => _repo.updateOrderStatus(
-        orderId:   params.orderId,
+  Future<Either<Failure, void>> call(UpdateOrderStatusParams params) =>
+      _repo.updateOrderStatus(
+        orderId: params.orderId,
         newStatus: params.newStatus,
         updatedBy: params.updatedBy,
-        note:      params.note,
-        courier:   params.courier,
+        note: params.note,
+        courier: params.courier,
       );
 }

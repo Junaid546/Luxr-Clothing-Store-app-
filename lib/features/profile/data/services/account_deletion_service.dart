@@ -23,17 +23,16 @@ part 'account_deletion_service.g.dart';
 //   8. Delete Storage files (profile photo)
 
 class AccountDeletionService {
-  final FirebaseFirestore _firestore;
-  final FirebaseAuth _auth;
-  final FirebaseStorage _storage;
-
   const AccountDeletionService({
     required FirebaseFirestore firestore,
     required FirebaseAuth auth,
     required FirebaseStorage storage,
-  })  : _firestore = firestore,
-        _auth = auth,
-        _storage = storage;
+  }) : _firestore = firestore,
+       _auth = auth,
+       _storage = storage;
+  final FirebaseFirestore _firestore;
+  final FirebaseAuth _auth;
+  final FirebaseStorage _storage;
 
   Future<Either<Failure, void>> deleteAccount({
     required String userId,
@@ -64,7 +63,10 @@ class AccountDeletionService {
       await _deleteStorageFiles(userId);
 
       // Step 5: Delete Firestore user doc
-      await _firestore.collection(FirestoreConstants.users).doc(userId).delete();
+      await _firestore
+          .collection(FirestoreConstants.users)
+          .doc(userId)
+          .delete();
 
       // Step 6: Delete Firebase Auth account (LAST)
       await _auth.currentUser!.delete();
@@ -76,16 +78,12 @@ class AccountDeletionService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
         return const Left(
-          AuthFailure(
-            'Incorrect password. Account deletion cancelled.',
-          ),
+          AuthFailure('Incorrect password. Account deletion cancelled.'),
         );
       }
       if (e.code == 'requires-recent-login') {
         return const Left(
-          AuthFailure(
-            'Please sign in again before deleting your account.',
-          ),
+          AuthFailure('Please sign in again before deleting your account.'),
         );
       }
       return Left(AuthFailure(e.message ?? 'Error'));
@@ -95,10 +93,7 @@ class AccountDeletionService {
   }
 
   // Delete all docs in a user subcollection
-  Future<void> _deleteSubcollection(
-    String userId,
-    String subcollection,
-  ) async {
+  Future<void> _deleteSubcollection(String userId, String subcollection) async {
     final snap = await _firestore
         .collection(FirestoreConstants.users)
         .doc(userId)
@@ -113,9 +108,7 @@ class AccountDeletionService {
   }
 
   // Delete user's notifications
-  Future<void> _deleteUserNotifications(
-    String userId,
-  ) async {
+  Future<void> _deleteUserNotifications(String userId) async {
     final snap = await _firestore
         .collection(FirestoreConstants.notifications)
         .where('userId', isEqualTo: userId)
@@ -158,9 +151,7 @@ class AccountDeletionService {
   }
 
   // Delete profile photo from Storage
-  Future<void> _deleteStorageFiles(
-    String userId,
-  ) async {
+  Future<void> _deleteStorageFiles(String userId) async {
     try {
       final ref = _storage.ref().child('users/$userId');
       final list = await ref.listAll();
@@ -172,7 +163,8 @@ class AccountDeletionService {
 }
 
 @riverpod
-AccountDeletionService accountDeletionService(AccountDeletionServiceRef ref) => AccountDeletionService(
+AccountDeletionService accountDeletionService(AccountDeletionServiceRef ref) =>
+    AccountDeletionService(
       firestore: ref.watch(firestoreProvider),
       auth: ref.watch(firebaseAuthProvider),
       storage: ref.watch(firebaseStorageProvider),

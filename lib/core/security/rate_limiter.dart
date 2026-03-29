@@ -80,7 +80,6 @@ class RateLimiter {
   static bool canAddToCart() => canProceed(
         'add_to_cart',
         minInterval: const Duration(milliseconds: 500),
-        maxPerMinute: 10,
       );
 
   // Order placement: max 3 per 10 minutes

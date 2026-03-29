@@ -1,15 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/core/errors/failures.dart';
+import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 import 'package:style_cart/features/orders/presentation/providers/order_notifier.dart';
+import 'package:style_cart/shared/widgets/images/safe_remote_image.dart';
 
 class MyOrdersScreen extends ConsumerStatefulWidget {
   const MyOrdersScreen({super.key});
@@ -39,10 +38,10 @@ class _MyOrdersScreenState extends ConsumerState<MyOrdersScreen> {
               child: state.isLoading
                   ? _buildLoadingState()
                   : state.hasError
-                      ? _buildErrorState(state.errorMessage)
-                      : state.orders.isEmpty
-                          ? _buildEmptyState()
-                          : _OrdersList(orders: state.orders),
+                  ? _buildErrorState(state.errorMessage)
+                  : state.orders.isEmpty
+                  ? _buildEmptyState()
+                  : _OrdersList(orders: state.orders),
             ),
           ],
         ),
@@ -68,7 +67,10 @@ class _MyOrdersScreenState extends ConsumerState<MyOrdersScreen> {
           Text(message, style: const TextStyle(color: Colors.white70)),
           TextButton(
             onPressed: () => ref.refresh(myOrdersNotifierProvider),
-            child: const Text('Retry', style: TextStyle(color: AppColors.primary)),
+            child: const Text(
+              'Retry',
+              style: TextStyle(color: AppColors.primary),
+            ),
           ),
         ],
       ),
@@ -80,8 +82,11 @@ class _MyOrdersScreenState extends ConsumerState<MyOrdersScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.shopping_bag_outlined,
-              size: 80, color: AppColors.textMuted.withOpacity(0.5)),
+          Icon(
+            Icons.shopping_bag_outlined,
+            size: 80,
+            color: AppColors.textMuted.withOpacity(0.5),
+          ),
           const SizedBox(height: 20),
           const Text(
             'No orders found',
@@ -103,8 +108,8 @@ class _MyOrdersScreenState extends ConsumerState<MyOrdersScreen> {
 }
 
 class _OrdersAppBar extends StatelessWidget {
-  final List<OrderEntity> orders;
   const _OrdersAppBar({required this.orders});
+  final List<OrderEntity> orders;
 
   @override
   Widget build(BuildContext context) {
@@ -149,13 +154,12 @@ class _OrdersAppBar extends StatelessWidget {
 }
 
 class _StatusFilterTabs extends StatelessWidget {
-  final String activeFilter;
-  final ValueChanged<String> onFilterChanged;
-
   const _StatusFilterTabs({
     required this.activeFilter,
     required this.onFilterChanged,
   });
+  final String activeFilter;
+  final ValueChanged<String> onFilterChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -203,8 +207,8 @@ class _StatusFilterTabs extends StatelessWidget {
 }
 
 class _OrdersList extends StatelessWidget {
-  final List<OrderEntity> orders;
   const _OrdersList({required this.orders});
+  final List<OrderEntity> orders;
 
   @override
   Widget build(BuildContext context) {
@@ -217,8 +221,8 @@ class _OrdersList extends StatelessWidget {
 }
 
 class _OrderCard extends ConsumerWidget {
-  final OrderEntity order;
   const _OrderCard({required this.order});
+  final OrderEntity order;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -265,7 +269,7 @@ class _OrderCard extends ConsumerWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
+                  child: SafeRemoteImage(
                     imageUrl: order.items.first.imageUrl,
                     width: 64,
                     height: 72,
@@ -280,9 +284,10 @@ class _OrderCard extends ConsumerWidget {
                       Text(
                         order.items.first.productName,
                         style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -290,12 +295,18 @@ class _OrderCard extends ConsumerWidget {
                       if (order.totalItems > 1)
                         Text(
                           '+${order.totalItems - 1} more item(s)',
-                          style: const TextStyle(color: Colors.white54, fontSize: 12),
+                          style: const TextStyle(
+                            color: Colors.white54,
+                            fontSize: 12,
+                          ),
                         ),
                       const SizedBox(height: 4),
                       Text(
                         'Size: ${order.items.first.size}  × ${order.items.first.quantity}',
-                        style: const TextStyle(color: Colors.white54, fontSize: 12),
+                        style: const TextStyle(
+                          color: Colors.white54,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -318,8 +329,10 @@ class _OrderCard extends ConsumerWidget {
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: () => context.push(
-                      RouteNames.orderTracking
-                          .replaceAll(':orderId', order.orderId),
+                      RouteNames.orderTracking.replaceAll(
+                        ':orderId',
+                        order.orderId,
+                      ),
                     ),
                     icon: const Icon(Icons.location_on_outlined, size: 16),
                     label: const Text('Track Order'),
@@ -333,7 +346,8 @@ class _OrderCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-                if (order.isCancellable || order.isReturnable) const SizedBox(width: 10),
+                if (order.isCancellable || order.isReturnable)
+                  const SizedBox(width: 10),
                 if (order.isCancellable)
                   Expanded(
                     child: OutlinedButton(
@@ -374,8 +388,8 @@ class _OrderCard extends ConsumerWidget {
 }
 
 class _StatusChip extends StatelessWidget {
-  final String status;
   const _StatusChip({required this.status});
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -384,9 +398,7 @@ class _StatusChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: _statusColor(status).withOpacity(0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: _statusColor(status).withOpacity(0.5),
-        ),
+        border: Border.all(color: _statusColor(status).withOpacity(0.5)),
       ),
       child: Text(
         _statusLabel(status),
@@ -400,27 +412,27 @@ class _StatusChip extends StatelessWidget {
   }
 
   String _statusLabel(String status) => switch (status) {
-        OrderStatus.pending => 'Order Placed',
-        OrderStatus.confirmed => 'Confirmed',
-        OrderStatus.processing => 'Processing',
-        OrderStatus.packed => 'Packed',
-        OrderStatus.shipped => 'Shipped',
-        OrderStatus.outForDelivery => 'Out for Delivery',
-        OrderStatus.delivered => 'Delivered',
-        OrderStatus.cancelled => 'Cancelled',
-        OrderStatus.returnRequested => 'Return Requested',
-        OrderStatus.returned => 'Returned',
-        _ => status.toUpperCase(),
-      };
+    OrderStatus.pending => 'Order Placed',
+    OrderStatus.confirmed => 'Confirmed',
+    OrderStatus.processing => 'Processing',
+    OrderStatus.packed => 'Packed',
+    OrderStatus.shipped => 'Shipped',
+    OrderStatus.outForDelivery => 'Out for Delivery',
+    OrderStatus.delivered => 'Delivered',
+    OrderStatus.cancelled => 'Cancelled',
+    OrderStatus.returnRequested => 'Return Requested',
+    OrderStatus.returned => 'Returned',
+    _ => status.toUpperCase(),
+  };
 
   Color _statusColor(String status) => switch (status) {
-        OrderStatus.delivered => AppColors.success,
-        OrderStatus.cancelled => AppColors.error,
-        OrderStatus.returned => AppColors.error,
-        OrderStatus.shipped || OrderStatus.outForDelivery => AppColors.primary,
-        OrderStatus.returnRequested => AppColors.warning,
-        _ => AppColors.gold,
-      };
+    OrderStatus.delivered => AppColors.success,
+    OrderStatus.cancelled => AppColors.error,
+    OrderStatus.returned => AppColors.error,
+    OrderStatus.shipped || OrderStatus.outForDelivery => AppColors.primary,
+    OrderStatus.returnRequested => AppColors.warning,
+    _ => AppColors.gold,
+  };
 }
 
 class _OrderShimmerCard extends StatelessWidget {
@@ -483,26 +495,37 @@ Future<void> _showCancelDialog(
               ),
             ),
             const SizedBox(height: 16),
-            const Text('Cancel Order',
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold)),
-            Text('#${order.orderId}',
-                style: const TextStyle(color: AppColors.gold)),
+            const Text(
+              'Cancel Order',
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              '#${order.orderId}',
+              style: const TextStyle(color: AppColors.gold),
+            ),
             const SizedBox(height: 20),
-            const Text('Reason for cancellation:',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600)),
+            const Text(
+              'Reason for cancellation:',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 12),
             ...reasons.map(
               (reason) => RadioListTile<String>(
                 value: reason,
                 groupValue: selectedReason,
                 onChanged: (v) => setState(() => selectedReason = v),
-                title: Text(reason, style: const TextStyle(color: Colors.white)),
+                title: Text(
+                  reason,
+                  style: const TextStyle(color: Colors.white),
+                ),
                 activeColor: AppColors.primary,
                 contentPadding: EdgeInsets.zero,
               ),
@@ -519,15 +542,19 @@ Future<void> _showCancelDialog(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text('Confirm Cancellation',
-                  style: TextStyle(color: Colors.white, fontSize: 16)),
+              child: const Text(
+                'Confirm Cancellation',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
             ),
             const SizedBox(height: 10),
             TextButton(
               onPressed: () => Navigator.pop(context, false),
               child: const Center(
-                child: Text('Keep Order',
-                    style: TextStyle(color: AppColors.primary, fontSize: 16)),
+                child: Text(
+                  'Keep Order',
+                  style: TextStyle(color: AppColors.primary, fontSize: 16),
+                ),
               ),
             ),
           ],
@@ -536,7 +563,7 @@ Future<void> _showCancelDialog(
     ),
   );
 
-  if (confirmed == true) {
+  if (confirmed ?? false) {
     final result = await ref
         .read(myOrdersNotifierProvider.notifier)
         .cancelOrder(order, selectedReason);
@@ -596,24 +623,34 @@ Future<void> _showReturnDialog(
             ),
           ),
           const SizedBox(height: 16),
-          const Text('Request Return',
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold)),
-          Text('#${order.orderId}',
-              style: const TextStyle(color: AppColors.gold)),
+          const Text(
+            'Request Return',
+            style: TextStyle(
+              fontSize: 24,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            '#${order.orderId}',
+            style: const TextStyle(color: AppColors.gold),
+          ),
           const SizedBox(height: 20),
-          const Text('Please describe the reason for return:',
-              style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600)),
+          const Text(
+            'Please describe the reason for return:',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 12),
           TextField(
             controller: controller,
             maxLines: 4,
             style: const TextStyle(color: Colors.white),
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => FocusScope.of(context).unfocus(),
             decoration: InputDecoration(
               hintText: 'Size issues, damaged items, etc. (min 10 characters)',
               hintStyle: const TextStyle(color: Colors.white38),
@@ -635,15 +672,23 @@ Future<void> _showReturnDialog(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text('Submit Return Request',
-                style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Submit Return Request',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           const SizedBox(height: 10),
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Center(
-              child: Text('Keep Order',
-                  style: TextStyle(color: AppColors.primary, fontSize: 16)),
+              child: Text(
+                'Keep Order',
+                style: TextStyle(color: AppColors.primary, fontSize: 16),
+              ),
             ),
           ),
         ],
@@ -651,7 +696,7 @@ Future<void> _showReturnDialog(
     ),
   );
 
-  if (confirmed == true && controller.text.length >= 10) {
+  if ((confirmed ?? false) && controller.text.length >= 10) {
     final result = await ref
         .read(myOrdersNotifierProvider.notifier)
         .requestReturn(order.orderId, controller.text);
@@ -672,7 +717,7 @@ Future<void> _showReturnDialog(
         ),
       ),
     );
-  } else if (confirmed == true && controller.text.length < 10) {
+  } else if ((confirmed ?? false) && controller.text.length < 10) {
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

@@ -1,15 +1,19 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:style_cart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:style_cart/features/home/presentation/providers/home_providers.dart';
 import 'package:style_cart/core/errors/failures.dart';
 import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
 import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
 import 'package:style_cart/features/products/domain/usecases/create_product_usecase.dart';
-import 'package:style_cart/features/products/domain/usecases/get_low_stock_products_usecase.dart';
 import 'package:style_cart/features/products/domain/usecases/update_inventory_usecase.dart';
 import 'package:style_cart/features/products/domain/usecases/update_product_usecase.dart';
+import 'package:style_cart/features/products/presentation/providers/paginated_product_notifier.dart';
+import 'package:style_cart/features/products/presentation/providers/product_list_notifier.dart';
 
 part 'admin_product_notifier.freezed.dart';
 part 'admin_product_notifier.g.dart';
@@ -43,19 +47,16 @@ class AdminProductNotifier extends _$AdminProductNotifier {
     state = state.copyWith(isLoading: true, hasError: false);
 
     // Load all products (including inactive) using repository directly to bypass standard filters
-    final result = await ref.read(productRepositoryProvider).getProducts(
-          filter: const ProductFilter(
-            pageSize: 100,
-            sortBy: 'newest',
-          ),
-        );
+    final result = await ref
+        .read(productRepositoryProvider)
+        .getProducts(filter: const ProductFilter(pageSize: 100));
 
     // Load low stock products
-    final threshold = int.parse(
-      dotenv.env['LOW_STOCK_THRESHOLD'] ?? '5',
-    );
-    final lowStockResult =
-        await ref.read(getLowStockProductsUseCaseProvider).call(threshold);
+    final threshold =
+        int.tryParse(dotenv.env['LOW_STOCK_THRESHOLD']?.trim() ?? '5') ?? 5;
+    final lowStockResult = await ref
+        .read(getLowStockProductsUseCaseProvider)
+        .call(threshold);
 
     state = state.copyWith(
       isLoading: false,
@@ -70,8 +71,13 @@ class AdminProductNotifier extends _$AdminProductNotifier {
     required List<String> imageLocalPaths,
   }) async {
     state = state.copyWith(isSaving: true);
+    debugPrint(
+      'AdminProductNotifier: Starting product creation for ${product.name}',
+    );
 
-    final result = await ref.read(createProductUseCaseProvider).call(
+    final result = await ref
+        .read(createProductUseCaseProvider)
+        .call(
           CreateProductParams(
             product: product,
             imageLocalPaths: imageLocalPaths,
@@ -80,9 +86,18 @@ class AdminProductNotifier extends _$AdminProductNotifier {
 
     state = state.copyWith(isSaving: false);
 
-    if (result.isRight()) {
-      await _loadProducts(); // refresh list
+    if (result.isLeft()) {
+      debugPrint(
+        'AdminProductNotifier: Creation FAILED - '
+        '${result.swap().getOrElse(() => const ServerFailure()).message}',
+      );
+      return result;
     }
+
+    final productId = result.getOrElse(() => '');
+    debugPrint('AdminProductNotifier: Creation SUCCESS - ID: $productId');
+    await _loadProducts();
+    _refreshProductConsumers();
 
     return result;
   }
@@ -94,8 +109,13 @@ class AdminProductNotifier extends _$AdminProductNotifier {
     required List<String> removedUrls,
   }) async {
     state = state.copyWith(isSaving: true);
+    debugPrint(
+      'AdminProductNotifier: Starting product update for ${product.productId}',
+    );
 
-    final result = await ref.read(updateProductUseCaseProvider).call(
+    final result = await ref
+        .read(updateProductUseCaseProvider)
+        .call(
           UpdateProductParams(
             product: product,
             newImageLocalPaths: newImagePaths,
@@ -105,22 +125,28 @@ class AdminProductNotifier extends _$AdminProductNotifier {
 
     state = state.copyWith(isSaving: false);
 
-    if (result.isRight()) {
-      await _loadProducts();
+    if (result.isLeft()) {
+      debugPrint(
+        'AdminProductNotifier: Update FAILED - '
+        '${result.swap().getOrElse(() => const ServerFailure()).message}',
+      );
+      return result;
     }
+
+    debugPrint('AdminProductNotifier: Update SUCCESS');
+    await _loadProducts();
+    _refreshProductConsumers();
 
     return result;
   }
 
   // Toggle product status
-  Future<void> toggleStatus(
-    String productId,
-    bool isActive,
-  ) async {
+  Future<void> toggleStatus(String productId, bool isActive) async {
     await ref
         .read(productRepositoryProvider)
         .toggleProductStatus(productId, isActive);
     await _loadProducts();
+    _refreshProductConsumers();
   }
 
   // Update inventory
@@ -128,13 +154,44 @@ class AdminProductNotifier extends _$AdminProductNotifier {
     required String productId,
     required Map<String, int> inventory,
   }) async {
-    final result = await ref.read(updateInventoryUseCaseProvider).call(
-          UpdateInventoryParams(
-            productId: productId,
-            inventory: inventory,
-          ),
+    final result = await ref
+        .read(updateInventoryUseCaseProvider)
+        .call(
+          UpdateInventoryParams(productId: productId, inventory: inventory),
         );
-    if (result.isRight()) await _loadProducts();
+    if (result.isRight()) {
+      await _loadProducts();
+      _refreshProductConsumers();
+    }
+    return result;
+  }
+
+  Future<Either<Failure, void>> deleteProduct(String productId) async {
+    state = state.copyWith(isDeleting: true, hasError: false, errorMessage: '');
+    debugPrint('AdminProductNotifier: Starting product delete for $productId');
+
+    final result = await ref
+        .read(productRepositoryProvider)
+        .deleteProduct(productId);
+
+    state = state.copyWith(
+      isDeleting: false,
+      hasError: result.isLeft(),
+      errorMessage: result.fold((failure) => failure.message, (_) => ''),
+    );
+
+    if (result.isLeft()) {
+      debugPrint(
+        'AdminProductNotifier: Delete FAILED - '
+        '${result.swap().getOrElse(() => const ServerFailure()).message}',
+      );
+      return result;
+    }
+
+    debugPrint('AdminProductNotifier: Delete SUCCESS');
+    await _loadProducts();
+    _refreshProductConsumers();
+
     return result;
   }
 
@@ -165,4 +222,14 @@ class AdminProductNotifier extends _$AdminProductNotifier {
   }
 
   Future<void> refresh() => _loadProducts();
+
+  void _refreshProductConsumers() {
+    ref.invalidate(productListNotifierProvider);
+    ref.invalidate(paginatedProductNotifierProvider);
+    ref.invalidate(featuredProductsProvider);
+    ref.invalidate(newArrivalProductsProvider);
+    ref.invalidate(bestSellerProductsProvider);
+    ref.invalidate(lowStockCountProvider);
+    ref.invalidate(adminLowStockCountProvider);
+  }
 }

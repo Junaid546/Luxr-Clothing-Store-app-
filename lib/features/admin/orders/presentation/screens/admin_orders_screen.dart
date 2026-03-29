@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
+import 'package:style_cart/core/constants/firestore_schema.dart';
 import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
 import 'package:style_cart/features/admin/dashboard/presentation/providers/dashboard_providers.dart';
 import 'package:style_cart/features/admin/orders/presentation/providers/admin_order_notifier.dart';
 import 'package:style_cart/features/admin/orders/presentation/widgets/admin_order_card.dart';
 import 'package:style_cart/features/admin/orders/presentation/widgets/status_update_dialog.dart';
 import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
 
 class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
   const AdminOrdersScreen({super.key});
@@ -58,6 +58,8 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
               padding: const EdgeInsets.all(16),
               child: TextFormField(
                 onChanged: notifier.setSearchQuery,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: 'Search by Order ID or Email',
@@ -94,13 +96,13 @@ class AdminOrdersScreen extends ConsumerWidget with AdminGuardMixin {
     final orders = notifier.filteredOrders;
 
     if (orders.isEmpty) {
-      return Center(
+      return const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.shopping_bag_outlined, size: 64, color: Colors.white24),
-            const SizedBox(height: 16),
-            const Text(
+            SizedBox(height: 16),
+            Text(
               'No orders found',
               style: TextStyle(color: AppColors.textSecondary, fontSize: 16),
             ),

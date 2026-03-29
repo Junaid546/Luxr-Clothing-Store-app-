@@ -14,22 +14,28 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // to avoid disk I/O issues in isolates.
 
   try {
-    await Firebase.initializeApp();
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp();
+    }
   } catch (e) {
     // If it fails (e.g. options needed), we might need to load dotenv
     try {
-      await dotenv.load();
-      await Firebase.initializeApp(
-        options: FirebaseOptions(
-          apiKey:            dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
-          projectId:         dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
-          storageBucket:     dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
-          messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
-          appId:             dotenv.env['FIREBASE_APP_ID'] ?? '',
-        ),
-      );
+      if (Firebase.apps.isEmpty) {
+        await dotenv.load();
+        await Firebase.initializeApp(
+          options: FirebaseOptions(
+            apiKey:            dotenv.env['FIREBASE_WEB_API_KEY'] ?? '',
+            projectId:         dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+            storageBucket:     dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
+            messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+            appId:             dotenv.env['FIREBASE_APP_ID'] ?? '',
+          ),
+        );
+      }
     } catch (e2) {
-      debugPrint('FCM background init failed: $e2');
+      if (e2 is! FirebaseException || e2.code != 'duplicate-app') {
+        debugPrint('FCM background init failed: $e2');
+      }
       return;
     }
   }

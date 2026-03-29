@@ -33,9 +33,7 @@ Stream<ProductEntity> watchProductCached(WatchProductCachedRef ref, String produ
   Timer? timer;
 
   ref.onCancel(() {
-    timer = Timer(CacheDuration.productDetail, () {
-      link.close();
-    });
+    timer = Timer(CacheDuration.productDetail, link.close);
   });
 
   ref.onResume(() {
@@ -73,7 +71,7 @@ Future<List<BannerModel>> cachedBanners(CachedBannersRef ref) async {
         .collection(FirestoreConstants.banners)
         .where('isActive', isEqualTo: true)
         .orderBy('sortOrder')
-        .get(const GetOptions(source: Source.serverAndCache));
+        .get(const GetOptions());
     return snap.docs.map(BannerModel.fromFirestore).toList();
   } catch (_) {
     return [];
@@ -86,8 +84,8 @@ Future<List<ProductEntity>> cachedFeaturedProducts(CachedFeaturedProductsRef ref
   Timer(CacheDuration.productList, link.close);
 
   final result = await ref.read(getProductsUseCaseProvider).call(
-        GetProductsParams(
-          filter: const ProductFilter(
+        const GetProductsParams(
+          filter: ProductFilter(
             isFeatured: true,
             pageSize: 10,
           ),
@@ -136,12 +134,12 @@ class ProductMemoryCache {
 }
 
 class _CacheEntry<T> {
-  final T value;
-  final DateTime timestamp;
   const _CacheEntry({
     required this.value,
     required this.timestamp,
   });
+  final T value;
+  final DateTime timestamp;
 }
 
 @riverpod

@@ -13,7 +13,7 @@ Future<void> toggleWishlist(
   ProductEntity product,
 ) async {
   final authState = ref.read(authNotifierProvider);
-  final bool isAuthenticated = authState is AuthAuthenticated;
+  final isAuthenticated = authState is AuthAuthenticated;
 
   if (!isAuthenticated) {
     ScaffoldMessenger.of(context).showSnackBar(

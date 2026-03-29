@@ -10,12 +10,7 @@ import 'package:style_cart/features/admin/analytics/domain/models/analytics_mode
 // Supports multiple series (solid + dashed)
 // ══════════════════════════════════════════════════════
 
-class LineChartPainter extends CustomPainter {
-  final List<TimeSeriesPoint> points;
-  final Color lineColor;
-  final bool showDots;
-  final bool showGradient;
-  final double animationValue; // 0.0 to 1.0
+class LineChartPainter extends CustomPainter { // 0.0 to 1.0
 
   const LineChartPainter({
     required this.points,
@@ -24,6 +19,11 @@ class LineChartPainter extends CustomPainter {
     this.showGradient = true,
     this.animationValue = 1.0,
   });
+  final List<TimeSeriesPoint> points;
+  final Color lineColor;
+  final bool showDots;
+  final bool showGradient;
+  final double animationValue;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -60,7 +60,7 @@ class LineChartPainter extends CustomPainter {
         ..moveTo(pixelPoints.first.dx, size.height)
         ..lineTo(pixelPoints.first.dx, pixelPoints.first.dy);
 
-      for (int i = 0; i < pixelPoints.length - 1; i++) {
+      for (var i = 0; i < pixelPoints.length - 1; i++) {
         final cp1 = Offset(
           (pixelPoints[i].dx + pixelPoints[i + 1].dx) / 2,
           pixelPoints[i].dy,
@@ -91,7 +91,7 @@ class LineChartPainter extends CustomPainter {
             end: Alignment.bottomCenter,
             colors: [
               lineColor.withOpacity(0.35),
-              lineColor.withOpacity(0.0),
+              lineColor.withOpacity(0),
             ],
           ).createShader(chartArea),
       );
@@ -101,7 +101,7 @@ class LineChartPainter extends CustomPainter {
     if (pixelPoints.length > 1) {
       final linePath = Path()..moveTo(pixelPoints.first.dx, pixelPoints.first.dy);
 
-      for (int i = 0; i < pixelPoints.length - 1; i++) {
+      for (var i = 0; i < pixelPoints.length - 1; i++) {
         final cp1 = Offset(
           (pixelPoints[i].dx + pixelPoints[i + 1].dx) / 2,
           pixelPoints[i].dy,
@@ -147,7 +147,7 @@ class LineChartPainter extends CustomPainter {
       ..color = Colors.white.withOpacity(0.04)
       ..strokeWidth = 1;
 
-    for (int i = 1; i <= 4; i++) {
+    for (var i = 1; i <= 4; i++) {
       final y = size.height - (i / 4) * size.height;
       canvas.drawLine(
         Offset(0, y),
@@ -166,12 +166,7 @@ class LineChartPainter extends CustomPainter {
 // Animated bars, rounded tops, value labels
 // ══════════════════════════════════════════════════════
 
-class BarChartPainter extends CustomPainter {
-  final List<TimeSeriesPoint> points;
-  final Color barColor;
-  final Color highlightColor; // today's bar
-  final double animationValue;
-  final int? highlightIndex; // which bar to highlight
+class BarChartPainter extends CustomPainter { // which bar to highlight
 
   const BarChartPainter({
     required this.points,
@@ -180,6 +175,11 @@ class BarChartPainter extends CustomPainter {
     this.animationValue = 1.0,
     this.highlightIndex,
   });
+  final List<TimeSeriesPoint> points;
+  final Color barColor;
+  final Color highlightColor; // today's bar
+  final double animationValue;
+  final int? highlightIndex;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -193,7 +193,7 @@ class BarChartPainter extends CustomPainter {
     final totalSpace = spacing * (barCount - 1);
     final barWidth = (size.width - totalSpace) / barCount;
 
-    for (int i = 0; i < barCount; i++) {
+    for (var i = 0; i < barCount; i++) {
       final pt = points[i];
       final normalizedHeight = (pt.value / maxValue) * size.height * animationValue * 0.85;
 
@@ -250,12 +250,6 @@ class BarChartPainter extends CustomPainter {
 // ══════════════════════════════════════════════════════
 
 class DonutChartPainter extends CustomPainter {
-  final Map<String, double> data;
-  final List<Color> colors;
-  final int? selectedIndex;
-  final double animationValue;
-  final String centerLabel;
-  final String centerValue;
 
   const DonutChartPainter({
     required this.data,
@@ -265,6 +259,12 @@ class DonutChartPainter extends CustomPainter {
     this.centerLabel = 'TOTAL',
     this.centerValue = '',
   });
+  final Map<String, double> data;
+  final List<Color> colors;
+  final int? selectedIndex;
+  final double animationValue;
+  final String centerLabel;
+  final String centerValue;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -275,7 +275,7 @@ class DonutChartPainter extends CustomPainter {
     final outerRadius = size.shortestSide / 2 - 10;
     const strokeWidth = 32.0;
 
-    double startAngle = -pi / 2; // top
+    var startAngle = -pi / 2; // top
 
     data.entries.toList().asMap().forEach((idx, entry) {
       final fraction = entry.value / total;
@@ -352,10 +352,6 @@ class DonutChartPainter extends CustomPainter {
 // ══════════════════════════════════════════════════════
 
 class GaugeChartPainter extends CustomPainter {
-  final double value; // 0 to 100
-  final Color trackColor;
-  final Color valueColor;
-  final double animationValue;
 
   const GaugeChartPainter({
     required this.value,
@@ -363,6 +359,10 @@ class GaugeChartPainter extends CustomPainter {
     this.valueColor = AppColors.gold,
     this.animationValue = 1.0,
   });
+  final double value; // 0 to 100
+  final Color trackColor;
+  final Color valueColor;
+  final double animationValue;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -397,7 +397,6 @@ class GaugeChartPainter extends CustomPainter {
         Paint()
           ..shader = const SweepGradient(
             startAngle: startAngle,
-            endAngle: startAngle + totalAngle,
             colors: [
               AppColors.error,
               AppColors.warning,
@@ -468,10 +467,6 @@ class GaugeChartPainter extends CustomPainter {
 // ══════════════════════════════════════════════════════
 
 class AnimatedChart extends StatefulWidget {
-  final CustomPainter Function(double animValue) painterBuilder;
-  final double width;
-  final double height;
-  final Duration duration;
 
   const AnimatedChart({
     required this.painterBuilder,
@@ -480,6 +475,10 @@ class AnimatedChart extends StatefulWidget {
     this.duration = const Duration(milliseconds: 900),
     super.key,
   });
+  final CustomPainter Function(double animValue) painterBuilder;
+  final double width;
+  final double height;
+  final Duration duration;
 
   @override
   State<AnimatedChart> createState() => _AnimatedChartState();

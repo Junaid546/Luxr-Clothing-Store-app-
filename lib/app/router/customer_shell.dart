@@ -1,28 +1,29 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:style_cart/app/router/route_names.dart';
+import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/core/providers/shared_providers.dart';
 
 class NavTab {
-  final IconData icon;
-  final IconData activeIcon;
-  final String label;
-  final String route;
-
   const NavTab({
     required this.icon,
     required this.activeIcon,
     required this.label,
     required this.route,
   });
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+  final String route;
 }
 
 class CustomerShell extends ConsumerWidget {
-  const CustomerShell({required this.child, super.key});
+  const CustomerShell({required this.location, required this.child, super.key});
+
+  final String location;
   final Widget child;
 
   static const _tabs = [
@@ -70,7 +71,6 @@ class CustomerShell extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final location = GoRouterState.of(context).matchedLocation;
     final activeIndex = _getActiveIndex(location);
 
     return Scaffold(
@@ -86,15 +86,14 @@ class CustomerShell extends ConsumerWidget {
 }
 
 class _FloatingNavBar extends StatelessWidget {
-  final int activeIndex;
-  final void Function(int) onTap;
-  final List<NavTab> tabs;
-
   const _FloatingNavBar({
     required this.activeIndex,
     required this.onTap,
     required this.tabs,
   });
+  final int activeIndex;
+  final void Function(int) onTap;
+  final List<NavTab> tabs;
 
   @override
   Widget build(BuildContext context) {
@@ -107,15 +106,15 @@ class _FloatingNavBar extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.7),
+              color: Colors.black.withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(35),
               border: Border.all(
-                color: AppColors.gold.withOpacity(0.2),
+                color: AppColors.gold.withValues(alpha: 0.2),
                 width: 1.5,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withValues(alpha: 0.5),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -142,15 +141,14 @@ class _FloatingNavBar extends StatelessWidget {
 }
 
 class _NavBarItem extends ConsumerWidget {
-  final NavTab tab;
-  final bool isActive;
-  final VoidCallback onTap;
-
   const _NavBarItem({
     required this.tab,
     required this.isActive,
     required this.onTap,
   });
+  final NavTab tab;
+  final bool isActive;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -164,7 +162,9 @@ class _NavBarItem extends ConsumerWidget {
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: isActive ? AppColors.gold.withOpacity(0.1) : Colors.transparent,
+          color: isActive
+              ? AppColors.gold.withValues(alpha: 0.1)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(

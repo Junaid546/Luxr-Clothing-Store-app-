@@ -25,6 +25,7 @@ abstract final class FirestoreConstants {
   static const String totalSpent = 'totalSpent';
   static const String wishlistCount = 'wishlistCount';
   static const String addresses = 'addresses';
+  static const String paymentMethods = 'paymentMethods';
   static const String notificationPrefs = 'notificationPrefs';
 
   // Product fields

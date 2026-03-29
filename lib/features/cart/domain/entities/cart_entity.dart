@@ -3,25 +3,18 @@ import 'package:style_cart/core/constants/firestore_schema.dart';
 import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
 
 class CartEntity {
-  final List<CartItemModel> items;
-  final CartSummary summary;
 
   const CartEntity({
     required this.items,
     required this.summary,
   });
+  final List<CartItemModel> items;
+  final CartSummary summary;
 
   bool get isEmpty => items.isEmpty;
 }
 
 class CartSummary {
-  final double subtotal;
-  final double shippingCost;
-  final double discountAmount;
-  final double totalSavings;
-  final double total;
-  final int totalItems;
-  final bool freeShippingEligible;
 
   const CartSummary({
     required this.subtotal,
@@ -32,8 +25,6 @@ class CartSummary {
     required this.totalItems,
     required this.freeShippingEligible,
   });
-
-  bool get isEmpty => subtotal == 0;
 
   factory CartSummary.compute({
     required List<CartItemModel> items,
@@ -71,30 +62,33 @@ class CartSummary {
       freeShippingEligible: isFreeShipping,
     );
   }
+  final double subtotal;
+  final double shippingCost;
+  final double discountAmount;
+  final double totalSavings;
+  final double total;
+  final int totalItems;
+  final bool freeShippingEligible;
+
+  bool get isEmpty => subtotal == 0;
 }
 
 class CartValidationResult {
-  final List<CartItemModel> validatedItems;
-  final List<StockIssue> stockIssues;
-  final List<PriceChange> priceChanges;
 
   const CartValidationResult({
     required this.validatedItems,
     required this.stockIssues,
     required this.priceChanges,
   });
+  final List<CartItemModel> validatedItems;
+  final List<StockIssue> stockIssues;
+  final List<PriceChange> priceChanges;
 
   bool get isValid => stockIssues.isEmpty;
   bool get hasPriceChanges => priceChanges.isNotEmpty;
 }
 
 class StockIssue {
-  final String productId;
-  final String productName;
-  final String size;
-  final int requested;
-  final int available;
-  final String reason;
 
   const StockIssue({
     required this.productId,
@@ -104,13 +98,15 @@ class StockIssue {
     required this.available,
     required this.reason,
   });
+  final String productId;
+  final String productName;
+  final String size;
+  final int requested;
+  final int available;
+  final String reason;
 }
 
 class PriceChange {
-  final String productId;
-  final String productName;
-  final double oldPrice;
-  final double newPrice;
 
   const PriceChange({
     required this.productId,
@@ -118,6 +114,10 @@ class PriceChange {
     required this.oldPrice,
     required this.newPrice,
   });
+  final String productId;
+  final String productName;
+  final double oldPrice;
+  final double newPrice;
 
   bool get isIncrease => newPrice > oldPrice;
 }

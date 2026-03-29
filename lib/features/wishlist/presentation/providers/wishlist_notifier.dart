@@ -1,10 +1,10 @@
 import 'dart:async';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
-import 'package:style_cart/features/wishlist/data/models/wishlist_item_model.dart';
 import 'package:style_cart/core/providers/repository_providers.dart';
+import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
+import 'package:style_cart/features/wishlist/data/models/wishlist_item_model.dart';
 
 part 'wishlist_notifier.freezed.dart';
 part 'wishlist_notifier.g.dart';
@@ -28,7 +28,7 @@ class WishlistNotifier extends _$WishlistNotifier {
     ref.onDispose(() => _subscription?.cancel());
 
     final authState = ref.watch(authNotifierProvider);
-    final UserEntity? user = authState is AuthAuthenticated ? authState.user : null;
+    final user = authState is AuthAuthenticated ? authState.user : null;
     
     if (user != null) {
       // Defer stream subscription past the current build phase to avoid assertion errors
@@ -36,7 +36,7 @@ class WishlistNotifier extends _$WishlistNotifier {
       return const WishlistState(isLoading: true);
     }
     
-    return const WishlistState(isLoading: false);
+    return const WishlistState();
   }
 
   void _watchWishlist(String userId) {

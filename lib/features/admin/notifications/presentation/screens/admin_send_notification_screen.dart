@@ -18,7 +18,7 @@ class _AdminSendNotificationScreenState
   final _titleController = TextEditingController();
   final _bodyController = TextEditingController();
   final _userIdController = TextEditingController();
-  
+
   String _selectedType = 'promotion';
   String _targetAudience = 'all'; // 'all' | 'specific_user'
   String? _targetRoute;
@@ -41,7 +41,8 @@ class _AdminSendNotificationScreenState
       _showError('Message body is required');
       return;
     }
-    if (_targetAudience == 'specific_user' && _userIdController.text.trim().isEmpty) {
+    if (_targetAudience == 'specific_user' &&
+        _userIdController.text.trim().isEmpty) {
       _showError('User UID is required for specific target');
       return;
     }
@@ -51,9 +52,7 @@ class _AdminSendNotificationScreenState
     try {
       // Write notification request to Firestore
       // A Cloud Function would pick this up to send real FCM
-      await ref.read(firestoreProvider)
-          .collection('admin_notifications')
-          .add({
+      await ref.read(firestoreProvider).collection('admin_notifications').add({
         'title': _titleController.text.trim(),
         'body': _bodyController.text.trim(),
         'type': _selectedType,
@@ -61,10 +60,7 @@ class _AdminSendNotificationScreenState
         'targetUserId': _targetAudience == 'specific_user'
             ? _userIdController.text.trim()
             : null,
-        'data': {
-          'type': _selectedType,
-          'route': _targetRoute,
-        },
+        'data': {'type': _selectedType, 'route': _targetRoute},
         'status': 'pending',
         'sentBy': ref.read(currentUserProvider)?.uid,
         'createdAt': FieldValue.serverTimestamp(),
@@ -131,6 +127,7 @@ class _AdminSendNotificationScreenState
               const SizedBox(height: 12),
               TextField(
                 controller: _userIdController,
+                textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
                   hintText: 'Enter user UID...',
                 ),
@@ -143,6 +140,7 @@ class _AdminSendNotificationScreenState
             TextField(
               controller: _titleController,
               onChanged: (_) => setState(() {}),
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 hintText: 'e.g. Flash Sale: 20% Off!',
               ),
@@ -155,6 +153,7 @@ class _AdminSendNotificationScreenState
             TextField(
               controller: _bodyController,
               onChanged: (_) => setState(() {}),
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 hintText: 'Write your content here...',
               ),
@@ -163,10 +162,15 @@ class _AdminSendNotificationScreenState
             ),
             const SizedBox(height: 12),
 
-            _FormLabel(title: 'Deep Link Route (optional)', textTheme: textTheme),
+            _FormLabel(
+              title: 'Deep Link Route (optional)',
+              textTheme: textTheme,
+            ),
             const SizedBox(height: 10),
             TextField(
               onChanged: (v) => setState(() => _targetRoute = v),
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => FocusScope.of(context).unfocus(),
               decoration: const InputDecoration(
                 hintText: 'e.g. /shop or /product/abc123',
               ),
@@ -217,9 +221,9 @@ class _AdminSendNotificationScreenState
 }
 
 class _FormLabel extends StatelessWidget {
+  const _FormLabel({required this.title, required this.textTheme});
   final String title;
   final TextTheme textTheme;
-  const _FormLabel({required this.title, required this.textTheme});
 
   @override
   Widget build(BuildContext context) {
@@ -234,16 +238,20 @@ class _FormLabel extends StatelessWidget {
 }
 
 class _TypeSelector extends StatelessWidget {
+  const _TypeSelector({required this.selected, required this.onSelected});
   final String selected;
   final ValueChanged<String> onSelected;
-
-  const _TypeSelector({required this.selected, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
     final types = [
       ('promotion', 'Promotion', Icons.local_offer_outlined, AppColors.gold),
-      ('new_arrival', 'New Arrival', Icons.new_releases_outlined, AppColors.successTeal),
+      (
+        'new_arrival',
+        'New Arrival',
+        Icons.new_releases_outlined,
+        AppColors.successTeal,
+      ),
       ('system', 'System', Icons.settings_suggest_outlined, AppColors.warning),
     ];
 
@@ -258,7 +266,11 @@ class _TypeSelector extends StatelessWidget {
               selected: isSelected,
               label: Text(t.$2),
               onSelected: (_) => onSelected(t.$1),
-              avatar: Icon(t.$3, color: isSelected ? Colors.white : t.$4, size: 16),
+              avatar: Icon(
+                t.$3,
+                color: isSelected ? Colors.white : t.$4,
+                size: 16,
+              ),
               selectedColor: AppColors.primary,
               labelStyle: TextStyle(
                 color: isSelected ? Colors.white : AppColors.textSecondary,
@@ -273,17 +285,19 @@ class _TypeSelector extends StatelessWidget {
 }
 
 class _AudienceSelector extends StatelessWidget {
+  const _AudienceSelector({required this.selected, required this.onSelected});
   final String selected;
   final ValueChanged<String> onSelected;
-
-  const _AudienceSelector({required this.selected, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         RadioListTile<String>(
-          title: const Text('All Customers', style: TextStyle(color: Colors.white)),
+          title: const Text(
+            'All Customers',
+            style: TextStyle(color: Colors.white),
+          ),
           value: 'all',
           groupValue: selected,
           onChanged: (v) => onSelected(v!),
@@ -291,7 +305,10 @@ class _AudienceSelector extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
         ),
         RadioListTile<String>(
-          title: const Text('Specific User (by UID)', style: TextStyle(color: Colors.white)),
+          title: const Text(
+            'Specific User (by UID)',
+            style: TextStyle(color: Colors.white),
+          ),
           value: 'specific_user',
           groupValue: selected,
           onChanged: (v) => onSelected(v!),
@@ -304,33 +321,40 @@ class _AudienceSelector extends StatelessWidget {
 }
 
 class _NotificationPreviewCard extends StatelessWidget {
-  final String title;
-  final String body;
-  final String type;
-  final TextTheme textTheme;
-
   const _NotificationPreviewCard({
     required this.title,
     required this.body,
     required this.type,
     required this.textTheme,
   });
+  final String title;
+  final String body;
+  final String type;
+  final TextTheme textTheme;
 
   Color _getTypeColor(String type) {
     switch (type) {
-      case 'promotion': return AppColors.gold;
-      case 'new_arrival': return AppColors.successTeal;
-      case 'system': return AppColors.warning;
-      default: return AppColors.primary;
+      case 'promotion':
+        return AppColors.gold;
+      case 'new_arrival':
+        return AppColors.successTeal;
+      case 'system':
+        return AppColors.warning;
+      default:
+        return AppColors.primary;
     }
   }
 
   IconData _getTypeIcon(String type) {
     switch (type) {
-      case 'promotion': return Icons.local_offer;
-      case 'new_arrival': return Icons.new_releases;
-      case 'system': return Icons.settings_suggest;
-      default: return Icons.notifications;
+      case 'promotion':
+        return Icons.local_offer;
+      case 'new_arrival':
+        return Icons.new_releases;
+      case 'system':
+        return Icons.settings_suggest;
+      default:
+        return Icons.notifications;
     }
   }
 
@@ -348,11 +372,13 @@ class _NotificationPreviewCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('LIVE PREVIEW',
-              style: textTheme.labelSmall?.copyWith(
-                color: AppColors.textMuted,
-                letterSpacing: 1.5,
-              )),
+          Text(
+            'LIVE PREVIEW',
+            style: textTheme.labelSmall?.copyWith(
+              color: AppColors.textMuted,
+              letterSpacing: 1.5,
+            ),
+          ),
           const SizedBox(height: 14),
           Row(
             children: [
@@ -370,16 +396,31 @@ class _NotificationPreviewCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('StyleCart', style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
+                    const Text(
+                      'StyleCart',
+                      style: TextStyle(
+                        color: AppColors.textMuted,
+                        fontSize: 10,
+                      ),
+                    ),
                     Text(
                       title.isEmpty ? 'Notification Title' : title,
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      body.isEmpty ? 'Notification message content appears here.' : body,
-                      style: const TextStyle(color: AppColors.textMuted, fontSize: 12),
+                      body.isEmpty
+                          ? 'Notification message content appears here.'
+                          : body,
+                      style: const TextStyle(
+                        color: AppColors.textMuted,
+                        fontSize: 12,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

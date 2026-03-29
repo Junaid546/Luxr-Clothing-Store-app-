@@ -17,12 +17,11 @@ import 'package:style_cart/features/admin/analytics/domain/models/analytics_mode
 // ══════════════════════════════════════════════════════
 
 class ExportBottomSheet extends ConsumerStatefulWidget {
-  final AnalyticsReport report;
   const ExportBottomSheet({required this.report, super.key});
+  final AnalyticsReport report;
 
   @override
-  ConsumerState<ExportBottomSheet> createState() =>
-      _ExportBottomSheetState();
+  ConsumerState<ExportBottomSheet> createState() => _ExportBottomSheetState();
 }
 
 class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
@@ -46,7 +45,9 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
       },
       (String path) {
         setState(() => _isExportingCSV = false);
-        ref.read(reportExportServiceProvider).shareFile(
+        ref
+            .read(reportExportServiceProvider)
+            .shareFile(
               path,
               'StyleCart Analytics — ${widget.report.dateRange.displayLabel}',
             );
@@ -70,7 +71,9 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
       },
       (String path) {
         setState(() => _isExportingPDF = false);
-        ref.read(reportExportServiceProvider).shareFile(
+        ref
+            .read(reportExportServiceProvider)
+            .shareFile(
               path,
               'StyleCart Report PDF — ${widget.report.dateRange.displayLabel}',
             );
@@ -103,10 +106,7 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
   void _showError(String message) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: AppColors.error,
-      ),
+      SnackBar(content: Text(message), backgroundColor: AppColors.error),
     );
   }
 
@@ -146,10 +146,7 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
             style: AppTextStyles.headlineMedium.copyWith(color: Colors.white),
           ),
           const SizedBox(height: 6),
-          Text(
-            report.dateRange.displayLabel,
-            style: AppTextStyles.bodySmall,
-          ),
+          Text(report.dateRange.displayLabel, style: AppTextStyles.bodySmall),
           const SizedBox(height: 20),
 
           // Summary card
@@ -162,7 +159,10 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
             child: Column(
               children: [
                 _SummaryRow('Period', report.period.toUpperCase()),
-                _SummaryRow('Revenue', report.revenue.totalRevenue.toCurrencyString),
+                _SummaryRow(
+                  'Revenue',
+                  report.revenue.totalRevenue.toCurrencyString,
+                ),
                 _SummaryRow('Orders', '${report.orders.totalOrders}'),
                 _SummaryRow(
                   'Generated',
@@ -208,9 +208,9 @@ class _ExportBottomSheetState extends ConsumerState<ExportBottomSheet> {
 
 // ── Summary row widget ─────────────────────────────────
 class _SummaryRow extends StatelessWidget {
+  const _SummaryRow(this.label, this.value);
   final String label;
   final String value;
-  const _SummaryRow(this.label, this.value);
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +220,10 @@ class _SummaryRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: AppTextStyles.bodySmall),
-          Text(value, style: AppTextStyles.bodyMedium.copyWith(color: Colors.white)),
+          Text(
+            value,
+            style: AppTextStyles.bodyMedium.copyWith(color: Colors.white),
+          ),
         ],
       ),
     );
@@ -229,13 +232,6 @@ class _SummaryRow extends StatelessWidget {
 
 // ── Export option tile ─────────────────────────────────
 class _ExportOption extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final Color color;
-  final bool isLoading;
-  final VoidCallback onTap;
-
   const _ExportOption({
     required this.icon,
     required this.title,
@@ -244,6 +240,12 @@ class _ExportOption extends StatelessWidget {
     required this.isLoading,
     required this.onTap,
   });
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color color;
+  final bool isLoading;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -287,13 +289,21 @@ class _ExportOption extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title,
-                        style: AppTextStyles.titleMedium.copyWith(color: Colors.white)),
+                    Text(
+                      title,
+                      style: AppTextStyles.titleMedium.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
                     Text(subtitle, style: AppTextStyles.bodySmall),
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: AppColors.textMuted, size: 20),
+              const Icon(
+                Icons.chevron_right,
+                color: AppColors.textMuted,
+                size: 20,
+              ),
             ],
           ),
         ),

@@ -98,7 +98,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   Container(
                     width: double.infinity,
                     height: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
                           'assets/images/signup_screen_model_image.png',
@@ -211,6 +211,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: _nameController,
                           textCapitalization: TextCapitalization.words,
+                          textInputAction: TextInputAction.next,
                           style: const TextStyle(color: Colors.white),
                           decoration: _inputDecoration(
                             hintText: 'Alexander Pierce',
@@ -240,6 +241,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
                           style: const TextStyle(color: Colors.white),
                           decoration: _inputDecoration(
                             hintText: 'alex@luxr.io',
@@ -269,6 +271,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: _passwordController,
                           obscureText: _obscurePassword,
+                          textInputAction: TextInputAction.next,
                           style: const TextStyle(color: Colors.white),
                           onChanged: (_) => setState(() {}),
                           decoration: _inputDecoration(
@@ -320,6 +323,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         TextFormField(
                           controller: _confirmPasswordController,
                           obscureText: _obscureConfirmPassword,
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                           style: const TextStyle(color: Colors.white),
                           decoration: _inputDecoration(
                             hintText: '••••••••',

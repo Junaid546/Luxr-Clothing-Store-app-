@@ -6,22 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
-
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
 import 'package:style_cart/features/home/data/models/banner_model.dart';
 import 'package:style_cart/features/home/presentation/providers/home_providers.dart';
-
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
+import 'package:style_cart/features/notifications/presentation/widgets/notification_bell.dart';
+import 'package:style_cart/features/notifications/presentation/widgets/notification_permission_dialog.dart';
 import 'package:style_cart/features/products/presentation/providers/product_list_notifier.dart';
 import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
 import 'package:style_cart/shared/utils/wishlist_helper.dart';
 import 'package:style_cart/shared/widgets/cards/product_card_widget.dart';
 import 'package:style_cart/shared/widgets/section_header_widget.dart';
-import 'package:style_cart/features/notifications/presentation/widgets/notification_bell.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
-import 'package:style_cart/features/notifications/presentation/widgets/notification_permission_dialog.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -49,7 +47,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.read(notificationPermissionDialogShownProvider.notifier).state = true;
 
     final fcmService = ref.read(fcmServiceProvider);
-    
+
     // If not requested yet, show after 2 seconds
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
@@ -70,22 +68,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.backgroundDark,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(child: _AppBar()),
-            const SliverToBoxAdapter(child: _SearchBar()),
-            const SliverToBoxAdapter(child: _BannerCarousel()),
-            const SliverToBoxAdapter(child: _CategoryChips()),
-            const SliverToBoxAdapter(child: _FeaturedSection()),
-            const SliverToBoxAdapter(child: _NewArrivalsSection()),
-            const SliverToBoxAdapter(child: _TrendingBanner()),
-            const SliverToBoxAdapter(child: _BestSellersSection()),
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 32),
-            ), // Bottom padding
+            SliverToBoxAdapter(child: _AppBar()),
+            SliverToBoxAdapter(child: _SearchBar()),
+            SliverToBoxAdapter(child: _BannerCarousel()),
+            SliverToBoxAdapter(child: _CategoryChips()),
+            SliverToBoxAdapter(child: _FeaturedSection()),
+            SliverToBoxAdapter(child: _NewArrivalsSection()),
+            SliverToBoxAdapter(child: _TrendingBanner()),
+            SliverToBoxAdapter(child: _BestSellersSection()),
+            SliverToBoxAdapter(child: SizedBox(height: 32)), // Bottom padding
           ],
         ),
       ),
@@ -129,7 +125,7 @@ class _SearchBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 8),
       child: GestureDetector(
-        onTap: () => context.push(RouteNames.shop),
+        onTap: () => _openHomeActionRoute(context, RouteNames.shop),
         child: Container(
           height: 48,
           decoration: BoxDecoration(
@@ -187,7 +183,7 @@ class _BannerCarouselState extends ConsumerState<_BannerCarousel> {
       _bannerTimer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
         if (!mounted || !_pageController.hasClients) return;
 
-        int nextPage = _currentPage + 1;
+        var nextPage = _currentPage + 1;
         if (nextPage >= _banners.length) {
           nextPage = 0;
         }
@@ -287,9 +283,8 @@ class _BannerCarouselState extends ConsumerState<_BannerCarousel> {
 }
 
 class _BannerCard extends StatelessWidget {
-  final BannerModel banner;
-
   const _BannerCard({required this.banner});
+  final BannerModel banner;
 
   @override
   Widget build(BuildContext context) {
@@ -339,7 +334,8 @@ class _BannerCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 OutlinedButton(
-                  onPressed: () => context.push(banner.actionRoute),
+                  onPressed: () =>
+                      _openHomeActionRoute(context, banner.actionRoute),
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Colors.white),
                     foregroundColor: Colors.white,
@@ -416,15 +412,14 @@ class _CategoryChipsState extends ConsumerState<_CategoryChips> {
 }
 
 class _CategoryChip extends StatelessWidget {
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
   const _CategoryChip({
     required this.label,
     required this.isSelected,
     required this.onTap,
   });
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -462,7 +457,7 @@ class _FeaturedSection extends ConsumerWidget {
         SectionHeaderWidget(
           title: 'Featured',
           actionLabel: 'See all',
-          onActionTap: () => context.push(RouteNames.shop),
+          onActionTap: () => _openHomeActionRoute(context, RouteNames.shop),
         ),
         SizedBox(
           height: 350,
@@ -478,24 +473,28 @@ class _FeaturedSection extends ConsumerWidget {
                     width: 160,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 12),
-                        child: Consumer(
-                          builder: (context, ref, child) {
-                            final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
-                            return ProductCardWidget(
-                              product: products[index],
-                              imageAspectRatio: 2 / 3,
-                              onTap: () => context.push(
-                                RouteNames.productDetail.replaceAll(
-                                  ':productId',
-                                  products[index].productId,
-                                ),
+                      child: Consumer(
+                        builder: (context, ref, child) {
+                          final isWishlisted = ref.watch(
+                            isProductWishlistedProvider(
+                              products[index].productId,
+                            ),
+                          );
+                          return ProductCardWidget(
+                            product: products[index],
+                            imageAspectRatio: 2 / 3,
+                            onTap: () => context.push(
+                              RouteNames.productDetail.replaceAll(
+                                ':productId',
+                                products[index].productId,
                               ),
-                              isWishlisted: isWishlisted,
-                              onWishlistTap: () =>
-                                  toggleWishlist(ref, context, products[index]),
-                            );
-                          },
-                        ),
+                            ),
+                            isWishlisted: isWishlisted,
+                            onWishlistTap: () =>
+                                toggleWishlist(ref, context, products[index]),
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
@@ -519,12 +518,12 @@ class _FeaturedSection extends ConsumerWidget {
               ),
             ),
             error: (e, _) => Padding(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          e.toString(),
-          style: const TextStyle(color: Colors.red, fontSize: 12),
-        ),
-      ),
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                e.toString(),
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
           ),
         ),
       ],
@@ -542,9 +541,10 @@ class _NewArrivalsSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionHeaderWidget(
+        SectionHeaderWidget(
           title: 'New Arrivals',
           actionLabel: 'View all',
+          onActionTap: () => _openHomeActionRoute(context, RouteNames.shop),
         ),
         productsAsync.when(
           data: (products) {
@@ -562,7 +562,9 @@ class _NewArrivalsSection extends ConsumerWidget {
               itemCount: min(products.length, 4),
               itemBuilder: (_, index) => Consumer(
                 builder: (context, ref, child) {
-                  final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
+                  final isWishlisted = ref.watch(
+                    isProductWishlistedProvider(products[index].productId),
+                  );
                   return ProductCardWidget(
                     product: products[index],
                     imageAspectRatio: 3 / 4,
@@ -603,12 +605,12 @@ class _NewArrivalsSection extends ConsumerWidget {
             ),
           ),
           error: (e, _) => Padding(
-        padding: const EdgeInsets.all(16),
-        child: Text(
-          e.toString(),
-          style: const TextStyle(color: Colors.red, fontSize: 12),
-        ),
-      ),
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              e.toString(),
+              style: const TextStyle(color: Colors.red, fontSize: 12),
+            ),
+          ),
         ),
       ],
     );
@@ -661,8 +663,6 @@ class _TrendingBanner extends StatelessWidget {
                           AppColors.gold.withOpacity(0.1),
                           Colors.transparent,
                         ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
                       ),
                     ),
                   ),
@@ -694,7 +694,8 @@ class _TrendingBanner extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () => context.push(RouteNames.shop),
+                          onPressed: () =>
+                              _openHomeActionRoute(context, RouteNames.shop),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.gold,
                             foregroundColor: Colors.black,
@@ -743,7 +744,7 @@ class _BestSellersSection extends ConsumerWidget {
         SectionHeaderWidget(
           title: 'Best Sellers',
           actionLabel: 'See all',
-          onActionTap: () => context.push(RouteNames.shop),
+          onActionTap: () => _openHomeActionRoute(context, RouteNames.shop),
         ),
         SizedBox(
           height: 350,
@@ -761,7 +762,11 @@ class _BestSellersSection extends ConsumerWidget {
                       padding: const EdgeInsets.only(right: 12),
                       child: Consumer(
                         builder: (context, ref, child) {
-                          final isWishlisted = ref.watch(isProductWishlistedProvider(products[index].productId));
+                          final isWishlisted = ref.watch(
+                            isProductWishlistedProvider(
+                              products[index].productId,
+                            ),
+                          );
                           return ProductCardWidget(
                             product: products[index],
                             imageAspectRatio: 2 / 3,
@@ -805,4 +810,21 @@ class _BestSellersSection extends ConsumerWidget {
       ],
     );
   }
+}
+
+void _openHomeActionRoute(BuildContext context, String route) {
+  const shellRoutes = {
+    RouteNames.home,
+    RouteNames.shop,
+    RouteNames.cart,
+    RouteNames.wishlist,
+    RouteNames.profile,
+  };
+
+  if (shellRoutes.contains(route)) {
+    context.go(route);
+    return;
+  }
+
+  context.push(route);
 }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:style_cart/core/constants/firestore_schema.dart';
 import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
 import 'package:style_cart/features/products/presentation/providers/product_list_notifier.dart';
 import 'package:style_cart/features/products/presentation/providers/search_notifier.dart';
 import 'package:style_cart/shared/widgets/cards/product_grid_widget.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
 
 class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
@@ -55,10 +55,10 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
   }
 
   int _getActiveFilterCount(ProductFilter filter) {
-    int count = 0;
+    var count = 0;
     if (filter.category != null) count++;
     if (filter.minPrice != null || filter.maxPrice != null) count++;
-    if (filter.isLimitedEdition == true) count++;
+    if (filter.isLimitedEdition ?? false) count++;
     return count;
   }
 
@@ -156,8 +156,8 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                       isLoadingMore: productListState.isLoadingMore,
                       hasError: productListState.hasError,
                       errorMessage: productListState.errorMessage,
-                      onLoadMore: () => notifier.loadMore(),
-                      onRetry: () => notifier.refresh(),
+                      onLoadMore: notifier.loadMore,
+                      onRetry: notifier.refresh,
                     ),
             ),
           ],
@@ -205,10 +205,12 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
                 setState(() => _isSearchMode = query.isNotEmpty);
                 notifier.onQueryChanged(query);
               },
+              textInputAction: TextInputAction.search,
               onSubmitted: (query) {
                 if (query.isNotEmpty) {
                   notifier.saveSearch(query);
                 }
+                FocusScope.of(context).unfocus();
               },
             ),
           ),
@@ -264,7 +266,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
             _RemovableChip(
               label: _priceRangeLabel(filter),
               onRemove: () => notifier.applyFilter(
-                filter.copyWith(minPrice: null, maxPrice: null),
+                filter.copyWith(),
               ),
             ),
           if (filter.isFiltered)
@@ -358,10 +360,10 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
 }
 
 class _RemovableChip extends StatelessWidget {
-  final String label;
-  final VoidCallback onRemove;
 
   const _RemovableChip({required this.label, required this.onRemove});
+  final String label;
+  final VoidCallback onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -389,10 +391,10 @@ class _RemovableChip extends StatelessWidget {
 }
 
 class _FilterSheet extends StatefulWidget {
-  final ProductFilter currentFilter;
-  final void Function(ProductFilter) onApply;
 
   const _FilterSheet({required this.currentFilter, required this.onApply});
+  final ProductFilter currentFilter;
+  final void Function(ProductFilter) onApply;
 
   @override
   State<_FilterSheet> createState() => _FilterSheetState();
@@ -464,7 +466,6 @@ class _FilterSheetState extends State<_FilterSheet> {
                       _localFilter.minPrice ?? 0,
                       _localFilter.maxPrice ?? 5000,
                     ),
-                    min: 0,
                     max: 5000,
                     activeColor: AppColors.primary,
                     inactiveColor: AppColors.backgroundDark,
@@ -487,7 +488,7 @@ class _FilterSheetState extends State<_FilterSheet> {
                   const SizedBox(height: 24),
                   SwitchListTile(
                     title: const Text('Limited Edition', style: TextStyle(color: Colors.white)),
-                    activeColor: AppColors.primary,
+                    activeThumbColor: AppColors.primary,
                     value: _localFilter.isLimitedEdition ?? false,
                     onChanged: (val) {
                       setState(() {

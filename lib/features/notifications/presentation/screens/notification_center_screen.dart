@@ -5,9 +5,9 @@ import 'package:shimmer/shimmer.dart';
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
+import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
 import 'package:style_cart/features/notifications/presentation/providers/notification_notifier.dart';
-import 'package:style_cart/features/notifications/data/providers/notification_providers.dart';
 
 class NotificationCenterScreen extends ConsumerStatefulWidget {
   const NotificationCenterScreen({super.key});
@@ -57,13 +57,13 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
 }
 
 class _NotificationAppBar extends StatelessWidget {
-  final NotificationState state;
-  final NotificationNotifier notifier;
 
   const _NotificationAppBar({
     required this.state,
     required this.notifier,
   });
+  final NotificationState state;
+  final NotificationNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class _NotificationAppBar extends StatelessWidget {
           const Spacer(),
           if (state.unreadCount > 0)
             TextButton(
-              onPressed: () => notifier.markAllAsRead(),
+              onPressed: notifier.markAllAsRead,
               child: Text(
                 'Mark all read',
                 style: AppTextStyles.labelMedium.copyWith(
@@ -148,13 +148,13 @@ class _NotificationAppBar extends StatelessWidget {
 }
 
 class _FilterChipsRow extends StatelessWidget {
-  final NotificationState state;
-  final NotificationNotifier notifier;
 
   const _FilterChipsRow({
     required this.state,
     required this.notifier,
   });
+  final NotificationState state;
+  final NotificationNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -234,13 +234,13 @@ class _FilterChipsRow extends StatelessWidget {
 }
 
 class _NotificationsList extends StatelessWidget {
-  final List<NotificationEntity> notifications;
-  final NotificationNotifier notifier;
 
   const _NotificationsList({
     required this.notifications,
     required this.notifier,
   });
+  final List<NotificationEntity> notifications;
+  final NotificationNotifier notifier;
 
   Map<String, List<NotificationEntity>> _groupByDate(List<NotificationEntity> notifications) {
     final now = DateTime.now();
@@ -281,7 +281,7 @@ class _NotificationsList extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 16),
       itemCount: keys.fold<int>(0, (sum, key) => sum + grouped[key]!.length + 1),
       itemBuilder: (context, index) {
-        int currentCount = 0;
+        var currentCount = 0;
         for (final key in keys) {
           if (index == currentCount) {
             // Group header
@@ -304,8 +304,8 @@ class _NotificationsList extends StatelessWidget {
 }
 
 class _GroupHeader extends StatelessWidget {
-  final String title;
   const _GroupHeader({required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -324,13 +324,13 @@ class _GroupHeader extends StatelessWidget {
 }
 
 class _NotificationTile extends StatelessWidget {
-  final NotificationEntity notification;
-  final NotificationNotifier notifier;
 
   const _NotificationTile({
     required this.notification,
     required this.notifier,
   });
+  final NotificationEntity notification;
+  final NotificationNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -556,7 +556,7 @@ class _EmptyState extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'No notifications yet.\n'
-            'We\'ll notify you about orders\n'
+            "We'll notify you about orders\n"
             'and exclusive deals.',
             textAlign: TextAlign.center,
             style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textMuted),

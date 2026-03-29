@@ -12,14 +12,7 @@ import 'package:style_cart/features/admin/dashboard/domain/models/dashboard_stat
 
 part 'analytics_repository_impl.g.dart';
 
-class AnalyticsData extends Equatable {
-  final double totalRevenue;
-  final double revenueGrowthPct;
-  final List<DailyRevenue> revenueTrend;
-  final Map<String, double> revenueByCategory;
-  final List<BestSellerItem> bestSellers;
-  final int totalItemsSold;
-  final String selectedPeriod; // 'today'|'weekly'|'monthly'|'yearly'
+class AnalyticsData extends Equatable { // 'today'|'weekly'|'monthly'|'yearly'
 
   const AnalyticsData({
     required this.totalRevenue,
@@ -30,17 +23,19 @@ class AnalyticsData extends Equatable {
     required this.totalItemsSold,
     required this.selectedPeriod,
   });
+  final double totalRevenue;
+  final double revenueGrowthPct;
+  final List<DailyRevenue> revenueTrend;
+  final Map<String, double> revenueByCategory;
+  final List<BestSellerItem> bestSellers;
+  final int totalItemsSold;
+  final String selectedPeriod;
 
   @override
   List<Object> get props => [totalRevenue, selectedPeriod, revenueTrend, bestSellers];
 }
 
-class BestSellerItem extends Equatable {
-  final String productId;
-  final String productName;
-  final int unitsSold;
-  final double revenue;
-  final double progressPct; // relative to top seller
+class BestSellerItem extends Equatable { // relative to top seller
 
   const BestSellerItem({
     required this.productId,
@@ -49,6 +44,11 @@ class BestSellerItem extends Equatable {
     required this.revenue,
     required this.progressPct,
   });
+  final String productId;
+  final String productName;
+  final int unitsSold;
+  final double revenue;
+  final double progressPct;
 
   @override
   List<Object> get props => [productId, unitsSold];
@@ -188,11 +188,11 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
           end: now,
         ),
       'monthly' => (
-          start: DateTime(now.year, now.month, 1),
+          start: DateTime(now.year, now.month),
           end: now,
         ),
       _ => ( // yearly
-          start: DateTime(now.year, 1, 1),
+          start: DateTime(now.year),
           end: now,
         ),
     };
@@ -216,7 +216,7 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
     final dailyMap = <String, DailyRevenue>{};
     final dayCount = range.end.difference(range.start).inDays.clamp(1, 30);
 
-    for (int i = dayCount; i >= 0; i--) {
+    for (var i = dayCount; i >= 0; i--) {
       final date = range.end.subtract(Duration(days: i));
       final key = DateFormat('yyyy-MM-dd').format(date);
       dailyMap[key] = DailyRevenue(
@@ -227,7 +227,7 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
     }
 
     for (final doc in docs) {
-      final data = doc.data() as Map<String, dynamic>;
+      final data = doc.data()! as Map<String, dynamic>;
       final ts = (data['placedAt'] as Timestamp?)?.toDate();
       if (ts == null) continue;
       final key = DateFormat('yyyy-MM-dd').format(ts);
@@ -245,16 +245,16 @@ class AnalyticsRepositoryImpl extends FirestoreBaseRepository
 }
 
 class _ProductSaleData {
-  final String productId;
-  final String productName;
-  final int unitsSold;
-  final double revenue;
   const _ProductSaleData({
     required this.productId,
     required this.productName,
     required this.unitsSold,
     required this.revenue,
   });
+  final String productId;
+  final String productName;
+  final int unitsSold;
+  final double revenue;
 }
 
 @riverpod
@@ -280,9 +280,9 @@ Future<AnalyticsData> analyticsData(AnalyticsDataRef ref) async {
     () => AnalyticsData(
       totalRevenue: 0,
       revenueGrowthPct: 0,
-      revenueTrend: [],
-      revenueByCategory: {},
-      bestSellers: [],
+      revenueTrend: const [],
+      revenueByCategory: const {},
+      bestSellers: const [],
       totalItemsSold: 0,
       selectedPeriod: period,
     ),

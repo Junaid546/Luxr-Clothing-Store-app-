@@ -82,7 +82,7 @@ class OrderRepositoryImpl
     Object? lastDocument,
   }) {
     return safeFirestoreCall(() async {
-      Query<Map<String, dynamic>> query = _ordersRef
+      var query = _ordersRef
           .where('userId', isEqualTo: userId)
           .orderBy('placedAt', descending: true);
 
@@ -175,7 +175,7 @@ class OrderRepositoryImpl
 
         // WRITE: Release stock for all items (Grouped by product)
         final handledProducts = <String>{};
-        for (int i = 0; i < items.length; i++) {
+        for (var i = 0; i < items.length; i++) {
           final pId = items[i].productId;
           if (handledProducts.contains(pId)) continue;
 
@@ -190,7 +190,7 @@ class OrderRepositoryImpl
             'updatedAt': FieldValue.serverTimestamp(),
           };
 
-          int totalRelease = 0;
+          var totalRelease = 0;
           for (final item in productItems) {
             final currentQty = (inv[item.size] as num?)?.toInt() ?? 0;
             final newQty = currentQty + item.quantity;
@@ -283,7 +283,7 @@ class OrderRepositoryImpl
     Object? lastDocument,
   }) {
     return safeFirestoreCall(() async {
-      Query<Map<String, dynamic>> query = _ordersRef
+      var query = _ordersRef
           .orderBy('placedAt', descending: true);
 
       if (statusFilter != null && statusFilter != 'all') {
@@ -472,7 +472,7 @@ class OrderRepositoryImpl
 
         // RELEASE stock (Grouped by product)
         final handledProducts = <String>{};
-        for (int i = 0; i < items.length; i++) {
+        for (var i = 0; i < items.length; i++) {
           final pId = items[i].productId;
           if (handledProducts.contains(pId)) continue;
 
@@ -487,7 +487,7 @@ class OrderRepositoryImpl
             'updatedAt': FieldValue.serverTimestamp(),
           };
 
-          int totalRelease = 0;
+          var totalRelease = 0;
           for (final item in productItems) {
             final currentQty = (inv[item.size] as num?)?.toInt() ?? 0;
             final newQty = currentQty + item.quantity;

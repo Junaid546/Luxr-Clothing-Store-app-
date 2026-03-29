@@ -29,7 +29,7 @@ class ErrorMessages {
 
   // ── Firestore error mapping ────────────────────────
   static String fromFirestoreCode(String? code) => switch (code) {
-        'permission-denied' => 'You don\'t have permission to perform this action.',
+        'permission-denied' => "You don't have permission to perform this action.",
         'not-found' => 'The requested resource was not found.',
         'already-exists' => 'This record already exists.',
         'resource-exhausted' => 'Too many requests. Please try again later.',
@@ -46,7 +46,7 @@ class ErrorMessages {
 
   static const String sessionExpired = 'Your session has expired. Please sign in again.';
 
-  static const String permissionDenied = 'You don\'t have permission to do this.';
+  static const String permissionDenied = "You don't have permission to do this.";
 
   static const String itemNotFound = 'This item no longer exists.';
 

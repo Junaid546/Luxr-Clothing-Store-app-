@@ -8,19 +8,19 @@ part 'secure_storage_service.g.dart';
 // FlutterSecureStorage (sensitive) with a unified API.
 
 class SecureStorageService {
-  final FlutterSecureStorage _secureStorage;
-  final SharedPreferences _prefs;
-
   const SecureStorageService({
     required FlutterSecureStorage secureStorage,
     required SharedPreferences prefs,
-  })  : _secureStorage = secureStorage,
-        _prefs = prefs;
+  }) : _secureStorage = secureStorage,
+       _prefs = prefs;
+  final FlutterSecureStorage _secureStorage;
+  final SharedPreferences _prefs;
 
   // ── Sensitive data (encrypted) ─────────────────────
   // Use for: auth tokens, user IDs, payment info
 
-  Future<void> writeSecure(String key, String value) => _secureStorage.write(key: key, value: value);
+  Future<void> writeSecure(String key, String value) =>
+      _secureStorage.write(key: key, value: value);
 
   Future<String?> readSecure(String key) => _secureStorage.read(key: key);
 
@@ -34,15 +34,18 @@ class SecureStorageService {
 
   Future<void> writeBool(String key, bool value) => _prefs.setBool(key, value);
 
-  bool readBool(String key, {bool defaultValue = false}) => _prefs.getBool(key) ?? defaultValue;
+  bool readBool(String key, {bool defaultValue = false}) =>
+      _prefs.getBool(key) ?? defaultValue;
 
-  Future<void> writeString(String key, String value) => _prefs.setString(key, value);
+  Future<void> writeString(String key, String value) =>
+      _prefs.setString(key, value);
 
   String? readString(String key) => _prefs.getString(key);
 
   Future<void> writeInt(String key, int value) => _prefs.setInt(key, value);
 
-  int readInt(String key, {int defaultValue = 0}) => _prefs.getInt(key) ?? defaultValue;
+  int readInt(String key, {int defaultValue = 0}) =>
+      _prefs.getInt(key) ?? defaultValue;
 
   Future<void> remove(String key) => _prefs.remove(key);
 
@@ -57,7 +60,9 @@ class SecureStorageService {
 }
 
 @riverpod
-Future<SecureStorageService> secureStorageService(SecureStorageServiceRef ref) async {
+Future<SecureStorageService> secureStorageService(
+  SecureStorageServiceRef ref,
+) async {
   final prefs = await SharedPreferences.getInstance();
   return SecureStorageService(
     secureStorage: const FlutterSecureStorage(

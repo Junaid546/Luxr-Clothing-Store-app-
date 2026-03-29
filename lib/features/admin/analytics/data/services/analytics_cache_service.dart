@@ -17,13 +17,9 @@ part 'analytics_cache_service.g.dart';
 // ══════════════════════════════════════════════════════
 
 class AnalyticsCacheService {
+  const AnalyticsCacheService(this._firestore, this._computeService);
   final FirebaseFirestore _firestore;
   final AnalyticsComputationService _computeService;
-
-  const AnalyticsCacheService(
-    this._firestore,
-    this._computeService,
-  );
 
   // ── Write daily snapshot ──────────────────────────
   // Computes metrics for the given date and persists them
@@ -41,10 +37,7 @@ class AnalyticsCacheService {
 
     final dateKey = DateFormat('yyyy-MM-dd').format(date);
 
-    await _firestore
-        .collection(FirestoreConstants.analytics)
-        .doc(dateKey)
-        .set(
+    await _firestore.collection(FirestoreConstants.analytics).doc(dateKey).set(
       {
         'date': dateKey,
         'revenue': report.revenue.totalRevenue,
@@ -54,12 +47,14 @@ class AnalyticsCacheService {
         'avgOrderValue': report.revenue.avgOrderValue,
         'topProducts': report.topProducts
             .take(5)
-            .map((p) => {
-                  'productId': p.productId,
-                  'name': p.productName,
-                  'unitsSold': p.unitsSold,
-                  'revenue': p.revenue,
-                })
+            .map(
+              (p) => {
+                'productId': p.productId,
+                'name': p.productName,
+                'unitsSold': p.unitsSold,
+                'revenue': p.revenue,
+              },
+            )
             .toList(),
         'revenueByCategory': report.categoryBreakdown.map(
           (k, v) => MapEntry(k, v.revenue),
@@ -74,9 +69,7 @@ class AnalyticsCacheService {
 
   // ── Read cached snapshots for a date range ────────
   // Returns raw Firestore data maps sorted by date ASC.
-  Future<List<Map<String, dynamic>>> readCachedRange(
-    DateRange range,
-  ) async {
+  Future<List<Map<String, dynamic>>> readCachedRange(DateRange range) async {
     final startKey = DateFormat('yyyy-MM-dd').format(range.start);
     final endKey = DateFormat('yyyy-MM-dd').format(range.end);
 
@@ -92,9 +85,7 @@ class AnalyticsCacheService {
 }
 
 @riverpod
-AnalyticsCacheService analyticsCacheService(
-  AnalyticsCacheServiceRef ref,
-) =>
+AnalyticsCacheService analyticsCacheService(AnalyticsCacheServiceRef ref) =>
     AnalyticsCacheService(
       ref.watch(firestoreProvider),
       ref.watch(analyticsComputationServiceProvider),

@@ -29,7 +29,6 @@ class GlobalErrorHandler {
           details.exception,
           details.stack ?? StackTrace.empty,
           context: details.context?.toString(),
-          isFatal: false,
         );
       }
     };
@@ -115,7 +114,6 @@ class GlobalErrorHandler {
       sanitizedMessage,
       stack ?? StackTrace.empty,
       reason: reason,
-      fatal: false,
       printDetails: false,
     );
   }

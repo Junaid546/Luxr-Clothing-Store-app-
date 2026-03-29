@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:uuid/uuid.dart';
 import 'package:style_cart/features/notifications/domain/entities/notification_entity.dart';
+import 'package:uuid/uuid.dart';
 
 class NotificationModel extends NotificationEntity {
   const NotificationModel({
@@ -15,8 +15,27 @@ class NotificationModel extends NotificationEntity {
     required super.createdAt,
   });
 
+  factory NotificationModel.fromFCM({
+    required String userId,
+    required RemoteMessage message,
+  }) {
+    final msgData = message.data;
+    return NotificationModel(
+      notificationId: message.messageId ?? const Uuid().v4(),
+      userId:    userId,
+      title:     message.notification?.title ?? '',
+      body:      message.notification?.body  ?? '',
+      type: NotificationType.fromString(
+        msgData['type'] as String? ?? 'system',
+      ),
+      data: NotificationData.fromMap(msgData),
+      isRead:    false,
+      createdAt: DateTime.now(),
+    );
+  }
+
   factory NotificationModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data()! as Map<String, dynamic>;
     return NotificationModel(
       notificationId: doc.id,
       userId:   d['userId']  as String? ?? '',
@@ -42,25 +61,6 @@ class NotificationModel extends NotificationEntity {
     'isRead':         isRead,
     'createdAt':      FieldValue.serverTimestamp(),
   };
-
-  factory NotificationModel.fromFCM({
-    required String userId,
-    required RemoteMessage message,
-  }) {
-    final msgData = message.data;
-    return NotificationModel(
-      notificationId: message.messageId ?? const Uuid().v4(),
-      userId:    userId,
-      title:     message.notification?.title ?? '',
-      body:      message.notification?.body  ?? '',
-      type: NotificationType.fromString(
-        msgData['type'] as String? ?? 'system',
-      ),
-      data: NotificationData.fromMap(msgData),
-      isRead:    false,
-      createdAt: DateTime.now(),
-    );
-  }
 
   NotificationModel copyWith({
     String? notificationId,

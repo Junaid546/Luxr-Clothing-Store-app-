@@ -1,7 +1,7 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:app_settings/app_settings.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/core/constants/firestore_constants.dart';
 import 'package:style_cart/core/providers/firebase_providers.dart';
@@ -55,8 +55,8 @@ class _NotificationPreferencesScreenState
       setState(() => _localPrefs[key] = previousValue);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Failed to save preference'),
+          const SnackBar(
+            content: Text('Failed to save preference'),
             backgroundColor: AppColors.error,
           ),
         );
@@ -118,7 +118,6 @@ class _NotificationPreferencesScreenState
               icon: Icons.security_outlined,
               iconColor: AppColors.warning,
               value: true,
-              onChanged: null,
               isLocked: true,
             ),
             const SizedBox(height: 24),
@@ -151,7 +150,7 @@ class _NotificationPreferencesScreenState
             ),
             const SizedBox(height: 16),
             OutlinedButton.icon(
-              onPressed: () => AppSettings.openAppSettings(),
+              onPressed: AppSettings.openAppSettings,
               icon: const Icon(Icons.settings_outlined),
               label: const Text('Open Device Settings'),
               style: OutlinedButton.styleFrom(
@@ -173,10 +172,10 @@ class _NotificationPreferencesScreenState
 }
 
 class _SectionTitle extends StatelessWidget {
-  final String title;
-  final TextTheme textTheme;
 
   const _SectionTitle({required this.title, required this.textTheme});
+  final String title;
+  final TextTheme textTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -192,13 +191,6 @@ class _SectionTitle extends StatelessWidget {
 }
 
 class _PreferenceToggle extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final IconData icon;
-  final Color iconColor;
-  final bool value;
-  final ValueChanged<bool>? onChanged;
-  final bool isLocked;
 
   const _PreferenceToggle({
     required this.title,
@@ -209,6 +201,13 @@ class _PreferenceToggle extends StatelessWidget {
     this.onChanged,
     this.isLocked = false,
   });
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final Color iconColor;
+  final bool value;
+  final ValueChanged<bool>? onChanged;
+  final bool isLocked;
 
   @override
   Widget build(BuildContext context) {
@@ -263,7 +262,7 @@ class _PreferenceToggle extends StatelessWidget {
             Switch(
               value: value,
               onChanged: onChanged,
-              activeColor: AppColors.primary,
+              activeThumbColor: AppColors.primary,
               activeTrackColor: AppColors.primary.withOpacity(0.3),
               inactiveThumbColor: AppColors.textMuted,
               inactiveTrackColor: AppColors.backgroundElevated,

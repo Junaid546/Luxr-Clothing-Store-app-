@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -7,10 +8,7 @@ import 'package:style_cart/features/auth/data/providers/auth_providers.dart';
 import 'package:style_cart/features/orders/data/providers/order_providers.dart';
 import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 import 'package:style_cart/features/orders/domain/usecases/confirm_return_usecase.dart';
-import 'package:style_cart/features/orders/domain/usecases/search_orders_usecase.dart';
 import 'package:style_cart/features/orders/domain/usecases/update_order_status_usecase.dart';
-import 'package:style_cart/features/orders/domain/usecases/watch_order_usecase.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
 
 part 'admin_order_notifier.freezed.dart';
 part 'admin_order_notifier.g.dart';
@@ -34,9 +32,9 @@ class AdminOrderNotifier extends _$AdminOrderNotifier {
 
   @override
   AdminOrderState build() {
-    Future.microtask(() => _watchOrders());
+    Future.microtask(_watchOrders);
     ref.onDispose(() => _subscription?.cancel());
-    return const AdminOrderState(isLoading: true);
+    return const AdminOrderState();
   }
 
   void _watchOrders() {

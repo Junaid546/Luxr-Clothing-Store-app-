@@ -1,5 +1,3 @@
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,23 +5,24 @@ import 'package:style_cart/app/router/app_router.dart';
 import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
+import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:style_cart/core/providers/repository_providers.dart';
 import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
 import 'package:style_cart/features/cart/data/models/cart_item_model.dart';
-import 'package:style_cart/core/providers/repository_providers.dart';
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
 import 'package:style_cart/features/products/presentation/providers/product_detail_notifier.dart';
 import 'package:style_cart/features/wishlist/presentation/providers/wishlist_notifier.dart';
-import 'package:style_cart/core/constants/firestore_schema.dart';
 import 'package:style_cart/shared/utils/wishlist_helper.dart';
+import 'package:style_cart/shared/widgets/images/safe_remote_image.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
-  final String productId;
   const ProductDetailScreen({required this.productId, super.key});
+  final String productId;
 
   @override
-  ConsumerState<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  ConsumerState<ProductDetailScreen> createState() =>
+      _ProductDetailScreenState();
 }
 
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
@@ -40,12 +39,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   Future<void> _addToCart(BuildContext context, WidgetRef ref) async {
-    final ProductDetailState state = ref.read(productDetailNotifierProvider(widget.productId));
-    final ProductEntity? product = state.product;
+    final state = ref.read(productDetailNotifierProvider(widget.productId));
+    final product = state.product;
 
     if (product == null) return;
 
-    final error = ref.read(productDetailNotifierProvider(widget.productId).notifier).validateSelection();
+    final error = ref
+        .read(productDetailNotifierProvider(widget.productId).notifier)
+        .validateSelection();
     if (error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -58,7 +59,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     }
 
     final authState = ref.read(authNotifierProvider);
-    final UserEntity? user = authState is AuthAuthenticated ? authState.user : null;
+    final user = authState is AuthAuthenticated ? authState.user : null;
     if (user == null) {
       context.push(RouteNames.login);
       return;
@@ -76,10 +77,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
       imageUrl: product.thumbnailUrl,
       size: state.selectedSize!,
       color: state.selectedColor ?? '',
-      colorHex: product.colors.firstWhere(
-        (c) => c.name == state.selectedColor,
-        orElse: () => const ProductColorEntity(name: '', hexCode: '#000000'),
-      ).hexCode,
+      colorHex: product.colors
+          .firstWhere(
+            (c) => c.name == state.selectedColor,
+            orElse: () =>
+                const ProductColorEntity(name: '', hexCode: '#000000'),
+          )
+          .hexCode,
       quantity: state.quantity,
       unitPrice: product.price,
       discountPct: product.discountPct,
@@ -88,7 +92,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
       updatedAt: DateTime.now(),
     );
 
-    final result = await ref.read(cartRepositoryProvider).addToCart(userId: user.uid, item: cartItem);
+    final result = await ref
+        .read(cartRepositoryProvider)
+        .addToCart(userId: user.uid, item: cartItem);
 
     result.fold(
       (failure) => ScaffoldMessenger.of(context).showSnackBar(
@@ -112,7 +118,9 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               textColor: Colors.white,
               onPressed: () {
                 if (AppRouter.navigatorKey.currentContext?.mounted ?? false) {
-                  AppRouter.navigatorKey.currentContext?.pushNamed(RouteNames.cart);
+                  AppRouter.navigatorKey.currentContext?.pushNamed(
+                    RouteNames.cart,
+                  );
                 }
               },
             ),
@@ -129,9 +137,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ProductDetailState state = ref.watch(productDetailNotifierProvider(widget.productId));
-    final isWishlisted = ref.watch(isProductWishlistedProvider(widget.productId));
-    final detailNotifier = ref.read(productDetailNotifierProvider(widget.productId).notifier);
+    final state = ref.watch(productDetailNotifierProvider(widget.productId));
+    final isWishlisted = ref.watch(
+      isProductWishlistedProvider(widget.productId),
+    );
+    final detailNotifier = ref.read(
+      productDetailNotifierProvider(widget.productId).notifier,
+    );
 
     if (state.isLoading) {
       return const Scaffold(
@@ -152,12 +164,16 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(24),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, color: AppColors.error, size: 64),
+                const Icon(
+                  Icons.error_outline,
+                  color: AppColors.error,
+                  size: 64,
+                ),
                 const SizedBox(height: 16),
                 Text(
                   state.errorMessage.isNotEmpty
@@ -213,14 +229,24 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                 ),
               ),
               SliverToBoxAdapter(child: _ProductInfoSection(product: product)),
-              SliverToBoxAdapter(child: _SizeSelector(product: product, state: state, detailNotifier: detailNotifier)),
+              SliverToBoxAdapter(
+                child: _SizeSelector(
+                  product: product,
+                  state: state,
+                  detailNotifier: detailNotifier,
+                ),
+              ),
               if (product.colors.isNotEmpty)
-                SliverToBoxAdapter(child: _ColorSelector(product: product, state: state, detailNotifier: detailNotifier)),
+                SliverToBoxAdapter(
+                  child: _ColorSelector(
+                    product: product,
+                    state: state,
+                    detailNotifier: detailNotifier,
+                  ),
+                ),
               SliverToBoxAdapter(child: _TabSection(product: product)),
               SliverToBoxAdapter(child: _ReviewsSection(product: product)),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 100),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
           ),
           Positioned(
@@ -248,12 +274,6 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 }
 
 class _ImageSection extends StatelessWidget {
-  final ProductEntity product;
-  final ProductDetailState state;
-  final ProductDetailNotifier detailNotifier;
-  final PageController imagePageController;
-  final BuildContext context;
-
   const _ImageSection({
     required this.product,
     required this.state,
@@ -261,6 +281,11 @@ class _ImageSection extends StatelessWidget {
     required this.imagePageController,
     required this.context,
   });
+  final ProductEntity product;
+  final ProductDetailState state;
+  final ProductDetailNotifier detailNotifier;
+  final PageController imagePageController;
+  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {
@@ -271,8 +296,8 @@ class _ImageSection extends StatelessWidget {
           PageView.builder(
             controller: imagePageController,
             itemCount: product.imageUrls.length,
-            onPageChanged: (index) => detailNotifier.setImageIndex(index),
-            itemBuilder: (context, index) => CachedNetworkImage(
+            onPageChanged: detailNotifier.setImageIndex,
+            itemBuilder: (context, index) => SafeRemoteImage(
               imageUrl: product.imageUrls[index],
               fit: BoxFit.cover,
               width: double.infinity,
@@ -288,10 +313,7 @@ class _ImageSection extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    AppColors.backgroundDark,
-                  ],
+                  colors: [Colors.transparent, AppColors.backgroundDark],
                 ),
               ),
             ),
@@ -310,7 +332,9 @@ class _ImageSection extends StatelessWidget {
                   width: state.currentImageIndex == i ? 20 : 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: state.currentImageIndex == i ? Colors.white : Colors.white38,
+                    color: state.currentImageIndex == i
+                        ? Colors.white
+                        : Colors.white38,
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ),
@@ -324,13 +348,12 @@ class _ImageSection extends StatelessWidget {
 }
 
 class _FloatingNavButtons extends StatelessWidget {
-  final bool isWishlisted;
-  final VoidCallback onWishlistTap;
-
   const _FloatingNavButtons({
     required this.isWishlisted,
     required this.onWishlistTap,
   });
+  final bool isWishlisted;
+  final VoidCallback onWishlistTap;
 
   @override
   Widget build(BuildContext context) {
@@ -344,10 +367,7 @@ class _FloatingNavButtons extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _CircleButton(
-                icon: Icons.arrow_back,
-                onTap: () => context.pop(),
-              ),
+              _CircleButton(icon: Icons.arrow_back, onTap: () => context.pop()),
               _CircleButton(
                 icon: isWishlisted ? Icons.favorite : Icons.favorite_border,
                 iconColor: isWishlisted ? AppColors.gold : Colors.white,
@@ -362,15 +382,14 @@ class _FloatingNavButtons extends StatelessWidget {
 }
 
 class _CircleButton extends StatelessWidget {
+  const _CircleButton({
+    required this.icon,
+    required this.onTap,
+    this.iconColor,
+  });
   final IconData icon;
   final Color? iconColor;
   final VoidCallback onTap;
-
-  const _CircleButton({
-    required this.icon,
-    this.iconColor,
-    required this.onTap,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -390,9 +409,8 @@ class _CircleButton extends StatelessWidget {
 }
 
 class _ProductInfoSection extends StatelessWidget {
-  final ProductEntity product;
-
   const _ProductInfoSection({required this.product});
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
@@ -449,7 +467,10 @@ class _ProductInfoSection extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(4),
@@ -482,7 +503,9 @@ class _ProductInfoSection extends StatelessWidget {
                   ...List.generate(
                     5,
                     (i) => Icon(
-                      i < product.avgRating.floor() ? Icons.star : Icons.star_border,
+                      i < product.avgRating.floor()
+                          ? Icons.star
+                          : Icons.star_border,
                       color: AppColors.gold,
                       size: 16,
                     ),
@@ -490,7 +513,9 @@ class _ProductInfoSection extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     '${product.avgRating.toStringAsFixed(1)} (${product.reviewCount} reviews)',
-                    style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -502,9 +527,8 @@ class _ProductInfoSection extends StatelessWidget {
 }
 
 class _StockStatusBadge extends StatelessWidget {
-  final StockStatus status;
-
   const _StockStatusBadge({required this.status});
+  final StockStatus status;
 
   @override
   Widget build(BuildContext context) {
@@ -532,11 +556,14 @@ class _StockStatusBadge extends StatelessWidget {
 }
 
 class _SizeSelector extends StatelessWidget {
+  const _SizeSelector({
+    required this.product,
+    required this.state,
+    required this.detailNotifier,
+  });
   final ProductEntity product;
   final ProductDetailState state;
   final ProductDetailNotifier detailNotifier;
-
-  const _SizeSelector({required this.product, required this.state, required this.detailNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -547,7 +574,10 @@ class _SizeSelector extends StatelessWidget {
         children: [
           Text(
             'SELECT SIZE',
-            style: AppTextStyles.labelSmall.copyWith(letterSpacing: 1, color: Colors.white),
+            style: AppTextStyles.labelSmall.copyWith(
+              letterSpacing: 1,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 12),
           SingleChildScrollView(
@@ -558,19 +588,23 @@ class _SizeSelector extends StatelessWidget {
                 final isSelected = state.selectedSize == size;
 
                 return GestureDetector(
-                  onTap: isAvailable ? () => detailNotifier.selectSize(size) : null,
+                  onTap: isAvailable
+                      ? () => detailNotifier.selectSize(size)
+                      : null,
                   child: Container(
                     margin: const EdgeInsets.only(right: 10),
                     width: 52,
                     height: 52,
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.transparent : AppColors.backgroundCard,
+                      color: isSelected
+                          ? Colors.transparent
+                          : AppColors.backgroundCard,
                       border: Border.all(
                         color: isSelected
                             ? AppColors.gold
                             : isAvailable
-                                ? AppColors.borderDefault
-                                : AppColors.textMuted.withOpacity(0.3),
+                            ? AppColors.borderDefault
+                            : AppColors.textMuted.withOpacity(0.3),
                         width: isSelected ? 2 : 1,
                       ),
                       borderRadius: BorderRadius.circular(10),
@@ -584,16 +618,16 @@ class _SizeSelector extends StatelessWidget {
                             color: isSelected
                                 ? AppColors.gold
                                 : isAvailable
-                                    ? Colors.white
-                                    : AppColors.textMuted,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                ? Colors.white
+                                : AppColors.textMuted,
+                            fontWeight: isSelected
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                         if (!isAvailable)
                           Positioned.fill(
-                            child: CustomPaint(
-                              painter: _CrossOutPainter(),
-                            ),
+                            child: CustomPaint(painter: _CrossOutPainter()),
                           ),
                       ],
                     ),
@@ -606,7 +640,9 @@ class _SizeSelector extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               '${product.stockForSize(state.selectedSize!)} units available',
-              style: AppTextStyles.bodySmall.copyWith(color: AppColors.textMuted),
+              style: AppTextStyles.bodySmall.copyWith(
+                color: AppColors.textMuted,
+              ),
             ),
           ],
         ],
@@ -621,11 +657,7 @@ class _CrossOutPainter extends CustomPainter {
     final paint = Paint()
       ..color = AppColors.textMuted.withOpacity(0.5)
       ..strokeWidth = 1;
-    canvas.drawLine(
-      Offset(0, size.height),
-      Offset(size.width, 0),
-      paint,
-    );
+    canvas.drawLine(Offset(0, size.height), Offset(size.width, 0), paint);
   }
 
   @override
@@ -633,11 +665,14 @@ class _CrossOutPainter extends CustomPainter {
 }
 
 class _ColorSelector extends StatelessWidget {
+  const _ColorSelector({
+    required this.product,
+    required this.state,
+    required this.detailNotifier,
+  });
   final ProductEntity product;
   final ProductDetailState state;
   final ProductDetailNotifier detailNotifier;
-
-  const _ColorSelector({required this.product, required this.state, required this.detailNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -648,7 +683,10 @@ class _ColorSelector extends StatelessWidget {
         children: [
           Text(
             'COLOR',
-            style: AppTextStyles.labelSmall.copyWith(letterSpacing: 1, color: Colors.white),
+            style: AppTextStyles.labelSmall.copyWith(
+              letterSpacing: 1,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 12),
           SingleChildScrollView(
@@ -663,7 +701,12 @@ class _ColorSelector extends StatelessWidget {
                     width: 36,
                     height: 36,
                     decoration: BoxDecoration(
-                      color: Color(int.parse(color.hexCode.replaceFirst('#', 'FF'), radix: 16)),
+                      color: Color(
+                        int.parse(
+                          color.hexCode.replaceFirst('#', 'FF'),
+                          radix: 16,
+                        ),
+                      ),
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isSelected ? Colors.white : Colors.transparent,
@@ -688,7 +731,9 @@ class _ColorSelector extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8),
               child: Text(
                 state.selectedColor!,
-                style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
             ),
         ],
@@ -698,9 +743,8 @@ class _ColorSelector extends StatelessWidget {
 }
 
 class _TabSection extends StatelessWidget {
-  final ProductEntity product;
-
   const _TabSection({required this.product});
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
@@ -719,7 +763,8 @@ class _TabSection extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 200, // Fixed height for simple tab content without tricky scroll physics
+            height:
+                200, // Fixed height for simple tab content without tricky scroll physics
             child: TabBarView(
               children: [
                 SingleChildScrollView(
@@ -733,7 +778,10 @@ class _TabSection extends StatelessWidget {
                   ),
                 ),
                 const Center(
-                  child: Text('No reviews yet', style: TextStyle(color: AppColors.textMuted)),
+                  child: Text(
+                    'No reviews yet',
+                    style: TextStyle(color: AppColors.textMuted),
+                  ),
                 ),
               ],
             ),
@@ -745,9 +793,8 @@ class _TabSection extends StatelessWidget {
 }
 
 class _ReviewsSection extends StatelessWidget {
-  final ProductEntity product;
-
   const _ReviewsSection({required this.product});
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
@@ -756,14 +803,6 @@ class _ReviewsSection extends StatelessWidget {
 }
 
 class _BottomActionBar extends StatelessWidget {
-  final ProductEntity product;
-  final ProductDetailState state;
-  final VoidCallback onDecrement;
-  final VoidCallback onIncrement;
-  final VoidCallback onAddToCart;
-  final VoidCallback onBuyNow;
-  final BuildContext context;
-
   const _BottomActionBar({
     required this.product,
     required this.state,
@@ -773,17 +812,27 @@ class _BottomActionBar extends StatelessWidget {
     required this.onBuyNow,
     required this.context,
   });
+  final ProductEntity product;
+  final ProductDetailState state;
+  final VoidCallback onDecrement;
+  final VoidCallback onIncrement;
+  final VoidCallback onAddToCart;
+  final VoidCallback onBuyNow;
+  final BuildContext context;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.backgroundDark.withOpacity(0.97),
-        border: const Border(
-          top: BorderSide(color: AppColors.borderDefault, width: 1),
-        ),
+        border: const Border(top: BorderSide(color: AppColors.borderDefault)),
       ),
-      padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
+      padding: EdgeInsets.fromLTRB(
+        16,
+        16,
+        16,
+        MediaQuery.of(context).padding.bottom + 16,
+      ),
       child: Row(
         children: [
           if (state.selectedSize != null) ...[
@@ -807,7 +856,10 @@ class _BottomActionBar extends StatelessWidget {
               ),
               child: Text(
                 product.isOutOfStock ? 'OUT OF STOCK' : 'ADD TO CART',
-                style: AppTextStyles.labelLarge.copyWith(color: Colors.white, letterSpacing: 1),
+                style: AppTextStyles.labelLarge.copyWith(
+                  color: Colors.white,
+                  letterSpacing: 1,
+                ),
               ),
             ),
           ),
@@ -824,7 +876,10 @@ class _BottomActionBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(28),
               ),
             ),
-            child: Text('BUY NOW', style: AppTextStyles.labelLarge.copyWith(color: AppColors.gold)),
+            child: Text(
+              'BUY NOW',
+              style: AppTextStyles.labelLarge.copyWith(color: AppColors.gold),
+            ),
           ),
         ],
       ),
@@ -833,15 +888,14 @@ class _BottomActionBar extends StatelessWidget {
 }
 
 class _QuantitySelector extends StatelessWidget {
-  final int quantity;
-  final VoidCallback onDecrement;
-  final VoidCallback onIncrement;
-
   const _QuantitySelector({
     required this.quantity,
     required this.onDecrement,
     required this.onIncrement,
   });
+  final int quantity;
+  final VoidCallback onDecrement;
+  final VoidCallback onIncrement;
 
   @override
   Widget build(BuildContext context) {
@@ -849,7 +903,10 @@ class _QuantitySelector extends StatelessWidget {
       children: [
         _QtyButton(icon: Icons.remove, onTap: onDecrement),
         const SizedBox(width: 16),
-        Text('$quantity', style: AppTextStyles.titleMedium.copyWith(color: Colors.white)),
+        Text(
+          '$quantity',
+          style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+        ),
         const SizedBox(width: 16),
         _QtyButton(icon: Icons.add, onTap: onIncrement),
       ],
@@ -858,13 +915,9 @@ class _QuantitySelector extends StatelessWidget {
 }
 
 class _QtyButton extends StatelessWidget {
+  const _QtyButton({required this.icon, required this.onTap});
   final IconData icon;
   final VoidCallback onTap;
-
-  const _QtyButton({
-    required this.icon,
-    required this.onTap,
-  });
 
   @override
   Widget build(BuildContext context) {

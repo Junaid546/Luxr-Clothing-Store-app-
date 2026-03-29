@@ -1,8 +1,9 @@
 // ignore_for_file: public_member_api_docs, document_ignores
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:style_cart/core/providers/firebase_providers.dart';
-import 'package:style_cart/features/products/data/repositories/image_repository_impl.dart';
+import 'package:style_cart/features/products/data/repositories/cloudinary_image_repository_impl.dart';
 import 'package:style_cart/features/products/data/repositories/product_repository_impl.dart';
 import 'package:style_cart/features/products/domain/repositories/image_repository.dart';
 import 'package:style_cart/features/products/domain/repositories/product_repository.dart';
@@ -20,66 +21,55 @@ part 'product_data_providers.g.dart';
 
 @riverpod
 ImageRepository imageRepository(ImageRepositoryRef ref) =>
-    ImageRepositoryImpl(ref.watch(firebaseStorageProvider));
+    CloudinaryImageRepositoryImpl(
+      cloudName: dotenv.env['CLOUDINARY_CLOUD_NAME']?.trim() ?? '',
+      uploadPreset: dotenv.env['CLOUDINARY_UPLOAD_PRESET']?.trim() ?? '',
+      pathPrefix: dotenv.env['CLOUDINARY_UPLOAD_PATH_PREFIX']?.trim(),
+    );
 
 @riverpod
-ProductRepository productRepository(
-  ProductRepositoryRef ref,
-) => ProductRepositoryImpl(
+ProductRepository productRepository(ProductRepositoryRef ref) =>
+    ProductRepositoryImpl(
       ref.watch(firestoreProvider),
       ref.watch(imageRepositoryProvider),
     );
 
 // ── Use case providers ────────────────────────────────
 @riverpod
-GetProductsUseCase getProductsUseCase(
-  GetProductsUseCaseRef ref,
-) => GetProductsUseCase(ref.watch(productRepositoryProvider));
+GetProductsUseCase getProductsUseCase(GetProductsUseCaseRef ref) =>
+    GetProductsUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
-GetProductByIdUseCase getProductByIdUseCase(
-  GetProductByIdUseCaseRef ref,
-) => GetProductByIdUseCase(
-       ref.watch(productRepositoryProvider));
+GetProductByIdUseCase getProductByIdUseCase(GetProductByIdUseCaseRef ref) =>
+    GetProductByIdUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
-SearchProductsUseCase searchProductsUseCase(
-  SearchProductsUseCaseRef ref,
-) => SearchProductsUseCase(
-       ref.watch(productRepositoryProvider));
+SearchProductsUseCase searchProductsUseCase(SearchProductsUseCaseRef ref) =>
+    SearchProductsUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
-CreateProductUseCase createProductUseCase(
-  CreateProductUseCaseRef ref,
-) => CreateProductUseCase(
-       ref.watch(productRepositoryProvider));
+CreateProductUseCase createProductUseCase(CreateProductUseCaseRef ref) =>
+    CreateProductUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
-UpdateProductUseCase updateProductUseCase(
-  UpdateProductUseCaseRef ref,
-) => UpdateProductUseCase(
-       ref.watch(productRepositoryProvider));
+UpdateProductUseCase updateProductUseCase(UpdateProductUseCaseRef ref) =>
+    UpdateProductUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
-UpdateInventoryUseCase updateInventoryUseCase(
-  UpdateInventoryUseCaseRef ref,
-) => UpdateInventoryUseCase(
-       ref.watch(productRepositoryProvider));
+UpdateInventoryUseCase updateInventoryUseCase(UpdateInventoryUseCaseRef ref) =>
+    UpdateInventoryUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
 GetLowStockProductsUseCase getLowStockProductsUseCase(
   GetLowStockProductsUseCaseRef ref,
-) => GetLowStockProductsUseCase(
-       ref.watch(productRepositoryProvider));
+) => GetLowStockProductsUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
 ReserveMultipleStockUseCase reserveMultipleStockUseCase(
   ReserveMultipleStockUseCaseRef ref,
-) => ReserveMultipleStockUseCase(
-       ref.watch(productRepositoryProvider));
+) => ReserveMultipleStockUseCase(ref.watch(productRepositoryProvider));
 
 @riverpod
 ReleaseMultipleStockUseCase releaseMultipleStockUseCase(
   ReleaseMultipleStockUseCaseRef ref,
-) => ReleaseMultipleStockUseCase(
-       ref.watch(productRepositoryProvider));
+) => ReleaseMultipleStockUseCase(ref.watch(productRepositoryProvider));

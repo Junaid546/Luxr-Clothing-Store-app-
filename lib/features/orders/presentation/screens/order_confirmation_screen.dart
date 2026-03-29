@@ -6,12 +6,11 @@ import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 
 class OrderConfirmationScreen extends ConsumerWidget {
-  final String orderId;
 
   const OrderConfirmationScreen({
-    super.key,
-    required this.orderId,
+    required this.orderId, super.key,
   });
+  final String orderId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

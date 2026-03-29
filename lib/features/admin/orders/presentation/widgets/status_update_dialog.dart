@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 
 class StatusUpdateDialog extends StatefulWidget {
+
+  const StatusUpdateDialog({
+    required this.order, required this.nextStatus, required this.onConfirm, super.key,
+  });
   final OrderEntity order;
   final String nextStatus;
   final void Function(String? note, CourierEntity? courier) onConfirm;
-
-  const StatusUpdateDialog({
-    super.key,
-    required this.order,
-    required this.nextStatus,
-    required this.onConfirm,
-  });
 
   @override
   State<StatusUpdateDialog> createState() => _StatusUpdateDialogState();
@@ -63,6 +60,8 @@ class _StatusUpdateDialogState extends State<StatusUpdateDialog> {
               controller: _noteController,
               maxLines: 2,
               style: const TextStyle(color: Colors.white),
+              textInputAction: isShipping ? TextInputAction.next : TextInputAction.done,
+              onSubmitted: isShipping ? null : (_) => FocusScope.of(context).unfocus(),
               decoration: _inputDecoration('e.g. Item is being packed'),
             ),
             
@@ -77,6 +76,7 @@ class _StatusUpdateDialogState extends State<StatusUpdateDialog> {
               TextField(
                 controller: _courierNameController,
                 style: const TextStyle(color: Colors.white),
+                textInputAction: TextInputAction.next,
                 decoration: _inputDecoration('e.g. FedEx, DHL'),
               ),
               const SizedBox(height: 12),
@@ -85,6 +85,7 @@ class _StatusUpdateDialogState extends State<StatusUpdateDialog> {
               TextField(
                 controller: _trackingController,
                 style: const TextStyle(color: Colors.white),
+                textInputAction: TextInputAction.next,
                 decoration: _inputDecoration('Tracking ID'),
               ),
               const SizedBox(height: 12),
@@ -93,6 +94,8 @@ class _StatusUpdateDialogState extends State<StatusUpdateDialog> {
               TextField(
                 controller: _estTimeController,
                 style: const TextStyle(color: Colors.white),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) => FocusScope.of(context).unfocus(),
                 decoration: _inputDecoration('e.g. Tomorrow, 5 PM'),
               ),
             ],

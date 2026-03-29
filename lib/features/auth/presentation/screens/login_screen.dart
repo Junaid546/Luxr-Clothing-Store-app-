@@ -103,7 +103,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   Container(
                     width: double.infinity,
                     height: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
                           'assets/images/login screen model image.png',
@@ -205,6 +205,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 controller: _emailController,
                                 focusNode: _emailFocusNode,
                                 keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
                                 style: const TextStyle(color: Colors.white),
                                 decoration: _inputDecoration(
                                   hintText: 'alex@example.com',
@@ -255,6 +256,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 controller: _passwordController,
                                 focusNode: _passwordFocusNode,
                                 obscureText: _obscurePassword,
+                                textInputAction: TextInputAction.done,
+                                onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
                                 style: const TextStyle(color: Colors.white),
                                 decoration: _inputDecoration(
                                   hintText: '••••••••',

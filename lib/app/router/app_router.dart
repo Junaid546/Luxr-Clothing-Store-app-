@@ -1,33 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:go_router/go_router.dart';
+import 'package:style_cart/app/router/admin_shell.dart';
+import 'package:style_cart/app/router/customer_shell.dart';
+import 'package:style_cart/app/router/route_names.dart';
+import 'package:style_cart/features/admin/analytics/presentation/screens/admin_analytics_screen.dart';
+import 'package:style_cart/features/admin/dashboard/presentation/screens/admin_dashboard_screen.dart';
+import 'package:style_cart/features/admin/notifications/presentation/screens/admin_send_notification_screen.dart';
+import 'package:style_cart/features/admin/orders/presentation/screens/admin_orders_screen.dart';
+import 'package:style_cart/features/admin/products/presentation/screens/add_edit_product_screen.dart';
+import 'package:style_cart/features/admin/products/presentation/screens/admin_products_screen.dart';
 import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
-import 'package:style_cart/features/auth/presentation/screens/splash_screen.dart';
+import 'package:style_cart/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:style_cart/features/auth/presentation/screens/login_screen.dart';
 import 'package:style_cart/features/auth/presentation/screens/register_screen.dart';
-import 'package:style_cart/features/auth/presentation/screens/forgot_password_screen.dart';
-import 'package:style_cart/app/router/route_names.dart';
-import 'package:style_cart/app/router/customer_shell.dart';
-import 'package:style_cart/app/router/admin_shell.dart';
-import 'package:style_cart/features/home/presentation/screens/home_screen.dart';
-import 'package:style_cart/features/products/presentation/screens/shop_screen.dart';
-import 'package:style_cart/features/products/presentation/screens/product_detail_screen.dart';
-import 'package:style_cart/features/wishlist/presentation/screens/wishlist_screen.dart';
+import 'package:style_cart/features/auth/presentation/screens/splash_screen.dart';
 import 'package:style_cart/features/cart/presentation/screens/cart_screen.dart';
-import 'package:style_cart/features/profile/presentation/screens/profile_screen.dart';
 import 'package:style_cart/features/checkout/presentation/screens/checkout_screen.dart';
-import 'package:style_cart/features/orders/presentation/screens/order_confirmation_screen.dart';
-import 'package:style_cart/features/orders/presentation/screens/my_orders_screen.dart';
-import 'package:style_cart/features/orders/presentation/screens/order_tracking_screen.dart';
-import 'package:style_cart/features/admin/dashboard/presentation/screens/admin_dashboard_screen.dart';
-import 'package:style_cart/features/admin/products/presentation/screens/admin_products_screen.dart';
-import 'package:style_cart/features/admin/products/presentation/screens/add_edit_product_screen.dart';
-import 'package:style_cart/features/admin/orders/presentation/screens/admin_orders_screen.dart';
-import 'package:style_cart/features/admin/analytics/presentation/screens/admin_analytics_screen.dart';
+import 'package:style_cart/features/home/presentation/screens/home_screen.dart';
 import 'package:style_cart/features/notifications/presentation/screens/notification_center_screen.dart';
 import 'package:style_cart/features/notifications/presentation/screens/notification_preferences_screen.dart';
-import 'package:style_cart/features/admin/notifications/presentation/screens/admin_send_notification_screen.dart';
+import 'package:style_cart/features/orders/presentation/screens/my_orders_screen.dart';
+import 'package:style_cart/features/orders/presentation/screens/order_confirmation_screen.dart';
+import 'package:style_cart/features/orders/presentation/screens/order_tracking_screen.dart';
+import 'package:style_cart/features/products/presentation/screens/product_detail_screen.dart';
+import 'package:style_cart/features/products/presentation/screens/shop_screen.dart';
+import 'package:style_cart/features/profile/data/models/profile_address_model.dart';
+import 'package:style_cart/features/profile/data/models/saved_payment_method_model.dart';
+import 'package:style_cart/features/profile/presentation/screens/edit_payment_method_screen.dart';
+import 'package:style_cart/features/profile/presentation/screens/edit_profile_address_screen.dart';
+import 'package:style_cart/features/profile/presentation/screens/help_support_screen.dart';
+import 'package:style_cart/features/profile/presentation/screens/payment_methods_screen.dart';
+import 'package:style_cart/features/profile/presentation/screens/profile_addresses_screen.dart';
+import 'package:style_cart/features/profile/presentation/screens/profile_screen.dart';
+import 'package:style_cart/features/wishlist/presentation/screens/wishlist_screen.dart';
 
 // Cart item count provider (stub)
 final cartItemCountProvider = StateProvider<int>((ref) => 0);
@@ -65,7 +71,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // Customer shell routes
       ShellRoute(
-        builder: (context, state, child) => CustomerShell(child: child),
+        builder: (context, state, child) =>
+            CustomerShell(location: state.matchedLocation, child: child),
         routes: [
           GoRoute(
             path: RouteNames.home,
@@ -104,6 +111,34 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: RouteNames.profile,
             name: RouteNames.profile,
             builder: (context, state) => const ProfileScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.profileAddresses,
+            builder: (context, state) => const ProfileAddressesScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.profileEditAddress,
+            builder: (context, state) => EditProfileAddressScreen(
+              initialAddress: state.extra is ProfileAddressModel
+                  ? state.extra! as ProfileAddressModel
+                  : null,
+            ),
+          ),
+          GoRoute(
+            path: RouteNames.profilePaymentMethods,
+            builder: (context, state) => const PaymentMethodsScreen(),
+          ),
+          GoRoute(
+            path: RouteNames.profileEditPaymentMethod,
+            builder: (context, state) => EditPaymentMethodScreen(
+              initialMethod: state.extra is SavedPaymentMethodModel
+                  ? state.extra! as SavedPaymentMethodModel
+                  : null,
+            ),
+          ),
+          GoRoute(
+            path: RouteNames.profileHelpSupport,
+            builder: (context, state) => const HelpSupportScreen(),
           ),
           GoRoute(
             path: RouteNames.notificationPreferences,
@@ -217,11 +252,9 @@ String? _handleRedirect(AuthRedirectStatus status, GoRouterState state) {
     RouteNames.forgotPassword,
   ].contains(location);
 
-  final isPublicRoute = [
-    RouteNames.home,
-    RouteNames.shop,
-  ].contains(location) || location.startsWith('/product/');
-
+  final isPublicRoute =
+      [RouteNames.home, RouteNames.shop].contains(location) ||
+      location.startsWith('/product/');
 
   // 2. Routing logic based on Auth Status
   return switch (status) {
@@ -232,8 +265,8 @@ String? _handleRedirect(AuthRedirectStatus status, GoRouterState state) {
       (isAuthRoute || isPublicRoute) ? null : RouteNames.login,
 
     // Customer OR Admin: allow all navigation, screen-level guards handle admin access
-    AuthRedirectStatus.customer || AuthRedirectStatus.admin =>
-      isAuthRoute ? RouteNames.home : null,
+    AuthRedirectStatus.customer ||
+    AuthRedirectStatus.admin => isAuthRoute ? RouteNames.home : null,
   };
 }
 
@@ -264,8 +297,6 @@ class RegisterScreenPlaceholder extends StatelessWidget {
     return const Scaffold(body: Center(child: Text('RegisterScreen')));
   }
 }
-
-
 
 class CartScreenPlaceholder extends StatelessWidget {
   const CartScreenPlaceholder({super.key});

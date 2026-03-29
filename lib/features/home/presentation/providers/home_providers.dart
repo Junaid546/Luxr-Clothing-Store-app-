@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:style_cart/core/constants/firestore_constants.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
@@ -9,7 +8,6 @@ import 'package:style_cart/features/home/data/models/banner_model.dart';
 import 'package:style_cart/features/products/data/providers/product_data_providers.dart';
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
 import 'package:style_cart/features/products/domain/entities/product_filter_entity.dart';
-import 'package:style_cart/features/products/domain/usecases/get_low_stock_products_usecase.dart';
 import 'package:style_cart/features/products/domain/usecases/get_products_usecase.dart';
 
 part 'home_providers.g.dart';
@@ -43,7 +41,6 @@ Future<List<ProductEntity>> newArrivalProducts(
       .call(const GetProductsParams(
         filter: ProductFilter(
           isNewArrival: true,
-          sortBy: 'newest',
           pageSize: 10,
         ),
       ));

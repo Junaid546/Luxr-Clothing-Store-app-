@@ -3,6 +3,27 @@ import 'package:intl/intl.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
 
 class OrderEntity extends Equatable {
+
+  const OrderEntity({
+    required this.orderId,
+    required this.userId,
+    required this.userEmail,
+    required this.userName,
+    required this.items,
+    required this.subtotal,
+    required this.shippingCost,
+    required this.discountAmount,
+    required this.taxAmount,
+    required this.total,
+    required this.shippingMethod,
+    required this.shippingAddress,
+    required this.estimatedDelivery,
+    required this.paymentMethod,
+    required this.paymentStatus,
+    required this.status, required this.statusHistory, required this.placedAt, required this.updatedAt, this.transactionId,
+    this.courier,
+    this.deliveredAt,
+  });
   final String orderId;
   final String userId;
   final String userEmail;
@@ -25,31 +46,6 @@ class OrderEntity extends Equatable {
   final DateTime placedAt;
   final DateTime updatedAt;
   final DateTime? deliveredAt;
-
-  const OrderEntity({
-    required this.orderId,
-    required this.userId,
-    required this.userEmail,
-    required this.userName,
-    required this.items,
-    required this.subtotal,
-    required this.shippingCost,
-    required this.discountAmount,
-    required this.taxAmount,
-    required this.total,
-    required this.shippingMethod,
-    required this.shippingAddress,
-    required this.estimatedDelivery,
-    required this.paymentMethod,
-    required this.paymentStatus,
-    this.transactionId,
-    required this.status,
-    required this.statusHistory,
-    this.courier,
-    required this.placedAt,
-    required this.updatedAt,
-    this.deliveredAt,
-  });
 
   // ── Business Logic ────────────────────────────────
 
@@ -79,7 +75,7 @@ class OrderEntity extends Equatable {
       items.fold(0, (sum, i) => sum + i.quantity);
 
   double get totalSavings => items.fold(
-    0.0,
+    0,
     (sum, item) => sum +
         ((item.unitPrice - item.finalPrice) * item.quantity),
   );
@@ -128,17 +124,6 @@ class OrderEntity extends Equatable {
 }
 
 class OrderItemEntity extends Equatable {
-  final String productId;
-  final String productName;
-  final String brand;
-  final String imageUrl;
-  final String size;
-  final String color;
-  final int quantity;
-  final double unitPrice;
-  final int discountPct;
-  final double finalPrice;
-  final double lineTotal;
 
   const OrderItemEntity({
     required this.productId,
@@ -153,6 +138,17 @@ class OrderItemEntity extends Equatable {
     required this.finalPrice,
     required this.lineTotal,
   });
+  final String productId;
+  final String productName;
+  final String brand;
+  final String imageUrl;
+  final String size;
+  final String color;
+  final int quantity;
+  final double unitPrice;
+  final int discountPct;
+  final double finalPrice;
+  final double lineTotal;
 
   bool get hasDiscount => discountPct > 0;
   double get savings =>
@@ -163,17 +159,16 @@ class OrderItemEntity extends Equatable {
 }
 
 class StatusHistoryEntity extends Equatable {
-  final String status;
-  final DateTime timestamp;
-  final String? note;
-  final String updatedBy;
 
   const StatusHistoryEntity({
     required this.status,
     required this.timestamp,
-    this.note,
-    required this.updatedBy,
+    required this.updatedBy, this.note,
   });
+  final String status;
+  final DateTime timestamp;
+  final String? note;
+  final String updatedBy;
 
   String get statusDisplay => switch (status) {
     OrderStatus.pending          => 'Order Placed',
@@ -194,11 +189,6 @@ class StatusHistoryEntity extends Equatable {
 }
 
 class CourierEntity extends Equatable {
-  final String? name;
-  final String? trackingNumber;
-  final String? estimatedTime;
-  final double? latitude;
-  final double? longitude;
 
   const CourierEntity({
     this.name,
@@ -207,19 +197,17 @@ class CourierEntity extends Equatable {
     this.latitude,
     this.longitude,
   });
+  final String? name;
+  final String? trackingNumber;
+  final String? estimatedTime;
+  final double? latitude;
+  final double? longitude;
 
   @override
   List<Object?> get props => [name, trackingNumber];
 }
 
 class ShippingAddressEntity extends Equatable {
-  final String fullName;
-  final String phone;
-  final String street;
-  final String city;
-  final String state;
-  final String zipCode;
-  final String country;
 
   const ShippingAddressEntity({
     required this.fullName,
@@ -230,6 +218,13 @@ class ShippingAddressEntity extends Equatable {
     required this.zipCode,
     required this.country,
   });
+  final String fullName;
+  final String phone;
+  final String street;
+  final String city;
+  final String state;
+  final String zipCode;
+  final String country;
 
   String get singleLine =>
       '$street, $city, $state $zipCode';
@@ -242,13 +237,13 @@ class ShippingAddressEntity extends Equatable {
 }
 
 class EstimatedDeliveryEntity extends Equatable {
-  final DateTime from;
-  final DateTime to;
 
   const EstimatedDeliveryEntity({
     required this.from,
     required this.to,
   });
+  final DateTime from;
+  final DateTime to;
 
   String get displayRange {
     final formatter = DateFormat('MMM dd');

@@ -2,15 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
 class DashboardStats extends Equatable {
-  final double totalRevenue;
-  final int totalOrders;
-  final int newClients;
-  final int totalClients;
-  final double conversionRate;
-  final double revenueChange;
-  final double ordersChange;
-  final double clientsChange;
-  final double conversionChange;
 
   const DashboardStats({
     required this.totalRevenue,
@@ -23,6 +14,15 @@ class DashboardStats extends Equatable {
     required this.clientsChange,
     required this.conversionChange,
   });
+  final double totalRevenue;
+  final int totalOrders;
+  final int newClients;
+  final int totalClients;
+  final double conversionRate;
+  final double revenueChange;
+  final double ordersChange;
+  final double clientsChange;
+  final double conversionChange;
 
   bool get isRevenueUp => revenueChange >= 0;
   bool get isOrdersUp => ordersChange >= 0;
@@ -56,9 +56,9 @@ class DashboardStats extends Equatable {
 }
 
 class WeeklyRevenueData extends Equatable {
-  final List<DailyRevenue> days;
 
   const WeeklyRevenueData({required this.days});
+  final List<DailyRevenue> days;
 
   double get total => days.fold(0.0, (sum, d) => sum + d.revenue);
 
@@ -70,15 +70,15 @@ class WeeklyRevenueData extends Equatable {
 }
 
 class DailyRevenue extends Equatable {
-  final DateTime date;
-  final double revenue;
-  final int orderCount;
 
   const DailyRevenue({
     required this.date,
     required this.revenue,
     required this.orderCount,
   });
+  final DateTime date;
+  final double revenue;
+  final int orderCount;
 
   String get dayLabel => DateFormat('EEE').format(date).toUpperCase();
 
@@ -87,6 +87,15 @@ class DailyRevenue extends Equatable {
 }
 
 class ActivityItem extends Equatable {
+
+  const ActivityItem({
+    required this.type,
+    required this.title,
+    required this.subtitle,
+    required this.timestamp, this.amount,
+    this.orderId,
+    this.userId,
+  });
   final String type; // 'order' | 'customer'
   final String title;
   final String subtitle;
@@ -94,16 +103,6 @@ class ActivityItem extends Equatable {
   final DateTime timestamp;
   final String? orderId;
   final String? userId;
-
-  const ActivityItem({
-    required this.type,
-    required this.title,
-    required this.subtitle,
-    this.amount,
-    required this.timestamp,
-    this.orderId,
-    this.userId,
-  });
 
   String get timeAgo {
     final diff = DateTime.now().difference(timestamp);

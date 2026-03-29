@@ -13,20 +13,20 @@ import 'package:style_cart/core/providers/firebase_providers.dart';
 import 'package:style_cart/core/providers/repository_providers.dart' hide firestoreProvider;
 import 'package:style_cart/features/auth/domain/entities/user_entity.dart';
 import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
-import 'package:style_cart/features/orders/data/models/order_model.dart';
 import 'package:style_cart/features/cart/domain/repositories/cart_repository.dart';
+import 'package:style_cart/features/orders/data/models/order_model.dart';
 
 part 'order_placement_service.g.dart';
 
 class OrderPlacementService {
-  final FirebaseFirestore _firestore;
-  final CartRepository _cartRepo;
 
   const OrderPlacementService({
     required FirebaseFirestore firestore,
     required CartRepository cartRepo,
   })  : _firestore = firestore,
         _cartRepo = cartRepo;
+  final FirebaseFirestore _firestore;
+  final CartRepository _cartRepo;
 
   // ══════════════════════════════════════════════════
   // PLACE ORDER — Single atomic operation
@@ -95,7 +95,7 @@ class OrderPlacementService {
         final userSnap = await txn.get(userRef);
 
         // ── PHASE 3: VALIDATE ALL STOCK ───────────
-        for (int i = 0; i < items.length; i++) {
+        for (var i = 0; i < items.length; i++) {
           final item = items[i];
           final snap = productSnaps[i];
 
@@ -129,7 +129,7 @@ class OrderPlacementService {
 
         // ── PHASE 4: WRITE STOCK DEDUCTIONS ───────
         final handledProducts = <String>{};
-        for (int i = 0; i < items.length; i++) {
+        for (var i = 0; i < items.length; i++) {
           final pId = items[i].productId;
           if (handledProducts.contains(pId)) continue;
 
@@ -144,7 +144,7 @@ class OrderPlacementService {
             'updatedAt': FieldValue.serverTimestamp(),
           };
 
-          int totalDeduction = 0;
+          var totalDeduction = 0;
           for (final orderItem in productItems) {
             final currentQty = (inv[orderItem.size] as num?)?.toInt() ?? 0;
             final newQty = currentQty - orderItem.quantity;

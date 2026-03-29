@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 
 class NotificationPermissionDialog extends StatelessWidget {
-  final VoidCallback onAllow;
-  final VoidCallback onSkip;
-
   const NotificationPermissionDialog({
     required this.onAllow,
     required this.onSkip,
     super.key,
   });
+  final VoidCallback onAllow;
+  final VoidCallback onSkip;
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +16,7 @@ class NotificationPermissionDialog extends StatelessWidget {
 
     return Dialog(
       backgroundColor: AppColors.backgroundCard,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -62,23 +59,25 @@ class NotificationPermissionDialog extends StatelessWidget {
               (Icons.local_shipping_outlined, 'Status & tracking updates'),
               (Icons.local_offer_outlined, 'Exclusive deals & promotions'),
               (Icons.new_releases_outlined, 'New collection alerts'),
-            ].map((item) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Row(
-                    children: [
-                      Icon(item.$1, color: AppColors.gold, size: 20),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          item.$2,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
-                          ),
+            ].map(
+              (item) => Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Row(
+                  children: [
+                    Icon(item.$1, color: AppColors.gold, size: 20),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        item.$2,
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Colors.white,
                         ),
                       ),
-                    ],
-                  ),
-                )),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 24),
             // Allow button
             ElevatedButton(
@@ -106,10 +105,7 @@ class NotificationPermissionDialog extends StatelessWidget {
               onPressed: onSkip,
               child: const Text(
                 'Not now',
-                style: TextStyle(
-                  color: AppColors.textMuted,
-                  fontSize: 14,
-                ),
+                style: TextStyle(color: AppColors.textMuted, fontSize: 14),
               ),
             ),
           ],

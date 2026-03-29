@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
-import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
+import 'package:style_cart/features/orders/domain/entities/order_entity.dart';
 
 class AdminOrderCard extends StatelessWidget {
+
+  const AdminOrderCard({
+    required this.order, required this.onTap, required this.onUpdateStatus, super.key,
+  });
   final OrderEntity order;
   final VoidCallback onTap;
   final void Function(String status) onUpdateStatus;
-
-  const AdminOrderCard({
-    super.key,
-    required this.order,
-    required this.onTap,
-    required this.onUpdateStatus,
-  });
 
   @override
   Widget build(BuildContext context) {

@@ -17,8 +17,8 @@ class Validators {
     // RFC 5322 compliant email regex
     final emailRegex = RegExp(
       r'^[a-zA-Z0-9.!#$%&'
-      r"'*+/=?^_`{|}~-]+"
-      r'@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}'
+      "'*+/=?^_`{|}~-]+"
+      '@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}'
       r'[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]'
       r'(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$',
     );
@@ -52,13 +52,13 @@ class Validators {
     if (value.length > 128) {
       return 'Password is too long (max 128 characters)';
     }
-    if (!value.contains(RegExp(r'[A-Z]'))) {
+    if (!value.contains(RegExp('[A-Z]'))) {
       return 'Password must contain at least 1 uppercase letter';
     }
-    if (!value.contains(RegExp(r'[a-z]'))) {
+    if (!value.contains(RegExp('[a-z]'))) {
       return 'Password must contain at least 1 lowercase letter';
     }
-    if (!value.contains(RegExp(r'[0-9]'))) {
+    if (!value.contains(RegExp('[0-9]'))) {
       return 'Password must contain at least 1 number';
     }
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
@@ -302,10 +302,10 @@ class Validators {
   // ── Password Strength (0-4) ───────────────────────
   static int passwordStrength(String password) {
     if (password.isEmpty) return 0;
-    int score = 0;
+    var score = 0;
     if (password.length >= 8) score++;
-    if (password.contains(RegExp(r'[A-Z]'))) score++;
-    if (password.contains(RegExp(r'[0-9]'))) score++;
+    if (password.contains(RegExp('[A-Z]'))) score++;
+    if (password.contains(RegExp('[0-9]'))) score++;
     if (password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) score++;
     return score;
   }

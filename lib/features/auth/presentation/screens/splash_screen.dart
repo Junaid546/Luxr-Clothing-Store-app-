@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/router/route_names.dart';
-import '../../../../app/theme/app_colors.dart';
-import '../../../../app/theme/app_dimensions.dart';
-import '../../../../app/theme/app_text_styles.dart';
-import '../providers/auth_state_notifier.dart';
+import 'package:style_cart/app/router/route_names.dart';
+import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:style_cart/app/theme/app_dimensions.dart';
+import 'package:style_cart/app/theme/app_text_styles.dart';
+import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -29,17 +29,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       vsync: this,
     );
 
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeIn),
+        curve: const Interval(0, 0.5, curve: Curves.easeIn),
       ),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
+        curve: const Interval(0, 0.5, curve: Curves.easeOut),
       ),
     );
 
@@ -93,7 +93,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       body: SafeArea(
         child: SizedBox.expand(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Spacer(flex: 2),
               // Animated Logo
@@ -120,7 +119,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       ),
                       const SizedBox(height: AppDimensions.spacing24),
                       // Logo text
-                      Text(
+                      const Text(
                         'LUXR',
                         style: TextStyle(
                           fontFamily: 'serif',
@@ -160,7 +159,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                   ),
                 ),
               ),
-              const Spacer(flex: 1),
+              const Spacer(),
               // Loading indicator
               Padding(
                 padding: const EdgeInsets.only(bottom: AppDimensions.spacing48),
@@ -172,7 +171,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       child: LinearProgressIndicator(
                         backgroundColor: AppColors.gold.withValues(alpha: 0.2),
                         valueColor:
-                            AlwaysStoppedAnimation<Color>(AppColors.gold),
+                            const AlwaysStoppedAnimation<Color>(AppColors.gold),
                       ),
                     ),
                     const SizedBox(height: AppDimensions.spacing16),

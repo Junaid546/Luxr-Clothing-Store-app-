@@ -49,7 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '649656041937',
     projectId: 'luxr-clothing',
     authDomain: 'luxr-clothing.firebaseapp.com',
-    storageBucket: 'luxr-clothing.appspot.com',
+    storageBucket: 'luxr-clothing.firebasestorage.app',
     measurementId: 'G-XXXXXXXXXX',
   );
 
@@ -66,7 +66,7 @@ class DefaultFirebaseOptions {
     appId: '1:649656041937:ios:XXXXXXXXXXXX',
     messagingSenderId: '649656041937',
     projectId: 'luxr-clothing',
-    storageBucket: 'luxr-clothing.appspot.com',
+    storageBucket: 'luxr-clothing.firebasestorage.app',
     iosBundleId: 'com.example.luxrClothing',
   );
 }

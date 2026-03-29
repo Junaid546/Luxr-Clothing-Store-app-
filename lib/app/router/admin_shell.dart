@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'package:style_cart/app/theme/app_colors.dart';
+import 'package:go_router/go_router.dart';
 import 'package:style_cart/app/router/route_names.dart';
+import 'package:style_cart/app/theme/app_colors.dart';
 
 class AdminShell extends ConsumerWidget {
   const AdminShell({required this.child, super.key});
@@ -17,12 +16,11 @@ class AdminShell extends ConsumerWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.backgroundCard,
           border: Border(
             top: BorderSide(
               color: AppColors.borderDefault,
-              width: 1,
             ),
           ),
         ),

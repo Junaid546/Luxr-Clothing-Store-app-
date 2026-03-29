@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,12 +8,14 @@ import 'package:style_cart/core/utils/extensions.dart';
 import 'package:style_cart/features/admin/core/providers/admin_guard_provider.dart';
 import 'package:style_cart/features/admin/products/presentation/providers/admin_product_notifier.dart';
 import 'package:style_cart/features/products/domain/entities/product_entity.dart';
+import 'package:style_cart/shared/widgets/images/safe_remote_image.dart';
 
 class AdminProductsScreen extends ConsumerStatefulWidget {
   const AdminProductsScreen({super.key});
 
   @override
-  ConsumerState<AdminProductsScreen> createState() => _AdminProductsScreenState();
+  ConsumerState<AdminProductsScreen> createState() =>
+      _AdminProductsScreenState();
 }
 
 class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
@@ -35,7 +36,7 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     if (guardState.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (guardState.hasError) {
       return Center(child: Text('Error: ${guardState.error}'));
     }
@@ -67,8 +68,8 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
               child: state.isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : products.isEmpty
-                      ? _buildEmptyState()
-                      : _buildProductsList(products, notifier),
+                  ? _buildEmptyState()
+                  : _buildProductsList(products, notifier),
             ),
           ],
         ),
@@ -103,7 +104,9 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
               setState(() => _showSearch = !_showSearch);
               if (!_showSearch) {
                 _searchController.clear();
-                ref.read(adminProductNotifierProvider.notifier).setSearchQuery('');
+                ref
+                    .read(adminProductNotifierProvider.notifier)
+                    .setSearchQuery('');
               }
             },
           ),
@@ -122,6 +125,8 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
       child: TextField(
         controller: _searchController,
         onChanged: notifier.setSearchQuery,
+        textInputAction: TextInputAction.search,
+        onSubmitted: (_) => FocusScope.of(context).unfocus(),
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: 'Search products, brands...',
@@ -201,7 +206,10 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     );
   }
 
-  Widget _buildProductsList(List<ProductEntity> products, AdminProductNotifier notifier) {
+  Widget _buildProductsList(
+    List<ProductEntity> products,
+    AdminProductNotifier notifier,
+  ) {
     return RefreshIndicator(
       onRefresh: notifier.refresh,
       color: AppColors.primary,
@@ -223,7 +231,11 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.inventory_2_outlined, size: 64, color: AppColors.textMuted.withOpacity(0.5)),
+          Icon(
+            Icons.inventory_2_outlined,
+            size: 64,
+            color: AppColors.textMuted.withOpacity(0.5),
+          ),
           const SizedBox(height: 16),
           const Text(
             'No products found',
@@ -238,20 +250,26 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     // TODO: Implement category filter sheet
   }
 
-  void _showOptions(BuildContext context, ProductEntity product, AdminProductNotifier notifier) {
+  void _showOptions(
+    BuildContext context,
+    ProductEntity product,
+    AdminProductNotifier notifier,
+  ) {
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: AppColors.backgroundCard,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (context) => SafeArea(
+      builder: (sheetContext) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
               leading: Icon(
-                product.isActive ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                product.isActive
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
                 color: Colors.white,
               ),
               title: Text(
@@ -260,23 +278,32 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
               ),
               onTap: () {
                 notifier.toggleStatus(product.productId, !product.isActive);
-                Navigator.pop(context);
+                Navigator.pop(sheetContext);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.edit_road_outlined, color: Colors.white),
-              title: const Text('Update Stock', style: TextStyle(color: Colors.white)),
+              leading: const Icon(
+                Icons.edit_road_outlined,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Update Stock',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pop(sheetContext);
                 // TODO: Show quick stock update dialog
               },
             ),
             const Divider(color: AppColors.borderDefault),
             ListTile(
               leading: const Icon(Icons.delete_outline, color: AppColors.error),
-              title: const Text('Delete Product', style: TextStyle(color: AppColors.error)),
+              title: const Text(
+                'Delete Product',
+                style: TextStyle(color: AppColors.error),
+              ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pop(sheetContext);
                 _confirmDelete(context, product, notifier);
               },
             ),
@@ -286,52 +313,110 @@ class _AdminProductsScreenState extends ConsumerState<AdminProductsScreen> {
     );
   }
 
-  void _confirmDelete(BuildContext context, ProductEntity product, AdminProductNotifier notifier) {
+  void _confirmDelete(
+    BuildContext context,
+    ProductEntity product,
+    AdminProductNotifier notifier,
+  ) {
+    final messenger = ScaffoldMessenger.of(context);
+
     showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.backgroundCard,
-        title: const Text('Delete Product?', style: TextStyle(color: Colors.white)),
-        content: Text(
-          'Are you sure you want to delete "${product.name}"? This action cannot be undone.',
-          style: const TextStyle(color: AppColors.textSecondary),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+      builder: (dialogContext) {
+        var isDeleting = false;
+
+        return StatefulBuilder(
+          builder: (context, setDialogState) => AlertDialog(
+            backgroundColor: AppColors.backgroundCard,
+            title: const Text(
+              'Delete Product?',
+              style: TextStyle(color: Colors.white),
+            ),
+            content: Text(
+              'Are you sure you want to delete "${product.name}"? '
+              'This action cannot be undone.',
+              style: const TextStyle(color: AppColors.textSecondary),
+            ),
+            actions: [
+              TextButton(
+                onPressed: isDeleting
+                    ? null
+                    : () => Navigator.pop(dialogContext),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: isDeleting
+                    ? null
+                    : () async {
+                        setDialogState(() => isDeleting = true);
+                        final result = await notifier.deleteProduct(
+                          product.productId,
+                        );
+                        if (!mounted) {
+                          return;
+                        }
+
+                        if (dialogContext.mounted) {
+                          Navigator.pop(dialogContext);
+                        }
+
+                        result.fold(
+                          (failure) => messenger.showSnackBar(
+                            SnackBar(
+                              content: Text(failure.message),
+                              backgroundColor: AppColors.error,
+                            ),
+                          ),
+                          (_) => messenger.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '"${product.name}" deleted successfully',
+                              ),
+                              backgroundColor: AppColors.success,
+                            ),
+                          ),
+                        );
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.error,
+                ),
+                child: isDeleting
+                    ? const SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Text(
+                        'Delete',
+                        style: TextStyle(color: Colors.white),
+                      ),
+              ),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              // TODO: Implement delete in repository/notifier if needed
-              // For now we use status toggle usually
-              Navigator.pop(context);
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Delete', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
 
 class _AdminTab extends StatelessWidget {
+  const _AdminTab({
+    required this.label,
+    required this.tabKey,
+    required this.isActive,
+    required this.onTap,
+    this.badgeCount,
+    this.badgeColor,
+  });
   final String label;
   final String tabKey;
   final bool isActive;
   final int? badgeCount;
   final Color? badgeColor;
   final VoidCallback onTap;
-
-  const _AdminTab({
-    required this.label,
-    required this.tabKey,
-    required this.isActive,
-    this.badgeCount,
-    this.badgeColor,
-    required this.onTap,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -383,18 +468,16 @@ class _AdminTab extends StatelessWidget {
 }
 
 class _AdminProductTile extends StatelessWidget {
+  const _AdminProductTile({required this.product, required this.onLongPress});
   final ProductEntity product;
   final VoidCallback onLongPress;
 
-  const _AdminProductTile({
-    required this.product,
-    required this.onLongPress,
-  });
-
   @override
   Widget build(BuildContext context) {
-    final bool isLowStock = product.totalStock <= product.lowStockThreshold && product.totalStock > 0;
-    final bool isOutOfStock = product.totalStock == 0;
+    final isLowStock =
+        product.totalStock <= product.lowStockThreshold &&
+        product.totalStock > 0;
+    final isOutOfStock = product.totalStock == 0;
 
     return GestureDetector(
       onLongPress: onLongPress,
@@ -408,8 +491,8 @@ class _AdminProductTile extends StatelessWidget {
             color: isOutOfStock
                 ? AppColors.error.withOpacity(0.4)
                 : isLowStock
-                    ? AppColors.warning.withOpacity(0.4)
-                    : AppColors.borderDefault,
+                ? AppColors.warning.withOpacity(0.4)
+                : AppColors.borderDefault,
           ),
         ),
         child: Row(
@@ -418,13 +501,13 @@ class _AdminProductTile extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: CachedNetworkImage(
+                  child: SafeRemoteImage(
                     imageUrl: product.thumbnailUrl,
                     width: 60,
                     height: 68,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => Container(color: AppColors.backgroundElevated),
-                    errorWidget: (context, url, error) => const Icon(Icons.image_not_supported),
+                    placeholder: Container(color: AppColors.backgroundElevated),
+                    errorWidget: const Icon(Icons.image_not_supported),
                   ),
                 ),
                 if (!product.isActive)
@@ -458,13 +541,18 @@ class _AdminProductTile extends StatelessWidget {
                       Expanded(
                         child: Text(
                           product.name,
-                          style: AppTextStyles.titleMedium.copyWith(color: Colors.white),
+                          style: AppTextStyles.titleMedium.copyWith(
+                            color: Colors.white,
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.gold.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(20),
@@ -502,8 +590,8 @@ class _AdminProductTile extends StatelessWidget {
                           color: isOutOfStock
                               ? AppColors.error
                               : isLowStock
-                                  ? AppColors.warning
-                                  : AppColors.success,
+                              ? AppColors.warning
+                              : AppColors.success,
                         ),
                       ),
                       const SizedBox(width: 6),
@@ -514,8 +602,8 @@ class _AdminProductTile extends StatelessWidget {
                           color: isOutOfStock
                               ? AppColors.error
                               : isLowStock
-                                  ? AppColors.warning
-                                  : AppColors.textSecondary,
+                              ? AppColors.warning
+                              : AppColors.textSecondary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -527,7 +615,10 @@ class _AdminProductTile extends StatelessWidget {
             const SizedBox(width: 8),
             GestureDetector(
               onTap: () => context.push(
-                RouteNames.adminEditProduct.replaceAll(':productId', product.productId),
+                RouteNames.adminEditProduct.replaceAll(
+                  ':productId',
+                  product.productId,
+                ),
               ),
               child: Container(
                 padding: const EdgeInsets.all(10),

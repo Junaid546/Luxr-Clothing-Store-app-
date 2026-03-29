@@ -5,11 +5,11 @@ import 'package:style_cart/app/router/route_names.dart';
 import 'package:style_cart/app/theme/app_colors.dart';
 import 'package:style_cart/app/theme/app_text_styles.dart';
 import 'package:style_cart/core/constants/firestore_schema.dart';
-import 'package:style_cart/features/auth/presentation/providers/auth_state_notifier.dart';
 import 'package:style_cart/features/cart/domain/entities/cart_entity.dart';
 import 'package:style_cart/features/cart/presentation/providers/cart_notifier.dart';
 import 'package:style_cart/features/checkout/presentation/providers/checkout_notifier.dart';
 import 'package:style_cart/features/orders/data/models/order_model.dart';
+import 'package:style_cart/features/profile/presentation/providers/profile_providers.dart';
 
 class CheckoutScreen extends ConsumerStatefulWidget {
   const CheckoutScreen({super.key});
@@ -22,24 +22,30 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   @override
   void initState() {
     super.initState();
-    // Pre-select a default address for demo purposes if none selected
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final authState = ref.read(authNotifierProvider);
-      if (authState is AuthAuthenticated) {
-        final user = authState.user;
-        ref.read(checkoutNotifierProvider.notifier).setAddress(
-              ShippingAddressModel(
-                fullName: user.displayName,
-                phone: '+1 234 567 890',
-                street: '123 Luxury Ave',
-                city: 'New York',
-                state: 'NY',
-                zipCode: '10001',
-                country: 'USA',
-              ),
-            );
-      }
+      _prefillDefaultAddress();
     });
+  }
+
+  Future<void> _prefillDefaultAddress() async {
+    try {
+      final settings = await ref.read(profileSettingsProvider.future);
+      final defaultAddress = settings.defaultAddress;
+      if (!mounted || defaultAddress == null) {
+        return;
+      }
+
+      final checkoutState = ref.read(checkoutNotifierProvider);
+      if (checkoutState.selectedAddress != null) {
+        return;
+      }
+
+      ref
+          .read(checkoutNotifierProvider.notifier)
+          .setAddress(defaultAddress.toShippingAddress());
+    } catch (_) {
+      // Keep checkout usable even if profile settings fail to load.
+    }
   }
 
   @override
@@ -49,7 +55,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 
     // Sync handle success
     ref.listen(checkoutNotifierProvider, (prev, next) {
-      if (next.successOrderId != null && next.successOrderId != prev?.successOrderId) {
+      if (next.successOrderId != null &&
+          next.successOrderId != prev?.successOrderId) {
         context.goNamed(
           RouteNames.orderConfirmationName,
           pathParameters: {'orderId': next.successOrderId!},
@@ -138,7 +145,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   }
 
   Widget _buildBottomBar(CheckoutState state) {
-    bool isLastStep = state.step == CheckoutStep.payment;
+    final isLastStep = state.step == CheckoutStep.payment;
 
     return Container(
       padding: const EdgeInsets.all(20).copyWith(bottom: 30),
@@ -160,7 +167,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               onPressed: state.isProcessing
                   ? null
                   : () async {
-                      final notifier = ref.read(checkoutNotifierProvider.notifier);
+                      final notifier = ref.read(
+                        checkoutNotifierProvider.notifier,
+                      );
                       if (isLastStep) {
                         await notifier.placeOrder();
                       } else {
@@ -217,9 +226,9 @@ class _StepProgressIndicator extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: Row(
         children: CheckoutStep.values.map((step) {
-          int index = step.index;
-          bool isCompleted = index < currentStep.index;
-          bool isCurrent = index == currentStep.index;
+          final index = step.index;
+          final isCompleted = index < currentStep.index;
+          final isCurrent = index == currentStep.index;
 
           return Expanded(
             child: Row(
@@ -269,19 +278,15 @@ class _StepProgressIndicator extends ConsumerWidget {
 }
 
 class _AddressStep extends ConsumerWidget {
-  final ShippingAddressModel? selectedAddress;
-
   const _AddressStep({this.selectedAddress});
+  final ShippingAddressModel? selectedAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Delivering To',
-          style: AppTextStyles.titleLarge,
-        ),
+        const Text('Delivering To', style: AppTextStyles.titleLarge),
         const SizedBox(height: 16),
         if (selectedAddress != null)
           Container(
@@ -294,42 +299,57 @@ class _AddressStep extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                    Text(selectedAddress!.fullName, style: AppTextStyles.titleMedium),
-                    Row(
-                      children: [
-                        TextButton(
-                          onPressed: () => _showAddressForm(context, ref, selectedAddress),
-                          child: const Text('EDIT', style: TextStyle(color: AppColors.gold, fontWeight: FontWeight.bold)),
+                Text(
+                  selectedAddress!.fullName,
+                  style: AppTextStyles.titleMedium,
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () =>
+                          _showAddressForm(context, ref, selectedAddress),
+                      child: const Text(
+                        'EDIT',
+                        style: TextStyle(
+                          color: AppColors.gold,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const Icon(Icons.check_circle, color: AppColors.primary, size: 20),
-                      ],
+                      ),
                     ),
+                    const Icon(
+                      Icons.check_circle,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 8),
                 Text(
                   '${selectedAddress!.street}\n${selectedAddress!.city}, ${selectedAddress!.state} ${selectedAddress!.zipCode}',
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   selectedAddress!.phone,
-                  style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),
           )
         else
-          const Center(
-            child: Text('Please add a shipping address'),
-          ),
+          const Center(child: Text('Please add a shipping address')),
       ],
     );
   }
 }
 
 class _ShippingStep extends ConsumerWidget {
-  final String selectedMethod;
-
   const _ShippingStep({required this.selectedMethod});
+  final String selectedMethod;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -351,7 +371,7 @@ class _ShippingStep extends ConsumerWidget {
           id: ShippingMethod.express,
           title: 'Express Delivery',
           info: '1-2 Business Days',
-          price: '\$25.00',
+          price: r'$25.00',
         ),
       ],
     );
@@ -364,10 +384,11 @@ class _ShippingStep extends ConsumerWidget {
     required String info,
     required String price,
   }) {
-    bool isSelected = selectedMethod == id;
+    final isSelected = selectedMethod == id;
 
     return InkWell(
-      onTap: () => ref.read(checkoutNotifierProvider.notifier).setShippingMethod(id),
+      onTap: () =>
+          ref.read(checkoutNotifierProvider.notifier).setShippingMethod(id),
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -413,7 +434,10 @@ class _ShippingStep extends ConsumerWidget {
                 ],
               ),
             ),
-            Text(price, style: AppTextStyles.titleMedium.copyWith(color: AppColors.gold)),
+            Text(
+              price,
+              style: AppTextStyles.titleMedium.copyWith(color: AppColors.gold),
+            ),
           ],
         ),
       ),
@@ -422,9 +446,8 @@ class _ShippingStep extends ConsumerWidget {
 }
 
 class _PaymentStep extends ConsumerWidget {
-  final String selectedMethod;
-
   const _PaymentStep({required this.selectedMethod});
+  final String selectedMethod;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -466,10 +489,17 @@ class _PaymentStep extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          _buildReviewRow(Icons.location_on_outlined, state.selectedAddress?.formatted ?? ''),
+          _buildReviewRow(
+            Icons.location_on_outlined,
+            state.selectedAddress?.formatted ?? '',
+          ),
           const Divider(height: 24, color: AppColors.borderDefault),
-          _buildReviewRow(Icons.local_shipping_outlined, 
-              state.shippingMethod == ShippingMethod.express ? 'Express Delivery' : 'Standard Delivery'),
+          _buildReviewRow(
+            Icons.local_shipping_outlined,
+            state.shippingMethod == ShippingMethod.express
+                ? 'Express Delivery'
+                : 'Standard Delivery',
+          ),
         ],
       ),
     );
@@ -483,7 +513,9 @@ class _PaymentStep extends ConsumerWidget {
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+            style: AppTextStyles.bodySmall.copyWith(
+              color: AppColors.textSecondary,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -499,17 +531,20 @@ class _PaymentStep extends ConsumerWidget {
     IconData? icon,
     String? subtitle,
   }) {
-    bool isSelected = selectedMethod == id;
+    final isSelected = selectedMethod == id;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       child: InkWell(
-        onTap: () => ref.read(checkoutNotifierProvider.notifier).setPaymentMethod(id),
+        onTap: () =>
+            ref.read(checkoutNotifierProvider.notifier).setPaymentMethod(id),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary.withOpacity(0.1) : AppColors.backgroundElevated,
+            color: isSelected
+                ? AppColors.primary.withOpacity(0.1)
+                : AppColors.backgroundElevated,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
               color: isSelected ? AppColors.primary : Colors.transparent,
@@ -518,18 +553,23 @@ class _PaymentStep extends ConsumerWidget {
           ),
           child: Row(
             children: [
-              Icon(icon, color: isSelected ? AppColors.primary : AppColors.textSecondary),
+              Icon(
+                icon,
+                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+              ),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: AppTextStyles.titleMedium),
-                    if (subtitle != null) Text(subtitle, style: AppTextStyles.bodySmall),
+                    if (subtitle != null)
+                      Text(subtitle, style: AppTextStyles.bodySmall),
                   ],
                 ),
               ),
-              if (isSelected) const Icon(Icons.check_circle, color: AppColors.primary),
+              if (isSelected)
+                const Icon(Icons.check_circle, color: AppColors.primary),
             ],
           ),
         ),
@@ -538,7 +578,11 @@ class _PaymentStep extends ConsumerWidget {
   }
 }
 
-void _showAddressForm(BuildContext context, WidgetRef ref, [ShippingAddressModel? initial]) {
+void _showAddressForm(
+  BuildContext context,
+  WidgetRef ref, [
+  ShippingAddressModel? initial,
+]) {
   // Simple dialog for address editing
   final nameCtrl = TextEditingController(text: initial?.fullName);
   final phoneCtrl = TextEditingController(text: initial?.phone);
@@ -549,32 +593,69 @@ void _showAddressForm(BuildContext context, WidgetRef ref, [ShippingAddressModel
     context: context,
     builder: (context) => AlertDialog(
       backgroundColor: AppColors.backgroundElevated,
-      title: Text(initial == null ? 'Add Address' : 'Edit Address', style: const TextStyle(color: Colors.white)),
+      title: Text(
+        initial == null ? 'Add Address' : 'Edit Address',
+        style: const TextStyle(color: Colors.white),
+      ),
       content: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(controller: nameCtrl, decoration: const InputDecoration(labelText: 'Full Name', labelStyle: TextStyle(color: AppColors.textMuted))),
-            TextField(controller: phoneCtrl, decoration: const InputDecoration(labelText: 'Phone', labelStyle: TextStyle(color: AppColors.textMuted))),
-            TextField(controller: streetCtrl, decoration: const InputDecoration(labelText: 'Street', labelStyle: TextStyle(color: AppColors.textMuted))),
-            TextField(controller: cityCtrl, decoration: const InputDecoration(labelText: 'City', labelStyle: TextStyle(color: AppColors.textMuted))),
+            TextField(
+              controller: nameCtrl,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                labelText: 'Full Name',
+                labelStyle: TextStyle(color: AppColors.textMuted),
+              ),
+            ),
+            TextField(
+              controller: phoneCtrl,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                labelText: 'Phone',
+                labelStyle: TextStyle(color: AppColors.textMuted),
+              ),
+            ),
+            TextField(
+              controller: streetCtrl,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(
+                labelText: 'Street',
+                labelStyle: TextStyle(color: AppColors.textMuted),
+              ),
+            ),
+            TextField(
+              controller: cityCtrl,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => FocusScope.of(context).unfocus(),
+              decoration: const InputDecoration(
+                labelText: 'City',
+                labelStyle: TextStyle(color: AppColors.textMuted),
+              ),
+            ),
           ],
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('CANCEL')),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('CANCEL'),
+        ),
         ElevatedButton(
           onPressed: () {
-            ref.read(checkoutNotifierProvider.notifier).setAddress(
-              ShippingAddressModel(
-                fullName: nameCtrl.text,
-                phone: phoneCtrl.text,
-                street: streetCtrl.text,
-                city: cityCtrl.text,
-                state: initial?.state ?? 'NY',
-                zipCode: initial?.zipCode ?? '10001',
-                country: initial?.country ?? 'USA',
-              ),
-            );
+            ref
+                .read(checkoutNotifierProvider.notifier)
+                .setAddress(
+                  ShippingAddressModel(
+                    fullName: nameCtrl.text,
+                    phone: phoneCtrl.text,
+                    street: streetCtrl.text,
+                    city: cityCtrl.text,
+                    state: initial?.state ?? 'NY',
+                    zipCode: initial?.zipCode ?? '10001',
+                    country: initial?.country ?? 'USA',
+                  ),
+                );
             Navigator.pop(context);
           },
           child: const Text('SAVE'),
@@ -585,9 +666,8 @@ void _showAddressForm(BuildContext context, WidgetRef ref, [ShippingAddressModel
 }
 
 class _OrderSummaryCard extends StatelessWidget {
-  final CartSummary summary;
-
   const _OrderSummaryCard({required this.summary});
+  final CartSummary summary;
 
   @override
   Widget build(BuildContext context) {
@@ -603,12 +683,19 @@ class _OrderSummaryCard extends StatelessWidget {
         children: [
           const Text('Order Summary', style: AppTextStyles.titleLarge),
           const SizedBox(height: 20),
-          _SummaryRow(label: 'Subtotal', value: '\$${summary.subtotal.toStringAsFixed(2)}'),
+          _SummaryRow(
+            label: 'Subtotal',
+            value: '\$${summary.subtotal.toStringAsFixed(2)}',
+          ),
           const SizedBox(height: 12),
           _SummaryRow(
             label: 'Shipping',
-            value: summary.shippingCost == 0 ? 'FREE' : '\$${summary.shippingCost.toStringAsFixed(2)}',
-            valueColor: summary.shippingCost == 0 ? AppColors.successTeal : AppColors.textPrimary,
+            value: summary.shippingCost == 0
+                ? 'FREE'
+                : '\$${summary.shippingCost.toStringAsFixed(2)}',
+            valueColor: summary.shippingCost == 0
+                ? AppColors.successTeal
+                : AppColors.textPrimary,
           ),
           if (summary.discountAmount > 0) ...[
             const SizedBox(height: 12),
@@ -636,12 +723,6 @@ class _OrderSummaryCard extends StatelessWidget {
 }
 
 class _SummaryRow extends StatelessWidget {
-  final String label;
-  final String value;
-  final Color? valueColor;
-  final bool isBold;
-  final double fontSize;
-
   const _SummaryRow({
     required this.label,
     required this.value,
@@ -649,6 +730,11 @@ class _SummaryRow extends StatelessWidget {
     this.isBold = false,
     this.fontSize = 16,
   });
+  final String label;
+  final String value;
+  final Color? valueColor;
+  final bool isBold;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {

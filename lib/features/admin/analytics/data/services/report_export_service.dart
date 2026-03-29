@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -98,7 +97,7 @@ class ReportExportService {
       // ── Section 5: Top Products ───────────────────
       buffer.writeln('=== TOP PRODUCTS ===');
       buffer.writeln('Rank,Product,Brand,Category,Units Sold,Revenue,Rating,Stock');
-      for (int i = 0; i < report.topProducts.length; i++) {
+      for (var i = 0; i < report.topProducts.length; i++) {
         final p = report.topProducts[i];
         // Wrap name in quotes to handle commas
         buffer.writeln(
@@ -117,7 +116,7 @@ class ReportExportService {
       // ── Section 6: Top Customers ──────────────────
       buffer.writeln('=== TOP CUSTOMERS ===');
       buffer.writeln('Rank,Name,Email,Total Orders,Total Spent,Elite Status');
-      for (int i = 0; i < report.topCustomers.length; i++) {
+      for (var i = 0; i < report.topCustomers.length; i++) {
         final c = report.topCustomers[i];
         buffer.writeln(
           '${i + 1},'
@@ -215,7 +214,7 @@ class ReportExportService {
                       pw.SizedBox(height: 4),
                       pw.Text(
                         'Analytics Report',
-                        style: pw.TextStyle(fontSize: 14, color: PdfColors.white),
+                        style: const pw.TextStyle(fontSize: 14, color: PdfColors.white),
                       ),
                     ],
                   ),
@@ -224,7 +223,7 @@ class ReportExportService {
                     children: [
                       pw.Text(
                         report.dateRange.displayLabel,
-                        style: pw.TextStyle(color: PdfColors.white, fontSize: 12),
+                        style: const pw.TextStyle(color: PdfColors.white, fontSize: 12),
                       ),
                       pw.SizedBox(height: 4),
                       pw.Text(
