@@ -38,7 +38,7 @@ class CartSummary {
     final totalItems = items.fold(0, (sum, i) => sum + i.quantity);
     final isFreeShipping = subtotal >= threshold;
 
-    double shippingCost = 0.0;
+    var shippingCost = 0.0;
     if (shippingMethod == ShippingMethod.express) {
       final expressCostString = dotenv.env['EXPRESS_SHIPPING_COST'] ?? '25';
       shippingCost = double.tryParse(expressCostString) ?? 25.0;

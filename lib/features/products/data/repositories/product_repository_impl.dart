@@ -409,8 +409,8 @@ class ProductRepositoryImpl extends FirestoreBaseRepository
   // DELETE PRODUCT (Admin hard delete)
   // ══════════════════════════════════════════════════
   @override
-  Future<Either<Failure, void>> deleteProduct(String productId) {
-    return safeFirestoreCall(() async {
+  Future<Either<Failure, void>> deleteProduct(String productId) async {
+    return safeFirestoreCall<void>(() async {
       final docRef = _ref.doc(productId);
       final snapshot = await docRef.get();
 

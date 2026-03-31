@@ -38,3 +38,6 @@
 # ── Prevent reverse engineering of sensitive strings ──
 -keepattributes SourceFile,LineNumberTable
 -renamesourcefileattribute SourceFile
+
+# ── Play Core (Ignore missing classes from Flutter Core) ──
+-dontwarn com.google.android.play.core.**
