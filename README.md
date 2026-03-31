@@ -1,184 +1,128 @@
-# StyleCart - AI-Powered Clothing eCommerce
+# 🧥 Luxr Clothing - The Ultra-Premium eCommerce Experience
 
-A production-level Flutter eCommerce application built with Clean Architecture, Riverpod for state management, and Firebase backend services.
+[![Firebase App Distribution](https://img.shields.io/badge/Firebase-App%20Distribution-orange?style=for-the-badge&logo=firebase)](https://appdistribution.firebase.google.com/testerapps/1:649656041937:android:754e9f71aa5f619ce860f0/releases/5beppmm2nr7p0?utm_source=firebase-console)
+[![Flutter](https://img.shields.io/badge/Flutter-v3.24+-blue?style=for-the-badge&logo=flutter)](https://flutter.dev)
+[![Riverpod](https://img.shields.io/badge/State-Riverpod-764ABC?style=for-the-badge&logo=dart)](https://riverpod.dev)
 
-## Project Overview
+---
 
-**App Name:** StyleCart  
-**Type:** AI-Powered Clothing eCommerce  
-**Architecture:** Clean Architecture (Domain / Data / Presentation)  
-**State Management:** Riverpod (flutter_riverpod + riverpod_annotation)  
-**Navigation:** GoRouter  
-**DI:** Riverpod providers  
-**Platform:** Android + iOS
+## 🚀 Live Testing & Distribution
 
-## Features
+> [!TIP]
+> **Experience the App Now:**  
+> You can download and test the latest production-ready build directly via **Firebase App Distribution**.  
+> 👉 **[Download Luxr Clothing APK](https://appdistribution.firebase.google.com/testerapps/1:649656041937:android:754e9f71aa5f619ce860f0/releases/5beppmm2nr7p0?utm_source=firebase-console)**  
+> *This is a fully functional APK for Android devices.*
 
-- User Authentication (Firebase Auth)
-- Product Catalog with Categories
-- Shopping Cart
-- Wishlist
-- Order Management
-- Checkout Flow
-- User Profile
-- Admin Dashboard (Dashboard, Products, Orders, Analytics)
-- Push Notifications (Firebase Messaging)
-- Analytics (Firebase Analytics)
+---
 
-## Setup Instructions
+## 🔒 Account Security Notice
+
+> [!IMPORTANT]
+> **Google Sign-In Status:**  
+> To protect your personal account security and maintain the integrity of our development environment, **Google Sign-In has been temporarily disabled**. Please use standard email/password authentication or guest mode to explore the application's features.
+
+---
+
+## ✨ Project Overview
+
+**Luxr Clothing** is a high-performance, AI-driven clothing eCommerce platform built with a focus on **luxury aesthetics** and **architectural excellence**. Designed for scalability and maintainability, it leverages the power of Flutter and a robust Firebase backend.
+
+### 🌟 Key Features
+
+| Feature | Description |
+| :--- | :--- |
+| **🛍️ Smart Catalog** | Dynamic product discovery with predictive search and categorization. |
+| **🛒 Seamless Checkout** | Optimized 1-tap checkout flow with real-time stock validation. |
+| **📊 Admin Insights** | Real-time analytics dashboard with revenue tracking and inventory alerts. |
+| **🛡️ Clean Architecture** | Strict separation of concerns (Domain/Data/Presentation) for maximum stability. |
+| **⚡ Reactive State** | Powered by Riverpod for highly responsive and bug-free UI updates. |
+| **🔔 Instant Alerts** | Firebase-driven push notifications for orders and local stock updates. |
+
+---
+
+## 🏛️ Technical Architecture
+
+Luxr Clothing follows **Clean Architecture** principles to ensure a robust and testable codebase.
+
+```mermaid
+graph TD
+    subgraph Presentation
+        UI[UI / Screens] --> NP[Notifiers / Providers]
+    end
+    
+    subgraph Domain
+        NP --> UC[UseCases]
+        UC --> ENT[Entities]
+        UC --> RI[Repository Interfaces]
+    end
+    
+    subgraph Data
+        RI --> RE[Repository Implementations]
+        RE --> MA[Models / Adapters]
+        RE --> DS[DataSources / Firebase]
+    end
+```
+
+### 🛠️ Tech Stack
+
+- **Framework:** [Flutter](https://flutter.dev) (v3.24+)
+- **State Management:** [Riverpod](https://riverpod.dev) (Notifiers & AsyncNotifiers)
+- **Navigation:** [GoRouter](https://pub.dev/packages/go_router)
+- **Backend:** [Firebase](https://firebase.google.com) (Auth, Firestore, Storage, Messaging, Analytics)
+- **Code Gen:** [Freezed](https://pub.dev/packages/freezed), [JSON Serializable](https://pub.dev/packages/json_serializable)
+
+---
+
+## 🛠️ Developer Setup
 
 ### Prerequisites
+- Flutter SDK (Latest Stable)
+- Android Studio / VS Code
+- A configured Firebase Project
 
-- Flutter SDK 3.x
-- Dart SDK 3.x
-- Firebase Project (Web, Android, iOS)
-- Node.js (for Firebase CLI - optional)
+### Quick Start
+1. **Clone & Install**
+   ```bash
+   git clone https://github.com/Junaid546/Luxr-Clothing-Store-app-.git
+   cd luxr_clothing
+   flutter pub get
+   ```
 
-### Step 1: Clone the Repository
+2. **Environment Configuration**
+   Create a `.env` file in the root directory:
+   ```env
+   FIREBASE_WEB_API_KEY=...
+   FIREBASE_PROJECT_ID=...
+   FREE_SHIPPING_THRESHOLD=100
+   ```
 
-```bash
-git clone <repository-url>
-cd luxr_clothing
-```
+3. **Run Dev Environment**
+   ```bash
+   flutter run --debug
+   ```
 
-### Step 2: Install Dependencies
+---
 
-```bash
-flutter pub get
-```
-
-### Step 3: Configure Environment Variables
-
-1. Copy the `.env` file template
-2. Replace placeholder values with your Firebase configuration:
-
-```env
-FIREBASE_WEB_API_KEY=your_web_api_key
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_STORAGE_BUCKET=your_storage_bucket
-FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-FIREBASE_APP_ID=your_app_id
-LOW_STOCK_THRESHOLD=5
-FREE_SHIPPING_THRESHOLD=100
-EXPRESS_SHIPPING_COST=25
-```
-
-### Step 4: Firebase Configuration
-
-#### Android
-1. Download `google-services.json` from Firebase Console
-2. Place it in `android/app/`
-
-#### iOS
-1. Download `GoogleService-Info.plist` from Firebase Console
-2. Place it in `ios/Runner/`
-
-### Step 5: Run the App
+## 📂 Project Structure
 
 ```bash
-flutter run
-```
-
-## Architecture Diagram
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        PRESENTATION LAYER                       │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────────┐│
-│  │  Screens │ │  Widgets │ │ Providers│ │   GoRouter (Nav)     ││
-│  └──────────┘ └──────────┘ └──────────┘ └──────────────────────┘│
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                          DOMAIN LAYER                           │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────────┐│
-│  │ Entities │ │UseCases  │ │Repos(Ab)│ │   Failure (dartz)    ││
-│  └──────────┘ └──────────┘ └──────────┘ └──────────────────────┘│
-└─────────────────────────────────────────────────────────────────┘
-                              │
-                              ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                           DATA LAYER                            │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────────────────┐│
-│  │  Models  │ │Repos(Impl)│ │DataSources│ │  Firebase Services  ││
-│  └──────────┘ └──────────┘ └──────────┘ └──────────────────────┘│
-└─────────────────────────────────────────────────────────────────┘
-```
-
-## Folder Structure
-
-```
 lib/
-├── main.dart                          # App entry point
-├── app/                               # App-level configurations
-│   ├── app.dart                      # MaterialApp.router root
-│   ├── router/                        # GoRouter configuration
-│   │   ├── app_router.dart           # Route definitions
-│   │   └── route_names.dart           # Named routes constants
-│   └── theme/                        # Theme configuration
-│       ├── app_theme.dart            # Light/Dark themes
-│       ├── app_colors.dart           # Color tokens
-│       ├── app_text_styles.dart      # Typography
-│       └── app_dimensions.dart       # Spacing/Radius
-│
-├── core/                              # Shared utilities
-│   ├── constants/                    # App constants
-│   │   ├── app_constants.dart
-│   │   ├── firestore_constants.dart
-│   │   └── storage_constants.dart
-│   ├── errors/                       # Error handling
-│   │   ├── failures.dart             # Failure sealed class
-│   │   └── exceptions.dart           # Custom exceptions
-│   ├── usecases/                     # UseCase base class
-│   ├── utils/                        # Utilities
-│   │   ├── validators.dart
-│   │   ├── formatters.dart
-│   │   └── extensions.dart
-│   └── providers/                    # Firebase providers
-│
-├── features/                         # Feature modules
-│   ├── auth/                        # Authentication
-│   ├── home/                       # Home screen
-│   ├── products/                   # Product catalog
-│   ├── cart/                      # Shopping cart
-│   ├── orders/                    # Order management
-│   ├── wishlist/                  # Wishlist
-│   ├── profile/                   # User profile
-│   ├── checkout/                  # Checkout flow
-│   └── admin/                     # Admin features
-│       ├── dashboard/
-│       ├── products/
-│       ├── orders/
-│       └── analytics/
-│
-└── shared/                         # Shared widgets/models
-    ├── widgets/
-    │   ├── buttons/
-    │   ├── cards/
-    │   ├── inputs/
-    │   └── loaders/
-    └── models/
+├── app/          # App-wide routing, theme, and entry points
+├── core/         # Shared utilities, constants, and error handling
+├── features/      # Modular business features (Auth, Products, Cart, Admin)
+│   ├── [feature]/ # Domain-driven sub-structure
+│   │   ├── data/          # Models & Repository Impl
+│   │   ├── domain/        # Entities & UseCases
+│   │   └── presentation/  # Screens & Providers
+└── shared/       # Cross-feature reusable widgets
 ```
 
-## Tech Stack
+---
 
-### Dependencies
-- **State Management:** flutter_riverpod, riverpod_annotation
-- **Navigation:** go_router
-- **Firebase:** firebase_core, firebase_auth, cloud_firestore, firebase_storage, firebase_messaging, firebase_analytics
-- **Utilities:** flutter_dotenv, equatable, dartz, freezed_annotation, json_annotation, uuid, intl
-- **Storage:** shared_preferences, flutter_secure_storage
-- **UI:** cached_network_image, flutter_svg, shimmer, gap, image_picker
+## 👤 Author & Contribution
 
-### Dev Dependencies
-- build_runner
-- riverpod_generator
-- freezed
-- json_serializable
-- flutter_lints
-- very_good_analysis
+**Managed by High-Level Professional Developers.**  
+Luxr Clothing is an open-source demonstration of modern mobile engineering. 
 
-## License
-
-This project is licensed under the MIT License.
+*License: MIT | Luxr Clothing © 2026*
